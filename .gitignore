@@ -1,0 +1,6 @@
+ProjectUMini/.vsconfig
+*.sln
+ProjectUMini/Library/
+ProjectUMini/Logs/
+ProjectUMini/Temp/
+ProjectUMini/UserSettings/
