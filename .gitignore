@@ -5,3 +5,5 @@ ProjectUMini/Logs/
 ProjectUMini/Temp/
 ProjectUMini/UserSettings/
 ProjectUMini/.idea/
+ProjectUMini/obj/
+*.csproj
