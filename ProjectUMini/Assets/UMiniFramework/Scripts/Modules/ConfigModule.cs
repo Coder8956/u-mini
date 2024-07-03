@@ -1,10 +1,12 @@
-﻿namespace UMiniFramework.Scripts.Modules
+﻿using System.Collections;
+
+namespace UMiniFramework.Scripts.Modules
 {
     public class ConfigModule : UMModule
     {
-        public override void Create()
+        public override IEnumerator Init()
         {
-            
+            yield return null;
         }
     }
 }

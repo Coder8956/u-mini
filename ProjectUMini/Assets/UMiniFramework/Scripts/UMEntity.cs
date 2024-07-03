@@ -1,8 +1,9 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
 using UnityEngine;
-using UnityEngine.Assertions;
-using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Scripts
 {
@@ -48,35 +49,49 @@ namespace UMiniFramework.Scripts
         void Start()
         {
             UMDebug.Log("UMEntity Start");
-            CreateModules();
-            Scene.Load("Login");
+            StartCoroutine(InitModules(() => { Scene.Load("Login"); }));
         }
 
-        private void CreateModules()
+        private IEnumerator InitModules(Action OnCreated = null)
         {
+            UMDebug.Log(">>> UMEntity Init Modules begin.");
+
+            List<UMModule> modules = new List<UMModule>();
+
             // 创建音频模块
             if (CheckModuleIsNull(Audio))
             {
                 Audio = UMModuleTool.CreateModule<AudioModule>(this);
+                modules.Add(Audio);
             }
 
             // 创建配置模块
             if (CheckModuleIsNull(Config))
             {
                 Config = UMModuleTool.CreateModule<ConfigModule>(this);
+                modules.Add(Config);
             }
 
             // 创建场景模块
             if (CheckModuleIsNull(Scene))
             {
                 Scene = UMModuleTool.CreateModule<SceneModule>(this);
+                modules.Add(Scene);
             }
 
             // 创建UI模块
             if (CheckModuleIsNull(UI))
             {
                 UI = UMModuleTool.CreateModule<UIModule>(this);
+                modules.Add(UI);
             }
+
+            foreach (var module in modules)
+            {
+                yield return module.Init();
+            }
+            
+            UMDebug.Log(">>> UMEntity Init Modules end.");
         }
 
         private bool CheckModuleIsNull(UMModule module)
