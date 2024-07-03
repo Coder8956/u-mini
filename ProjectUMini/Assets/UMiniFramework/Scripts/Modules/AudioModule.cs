@@ -8,5 +8,10 @@ namespace UMiniFramework.Scripts.Modules
         {
             UMDebug.Log("Play Audio");
         }
+
+        public override void Create()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

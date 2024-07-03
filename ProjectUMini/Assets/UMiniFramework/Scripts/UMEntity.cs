@@ -73,13 +73,13 @@ namespace UMiniFramework.Scripts
             UMDebug.Log("UMEntity Start");
             EnableInit = true;
             // 创建音频模块
-            UMModule.CreateModule(ref m_audio, this);
+            // UMModule.CreateModule(ref m_audio, this);
             // 创建配置模块
-            UMModule.CreateModule(ref m_config, this);
+            // UMModule.CreateModule(ref m_config, this);
             // 创建场景模块
-            UMModule.CreateModule(ref m_scene, this);
+            // UMModule.CreateModule(ref m_scene, this);
             // 创建UI模块
-            UMModule.CreateModule(ref m_UI, this);
+            // UMModule.CreateModule(ref m_UI, this);
             EnableInit = false;
             SceneManager.LoadScene("Login");
         }
