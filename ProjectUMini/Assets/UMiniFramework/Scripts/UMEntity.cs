@@ -54,35 +54,35 @@ namespace UMiniFramework.Scripts
 
         private IEnumerator InitModules(Action OnCreated = null)
         {
-            UMDebug.Log(">>> UMEntity Init Modules begin.");
+            UMDebug.Log(">>> UMEntity Init Modules begin <<<");
 
             List<UMModule> modules = new List<UMModule>();
 
             // 创建音频模块
             if (CheckModuleIsNull(Audio))
             {
-                Audio = UMModuleTool.CreateModule<AudioModule>(this);
+                Audio = UMModuleTool.CreateGameObject<AudioModule>(gameObject);
                 modules.Add(Audio);
             }
 
             // 创建配置模块
             if (CheckModuleIsNull(Config))
             {
-                Config = UMModuleTool.CreateModule<ConfigModule>(this);
+                Config = UMModuleTool.CreateGameObject<ConfigModule>(gameObject);
                 modules.Add(Config);
             }
 
             // 创建场景模块
             if (CheckModuleIsNull(Scene))
             {
-                Scene = UMModuleTool.CreateModule<SceneModule>(this);
+                Scene = UMModuleTool.CreateGameObject<SceneModule>(gameObject);
                 modules.Add(Scene);
             }
 
             // 创建UI模块
             if (CheckModuleIsNull(UI))
             {
-                UI = UMModuleTool.CreateModule<UIModule>(this);
+                UI = UMModuleTool.CreateGameObject<UIModule>(gameObject);
                 modules.Add(UI);
             }
 
@@ -90,8 +90,9 @@ namespace UMiniFramework.Scripts
             {
                 yield return module.Init();
             }
-            
-            UMDebug.Log(">>> UMEntity Init Modules end.");
+
+            UMDebug.Log(">>> UMEntity Init Modules end <<<");
+            OnCreated?.Invoke();
         }
 
         private bool CheckModuleIsNull(UMModule module)

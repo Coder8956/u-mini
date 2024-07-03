@@ -1,6 +1,6 @@
 ﻿namespace UMiniFramework.Scripts.Function.Audio
 {
-    public class Effect : AudioFunc
+    public class EffectFunc : AudioFunc
     {
         
     }

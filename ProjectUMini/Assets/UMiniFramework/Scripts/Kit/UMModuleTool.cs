@@ -5,13 +5,13 @@ namespace UMiniFramework.Scripts.Kit
 {
     public class UMModuleTool
     {
-        public static T CreateModule<T>(UMEntity entity) where T : UMModule
+        public static T CreateGameObject<T>(GameObject parent) where T : MonoBehaviour
         {
-            string moduleName = typeof(T).Name;
-            GameObject moduleGo = new GameObject(moduleName, typeof(T));
-            moduleGo.transform.SetParent(entity.transform);
+            string gName = typeof(T).Name;
+            GameObject moduleGo = new GameObject(gName, typeof(T));
+            moduleGo.transform.SetParent(parent.transform);
             moduleGo.transform.localPosition = Vector3.zero;
-            UMDebug.Log($"The {moduleName} is created");
+            UMDebug.Log($"The {gName} is created");
             return moduleGo.GetComponent<T>();
         }
     }

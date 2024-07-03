@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Scripts;
+using UMiniFramework.Scripts.Kit;
 using UnityEngine;
 
 public class LoginScene : MonoBehaviour
@@ -8,6 +9,7 @@ public class LoginScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UMDebug.Log("LoginScene Open");
         // UMEntity.Audio.Play();
     }
 
