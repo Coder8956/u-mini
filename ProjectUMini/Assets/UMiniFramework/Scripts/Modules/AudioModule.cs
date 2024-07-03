@@ -6,6 +6,7 @@ namespace UMiniFramework.Scripts.Modules
     {
         public override IEnumerator Init()
         {
+            
             yield return null;
         }
     }
