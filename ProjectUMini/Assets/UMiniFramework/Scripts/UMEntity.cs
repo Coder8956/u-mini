@@ -61,28 +61,28 @@ namespace UMiniFramework.Scripts
             // 创建音频模块
             if (CheckModuleIsNull(Audio))
             {
-                Audio = UMModuleTool.CreateGameObject<AudioModule>(gameObject);
+                Audio = UMTool.CreateGameObject<AudioModule>(gameObject);
                 modules.Add(Audio);
             }
 
             // 创建配置模块
             if (CheckModuleIsNull(Config))
             {
-                Config = UMModuleTool.CreateGameObject<ConfigModule>(gameObject);
+                Config = UMTool.CreateGameObject<ConfigModule>(gameObject);
                 modules.Add(Config);
             }
 
             // 创建场景模块
             if (CheckModuleIsNull(Scene))
             {
-                Scene = UMModuleTool.CreateGameObject<SceneModule>(gameObject);
+                Scene = UMTool.CreateGameObject<SceneModule>(gameObject);
                 modules.Add(Scene);
             }
 
             // 创建UI模块
             if (CheckModuleIsNull(UI))
             {
-                UI = UMModuleTool.CreateGameObject<UIModule>(gameObject);
+                UI = UMTool.CreateGameObject<UIModule>(gameObject);
                 modules.Add(UI);
             }
 

@@ -19,6 +19,12 @@ namespace UMiniFramework.Scripts.Kit
             Debug.LogWarning(MessageAddTag(msg));
         }
 
+        public static void Error(object msg)
+        {
+            if (!Enable) return;
+            Debug.LogError(MessageAddTag(msg));
+        }
+
         private static string MessageAddTag(object msg)
         {
             return $"{DEBUG_TAG} {msg}";

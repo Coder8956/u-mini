@@ -1,11 +1,10 @@
-﻿using UMiniFramework.Scripts.Modules;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UMiniFramework.Scripts.Kit
 {
-    public class UMModuleTool
+    public static class UMTool
     {
-        public static T CreateGameObject<T>(GameObject parent) where T : MonoBehaviour
+        public static T CreateGameObject<T>(GameObject parent) where T : Component
         {
             string gName = typeof(T).Name;
             GameObject moduleGo = new GameObject(gName, typeof(T));
