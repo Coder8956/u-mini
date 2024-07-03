@@ -12,6 +12,8 @@ namespace UMiniFramework.Scripts.Modules
         public override IEnumerator Init()
         {
             BGM = UMModuleTool.CreateGameObject<BGMFunc>(gameObject);
+            BGM.Init();
+
             Effect = UMModuleTool.CreateGameObject<EffectFunc>(gameObject);
             yield return null;
         }

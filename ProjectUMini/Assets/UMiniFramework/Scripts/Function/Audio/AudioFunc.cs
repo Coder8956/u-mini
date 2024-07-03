@@ -2,8 +2,8 @@
 
 namespace UMiniFramework.Scripts.Function.Audio
 {
-    public class AudioFunc : MonoBehaviour
+    public abstract class AudioFunc : MonoBehaviour
     {
-        
+        public abstract void Init();
     }
 }

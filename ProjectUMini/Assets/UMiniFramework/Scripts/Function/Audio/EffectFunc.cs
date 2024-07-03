@@ -2,6 +2,9 @@
 {
     public class EffectFunc : AudioFunc
     {
-        
+        public override void Init()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
