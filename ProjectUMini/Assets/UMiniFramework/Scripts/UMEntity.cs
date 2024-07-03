@@ -1,10 +1,7 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Scripts
@@ -12,47 +9,26 @@ namespace UMiniFramework.Scripts
     public class UMEntity : MonoBehaviour
     {
         private static UMEntity GlobalInstance = null;
-        public bool EnableInit { get; private set; }
-
-        private AudioModule m_audio = null;
 
         /// <summary>
         /// 音频模块
         /// </summary>
-        public static AudioModule Audio
-        {
-            get { return GlobalInstance.m_audio; }
-        }
-
-        private ConfigModule m_config = null;
+        public static AudioModule Audio { get; private set; }
 
         /// <summary>
         /// 配置模块
         /// </summary>
-        public static ConfigModule Config
-        {
-            get { return GlobalInstance.m_config; }
-        }
-
-        private SceneModule m_scene = null;
+        public static ConfigModule Config { get; private set; }
 
         /// <summary>
         /// 场景模块
         /// </summary>
-        public static SceneModule Scene
-        {
-            get { return GlobalInstance.m_scene; }
-        }
-
-        private UIModule m_UI = null;
+        public static SceneModule Scene { get; private set; }
 
         /// <summary>
         /// UI模块
         /// </summary>
-        public static UIModule UI
-        {
-            get { return GlobalInstance.m_UI; }
-        }
+        public static UIModule UI { get; private set; }
 
         private void Awake()
         {
@@ -63,7 +39,8 @@ namespace UMiniFramework.Scripts
             }
             else
             {
-                Destroy(this);
+                Destroy(gameObject);
+                UMDebug.Warning("Destroy duplicate UMEntity instances on awake");
             }
         }
 
@@ -71,17 +48,40 @@ namespace UMiniFramework.Scripts
         void Start()
         {
             UMDebug.Log("UMEntity Start");
-            EnableInit = true;
+            CreateModules();
+            Scene.Load("Login");
+        }
+
+        private void CreateModules()
+        {
             // 创建音频模块
-            // UMModule.CreateModule(ref m_audio, this);
+            if (CheckModuleIsNull(Audio))
+            {
+                Audio = UMModuleTool.CreateModule<AudioModule>(this);
+            }
+
             // 创建配置模块
-            // UMModule.CreateModule(ref m_config, this);
+            if (CheckModuleIsNull(Config))
+            {
+                Config = UMModuleTool.CreateModule<ConfigModule>(this);
+            }
+
             // 创建场景模块
-            // UMModule.CreateModule(ref m_scene, this);
+            if (CheckModuleIsNull(Scene))
+            {
+                Scene = UMModuleTool.CreateModule<SceneModule>(this);
+            }
+
             // 创建UI模块
-            // UMModule.CreateModule(ref m_UI, this);
-            EnableInit = false;
-            SceneManager.LoadScene("Login");
+            if (CheckModuleIsNull(UI))
+            {
+                UI = UMModuleTool.CreateModule<UIModule>(this);
+            }
+        }
+
+        private bool CheckModuleIsNull(UMModule module)
+        {
+            return module == null;
         }
     }
 }

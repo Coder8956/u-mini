@@ -8,12 +8,15 @@ public class LoginScene : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UMEntity.Audio.Play();
+        // UMEntity.Audio.Play();
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        // if (Input.GetKey(KeyCode.Space))
+        // {
+        //     UMEntity.Scene.Load("Launch");
+        // }
     }
 }
