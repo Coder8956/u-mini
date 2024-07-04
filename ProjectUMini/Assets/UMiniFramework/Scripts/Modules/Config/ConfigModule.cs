@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace UMiniFramework.Scripts.Modules
+namespace UMiniFramework.Scripts.Modules.Config
 {
     public class ConfigModule : UMModule
     {

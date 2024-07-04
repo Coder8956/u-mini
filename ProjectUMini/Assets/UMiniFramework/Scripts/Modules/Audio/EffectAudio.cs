@@ -14,8 +14,7 @@ namespace UMiniFramework.Scripts.Modules.Audio
 
         private AudioSource CreateOriginalAudio()
         {
-            AudioSource origAudio = UMTool.CreateGameObject<AudioSource>(gameObject);
-            origAudio.gameObject.name += "_0";
+            AudioSource origAudio = UMTool.CreateGameObject<AudioSource>(gameObject,"Sound");
             return origAudio;
         }
     }

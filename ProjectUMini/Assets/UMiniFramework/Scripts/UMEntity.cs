@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
+using UMiniFramework.Scripts.Modules.UI;
 using UMiniFramework.Scripts.Modules.Audio;
+using UMiniFramework.Scripts.Modules.Config;
+using UMiniFramework.Scripts.Modules.Scene;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts
@@ -62,28 +65,28 @@ namespace UMiniFramework.Scripts
             // 创建音频模块
             if (CheckModuleIsNull(Audio))
             {
-                Audio = UMTool.CreateGameObject<AudioModule>(gameObject);
+                Audio = UMTool.CreateGameObject<AudioModule>(gameObject, nameof(AudioModule));
                 modules.Add(Audio);
             }
 
             // 创建配置模块
             if (CheckModuleIsNull(Config))
             {
-                Config = UMTool.CreateGameObject<ConfigModule>(gameObject);
+                Config = UMTool.CreateGameObject<ConfigModule>(gameObject, nameof(ConfigModule));
                 modules.Add(Config);
             }
 
             // 创建场景模块
             if (CheckModuleIsNull(Scene))
             {
-                Scene = UMTool.CreateGameObject<SceneModule>(gameObject);
+                Scene = UMTool.CreateGameObject<SceneModule>(gameObject, nameof(SceneModule));
                 modules.Add(Scene);
             }
 
             // 创建UI模块
             if (CheckModuleIsNull(UI))
             {
-                UI = UMTool.CreateGameObject<UIModule>(gameObject);
+                UI = UMTool.CreateGameObject<UIModule>(gameObject, nameof(UIModule));
                 modules.Add(UI);
             }
 
