@@ -10,10 +10,10 @@ namespace UMiniFramework.Scripts.Modules.Audio
 
         public override IEnumerator Init()
         {
-            BGM = UMTool.CreateGameObject<BGMAudio>(gameObject, nameof(BGMAudio));
+            BGM = UMTool.CreateGameObject<BGMAudio>(nameof(BGMAudio), gameObject);
             BGM.Init();
 
-            Effect = UMTool.CreateGameObject<EffectAudio>(gameObject, nameof(EffectAudio));
+            Effect = UMTool.CreateGameObject<EffectAudio>(nameof(EffectAudio), gameObject);
             Effect.Init();
             yield return null;
         }
