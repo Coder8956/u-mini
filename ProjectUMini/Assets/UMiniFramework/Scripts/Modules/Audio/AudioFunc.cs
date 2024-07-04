@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UMiniFramework.Scripts.Function.Audio
+namespace UMiniFramework.Scripts.Modules.Audio
 {
     public abstract class AudioFunc : MonoBehaviour
     {

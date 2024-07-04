@@ -1,9 +1,9 @@
 ﻿using UMiniFramework.Scripts.Kit;
 using UnityEngine;
 
-namespace UMiniFramework.Scripts.Function.Audio
+namespace UMiniFramework.Scripts.Modules.Audio
 {
-    public class EffectFunc : AudioFunc
+    public class EffectAudio : AudioFunc
     {
         private AudioSource m_originalEffect;
 

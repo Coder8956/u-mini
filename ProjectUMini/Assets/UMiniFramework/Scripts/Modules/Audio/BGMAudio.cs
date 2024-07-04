@@ -1,8 +1,8 @@
 ﻿using UnityEngine;
 
-namespace UMiniFramework.Scripts.Function.Audio
+namespace UMiniFramework.Scripts.Modules.Audio
 {
-    public class BGMFunc : AudioFunc
+    public class BGMAudio : AudioFunc
     {
         private AudioSource m_audio = null;
 
