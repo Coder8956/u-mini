@@ -2,7 +2,7 @@
 
 namespace UMiniFramework.Scripts.Modules.Audio
 {
-    public class BGMAudio : AudioFunc
+    public class BGMAudio : BaseAudio
     {
         private AudioSource m_audio = null;
 

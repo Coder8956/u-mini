@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.Audio
 {
-    public class EffectAudio : AudioFunc
+    public class EffectAudio : BaseAudio
     {
         private AudioSource m_originalEffect;
 
