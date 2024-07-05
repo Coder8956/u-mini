@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UnityEngine;
 
@@ -6,28 +7,89 @@ namespace UMiniFramework.Scripts.Pool
 {
     public class GameObjectPool : MonoBehaviour
     {
-        private Queue<GameObject> m_gameObject;
+        private Queue<GameObject> m_gameObjectQue;
+        private PoolConfig m_poolConfig;
+        private int m_createdNo = 0;
+        private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
 
-        public static GameObjectPool CreatePool(string poolName, GameObject parent = null)
+        private void Init(PoolConfig poolConfig)
         {
-            GameObjectPool newGameObjectPool = UMTool.CreateGameObject<GameObjectPool>(poolName, parent);
-            newGameObjectPool.Init();
-            return newGameObjectPool;
+            m_poolConfig = poolConfig;
+            m_gameObjectQue = new Queue<GameObject>();
+            m_poolConfig.ObjectTemplet.transform.SetParent(transform);
+            m_poolConfig.ObjectTemplet.name += OBJECT_TEMPLET_TAG;
+            m_poolConfig.ObjectTemplet.SetActive(false);
+
+            for (int i = 0; i < poolConfig.InitNum; i++)
+            {
+                m_gameObjectQue.Enqueue(Create());
+            }
         }
 
-        private void Init()
+        private GameObject Create()
         {
-            m_gameObject = new Queue<GameObject>();
+            GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
+            m_createdNo++;
+            string oldName = newObject.name;
+            newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNo}");
+            return newObject;
         }
 
         public GameObject Get()
         {
-            throw new System.NotImplementedException();
+            GameObject obj = null;
+            if (m_gameObjectQue.Count > 0)
+            {
+                obj = m_gameObjectQue.Dequeue();
+            }
+            else
+            {
+                obj = Create();
+            }
+
+            m_poolConfig.OnGet?.Invoke(obj);
+            return obj;
         }
 
         public void Back(GameObject obj)
         {
-            throw new System.NotImplementedException();
+            m_poolConfig.OnBack?.Invoke(obj);
+            m_gameObjectQue.Enqueue(obj);
+        }
+
+        public static GameObjectPool CreatePool(PoolConfig poolConfig)
+        {
+            GameObjectPool newGameObjectPool =
+                UMTool.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
+            newGameObjectPool.Init(poolConfig);
+            return newGameObjectPool;
+        }
+
+        public class PoolConfig
+        {
+            public readonly string PoolName;
+            public readonly GameObject PoolParent;
+            public readonly GameObject ObjectTemplet;
+            public readonly int InitNum;
+            public readonly Action<GameObject> OnGet;
+            public readonly Action<GameObject> OnBack;
+
+            public PoolConfig(
+                string poolName,
+                GameObject poolParent,
+                GameObject objectTemplet,
+                int initNum,
+                Action<GameObject> onGet,
+                Action<GameObject> onBack
+            )
+            {
+                PoolName = poolName;
+                PoolParent = poolParent;
+                ObjectTemplet = objectTemplet;
+                InitNum = initNum;
+                OnGet = onGet;
+                OnBack = onBack;
+            }
         }
     }
 }
