@@ -1,3 +1,5 @@
+using Game.Scripts.UI;
+using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
@@ -9,6 +11,7 @@ namespace Game.Scripts.Login
         void Start()
         {
             UMUtils.Debug.Log("LoginScene Open");
+            UMini.UI.Open<LoginPanel>();
             // UMEntity.Audio.Play();
         }
 

@@ -5,6 +5,7 @@ using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.ResourcesModule;
+using UMiniFramework.Scripts.Modules.ResourcesModule.ResourcesLoaders;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Utils;
@@ -120,6 +121,7 @@ namespace UMiniFramework.Scripts
         public class UMiniConfig
         {
             public Action OnLaunchFinished { get; set; }
+            public IResourcesLoader ResourcesLoader { get; set; }
         }
     }
 }

@@ -1,4 +1,5 @@
 using UMiniFramework.Scripts;
+using UMiniFramework.Scripts.Modules.ResourcesModule.ResourcesLoaders;
 using UnityEngine;
 
 namespace Game.Scripts.Launch
@@ -10,6 +11,7 @@ namespace Game.Scripts.Launch
         {
             UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
             umConfig.OnLaunchFinished = () => { UMini.Scene.Load("Login"); };
+            umConfig.ResourcesLoader = new ResourcesLoader();
             UMini.Launch(umConfig);
         }
 

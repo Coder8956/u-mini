@@ -11,6 +11,7 @@ namespace UMiniFramework.Scripts.Modules.ResourcesModule
 
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
+            m_resourcesLoader = config.ResourcesLoader;
             yield return null;
         }
 
