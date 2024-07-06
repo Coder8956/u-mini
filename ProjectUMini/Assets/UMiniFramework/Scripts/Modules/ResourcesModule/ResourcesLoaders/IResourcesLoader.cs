@@ -5,6 +5,6 @@ namespace UMiniFramework.Scripts.Modules.ResourcesModule.ResourcesLoaders
 {
     public interface IResourcesLoader
     {
-        void LoadAsync<T>(string path, Action<T> onSucceed, Action<T> fail) where T : Object;
+        void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object;
     }
 }

@@ -14,9 +14,9 @@ namespace UMiniFramework.Scripts.Modules.ResourcesModule
             yield return null;
         }
 
-        public void LoadAsync<T>(string path, Action<T> onSucceed, Action<T> fail) where T : Object
+        public void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object
         {
-            m_resourcesLoader.LoadAsync<T>(path, onSucceed, fail);
+            m_resourcesLoader.LoadAsync<T>(path, onCompleted);
         }
     }
 }
