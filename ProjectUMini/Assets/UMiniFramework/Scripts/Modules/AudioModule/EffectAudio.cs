@@ -1,5 +1,5 @@
-﻿using UMiniFramework.Scripts.Kit;
-using UMiniFramework.Scripts.Pool;
+﻿using UMiniFramework.Scripts.Pool;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.AudioModule
@@ -12,7 +12,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
         {
             // 初始化音效对象池
 
-            GameObject poolObjectTemplet = UMTool.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
+            GameObject poolObjectTemplet = UMUtils.Tool.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
             GameObjectPool.PoolConfig poolConfig = new GameObjectPool.PoolConfig
             ("SoundPool",
                 gameObject,

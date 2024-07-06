@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
-using UMiniFramework.Scripts;
-using UMiniFramework.Scripts.Kit;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
 namespace Game.Scripts.Login
@@ -11,7 +8,7 @@ namespace Game.Scripts.Login
         // Start is called before the first frame update
         void Start()
         {
-            UMDebug.Log("LoginScene Open");
+            UMUtils.Debug.Log("LoginScene Open");
             // UMEntity.Audio.Play();
         }
 

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using UMiniFramework.Scripts.Kit;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts.Pool
@@ -60,7 +60,7 @@ namespace UMiniFramework.Scripts.Pool
         public static GameObjectPool CreatePool(PoolConfig poolConfig)
         {
             GameObjectPool newGameObjectPool =
-                UMTool.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
+                UMUtils.Tool.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
             newGameObjectPool.Init(poolConfig);
             return newGameObjectPool;
         }

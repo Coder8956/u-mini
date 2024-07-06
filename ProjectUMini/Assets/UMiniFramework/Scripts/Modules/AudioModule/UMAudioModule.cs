@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using UMiniFramework.Scripts.Kit;
+using UMiniFramework.Scripts.Utils;
 
 namespace UMiniFramework.Scripts.Modules.AudioModule
 {
@@ -10,10 +10,10 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
 
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
-            BGM = UMTool.CreateGameObject<BGMAudio>(nameof(BGMAudio), gameObject);
+            BGM = UMUtils.Tool.CreateGameObject<BGMAudio>(nameof(BGMAudio), gameObject);
             BGM.Init();
 
-            Effect = UMTool.CreateGameObject<EffectAudio>(nameof(EffectAudio), gameObject);
+            Effect = UMUtils.Tool.CreateGameObject<EffectAudio>(nameof(EffectAudio), gameObject);
             Effect.Init();
             yield return null;
         }

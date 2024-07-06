@@ -1,13 +1,13 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.ResourcesModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts
@@ -65,7 +65,7 @@ namespace UMiniFramework.Scripts
             else
             {
                 Destroy(gameObject);
-                UMDebug.Warning("Destroy duplicate UMEntity instances on awake");
+                UMUtils.Debug.Warning("Destroy duplicate UMEntity instances on awake");
             }
         }
 
@@ -79,7 +79,7 @@ namespace UMiniFramework.Scripts
 
         private void InitFramework(UMiniConfig config)
         {
-            UMDebug.Log(">>> UMini Launch");
+            UMUtils.Debug.Log(">>> UMini Launch");
             m_config = config;
             m_moduleList = new List<UMModule>();
 
@@ -109,11 +109,11 @@ namespace UMiniFramework.Scripts
         {
             foreach (var module in m_moduleList)
             {
-                UMDebug.Log($"{module.GetType().Name} Start Init.");
+                UMUtils.Debug.Log($"{module.GetType().Name} Start Init.");
                 yield return module.Init(m_config);
             }
 
-            UMDebug.Log(">>> UMini Launch Finished.");
+            UMUtils.Debug.Log(">>> UMini Launch Finished.");
             m_config?.OnLaunchFinished?.Invoke();
         }
 
