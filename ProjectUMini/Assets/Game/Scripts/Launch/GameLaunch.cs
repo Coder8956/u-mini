@@ -8,7 +8,9 @@ namespace Game.Scripts.Launch
         // Start is called before the first frame update
         void Start()
         {
-            UMini.Launch();
+            UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
+            umConfig.OnLaunchFinished = () => { UMini.Scene.Load("Login"); };
+            UMini.Launch(umConfig);
         }
 
         // Update is called once per frame
