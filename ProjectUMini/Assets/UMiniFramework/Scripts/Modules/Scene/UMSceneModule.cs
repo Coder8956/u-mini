@@ -5,7 +5,7 @@ namespace UMiniFramework.Scripts.Modules.Scene
 {
     public class UMSceneModule : UMModule
     {
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMini.UMiniConfig config)
         {
             yield return null;
         }

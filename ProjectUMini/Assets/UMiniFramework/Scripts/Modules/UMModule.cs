@@ -5,6 +5,6 @@ namespace UMiniFramework.Scripts.Modules
 {
     public abstract class UMModule : MonoBehaviour
     {
-        public abstract IEnumerator Init();
+        public abstract IEnumerator Init(UMini.UMiniConfig config);
     }
 }

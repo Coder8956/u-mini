@@ -78,13 +78,13 @@ namespace UMiniFramework.Scripts
 
             Audio = m_audioModule;
             m_moduleList.Add(Audio);
-            
+
             Scene = m_sceneModule;
             m_moduleList.Add(Scene);
-            
+
             Config = m_configModule;
             m_moduleList.Add(Config);
-            
+
             UI = m_UIModule;
             m_moduleList.Add(UI);
 
@@ -100,7 +100,7 @@ namespace UMiniFramework.Scripts
             foreach (var module in m_moduleList)
             {
                 UMDebug.Log($"{module.GetType().Name} Start Init.");
-                yield return module.Init();
+                yield return module.Init(m_config);
             }
 
             UMDebug.Log(">>> UMini Launch Finished.");

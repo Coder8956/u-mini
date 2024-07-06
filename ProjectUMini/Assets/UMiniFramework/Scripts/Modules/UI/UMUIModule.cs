@@ -10,7 +10,7 @@ namespace UMiniFramework.Scripts.Modules.UI
         [SerializeField] private Camera m_UMUICamera = null;
         [SerializeField] private EventSystem m_UMEventSystem = null;
 
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMini.UMiniConfig config)
         {
             yield return null;
         }
