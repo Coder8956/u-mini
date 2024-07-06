@@ -7,13 +7,14 @@ using UMiniFramework.Scripts.Modules.UI;
 using UMiniFramework.Scripts.Modules.Audio;
 using UMiniFramework.Scripts.Modules.Config;
 using UMiniFramework.Scripts.Modules.Scene;
+using UnityEditor;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts
 {
-    public class UMEntity : MonoBehaviour
+    public class UMini : MonoBehaviour
     {
-        private static UMEntity GlobalInstance = null;
+        private static UMini GlobalInstance = null;
 
         /// <summary>
         /// 音频模块
@@ -49,11 +50,18 @@ namespace UMiniFramework.Scripts
             }
         }
 
-        // Start is called before the first frame update
-        void Start()
+        /// <summary>
+        /// 启动UMini框架 不能在MonoBehaviour Awake函数中调用 建议在Start函数中调用
+        /// </summary>
+        public static void Launch()
         {
-            UMDebug.Log("UMEntity Start");
-            StartCoroutine(InitModules(() => { Scene.Load("Login"); }));
+            GlobalInstance.InitUMEntity();
+        }
+
+        private void InitUMEntity()
+        {
+            UMDebug.Log("UMini Launch");
+            StartCoroutine(InitModules(() => { UMDebug.Log("UMini Launch Over!"); }));
         }
 
         private IEnumerator InitModules(Action OnCreated = null)
