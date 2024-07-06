@@ -2,7 +2,7 @@
 
 namespace UMiniFramework.Scripts.Modules.Config
 {
-    public class ConfigModule : UMModule
+    public class UMConfigModule : UMModule
     {
         public override IEnumerator Init()
         {

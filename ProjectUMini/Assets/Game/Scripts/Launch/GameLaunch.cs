@@ -8,7 +8,7 @@ namespace Game.Scripts.Launch
         // Start is called before the first frame update
         void Start()
         {
-            // UMini.Launch();
+            UMini.Launch();
         }
 
         // Update is called once per frame

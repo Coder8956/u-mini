@@ -19,22 +19,28 @@ namespace UMiniFramework.Scripts
         /// <summary>
         /// 音频模块
         /// </summary>
-        public static AudioModule Audio { get; private set; }
+        public static UMAudioModule Audio { get; private set; }
+
+        [SerializeField] private UMAudioModule m_audioModule = null;
 
         /// <summary>
         /// 配置模块
         /// </summary>
-        public static ConfigModule Config { get; private set; }
+        public static UMConfigModule Config { get; private set; }
 
         /// <summary>
         /// 场景模块
         /// </summary>
-        public static SceneModule Scene { get; private set; }
+        public static UMSceneModule Scene { get; private set; }
 
         /// <summary>
         /// UI模块
         /// </summary>
-        public static UIModule UI { get; private set; }
+        public static UMUIModule UI { get; private set; }
+
+        private List<UMModule> m_moduleList = null;
+
+        private UMiniConfig m_config = null;
 
         private void Awake()
         {
@@ -53,63 +59,40 @@ namespace UMiniFramework.Scripts
         /// <summary>
         /// 启动UMini框架 不能在MonoBehaviour Awake函数中调用 建议在Start函数中调用
         /// </summary>
-        public static void Launch()
+        public static void Launch(UMiniConfig config = null)
         {
-            GlobalInstance.InitUMEntity();
+            GlobalInstance.InitFramework(config);
         }
 
-        private void InitUMEntity()
+        private void InitFramework(UMiniConfig config)
         {
-            UMDebug.Log("UMini Launch");
-            StartCoroutine(InitModules(() => { UMDebug.Log("UMini Launch Over!"); }));
+            UMDebug.Log(">>> UMini Launch");
+            m_config = config;
+            m_moduleList = new List<UMModule>();
+
+            Audio = m_audioModule;
+            m_moduleList.Add(Audio);
+
+            StartCoroutine(InitModules());
         }
 
-        private IEnumerator InitModules(Action OnCreated = null)
+        /// <summary>
+        /// 初始化模块
+        /// </summary>
+        /// <returns></returns>
+        private IEnumerator InitModules()
         {
-            UMDebug.Log(">>> UMEntity Init Modules begin <<<");
-
-            List<UMModule> modules = new List<UMModule>();
-
-            // 创建音频模块
-            if (CheckModuleIsNull(Audio))
-            {
-                Audio = UMTool.CreateGameObject<AudioModule>(nameof(AudioModule), gameObject);
-                modules.Add(Audio);
-            }
-
-            // 创建配置模块
-            if (CheckModuleIsNull(Config))
-            {
-                Config = UMTool.CreateGameObject<ConfigModule>(nameof(ConfigModule), gameObject);
-                modules.Add(Config);
-            }
-
-            // 创建场景模块
-            if (CheckModuleIsNull(Scene))
-            {
-                Scene = UMTool.CreateGameObject<SceneModule>(nameof(SceneModule), gameObject);
-                modules.Add(Scene);
-            }
-
-            // 创建UI模块
-            if (CheckModuleIsNull(UI))
-            {
-                UI = UMTool.CreateGameObject<UIModule>(nameof(UIModule), gameObject);
-                modules.Add(UI);
-            }
-
-            foreach (var module in modules)
+            foreach (var module in m_moduleList)
             {
                 yield return module.Init();
             }
-
-            UMDebug.Log(">>> UMEntity Init Modules end <<<");
-            OnCreated?.Invoke();
+            UMDebug.Log(">>> UMini Launch Finished.");
+            m_config?.OnLaunchFinished?.Invoke();
         }
 
-        private bool CheckModuleIsNull(UMModule module)
+        public class UMiniConfig
         {
-            return module == null;
+            public Action OnLaunchFinished { get; set; }
         }
     }
 }

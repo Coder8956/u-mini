@@ -3,7 +3,7 @@ using UMiniFramework.Scripts.Kit;
 
 namespace UMiniFramework.Scripts.Modules.Audio
 {
-    public class AudioModule : UMModule
+    public class UMAudioModule : UMModule
     {
         public BGMAudio BGM { get; private set; }
         public EffectAudio Effect { get; private set; }

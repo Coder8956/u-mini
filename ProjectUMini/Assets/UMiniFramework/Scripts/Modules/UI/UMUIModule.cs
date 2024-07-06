@@ -2,7 +2,7 @@
 
 namespace UMiniFramework.Scripts.Modules.UI
 {
-    public class UIModule : UMModule
+    public class UMUIModule : UMModule
     {
         public override IEnumerator Init()
         {

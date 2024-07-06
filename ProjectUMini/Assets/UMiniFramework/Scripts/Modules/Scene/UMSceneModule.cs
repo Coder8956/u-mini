@@ -3,7 +3,7 @@ using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Scripts.Modules.Scene
 {
-    public class SceneModule : UMModule
+    public class UMSceneModule : UMModule
     {
         public override IEnumerator Init()
         {
