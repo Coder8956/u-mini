@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UMiniFramework.Scripts.Modules.Audio
+namespace UMiniFramework.Scripts.Modules.AudioModule
 {
     public class BGMAudio : BaseAudio
     {

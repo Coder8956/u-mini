@@ -3,10 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
-using UMiniFramework.Scripts.Modules.UI;
-using UMiniFramework.Scripts.Modules.Audio;
-using UMiniFramework.Scripts.Modules.Config;
-using UMiniFramework.Scripts.Modules.Scene;
+using UMiniFramework.Scripts.Modules.UIModule;
+using UMiniFramework.Scripts.Modules.AudioModule;
+using UMiniFramework.Scripts.Modules.ConfigModule;
+using UMiniFramework.Scripts.Modules.SceneModule;
 using UnityEditor;
 using UnityEngine;
 

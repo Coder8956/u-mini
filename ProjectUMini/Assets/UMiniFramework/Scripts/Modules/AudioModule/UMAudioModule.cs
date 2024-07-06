@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UMiniFramework.Scripts.Kit;
 
-namespace UMiniFramework.Scripts.Modules.Audio
+namespace UMiniFramework.Scripts.Modules.AudioModule
 {
     public class UMAudioModule : UMModule
     {

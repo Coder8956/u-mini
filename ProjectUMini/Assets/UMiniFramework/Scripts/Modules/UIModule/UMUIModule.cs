@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UMiniFramework.Scripts.Modules.UI
+namespace UMiniFramework.Scripts.Modules.UIModule
 {
     public class UMUIModule : UMModule
     {

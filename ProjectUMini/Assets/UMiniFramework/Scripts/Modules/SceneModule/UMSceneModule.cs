@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine.SceneManagement;
 
-namespace UMiniFramework.Scripts.Modules.Scene
+namespace UMiniFramework.Scripts.Modules.SceneModule
 {
     public class UMSceneModule : UMModule
     {

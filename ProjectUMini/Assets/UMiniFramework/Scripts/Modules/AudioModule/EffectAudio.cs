@@ -2,7 +2,7 @@
 using UMiniFramework.Scripts.Pool;
 using UnityEngine;
 
-namespace UMiniFramework.Scripts.Modules.Audio
+namespace UMiniFramework.Scripts.Modules.AudioModule
 {
     public class EffectAudio : BaseAudio
     {
