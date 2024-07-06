@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Scripts.Kit;
 using UMiniFramework.Scripts.Modules;
-using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.ResourcesModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
-using UnityEditor;
+using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts
