@@ -28,15 +28,21 @@ namespace UMiniFramework.Scripts
         /// </summary>
         public static UMConfigModule Config { get; private set; }
 
+        [SerializeField] private UMConfigModule m_configModule = null;
+
         /// <summary>
         /// 场景模块
         /// </summary>
         public static UMSceneModule Scene { get; private set; }
 
+        [SerializeField] private UMSceneModule m_sceneModule = null;
+
         /// <summary>
         /// UI模块
         /// </summary>
         public static UMUIModule UI { get; private set; }
+
+        [SerializeField] private UMUIModule m_UIModule = null;
 
         private List<UMModule> m_moduleList = null;
 
@@ -72,6 +78,15 @@ namespace UMiniFramework.Scripts
 
             Audio = m_audioModule;
             m_moduleList.Add(Audio);
+            
+            Scene = m_sceneModule;
+            m_moduleList.Add(Scene);
+            
+            Config = m_configModule;
+            m_moduleList.Add(Config);
+            
+            UI = m_UIModule;
+            m_moduleList.Add(UI);
 
             StartCoroutine(InitModules());
         }
@@ -84,8 +99,10 @@ namespace UMiniFramework.Scripts
         {
             foreach (var module in m_moduleList)
             {
+                UMDebug.Log($"{module.GetType().Name} Start Init.");
                 yield return module.Init();
             }
+
             UMDebug.Log(">>> UMini Launch Finished.");
             m_config?.OnLaunchFinished?.Invoke();
         }
