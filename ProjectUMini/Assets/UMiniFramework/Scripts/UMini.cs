@@ -6,6 +6,7 @@ using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
+using UMiniFramework.Scripts.Modules.ResourcesModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UnityEditor;
 using UnityEngine;
@@ -36,6 +37,13 @@ namespace UMiniFramework.Scripts
         public static UMSceneModule Scene { get; private set; }
 
         [SerializeField] private UMSceneModule m_sceneModule = null;
+
+        /// <summary>
+        /// 资源模块
+        /// </summary>
+        public static UMResourcesModule Resources { get; private set; }
+
+        [SerializeField] private UMResourcesModule m_resourcesModule = null;
 
         /// <summary>
         /// UI模块
@@ -84,6 +92,9 @@ namespace UMiniFramework.Scripts
 
             Config = m_configModule;
             m_moduleList.Add(Config);
+
+            Resources = m_resourcesModule;
+            m_moduleList.Add(Resources);
 
             UI = m_UIModule;
             m_moduleList.Add(UI);
