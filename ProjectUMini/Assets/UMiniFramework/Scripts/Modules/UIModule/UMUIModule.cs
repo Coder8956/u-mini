@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,8 +13,11 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         [SerializeField] private Camera m_UMUICamera = null;
         [SerializeField] private EventSystem m_UMEventSystem = null;
 
+        private Dictionary<Type, Queue<UMUIPanel>> m_createdPanel;
+
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
+            m_createdPanel = new Dictionary<Type, Queue<UMUIPanel>>();
             yield return null;
         }
 
@@ -21,13 +25,13 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         {
             UMUIPanelInfo panelInfo = Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelInfo)) as UMUIPanelInfo;
             string panelPath = panelInfo.PanelPath;
-            UMUtils.Debug.Log($"panelPath:{panelPath}");
+            // UMUtils.Debug.Log($"panelPath:{panelPath}");
 
             UMini.Resources.LoadAsync<GameObject>(panelPath, (result) =>
             {
-                GameObject panelGameObject = Instantiate(result.Resource,m_UMUIRootCanvas.transform);
+                GameObject panelGameObject = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
                 UMUtils.UI.FillParent(panelGameObject.GetComponent<RectTransform>());
-           });
+            });
         }
     }
 }
