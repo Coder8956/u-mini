@@ -6,10 +6,12 @@ namespace UMiniFramework.Scripts.Modules.UIModule
     public class UMUIPanelInfo : Attribute
     {
         public readonly string PanelPath = null;
+        public readonly bool Single = true;
 
-        public UMUIPanelInfo(string panelPath)
+        public UMUIPanelInfo(string panelPath, bool single = true)
         {
             PanelPath = panelPath;
+            Single = true;
         }
     }
 }
