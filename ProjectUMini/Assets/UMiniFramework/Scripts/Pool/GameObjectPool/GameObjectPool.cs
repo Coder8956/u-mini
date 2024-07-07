@@ -7,9 +7,17 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
 {
     public class GameObjectPool : MonoBehaviour
     {
+        /// <summary>
+        /// 池内对象数量
+        /// </summary>
+        public int ObjectCount
+        {
+            get { return (m_gameObjectQue != null ? m_gameObjectQue.Count : 0); }
+        }
+        
         private Queue<GameObject> m_gameObjectQue;
         private PoolConfig m_poolConfig;
-        private int m_createdNo = 0;
+        private int m_createdNum = 0;
         private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
         private int m_hashTag = 0;
 
@@ -34,11 +42,11 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         private GameObject Create()
         {
             GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
-            m_createdNo++;
+            m_createdNum++;
             GOPoolObject poolObject = newObject.AddComponent<GOPoolObject>();
             poolObject.SetRelatedPoolHashTag(m_hashTag);
             string oldName = newObject.name;
-            newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNo}");
+            newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNum}");
             return newObject;
         }
 
