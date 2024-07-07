@@ -25,12 +25,9 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 
             UMini.Resources.LoadAsync<GameObject>(panelPath, (result) =>
             {
-                GameObject panelGameObject = Instantiate<GameObject>(result.Resource);
-                panelGameObject.transform.SetParent(m_UMUIRootCanvas.transform);
+                GameObject panelGameObject = Instantiate(result.Resource,m_UMUIRootCanvas.transform);
                 UMUtils.UI.FillParent(panelGameObject.GetComponent<RectTransform>());
-                panelGameObject.GetComponent<RectTransform>().localPosition = Vector3.zero;
-                panelGameObject.GetComponent<RectTransform>().localScale = Vector3.one;
-            });
+           });
         }
     }
 }

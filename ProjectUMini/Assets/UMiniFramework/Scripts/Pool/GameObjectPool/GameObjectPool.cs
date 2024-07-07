@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Scripts.Pool
+namespace UMiniFramework.Scripts.Pool.GameObjectPool
 {
     public class GameObjectPool : MonoBehaviour
     {

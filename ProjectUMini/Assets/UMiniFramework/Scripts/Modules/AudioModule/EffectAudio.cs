@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Scripts.Pool;
+﻿using UMiniFramework.Scripts.Pool.GameObjectPool;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
