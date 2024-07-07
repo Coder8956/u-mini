@@ -11,6 +11,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         private PoolConfig m_poolConfig;
         private int m_createdNo = 0;
         private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
+        private int m_hashTag = 0;
 
         private void Init(PoolConfig poolConfig)
         {
@@ -19,6 +20,10 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
             m_poolConfig.ObjectTemplet.transform.SetParent(transform);
             m_poolConfig.ObjectTemplet.name += OBJECT_TEMPLET_TAG;
             m_poolConfig.ObjectTemplet.SetActive(false);
+
+            m_hashTag = GetHashCode();
+            // UMUtils.Debug.Log($"Pool HashTag:{m_hashTag}");
+            gameObject.name += $"<HashTag({m_hashTag})>";
 
             for (int i = 0; i < poolConfig.InitNum; i++)
             {
@@ -30,6 +35,8 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         {
             GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
             m_createdNo++;
+            GOPoolObject poolObject = newObject.AddComponent<GOPoolObject>();
+            poolObject.SetRelatedPoolHashTag(m_hashTag);
             string oldName = newObject.name;
             newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNo}");
             return newObject;
@@ -53,6 +60,12 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
 
         public void Back(GameObject obj)
         {
+            int relatedPoolTag = obj.GetComponent<GOPoolObject>().RelatedPoolHashTag;
+            if (m_hashTag != relatedPoolTag)
+            {
+                throw new Exception("The object returned to the wrong object pool");
+            }
+
             m_poolConfig.OnBack?.Invoke(obj);
             m_gameObjectQue.Enqueue(obj);
         }
