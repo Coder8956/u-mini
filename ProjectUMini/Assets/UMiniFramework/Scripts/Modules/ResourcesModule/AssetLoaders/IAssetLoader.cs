@@ -1,9 +1,10 @@
 ﻿using System;
 using Object = UnityEngine.Object;
 
-namespace UMiniFramework.Scripts.Modules.ResourcesModule.ResourcesLoaders
+namespace UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders
 {
-    public interface IResourcesLoader
+    
+    public interface IAssetLoader
     {
         void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object;
     }

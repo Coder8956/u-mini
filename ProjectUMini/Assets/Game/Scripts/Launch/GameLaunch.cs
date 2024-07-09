@@ -1,5 +1,5 @@
 using UMiniFramework.Scripts;
-using UMiniFramework.Scripts.Modules.ResourcesModule.ResourcesLoaders;
+using UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders;
 using UnityEngine;
 
 namespace Game.Scripts.Launch
