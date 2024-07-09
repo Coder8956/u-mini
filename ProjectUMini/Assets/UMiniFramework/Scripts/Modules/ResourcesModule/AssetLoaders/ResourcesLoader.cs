@@ -12,7 +12,8 @@ namespace UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders
             request.completed += (result) =>
             {
                 T res = request.asset as T;
-                onCompleted?.Invoke(new LoadResult<T>(true, res));
+                bool loadState = (res != null);
+                onCompleted?.Invoke(new LoadResult<T>(loadState, res));
             };
         }
     }
