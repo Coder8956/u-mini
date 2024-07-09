@@ -13,11 +13,11 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         [SerializeField] private Camera m_UMUICamera = null;
         [SerializeField] private EventSystem m_UMEventSystem = null;
 
-        private Dictionary<Type, Queue<UMUIPanel>> m_createdPanel;
+        private Dictionary<Type, UMUIPanel> m_createdPanel;
 
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
-            m_createdPanel = new Dictionary<Type, Queue<UMUIPanel>>();
+            m_createdPanel = new Dictionary<Type, UMUIPanel>();
             yield return null;
         }
 
@@ -29,8 +29,11 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 
             UMini.Resources.LoadAsync<GameObject>(panelPath, (result) =>
             {
-                GameObject panelGameObject = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
-                UMUtils.UI.FillParent(panelGameObject.GetComponent<RectTransform>());
+                GameObject panelGO = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
+                T panel = panelGO.GetComponent<T>();
+                m_createdPanel.Add(panel.GetType(), panel);
+                UMUtils.UI.FillParent(panelGO.GetComponent<RectTransform>());
+                completed?.Invoke(panel);
             });
         }
     }
