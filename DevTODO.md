@@ -6,7 +6,6 @@
 - [ ] 扩展AssetBundle资源加载方式
 - [ ] 查看ResourceRequest源码实现
 - [x] 增加Debug界面
-- [ ] ~~编写UI的打开与关闭,控制每种UI打开一个或者多个~~
 ---
 #### Asset模块
 - [x] 使用 Unity.Resources API 加载资源
@@ -26,4 +25,5 @@
 - [x] 当UI打开
 - [x] 当UI关闭
 - [x] 测视重复打开同一个界面
+- [ ] ~~编写UI的打开与关闭,控制每种UI打开一个或者多个~~
 ---
