@@ -1,7 +1,7 @@
 ﻿using System;
 using Object = UnityEngine.Object;
 
-namespace UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders
+namespace UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders
 {
     
     public interface IAssetLoader

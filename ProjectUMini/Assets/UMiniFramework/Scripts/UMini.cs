@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
-using UMiniFramework.Scripts.Modules.ResourcesModule;
-using UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders;
+using UMiniFramework.Scripts.Modules.AssetModule;
+using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Utils;
@@ -41,9 +41,9 @@ namespace UMiniFramework.Scripts
         /// <summary>
         /// 资源模块
         /// </summary>
-        public static UMResourcesModule Resources { get; private set; }
+        public static UMAssetModule Resources { get; private set; }
 
-        [SerializeField] private UMResourcesModule m_resourcesModule = null;
+        [SerializeField] private UMAssetModule m_resourcesModule = null;
 
         /// <summary>
         /// UI模块

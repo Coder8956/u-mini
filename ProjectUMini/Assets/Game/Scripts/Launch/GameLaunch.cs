@@ -1,7 +1,7 @@
 using System;
 using Game.Scripts.Const;
 using UMiniFramework.Scripts;
-using UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders;
+using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UnityEngine;
 using UnityEngine.UI;
 

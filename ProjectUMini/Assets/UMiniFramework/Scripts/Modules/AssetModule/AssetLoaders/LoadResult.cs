@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Scripts.Modules.ResourcesModule.AssetLoaders
+﻿namespace UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders
 {
     public class LoadResult<T> where T : UnityEngine.Object
     {
