@@ -5,19 +5,22 @@
 - [ ] 查看ResourceRequest源码实现
 - [x] 增加Debug界面
 - [ ] ~~编写UI的打开与关闭,控制每种UI打开一个或者多个~~
-#### Audio模块
-- [ ] 播放背景音乐
-- [ ] 播放音效
-#### Config模块
-- [ ] 生成配置文件
-- [ ] 读取配置文件
-#### Resources模块
+---
+#### Asset模块TODO
 - [x] 使用 Unity.Resources API 加载资源
 - [ ] 使用 Unity.AssetBundle API 加载资源
-#### Scene模块
+#### Audio模块TODO
+- [ ] 播放背景音乐
+- [ ] 播放音效
+#### Config模块TODO
+- [ ] 生成配置文件
+- [ ] 读取配置文件
+#### PersistentDataModule
+- [ ] 持久化游戏数据
+#### Scene模块TODO
 - [x] 同步加载场景
 - [ ] 异步加载场景
-#### UI模块
+#### UI模块TODO
 - [x] 当UI打开
 - [x] 当UI关闭
 - [x] 测视重复打开同一个界面

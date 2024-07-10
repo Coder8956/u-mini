@@ -6,6 +6,7 @@ using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.AssetModule;
 using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
+using UMiniFramework.Scripts.Modules.PersistentDataModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Utils;
@@ -30,6 +31,13 @@ namespace UMiniFramework.Scripts
         public static UMConfigModule Config { get; private set; }
 
         [SerializeField] private UMConfigModule m_configModule = null;
+
+        /// <summary>
+        /// 数据持久化模块
+        /// </summary>
+        public static UMPersistentDataModule PersiData { get; private set; }
+
+        [SerializeField] private UMPersistentDataModule m_persiData = null;
 
         /// <summary>
         /// 场景模块
@@ -92,6 +100,9 @@ namespace UMiniFramework.Scripts
 
             Config = m_configModule;
             m_moduleList.Add(Config);
+
+            PersiData = m_persiData;
+            m_moduleList.Add(PersiData);
 
             Resources = m_resourcesModule;
             m_moduleList.Add(Resources);
