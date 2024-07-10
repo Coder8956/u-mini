@@ -1,5 +1,4 @@
-﻿using System;
-using Game.Scripts.UI.Login;
+﻿using Game.Scripts.UI.Login;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
@@ -7,17 +6,21 @@ using UnityEngine.UI;
 
 namespace Game.Scripts.UI.Debug
 {
-    [UMUIPanelInfo("UI/Debug/DebugPanel")]
+    [UMUIPanelInfo("UI/Debug/DebugPanel", UMUILayer.TOP)]
     public class DebugPanel : UMUIPanel
     {
+        [SerializeField] private Button m_btnShowDebugFunc;
         [SerializeField] private Button m_btnOpenLogin;
-
-        [SerializeField] private Button m_btnClose;
+        [SerializeField] private RectTransform m_debugFuncRoot;
 
         public override void OnLoaded()
         {
+            m_btnShowDebugFunc.onClick.AddListener(() =>
+            {
+                m_debugFuncRoot.gameObject.SetActive(!m_debugFuncRoot.gameObject.activeSelf);
+            });
+
             m_btnOpenLogin.onClick.AddListener(() => { UMini.UI.Open<LoginPanel>(); });
-            m_btnClose.onClick.AddListener(() => { UMini.UI.Close<DebugPanel>(); });
         }
 
         public override void OnOpen()

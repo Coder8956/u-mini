@@ -15,6 +15,7 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         [SerializeField] private Camera m_UMUICamera = null;
         [SerializeField] private EventSystem m_UMEventSystem = null;
         [SerializeField] private RectTransform m_openedRoot;
+        [SerializeField] private RectTransform[] m_UILayerRoots;
         [SerializeField] private RectTransform m_closedRoot;
         private Dictionary<string, UMUIPanel> m_createdPanel;
 
@@ -26,39 +27,40 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 
         public void Open<T>(Action<T> completed = null) where T : UMUIPanel
         {
-            string panelPath = GetPanelPath<T>();
+            UMUIPanelInfo panelInfo = GetPanelInfo<T>();
             // UMUtils.Debug.Log($"panelPath:{panelPath}");
 
             T panel = null;
 
-            if (m_createdPanel.Keys.Contains(panelPath))
+            if (m_createdPanel.Keys.Contains(panelInfo.PanelPath))
             {
                 // 从缓存中获取 界面
-                panel = m_createdPanel[panelPath] as T;
-                OnPanelOpenHandler(panel, completed);
+                panel = m_createdPanel[panelInfo.PanelPath] as T;
+                OnPanelOpenHandler(panel, panelInfo, completed);
             }
             else
             {
                 // 加载界面
-                UMini.Resources.LoadAsync<GameObject>(panelPath, (result) =>
+                UMini.Resources.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
                 {
                     if (result.State)
                     {
                         GameObject panelGO = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
                         panel = panelGO.GetComponent<T>();
-                        m_createdPanel.Add(panelPath, panel);
+                        m_createdPanel.Add(panelInfo.PanelPath, panel);
                         panel.OnLoaded();
-                        OnPanelOpenHandler(panel, completed);
+                        OnPanelOpenHandler(panel, panelInfo, completed);
                     }
                     else
                     {
-                        UMUtils.Debug.Warning($"Load Panel Failed. Path:{panelPath}");
+                        UMUtils.Debug.Warning($"Load Panel Failed. Path:{panelInfo.PanelPath}");
                     }
                 });
             }
         }
 
-        private void OnPanelOpenHandler<T>(UMUIPanel panel, Action<T> completed = null) where T : UMUIPanel
+        private void OnPanelOpenHandler<T>(UMUIPanel panel, UMUIPanelInfo info, Action<T> completed = null)
+            where T : UMUIPanel
         {
             if (!panel.gameObject.activeSelf)
             {
@@ -66,7 +68,8 @@ namespace UMiniFramework.Scripts.Modules.UIModule
             }
 
             RectTransform panelRectTrans = panel.GetComponent<RectTransform>();
-            panelRectTrans.SetParent(m_openedRoot);
+            int uiLayer = (int) info.Layer;
+            panelRectTrans.SetParent(m_UILayerRoots[uiLayer]);
             UMUtils.UI.FillParent(panelRectTrans);
             panel.OnOpen();
             completed?.Invoke(panel as T);
@@ -74,20 +77,20 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 
         public void Close<T>()
         {
-            string panelPath = GetPanelPath<T>();
-            if (m_createdPanel.Keys.Contains(panelPath))
+            UMUIPanelInfo panelInfo = GetPanelInfo<T>();
+            if (m_createdPanel.Keys.Contains(panelInfo.PanelPath))
             {
-                UMUIPanel panel = m_createdPanel[panelPath];
+                UMUIPanel panel = m_createdPanel[panelInfo.PanelPath];
                 panel.gameObject.SetActive(false);
                 panel.OnClose();
                 panel.GetComponent<RectTransform>().SetParent(m_closedRoot);
             }
         }
 
-        private string GetPanelPath<T>()
+        private UMUIPanelInfo GetPanelInfo<T>()
         {
             UMUIPanelInfo panelInfo = Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelInfo)) as UMUIPanelInfo;
-            return panelInfo.PanelPath;
+            return panelInfo;
         }
     }
 }

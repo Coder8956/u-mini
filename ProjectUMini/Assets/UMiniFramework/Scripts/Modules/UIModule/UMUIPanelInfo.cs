@@ -7,9 +7,12 @@ namespace UMiniFramework.Scripts.Modules.UIModule
     {
         public readonly string PanelPath = null;
 
-        public UMUIPanelInfo(string panelPath)
+        public readonly UMUILayer Layer = UMUILayer.Middle;
+
+        public UMUIPanelInfo(string panelPath, UMUILayer layer = UMUILayer.Middle)
         {
             PanelPath = panelPath;
+            Layer = layer;
         }
     }
 }
