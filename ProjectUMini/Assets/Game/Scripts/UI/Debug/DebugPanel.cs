@@ -12,9 +12,17 @@ namespace Game.Scripts.UI.Debug
     {
         [SerializeField] private Button m_btnOpenLogin;
 
-        private void Start()
+        public override void OnLoaded()
         {
             m_btnOpenLogin.onClick.AddListener(() => { UMini.UI.Open<LoginPanel>(); });
+        }
+
+        public override void OnOpen()
+        {
+        }
+
+        public override void OnClose()
+        {
         }
     }
 }

@@ -2,8 +2,10 @@
 
 namespace UMiniFramework.Scripts.Modules.UIModule
 {
-    public class UMUIPanel : MonoBehaviour
+    public abstract class UMUIPanel : MonoBehaviour
     {
-        
+        public abstract void OnLoaded();
+        public abstract void OnOpen();
+        public abstract void OnClose();
     }
 }
