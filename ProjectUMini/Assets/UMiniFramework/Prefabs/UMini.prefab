@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4230027082298734887}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BottomLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -88,7 +88,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8797979831139858102}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: OpenedRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -189,7 +189,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 32
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -218,7 +218,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8238245058102309487}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: TopLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -256,7 +256,7 @@ GameObject:
   - component: {fileID: 3081149268281040074}
   - component: {fileID: 1052429880957642053}
   - component: {fileID: 3170809072411286923}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: UMUIRootCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -424,7 +424,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3536434410422227746}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: MiddleLayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -703,7 +703,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5357635522142672391}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: ClosedRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
