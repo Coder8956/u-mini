@@ -1,4 +1,6 @@
-﻿using UMiniFramework.Editor.Const;
+﻿using System;
+using UMiniFramework.Editor.Common;
+using UMiniFramework.Editor.Const;
 using UnityEditor;
 using UnityEngine;
 
@@ -6,31 +8,6 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
 {
     public class UMConfigWindow : EditorWindow
     {
-        /// <summary>
-        /// Excel 配置目录 文本常量
-        /// </summary>
-        private const string EXCEL_CONFIG_DIRECTORY = "Excel Config Directory: ";
-
-        /// <summary>
-        /// 选择目录 文本常量
-        /// </summary>
-        private const string SELECT_DIRECTORY = "Select Directory";
-
-        /// <summary>
-        /// Json文件输出目录 文本常量
-        /// </summary>
-        private const string JSON_FILES_OUTPUT_DIRECTORY = "Json Files Output: ";
-
-        /// <summary>
-        /// 配置脚本文件输出目录 文本常量
-        /// </summary>
-        private const string CONFIG_SCRIPTS_OUTPUT_DIRECTORY = "Config Scripts Output: ";
-
-        /// <summary>
-        /// 更新配置 文本常量
-        /// </summary>
-        private const string UPDATE_CONFIG = "Update Config";
-
         [MenuItem(UMEditorConst.UMEDITOR_WINDOWS_TITLE_ROOT + "/Config")]
         private static void ShowWindow()
         {
@@ -38,6 +15,19 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
             window.titleContent = new GUIContent("UMConfigWindow");
             window.Show();
             window.maxSize = new Vector2(window.maxSize.x, 100);
+        }
+
+        private string m_excelsDir = string.Empty;
+        private string m_jsonDir = string.Empty;
+        private string m_scriptsDir = string.Empty;
+        private string m_selectDir = string.Empty;
+
+        private void OnEnable()
+        {
+            // 初始化代码
+            m_excelsDir = GetDirVal(UMConfigWindowConst.KEY_EXCELS_DIR);
+            m_jsonDir = GetDirVal(UMConfigWindowConst.KEY_JSON_DIR);
+            m_scriptsDir = GetDirVal(UMConfigWindowConst.KEY_SCRIPTS_DIR);
         }
 
         private void OnGUI()
@@ -51,11 +41,18 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
         private void DrawExcelConfigDirectory()
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(EXCEL_CONFIG_DIRECTORY, EditorStyles.textField, GUILayout.Width(150));
-            EditorGUILayout.LabelField("", EditorStyles.textField);
-            if (GUILayout.Button(SELECT_DIRECTORY, GUILayout.Width(140)))
+            EditorGUILayout.LabelField(UMConfigWindowConst.EXCEL_CONFIG_DIRECTORY, EditorStyles.textField,
+                GUILayout.Width(150));
+            EditorGUILayout.LabelField(m_excelsDir, EditorStyles.textField);
+            if (GUILayout.Button(UMConfigWindowConst.SELECT_DIRECTORY, GUILayout.Width(140)))
             {
-                EditorUtility.OpenFolderPanel(EXCEL_CONFIG_DIRECTORY, "", "");
+                m_selectDir =
+                    EditorUtility.OpenFolderPanel(UMConfigWindowConst.EXCEL_CONFIG_DIRECTORY, m_excelsDir, "");
+                if (m_selectDir != String.Empty && m_selectDir != m_excelsDir)
+                {
+                    m_excelsDir = m_selectDir;
+                    SaveDirVal(UMConfigWindowConst.KEY_EXCELS_DIR, m_excelsDir);
+                }
             }
 
             EditorGUILayout.EndHorizontal();
@@ -64,11 +61,18 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
         private void DrawJsonFilesOutputDirectory()
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(JSON_FILES_OUTPUT_DIRECTORY, EditorStyles.textField, GUILayout.Width(150));
-            EditorGUILayout.LabelField("", EditorStyles.textField);
-            if (GUILayout.Button(SELECT_DIRECTORY, GUILayout.Width(140)))
+            EditorGUILayout.LabelField(UMConfigWindowConst.JSON_FILES_OUTPUT_DIRECTORY, EditorStyles.textField,
+                GUILayout.Width(150));
+            EditorGUILayout.LabelField(m_jsonDir, EditorStyles.textField);
+            if (GUILayout.Button(UMConfigWindowConst.SELECT_DIRECTORY, GUILayout.Width(140)))
             {
-                EditorUtility.OpenFolderPanel(JSON_FILES_OUTPUT_DIRECTORY, "", "");
+                m_selectDir =
+                    EditorUtility.OpenFolderPanel(UMConfigWindowConst.JSON_FILES_OUTPUT_DIRECTORY, m_jsonDir, "");
+                if (m_selectDir != String.Empty && m_selectDir != m_jsonDir)
+                {
+                    m_jsonDir = m_selectDir;
+                    SaveDirVal(UMConfigWindowConst.KEY_JSON_DIR, m_jsonDir);
+                }
             }
 
             EditorGUILayout.EndHorizontal();
@@ -77,11 +81,19 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
         private void DrawConfigScriptsOutputDirectory()
         {
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField(CONFIG_SCRIPTS_OUTPUT_DIRECTORY, EditorStyles.textField, GUILayout.Width(150));
-            EditorGUILayout.LabelField("", EditorStyles.textField);
-            if (GUILayout.Button(SELECT_DIRECTORY, GUILayout.Width(140)))
+            EditorGUILayout.LabelField(UMConfigWindowConst.CONFIG_SCRIPTS_OUTPUT_DIRECTORY, EditorStyles.textField,
+                GUILayout.Width(150));
+            EditorGUILayout.LabelField(m_scriptsDir, EditorStyles.textField);
+            if (GUILayout.Button(UMConfigWindowConst.SELECT_DIRECTORY, GUILayout.Width(140)))
             {
-                EditorUtility.OpenFolderPanel(CONFIG_SCRIPTS_OUTPUT_DIRECTORY, "", "");
+                m_selectDir =
+                    EditorUtility.OpenFolderPanel(UMConfigWindowConst.CONFIG_SCRIPTS_OUTPUT_DIRECTORY, m_scriptsDir,
+                        "");
+                if (m_selectDir != String.Empty && m_selectDir != m_scriptsDir)
+                {
+                    m_scriptsDir = m_selectDir;
+                    SaveDirVal(UMConfigWindowConst.KEY_SCRIPTS_DIR, m_scriptsDir);
+                }
             }
 
             EditorGUILayout.EndHorizontal();
@@ -90,11 +102,27 @@ namespace UMiniFramework.Editor.UMWindows.ConfigWindow
         private void DrawUpdateConfig()
         {
             EditorGUILayout.BeginHorizontal();
-            if (GUILayout.Button(UPDATE_CONFIG))
+            if (GUILayout.Button(UMConfigWindowConst.UPDATE_CONFIG))
             {
             }
 
             EditorGUILayout.EndHorizontal();
+        }
+
+        private string GetDirVal(string key)
+        {
+            string val = EditorPrefs.GetString(key, string.Empty);
+            if (val == String.Empty)
+            {
+                val = UMEditorUtils.GetProjectPath();
+            }
+
+            return val;
+        }
+
+        private void SaveDirVal(string key, string val)
+        {
+            EditorPrefs.SetString(key, val);
         }
     }
 }

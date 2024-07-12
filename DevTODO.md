@@ -14,7 +14,9 @@
 - [ ] 播放背景音乐
 - [ ] 播放音效
 #### Config模块
-- [ ] 生成配置文件
+- [ ] 开发 Unity Editor 窗口生成配置文件
+    - [ ] 设置配置相关的目录(Excels Json Scripts)
+    - [ ] 读取Excels配置文件
 - [ ] 读取配置文件
 #### PersistentDataModule
 - [ ] 持久化游戏数据
