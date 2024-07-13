@@ -4,7 +4,7 @@ namespace UMiniFramework.Scripts.Utils
 {
     public partial class UMUtils
     {
-        public static class Tool
+        public static class Common
         {
             public static T CreateGameObject<T>(string name, GameObject parent) where T : Component
             {
