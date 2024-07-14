@@ -14,8 +14,9 @@
 - [ ] 播放背景音乐
 - [ ] 播放音效
 #### Config模块
-- [ ] 开发 Unity Editor 窗口生成配置文件
-    - [ ] 设置配置相关的目录(Excels Json Scripts)
+- [ ] 开发 Config模块的 Inspector 面板
+- ~~[ ] 开发 Unity Editor 窗口生成配置文件~~
+    - [x] 设置配置相关的目录(Excels Json Scripts)
     - [ ] 读取Excels配置文件
 - [ ] 读取配置文件
 #### PersistentDataModule
