@@ -20,6 +20,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static string DataFolder;
         private const string ARR_SPLIT = ";";
         private static List<string> TableClassList = new List<string>();
+        private static string ScriptTip = "// UMiniFramework config automatically generated, please do not modify it";
 
         public static void UpdateConfig(string excelFolder, string scriptFolder, string dataFolder)
         {
@@ -80,6 +81,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 $"Create Config Module Partial Script", 1);
             CreateConfigModulePartial(TableClassList);
             EditorUtility.ClearProgressBar();
+            AssetDatabase.Refresh();
         }
 
         private static void CreateConfigModulePartial(List<string> tableClassNames)
@@ -87,11 +89,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             UMUtils.Debug.Log($"TableClassList.Count: {tableClassNames.Count}");
             // 生成 UMConfigModule Partial 脚本
             StringBuilder scriptTableString = new StringBuilder();
-            scriptTableString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
-
-            scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"");
+            scriptTableString.AppendLine($"{ScriptTip}");
             scriptTableString.AppendLine($"namespace UMiniFramework.Scripts.Modules.ConfigModule{{");
             scriptTableString.AppendLine($"public partial class UMConfigModule");
             scriptTableString.AppendLine("{");
@@ -161,8 +159,6 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                     }
                 }
             }
-
-            AssetDatabase.Refresh();
         }
 
         private static void CreateConfigJson(List<ConfigFieldInfo> fieldInfos, DataTable table, string excelPath)
@@ -295,7 +291,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             // 生成 Data 脚本
             string dataClassName = $"{CapitalizeFirstWord(excelName)}Data";
             StringBuilder scriptDataString = new StringBuilder();
-            scriptDataString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
+            scriptDataString.AppendLine($"{ScriptTip}");
             scriptDataString.AppendLine($"using Newtonsoft.Json;");
             scriptDataString.AppendLine($"");
             scriptDataString.AppendLine($"public class {dataClassName}");
@@ -327,7 +323,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             StringBuilder scriptTableString = new StringBuilder();
             string tableClassName = $"{CapitalizeFirstWord(excelName)}Table";
             TableClassList.Add(tableClassName);
-            scriptTableString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
+            scriptTableString.AppendLine($"{ScriptTip}");
 
             scriptTableString.AppendLine($"");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
