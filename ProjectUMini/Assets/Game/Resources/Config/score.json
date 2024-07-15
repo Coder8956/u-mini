@@ -1,0 +1,121 @@
+﻿[
+  {
+    "id": "level_11001",
+    "min": 1,
+    "average": 1.0356,
+    "lowest": true,
+    "max": 89
+  },
+  {
+    "id": "level_11002",
+    "min": 1,
+    "average": 1.0357,
+    "lowest": true,
+    "max": 90
+  },
+  {
+    "id": "level_11003",
+    "min": 1,
+    "average": 1.0358,
+    "lowest": true,
+    "max": 91
+  },
+  {
+    "id": "level_11004",
+    "min": 1,
+    "average": 1.0359,
+    "lowest": false,
+    "max": 92
+  },
+  {
+    "id": "level_11005",
+    "min": 1,
+    "average": 1.036,
+    "lowest": false,
+    "max": 93
+  },
+  {
+    "id": "level_11006",
+    "min": 1,
+    "average": 1.0361,
+    "lowest": false,
+    "max": 94
+  },
+  {
+    "id": "level_11007",
+    "min": 1,
+    "average": 1.0362,
+    "lowest": false,
+    "max": 95
+  },
+  {
+    "id": "level_11008",
+    "min": 1,
+    "average": 1.0363,
+    "lowest": false,
+    "max": 96
+  },
+  {
+    "id": "level_11009",
+    "min": 1,
+    "average": 1.0364,
+    "lowest": false,
+    "max": 97
+  },
+  {
+    "id": "level_11010",
+    "min": 1,
+    "average": 1.0365,
+    "lowest": false,
+    "max": 98
+  },
+  {
+    "id": "level_11011",
+    "min": 1,
+    "average": 1.0366,
+    "lowest": true,
+    "max": 99
+  },
+  {
+    "id": "level_11012",
+    "min": 1,
+    "average": 1.0367,
+    "lowest": true,
+    "max": 100
+  },
+  {
+    "id": "level_11013",
+    "min": 1,
+    "average": 1.0368,
+    "lowest": true,
+    "max": 101
+  },
+  {
+    "id": "level_11014",
+    "min": 1,
+    "average": 1.0369,
+    "lowest": true,
+    "max": 102
+  },
+  {
+    "id": "level_11015",
+    "min": 1,
+    "average": 1.037,
+    "lowest": true,
+    "max": 103
+  },
+  {
+    "id": "level_11016",
+    "min": 1,
+    "average": 1.0371,
+    "lowest": true,
+    "max": 104
+  },
+  {
+    "id": "level_11017",
+    "min": 1,
+    "average": 1.0372,
+    "lowest": true,
+    "max": 105
+  }
+]

@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
-using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
 using ExcelDataReader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UMiniFramework.Scripts.Utils;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -19,6 +19,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static string ExcelFolder;
         private static string ScriptFolder;
         private static string DataFolder;
+        private const string ARR_SPLIT = ";";
 
         public static void UpdateConfig(string excelFolder, string scriptFolder, string dataFolder)
         {
@@ -66,11 +67,15 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             UMUtils.Debug.Log($"config excel count: {excels.Count}");
-            return;
-            foreach (var excel in excels)
+            for (var i = 0; i < excels.Count; i++)
             {
-                CreateConfigByExcel(excel);
+                string currentExcel = excels[i];
+                EditorUtility.DisplayProgressBar("UMConfigModule Create Config By Excel",
+                    $"Current Excel: {currentExcel}", (i + 1) / excels.Count);
+                CreateConfigByExcel(currentExcel);
             }
+
+            EditorUtility.ClearProgressBar();
         }
 
         private static void CreateConfigByExcel(string excel)
@@ -117,22 +122,11 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 typeRow[i].ToString(), i));
                         }
 
-                        // foreach (var cfi in fieldInfos)
-                        // {
-                        //     Debug.Log(cfi.ToString());
-                        // }
-
                         //  根据excel生成Json                        
                         CreateConfigJson(fieldInfos, table, excel);
 
                         // 创建配置脚本
-                        CreateConfigScript(fieldInfos, excel);
-
-                        // for (int i = 0; i < table.Rows.Count; i++)
-                        // {
-                        //     Debug.Log(table.Rows[i][0].ToString());
-                        //     Debug.Log(table.Rows[i][1].ToString());
-                        // }
+                        // CreateConfigScript(fieldInfos, excel);
                     }
                 }
             }
@@ -172,16 +166,68 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                         switch (cfi.Type.ToLower())
                         {
                             case "string":
-                                dataItem[currentKey] = currentValue.ToString();
+                                dataItem[currentKey] = currentValue;
+                                break;
+                            case "string[]":
+                                JArray stringJArray = new JArray();
+                                string[] strArr = currentValue.Split(ARR_SPLIT);
+                                foreach (var s in strArr)
+                                {
+                                    if (UMUtils.String.IsValid(s))
+                                    {
+                                        stringJArray.Add(s);
+                                    }
+                                }
+
+                                dataItem[currentKey] = stringJArray;
                                 break;
                             case "float":
-                                dataItem[currentKey] = float.Parse(currentValue.ToString());
+                                dataItem[currentKey] = float.Parse(currentValue);
+                                break;
+                            case "float[]":
+                                JArray floatJArray = new JArray();
+                                string[] strFloatArr = currentValue.Split(ARR_SPLIT);
+                                foreach (var s in strFloatArr)
+                                {
+                                    if (UMUtils.String.IsValid(s))
+                                    {
+                                        floatJArray.Add(float.Parse(s));
+                                    }
+                                }
+
+                                dataItem[currentKey] = floatJArray;
                                 break;
                             case "int":
-                                dataItem[currentKey] = int.Parse(currentValue.ToString());
+                                dataItem[currentKey] = int.Parse(currentValue);
+                                break;
+                            case "int[]":
+                                JArray intJArray = new JArray();
+                                string[] strIntArr = currentValue.Split(ARR_SPLIT);
+                                foreach (var s in strIntArr)
+                                {
+                                    if (UMUtils.String.IsValid(s))
+                                    {
+                                        intJArray.Add(int.Parse(s));
+                                    }
+                                }
+
+                                dataItem[currentKey] = intJArray;
                                 break;
                             case "bool":
-                                dataItem[currentKey] = bool.Parse(currentValue.ToString());
+                                dataItem[currentKey] = bool.Parse(currentValue);
+                                break;
+                            case "bool[]":
+                                JArray boolJArray = new JArray();
+                                string[] strBoolArr = currentValue.Split(ARR_SPLIT);
+                                foreach (var s in strBoolArr)
+                                {
+                                    if (UMUtils.String.IsValid(s))
+                                    {
+                                        boolJArray.Add(bool.Parse(s));
+                                    }
+                                }
+
+                                dataItem[currentKey] = boolJArray;
                                 break;
                             default:
                                 UMUtils.Debug.Log(
@@ -197,7 +243,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 }
             }
 
-            string jsonConfigContent = JsonConvert.SerializeObject(configJson);
+            string jsonConfigContent = JsonConvert.SerializeObject(configJson, Formatting.Indented);
 
             jsonConfigContent = Regex.Unescape(jsonConfigContent);
 

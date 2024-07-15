@@ -1,0 +1,121 @@
+﻿[
+  {
+    "id": "bullet_18001",
+    "smin": 80,
+    "s_average": 9.856,
+    "s_lowest": true,
+    "s_Max": 859
+  },
+  {
+    "id": "bullet_18002",
+    "smin": 81,
+    "s_average": 9.857,
+    "s_lowest": true,
+    "s_Max": 860
+  },
+  {
+    "id": "bullet_18003",
+    "smin": 82,
+    "s_average": 9.858,
+    "s_lowest": true,
+    "s_Max": 861
+  },
+  {
+    "id": "bullet_18004",
+    "smin": 83,
+    "s_average": 9.859,
+    "s_lowest": false,
+    "s_Max": 862
+  },
+  {
+    "id": "bullet_18005",
+    "smin": 84,
+    "s_average": 9.86,
+    "s_lowest": false,
+    "s_Max": 863
+  },
+  {
+    "id": "bullet_18006",
+    "smin": 85,
+    "s_average": 9.861,
+    "s_lowest": false,
+    "s_Max": 864
+  },
+  {
+    "id": "bullet_18007",
+    "smin": 86,
+    "s_average": 9.862,
+    "s_lowest": true,
+    "s_Max": 865
+  },
+  {
+    "id": "bullet_18008",
+    "smin": 87,
+    "s_average": 9.863,
+    "s_lowest": true,
+    "s_Max": 866
+  },
+  {
+    "id": "bullet_18009",
+    "smin": 88,
+    "s_average": 9.864,
+    "s_lowest": true,
+    "s_Max": 867
+  },
+  {
+    "id": "bullet_18010",
+    "smin": 89,
+    "s_average": 9.865,
+    "s_lowest": false,
+    "s_Max": 868
+  },
+  {
+    "id": "bullet_18011",
+    "smin": 90,
+    "s_average": 9.866,
+    "s_lowest": false,
+    "s_Max": 869
+  },
+  {
+    "id": "bullet_18012",
+    "smin": 91,
+    "s_average": 9.867,
+    "s_lowest": false,
+    "s_Max": 870
+  },
+  {
+    "id": "bullet_18013",
+    "smin": 92,
+    "s_average": 9.868,
+    "s_lowest": false,
+    "s_Max": 871
+  },
+  {
+    "id": "bullet_18014",
+    "smin": 93,
+    "s_average": 9.869,
+    "s_lowest": false,
+    "s_Max": 872
+  },
+  {
+    "id": "bullet_18015",
+    "smin": 94,
+    "s_average": 9.87,
+    "s_lowest": true,
+    "s_Max": 873
+  },
+  {
+    "id": "bullet_18016",
+    "smin": 95,
+    "s_average": 9.871,
+    "s_lowest": true,
+    "s_Max": 874
+  },
+  {
+    "id": "bullet_18017",
+    "smin": 96,
+    "s_average": 9.872,
+    "s_lowest": true,
+    "s_Max": 875
+  }
+]

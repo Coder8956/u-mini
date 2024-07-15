@@ -1,0 +1,447 @@
+﻿[
+  {
+    "id": "monster_238001",
+    "name": [
+      "jlk",
+      "asd",
+      "wer"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      3
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.6
+    ]
+  },
+  {
+    "id": "monster_238002",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "qw"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      4
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.7
+    ]
+  },
+  {
+    "id": "monster_238003",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "dfd"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      5
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.8,
+      89.3
+    ]
+  },
+  {
+    "id": "monster_238004",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "xvc"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      6
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.9
+    ]
+  },
+  {
+    "id": "monster_238005",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "ghj"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      7
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.1
+    ]
+  },
+  {
+    "id": "monster_238006",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "bnm"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      8
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.11
+    ]
+  },
+  {
+    "id": "monster_238007",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "trt"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      9
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.12,
+      78.2
+    ]
+  },
+  {
+    "id": "monster_238008",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "uio"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      10
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.13
+    ]
+  },
+  {
+    "id": "monster_238009",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "dg"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      11
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.14
+    ]
+  },
+  {
+    "id": "monster_238010",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "asf"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      12
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.15
+    ]
+  },
+  {
+    "id": "monster_238011",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "gf"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      13
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.16,
+      78.4
+    ]
+  },
+  {
+    "id": "monster_238012",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "qe"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      14
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.17
+    ]
+  },
+  {
+    "id": "monster_238013",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "uio"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      15
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.18
+    ]
+  },
+  {
+    "id": "monster_238014",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "ghf"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      16
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.19,
+      98.3
+    ]
+  },
+  {
+    "id": "monster_238015",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "fgh"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      17
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.2
+    ]
+  },
+  {
+    "id": "monster_238016",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "xc"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      18
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.21
+    ]
+  },
+  {
+    "id": "monster_238017",
+    "name": [
+      "jlk",
+      "asd",
+      "wer",
+      "cxz"
+    ],
+    "weaponsSwitch": [
+      true,
+      false,
+      true,
+      false
+    ],
+    "initNum": [
+      8,
+      89,
+      12,
+      19
+    ],
+    "skillCD": [
+      78.569,
+      85.9,
+      12.22
+    ]
+  }
+]
