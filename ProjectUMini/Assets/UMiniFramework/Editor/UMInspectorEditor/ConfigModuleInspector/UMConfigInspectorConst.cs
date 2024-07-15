@@ -15,19 +15,19 @@
         public const string SELECT_EXCELS_DIRECTORY = "Select Excels Directory";
 
         /// <summary>
-        /// 选择Json Out目录 文本常量
+        /// 选择Data Out目录 文本常量
         /// </summary>
-        public const string SELECT_JSON_OUT_DIRECTORY = "Select Json Out Directory";
-        
+        public const string SELECT_DATA_OUT_DIRECTORY = "Select Data Out Directory";
+
         /// <summary>
         /// 选择Scripts Out目录 文本常量
         /// </summary>
         public const string SELECT_SCRIPTS_OUT_DIRECTORY = "Select Scripts Out Directory";
-        
+
         /// <summary>
-        /// Json文件输出目录 文本常量
+        /// Data文件输出目录 文本常量
         /// </summary>
-        public const string JSON_FILES_OUTPUT_DIRECTORY = "Json Files Output: ";
+        public const string DATA_FILES_OUTPUT_DIRECTORY = "Data Files Output: ";
 
         /// <summary>
         /// 配置脚本文件输出目录 文本常量
@@ -43,9 +43,9 @@
 
         #region EDITOR_PREFS_KEY
 
-        public const string KEY_EXCELS_DIR = "KEY_EXCELS_DIR";
-        public const string KEY_JSON_DIR = "KEY_JSON_DIR";
-        public const string KEY_SCRIPTS_DIR = "KEY_SCRIPTS_DIR";
+        public const string KEY_EXCELS_DIR = "UMKEY_EXCELS_DIR";
+        public const string KEY_DATA_DIR = "UMKEY_DATA_DIR";
+        public const string KEY_SCRIPTS_DIR = "UMKEY_SCRIPTS_DIR";
 
         #endregion
     }

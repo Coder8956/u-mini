@@ -11,7 +11,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
     public class UMConfigInspector : UnityEditor.Editor
     {
         private string m_excelsDir = string.Empty;
-        private string m_jsonDir = string.Empty;
+        private string m_dataDir = string.Empty;
         private string m_scriptsDir = string.Empty;
         private string m_selectDir = string.Empty;
 
@@ -19,7 +19,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         {
             // 初始化代码
             m_excelsDir = GetDirVal(UMConfigInspectorConst.KEY_EXCELS_DIR);
-            m_jsonDir = GetDirVal(UMConfigInspectorConst.KEY_JSON_DIR);
+            m_dataDir = GetDirVal(UMConfigInspectorConst.KEY_DATA_DIR);
             m_scriptsDir = GetDirVal(UMConfigInspectorConst.KEY_SCRIPTS_DIR);
         }
 
@@ -55,17 +55,17 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private void DrawJsonFilesOutputDirectory()
         {
             EditorGUILayout.BeginVertical("box");
-            EditorGUILayout.LabelField(UMConfigInspectorConst.JSON_FILES_OUTPUT_DIRECTORY, GUILayout.Width(150));
-            EditorGUILayout.LabelField(m_jsonDir, EditorStyles.textField);
+            EditorGUILayout.LabelField(UMConfigInspectorConst.DATA_FILES_OUTPUT_DIRECTORY, GUILayout.Width(150));
+            EditorGUILayout.LabelField(m_dataDir, EditorStyles.textField);
             EditorGUILayout.EndVertical();
-            if (GUILayout.Button(UMConfigInspectorConst.SELECT_JSON_OUT_DIRECTORY))
+            if (GUILayout.Button(UMConfigInspectorConst.SELECT_DATA_OUT_DIRECTORY))
             {
                 m_selectDir =
-                    EditorUtility.OpenFolderPanel(UMConfigInspectorConst.JSON_FILES_OUTPUT_DIRECTORY, m_jsonDir, "");
-                if (m_selectDir != String.Empty && m_selectDir != m_jsonDir)
+                    EditorUtility.OpenFolderPanel(UMConfigInspectorConst.DATA_FILES_OUTPUT_DIRECTORY, m_dataDir, "");
+                if (m_selectDir != String.Empty && m_selectDir != m_dataDir)
                 {
-                    m_jsonDir = m_selectDir;
-                    SaveDirVal(UMConfigInspectorConst.KEY_JSON_DIR, m_jsonDir);
+                    m_dataDir = m_selectDir;
+                    SaveDirVal(UMConfigInspectorConst.KEY_DATA_DIR, m_dataDir);
                 }
             }
         }
@@ -93,6 +93,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         {
             if (GUILayout.Button(UMConfigInspectorConst.UPDATE_CONFIG))
             {
+                // UMConfigHandler.Create();
             }
         }
 
