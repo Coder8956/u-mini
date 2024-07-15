@@ -93,22 +93,32 @@ namespace UMiniFramework.Scripts
             m_moduleList = new List<UMModule>();
 
             Audio = m_audioModule;
+            Audio.InitPriority = 0;
             m_moduleList.Add(Audio);
 
             Scene = m_sceneModule;
+            Scene.InitPriority = 0;
             m_moduleList.Add(Scene);
 
             Config = m_configModule;
+            Config.InitPriority = 1;
             m_moduleList.Add(Config);
 
             PersiData = m_persiData;
+            PersiData.InitPriority = 0;
             m_moduleList.Add(PersiData);
 
             Asset = m_resourcesModule;
+            Asset.InitPriority = 0;
             m_moduleList.Add(Asset);
 
             UI = m_UIModule;
+            UI.InitPriority = 0;
             m_moduleList.Add(UI);
+
+            m_moduleList.Sort((x, y) => { return x.InitPriority > y.InitPriority ? 1 : -1; });
+
+            Debug.Log(m_moduleList);
 
             StartCoroutine(InitModules());
         }
