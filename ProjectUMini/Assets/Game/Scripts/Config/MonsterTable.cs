@@ -1,13 +1,13 @@
 ﻿// UMiniFramework config automatically generated, please do not modify it
-
+using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Utils;
+using UMiniFramework.Scripts.Modules.ConfigModule;
 using UnityEngine;
 
-
-public class MonsterTable
+public class MonsterTable : UMConfigTable
 {
     /// <summary>
     /// 配置文件路径
@@ -34,7 +34,7 @@ public class MonsterTable
         return null;
     }
 
-    public void Init()
+    public override IEnumerator Init()
     {
         m_dataDicById = new Dictionary<string, MonsterData>();
         string jsonCofig = string.Empty;
@@ -46,11 +46,12 @@ public class MonsterTable
             foreach (var data in TableData){
                 m_dataDicById.Add(data.id, data);
             }
+        UMUtils.Debug.Log($"Init Config: {GetType().FullName} Succeed.");
         }
         else
         {
             UMUtils.Debug.Warning($"config load failed. path: {ConfigLoadPath}");
-        }
-        UMUtils.Debug.Log($"Init Config: {GetType().FullName}");});
+        }});
+        yield return new WaitUntil(() => { return TableData != null; });
     }
 }

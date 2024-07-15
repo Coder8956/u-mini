@@ -77,34 +77,8 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 CreateConfigByExcel(currentExcel);
             }
 
-            EditorUtility.DisplayProgressBar("UMConfigModule Create Config By Excel",
-                $"Create Config Module Partial Script", 1);
-            CreateConfigModulePartial(TableClassList);
             EditorUtility.ClearProgressBar();
             AssetDatabase.Refresh();
-        }
-
-        private static void CreateConfigModulePartial(List<string> tableClassNames)
-        {
-            UMUtils.Debug.Log($"TableClassList.Count: {tableClassNames.Count}");
-            // 生成 UMConfigModule Partial 脚本
-            StringBuilder scriptTableString = new StringBuilder();
-            scriptTableString.AppendLine($"{ScriptTip}");
-            scriptTableString.AppendLine($"namespace UMiniFramework.Scripts.Modules.ConfigModule{{");
-            scriptTableString.AppendLine($"public partial class UMConfigModule");
-            scriptTableString.AppendLine("{");
-
-
-            scriptTableString.AppendLine($" ");
-            scriptTableString.AppendLine("}}");
-
-            string moduleScriptSavePath = $"{ScriptFolder}/UMConfigModule.cs";
-            if (File.Exists(moduleScriptSavePath))
-            {
-                File.Delete(moduleScriptSavePath);
-            }
-
-            File.WriteAllText(moduleScriptSavePath, scriptTableString.ToString(), Encoding.UTF8);
         }
 
         private static void CreateConfigByExcel(string excel)
@@ -324,16 +298,15 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             string tableClassName = $"{CapitalizeFirstWord(excelName)}Table";
             TableClassList.Add(tableClassName);
             scriptTableString.AppendLine($"{ScriptTip}");
-
-            scriptTableString.AppendLine($"");
+            scriptTableString.AppendLine($"using System.Collections;");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
             scriptTableString.AppendLine($"using Newtonsoft.Json;");
             scriptTableString.AppendLine($"using UMiniFramework.Scripts;");
             scriptTableString.AppendLine($"using UMiniFramework.Scripts.Utils;");
+            scriptTableString.AppendLine($"using UMiniFramework.Scripts.Modules.ConfigModule;");
             scriptTableString.AppendLine($"using UnityEngine;");
             scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"public class {tableClassName}");
+            scriptTableString.AppendLine($"public class {tableClassName} : UMConfigTable");
             scriptTableString.AppendLine("{");
 
             string configPath = DataFolder.Replace($"{Application.dataPath}/", "");
@@ -394,7 +367,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"    public void Init()");
+            scriptTableString.AppendLine($"    public override IEnumerator Init()");
             scriptTableString.AppendLine($"    {{");
             if (isHasId)
             {
@@ -417,14 +390,15 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 scriptTableString.AppendLine($"            }}");
             }
 
-            // scriptTableString.AppendLine($"            UMUtils.Debug.Log($\"load config from path: {{ConfigPath}}. Content:\\n:{{jsonCofig}}\");");
+            scriptTableString.AppendLine(
+                $"        UMUtils.Debug.Log($\"Init Config: {{GetType().FullName}} Succeed.\");");
             scriptTableString.AppendLine($"        }}");
             scriptTableString.AppendLine($"        else");
             scriptTableString.AppendLine($"        {{");
             scriptTableString.AppendLine(
                 $"            UMUtils.Debug.Warning($\"config load failed. path: {{ConfigLoadPath}}\");");
-            scriptTableString.AppendLine($"        }}");
-            scriptTableString.AppendLine($"        UMUtils.Debug.Log($\"Init Config: {{GetType().FullName}}\");}});");
+            scriptTableString.AppendLine($"        }}}});");
+            scriptTableString.AppendLine($"        yield return new WaitUntil(() => {{ return TableData != null; }});");
             scriptTableString.AppendLine($"    }}");
             scriptTableString.AppendLine("}");
 

@@ -101,7 +101,7 @@ namespace UMiniFramework.Scripts
             m_moduleList.Add(Scene);
 
             Config = m_configModule;
-            Config.InitPriority = 1;
+            Config.InitPriority = 0;
             m_moduleList.Add(Config);
 
             PersiData = m_persiData;
@@ -118,7 +118,7 @@ namespace UMiniFramework.Scripts
 
             m_moduleList.Sort((x, y) => { return x.InitPriority > y.InitPriority ? 1 : -1; });
 
-            Debug.Log(m_moduleList);
+            // Debug.Log(m_moduleList);
 
             StartCoroutine(InitModules());
         }
@@ -143,6 +143,8 @@ namespace UMiniFramework.Scripts
         {
             public Action OnLaunchFinished { get; set; }
             public IAssetLoader ResourcesLoader { get; set; }
+
+            public List<UMConfigTable> ConfigTableList { get; set; }
         }
     }
 }
