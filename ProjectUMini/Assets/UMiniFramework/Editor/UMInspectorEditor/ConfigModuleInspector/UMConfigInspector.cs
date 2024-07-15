@@ -93,7 +93,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         {
             if (GUILayout.Button(UMConfigInspectorConst.UPDATE_CONFIG))
             {
-                // UMConfigHandler.Create();
+                UMConfigHandler.UpdateConfig(m_excelsDir, m_scriptsDir, m_dataDir);
             }
         }
 

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Text.RegularExpressions;
 using ExcelDataReader;
@@ -19,11 +20,17 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static string ScriptFolder;
         private static string DataFolder;
 
-        public static void Create(string excelFolder, string scriptFolder, string dataFolder)
+        public static void UpdateConfig(string excelFolder, string scriptFolder, string dataFolder)
         {
             ExcelFolder = excelFolder;
             ScriptFolder = scriptFolder;
             DataFolder = dataFolder;
+
+            if (!Directory.Exists(excelFolder))
+            {
+                EditorUtility.DisplayDialog("无效路径", scriptFolder, "确认");
+                return;
+            }
 
             if (!Directory.Exists(scriptFolder))
             {
@@ -59,7 +66,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             UMUtils.Debug.Log($"config excel count: {excels.Count}");
-
+            return;
             foreach (var excel in excels)
             {
                 CreateConfigByExcel(excel);
