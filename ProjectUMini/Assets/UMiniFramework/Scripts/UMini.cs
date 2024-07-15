@@ -49,7 +49,7 @@ namespace UMiniFramework.Scripts
         /// <summary>
         /// 资源模块
         /// </summary>
-        public static UMAssetModule Resources { get; private set; }
+        public static UMAssetModule Asset { get; private set; }
 
         [SerializeField] private UMAssetModule m_resourcesModule = null;
 
@@ -104,8 +104,8 @@ namespace UMiniFramework.Scripts
             PersiData = m_persiData;
             m_moduleList.Add(PersiData);
 
-            Resources = m_resourcesModule;
-            m_moduleList.Add(Resources);
+            Asset = m_resourcesModule;
+            m_moduleList.Add(Asset);
 
             UI = m_UIModule;
             m_moduleList.Add(UI);

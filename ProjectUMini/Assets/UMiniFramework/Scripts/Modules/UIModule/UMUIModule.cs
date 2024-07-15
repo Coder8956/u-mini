@@ -41,7 +41,7 @@ namespace UMiniFramework.Scripts.Modules.UIModule
             else
             {
                 // 加载界面
-                UMini.Resources.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
+                UMini.Asset.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
                 {
                     if (result.State)
                     {

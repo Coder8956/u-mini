@@ -8,7 +8,6 @@ using ExcelDataReader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using UMiniFramework.Scripts.Utils;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +19,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static string ScriptFolder;
         private static string DataFolder;
         private const string ARR_SPLIT = ";";
+        private static List<string> TableClassList = new List<string>();
 
         public static void UpdateConfig(string excelFolder, string scriptFolder, string dataFolder)
         {
@@ -67,15 +67,46 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             UMUtils.Debug.Log($"config excel count: {excels.Count}");
+            TableClassList.Clear();
             for (var i = 0; i < excels.Count; i++)
             {
                 string currentExcel = excels[i];
                 EditorUtility.DisplayProgressBar("UMConfigModule Create Config By Excel",
-                    $"Current Excel: {currentExcel}", (i + 1) / excels.Count);
+                    $"Current Excel: {currentExcel}", i / excels.Count);
                 CreateConfigByExcel(currentExcel);
             }
 
+            EditorUtility.DisplayProgressBar("UMConfigModule Create Config By Excel",
+                $"Create Config Module Partial Script", 1);
+            CreateConfigModulePartial(TableClassList);
             EditorUtility.ClearProgressBar();
+        }
+
+        private static void CreateConfigModulePartial(List<string> tableClassNames)
+        {
+            UMUtils.Debug.Log($"TableClassList.Count: {tableClassNames.Count}");
+            // 生成 UMConfigModule Partial 脚本
+            StringBuilder scriptTableString = new StringBuilder();
+            scriptTableString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
+
+            scriptTableString.AppendLine($"");
+            scriptTableString.AppendLine($"");
+            scriptTableString.AppendLine($"");
+            scriptTableString.AppendLine($"namespace UMiniFramework.Scripts.Modules.ConfigModule{{");
+            scriptTableString.AppendLine($"public partial class UMConfigModule");
+            scriptTableString.AppendLine("{");
+
+
+            scriptTableString.AppendLine($" ");
+            scriptTableString.AppendLine("}}");
+
+            string moduleScriptSavePath = $"{ScriptFolder}/UMConfigModule.cs";
+            if (File.Exists(moduleScriptSavePath))
+            {
+                File.Delete(moduleScriptSavePath);
+            }
+
+            File.WriteAllText(moduleScriptSavePath, scriptTableString.ToString(), Encoding.UTF8);
         }
 
         private static void CreateConfigByExcel(string excel)
@@ -126,7 +157,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                         CreateConfigJson(fieldInfos, table, excel);
 
                         // 创建配置脚本
-                        // CreateConfigScript(fieldInfos, excel);
+                        CreateConfigScript(fieldInfos, excel);
                     }
                 }
             }
@@ -264,7 +295,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             // 生成 Data 脚本
             string dataClassName = $"{CapitalizeFirstWord(excelName)}Data";
             StringBuilder scriptDataString = new StringBuilder();
-            scriptDataString.AppendLine($"// SMFramework config automatically generated, please do not modify it");
+            scriptDataString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
             scriptDataString.AppendLine($"using Newtonsoft.Json;");
             scriptDataString.AppendLine($"");
             scriptDataString.AppendLine($"public class {dataClassName}");
@@ -292,21 +323,21 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 
             File.WriteAllText(dataScriptSavePath, scriptDataString.ToString(), Encoding.UTF8);
 
-
             // 生成 Table 脚本
             StringBuilder scriptTableString = new StringBuilder();
             string tableClassName = $"{CapitalizeFirstWord(excelName)}Table";
-            scriptTableString.AppendLine($"// SMFramework config automatically generated, please do not modify it");
+            TableClassList.Add(tableClassName);
+            scriptTableString.AppendLine($"// UMiniFramework config automatically generated, please do not modify it");
 
             scriptTableString.AppendLine($"");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
-            scriptTableString.AppendLine($"using SMiniFramework.Interface;");
-            scriptTableString.AppendLine($"using SMiniFramework.Utils;");
             scriptTableString.AppendLine($"using Newtonsoft.Json;");
+            scriptTableString.AppendLine($"using UMiniFramework.Scripts;");
+            scriptTableString.AppendLine($"using UMiniFramework.Scripts.Utils;");
             scriptTableString.AppendLine($"using UnityEngine;");
             scriptTableString.AppendLine($"");
             scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"public class {tableClassName} : IConfigTable");
+            scriptTableString.AppendLine($"public class {tableClassName}");
             scriptTableString.AppendLine("{");
 
             string configPath = DataFolder.Replace($"{Application.dataPath}/", "");
@@ -336,10 +367,10 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 if (cfi.Field.ToLower() == "id")
                 {
                     string idType = cfi.Type.ToLower();
-                    if (idType != "int" && idType != "string")
+                    if (idType != "string")
                     {
                         UMUtils.Debug.Error(
-                            $"invalid id type in excel. path: {excelPath}; id type must use int or string");
+                            $"invalid id type in excel. path: {excelPath}; id type must use string");
                         return;
                     }
 
@@ -357,46 +388,13 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                     scriptTableString.AppendLine($"            return m_dataDicById[id];");
                     scriptTableString.AppendLine($"        else");
                     scriptTableString.AppendLine(
-                        $"            SMUtils.Log.Warn($\"{tableClassName} id does not exist {{id}}\");");
+                        $"            UMUtils.Debug.Warning($\"{tableClassName} id does not exist {{id}}\");");
                     scriptTableString.AppendLine($"        return null;");
                     scriptTableString.AppendLine($"    }}");
                     isHasId = true;
                 }
-                else
-                {
-                    string funcType = CapitalizeFirstWord(cfi.Field);
-                    string parName = cfi.Field;
 
-                    // 查找所有数据
-                    scriptTableString.AppendLine($"    /// <summary>");
-                    scriptTableString.AppendLine($"    /// 查询所有 {funcType} 属性值相等的数据");
-                    scriptTableString.AppendLine($"    /// </summary>");
-                    scriptTableString.AppendLine(
-                        $"    public List<{dataClassName}> GetDatasBy{funcType}({cfi.Type.ToLower()} {parName})");
-                    scriptTableString.AppendLine($"    {{");
-                    scriptTableString.AppendLine(
-                        $"        List<{dataClassName}> datas = TableData.FindAll((e) => {{ return e.{parName} == {parName}; }});");
-                    scriptTableString.AppendLine($"        if (datas == null || datas.Count == 0)");
-                    scriptTableString.AppendLine(
-                        $"            SMUtils.Log.Warn($\"{tableClassName} don't find any datas by {funcType}: {{{parName}}}\");");
-                    scriptTableString.AppendLine($"        return datas;");
-                    scriptTableString.AppendLine($"    }}");
-
-                    // 查找单个数据
-                    scriptTableString.AppendLine($"    /// <summary>");
-                    scriptTableString.AppendLine($"    /// 通过 {funcType} 属性查询数据");
-                    scriptTableString.AppendLine($"    /// </summary>");
-                    scriptTableString.AppendLine(
-                        $"    public {dataClassName} GetDataBy{funcType}({cfi.Type.ToLower()} {parName})");
-                    scriptTableString.AppendLine($"    {{");
-                    scriptTableString.AppendLine(
-                        $"        {dataClassName} data = TableData.Find((e) => {{ return e.{parName} == {parName}; }});");
-                    scriptTableString.AppendLine($"        if (data == null)");
-                    scriptTableString.AppendLine(
-                        $"            SMUtils.Log.Warn($\"{tableClassName} don't find any data by {funcType}: {{{parName}}}\");");
-                    scriptTableString.AppendLine($"        return data;");
-                    scriptTableString.AppendLine($"    }}");
-                }
+                break;
             }
 
             scriptTableString.AppendLine($"");
@@ -409,10 +407,10 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 
             scriptTableString.AppendLine($"        string jsonCofig = string.Empty;");
             scriptTableString.AppendLine(
-                $"        TextAsset configDataTA = SMUtils.Resources.Load<TextAsset>(ConfigLoadPath);");
-            scriptTableString.AppendLine($"        if (configDataTA != null)");
+                $"        UMini.Asset.LoadAsync<TextAsset>(ConfigLoadPath, (configData) =>{{");
+            scriptTableString.AppendLine($"        if (configData != null)");
             scriptTableString.AppendLine($"        {{");
-            scriptTableString.AppendLine($"            jsonCofig = configDataTA.text;");
+            scriptTableString.AppendLine($"            jsonCofig = configData.Resource.text;");
             scriptTableString.AppendLine(
                 $"            TableData = JsonConvert.DeserializeObject<List<{dataClassName}>>(jsonCofig);");
             // scriptTableString.AppendLine($"            TableData.AsReadOnly();");
@@ -423,14 +421,14 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 scriptTableString.AppendLine($"            }}");
             }
 
-            // scriptTableString.AppendLine($"            SMUtils.Log.Print($\"load config from path: {{ConfigPath}}. Content:\\n:{{jsonCofig}}\");");
+            // scriptTableString.AppendLine($"            UMUtils.Debug.Log($\"load config from path: {{ConfigPath}}. Content:\\n:{{jsonCofig}}\");");
             scriptTableString.AppendLine($"        }}");
             scriptTableString.AppendLine($"        else");
             scriptTableString.AppendLine($"        {{");
             scriptTableString.AppendLine(
-                $"            SMUtils.Log.Warn($\"config load failed. path: {{ConfigLoadPath}}\");");
+                $"            UMUtils.Debug.Warning($\"config load failed. path: {{ConfigLoadPath}}\");");
             scriptTableString.AppendLine($"        }}");
-            scriptTableString.AppendLine($"        SMUtils.Log.Print($\"Init Config: {{GetType().FullName}}\");");
+            scriptTableString.AppendLine($"        UMUtils.Debug.Log($\"Init Config: {{GetType().FullName}}\");}});");
             scriptTableString.AppendLine($"    }}");
             scriptTableString.AppendLine("}");
 
