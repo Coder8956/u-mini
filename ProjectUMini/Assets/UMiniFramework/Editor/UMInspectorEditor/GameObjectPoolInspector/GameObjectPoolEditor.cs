@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace UMiniFramework.Editor.UMEditor
+namespace UMiniFramework.Editor.UMInspectorEditor.GameObjectPoolInspector
 {
     [CustomEditor(typeof(GameObjectPool))]
     [CanEditMultipleObjects]

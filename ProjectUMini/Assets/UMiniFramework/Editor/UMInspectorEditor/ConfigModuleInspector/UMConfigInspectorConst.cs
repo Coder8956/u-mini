@@ -1,6 +1,6 @@
-﻿namespace UMiniFramework.Editor.UMWindows.ConfigWindow
+﻿namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 {
-    public static class UMConfigWindowConst
+    public static class UMConfigInspectorConst
     {
         #region CONST_EDITOR_UI
 
@@ -10,10 +10,20 @@
         public const string EXCEL_CONFIG_DIRECTORY = "Excel Config Directory: ";
 
         /// <summary>
-        /// 选择目录 文本常量
+        /// 选择Excels目录 文本常量
         /// </summary>
-        public const string SELECT_DIRECTORY = "Select Directory";
+        public const string SELECT_EXCELS_DIRECTORY = "Select Excels Directory";
 
+        /// <summary>
+        /// 选择Json Out目录 文本常量
+        /// </summary>
+        public const string SELECT_JSON_OUT_DIRECTORY = "Select Json Out Directory";
+        
+        /// <summary>
+        /// 选择Scripts Out目录 文本常量
+        /// </summary>
+        public const string SELECT_SCRIPTS_OUT_DIRECTORY = "Select Scripts Out Directory";
+        
         /// <summary>
         /// Json文件输出目录 文本常量
         /// </summary>

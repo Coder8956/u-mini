@@ -11,7 +11,7 @@ using UMiniFramework.Scripts.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace UMiniFramework.Editor.UMWindows.ConfigWindow
+namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 {
     public class UMConfigHandler
     {
