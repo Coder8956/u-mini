@@ -1,31 +1,31 @@
 ﻿// UMiniFramework config automatically generated, please do not modify it
 using Newtonsoft.Json;
 
-public class BulletData
+public class GameAudioData
 {
     /// <summary>
-    /// 子弹id
+    /// 音效id
     /// </summary>
     [JsonProperty] public readonly string id;
 
     /// <summary>
-    /// 最小射击范围
+    /// 路径
     /// </summary>
-    [JsonProperty] public readonly int smin;
+    [JsonProperty] public readonly string path;
 
     /// <summary>
-    /// 平均设计范围
+    /// 音量
     /// </summary>
-    [JsonProperty] public readonly float s_average;
+    [JsonProperty] public readonly float volume;
 
     /// <summary>
-    /// 超级武器
+    /// 是否是背景音乐
     /// </summary>
-    [JsonProperty] public readonly bool s_lowest;
+    [JsonProperty] public readonly bool isBGM;
 
     /// <summary>
-    /// 最大设计范围
+    /// 是否循环
     /// </summary>
-    [JsonProperty] public readonly int s_Max;
+    [JsonProperty] public readonly bool loop;
 
 }

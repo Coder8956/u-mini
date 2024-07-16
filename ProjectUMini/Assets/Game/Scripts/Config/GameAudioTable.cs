@@ -7,42 +7,42 @@ using UMiniFramework.Scripts.Utils;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UnityEngine;
 
-public class ScoreTable : UMConfigTable
+public class GameAudioTable : UMConfigTable
 {
     /// <summary>
     /// 配置文件路径
     /// </summary>
-    public const string ConfigAssetPath = "Game/Resources/Config/score";
-    public const string ConfigLoadPath = "Config/score";
+    public const string ConfigAssetPath = "Game/Resources/Config/gameAudio";
+    public const string ConfigLoadPath = "Config/gameAudio";
 
     /// <summary>
     /// 包含在配置表中的数据
     /// </summary>
-    public List<ScoreData> TableData { get; private set; }
+    public List<GameAudioData> TableData { get; private set; }
 
-    private Dictionary<string, ScoreData> m_dataDicById;
+    private Dictionary<string, GameAudioData> m_dataDicById;
 
     /// <summary>
     /// 通过 Id 属性查询数据
     /// </summary>
-    public ScoreData GetDataById(string id)
+    public GameAudioData GetDataById(string id)
     {
         if (m_dataDicById.ContainsKey(id))
             return m_dataDicById[id];
         else
-            UMUtils.Debug.Warning($"ScoreTable id does not exist {id}");
+            UMUtils.Debug.Warning($"GameAudioTable id does not exist {id}");
         return null;
     }
 
     public override IEnumerator Init()
     {
-        m_dataDicById = new Dictionary<string, ScoreData>();
+        m_dataDicById = new Dictionary<string, GameAudioData>();
         string jsonCofig = string.Empty;
         UMini.Asset.LoadAsync<TextAsset>(ConfigLoadPath, (configData) =>{
         if (configData != null)
         {
             jsonCofig = configData.Resource.text;
-            TableData = JsonConvert.DeserializeObject<List<ScoreData>>(jsonCofig);
+            TableData = JsonConvert.DeserializeObject<List<GameAudioData>>(jsonCofig);
             foreach (var data in TableData){
                 m_dataDicById.Add(data.id, data);
             }

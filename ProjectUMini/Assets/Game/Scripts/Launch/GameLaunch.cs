@@ -30,9 +30,8 @@ namespace Game.Scripts.Launch
             umConfig.IsPersiDataToConsole = true;
             umConfig.ConfigTableList = new List<UMConfigTable>()
             {
-                new BulletTable(),
-                new MonsterTable(),
-                new ScoreTable()
+                new LevelTable(),
+                new GameAudioTable()
             };
             UMini.Launch(umConfig);
         }
