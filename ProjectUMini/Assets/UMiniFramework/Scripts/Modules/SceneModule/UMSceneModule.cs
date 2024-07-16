@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Scripts.Modules.SceneModule
@@ -13,6 +14,12 @@ namespace UMiniFramework.Scripts.Modules.SceneModule
         public void Load(string scene)
         {
             SceneManager.LoadScene(scene);
+        }
+
+        public AsyncOperation LoadSceneAsync(string scene)
+        {
+            AsyncOperation ao = SceneManager.LoadSceneAsync(scene);
+            return ao;
         }
     }
 }
