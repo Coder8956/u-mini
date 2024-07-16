@@ -26,6 +26,7 @@ namespace Game.Scripts.UI.Game
 
         private void BackLogin()
         {
+            UMini.Audio.BGM.Stop();
             UMini.Scene.Load(SceneConst.LOGIN);
             UMini.UI.Close<GamePanel>();
         }

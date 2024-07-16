@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Const;
+using Game.Scripts.Gameplay;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
@@ -14,8 +15,8 @@ namespace Game.Scripts.UI.Login
 
         public override void OnLoaded()
         {
-            m_btnLevel_1.onClick.AddListener(EnterGame);
-            m_btnLevel_2.onClick.AddListener(EnterGame);
+            m_btnLevel_1.onClick.AddListener(OnClickLevel_1);
+            m_btnLevel_2.onClick.AddListener(OnClickLevel_2);
         }
 
         public override void OnOpen()
@@ -26,8 +27,19 @@ namespace Game.Scripts.UI.Login
         {
         }
 
-        private void EnterGame()
+        private void OnClickLevel_1()
         {
+            EnterGame("level_11001");
+        }
+
+        private void OnClickLevel_2()
+        {
+            EnterGame("level_11002");
+        }
+
+        private void EnterGame(string levelId)
+        {
+            GameMain.SetGameLevel(levelId);
             UMini.Scene.Load(SceneConst.GAME);
             UMini.UI.Close<LoginPanel>();
         }
