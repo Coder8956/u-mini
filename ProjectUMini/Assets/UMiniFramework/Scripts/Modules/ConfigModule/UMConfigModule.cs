@@ -16,8 +16,8 @@ namespace UMiniFramework.Scripts.Modules.ConfigModule
                 m_tableDic = new Dictionary<Type, UMConfigTable>();
                 foreach (var table in config.ConfigTableList)
                 {
-                    StartCoroutine(table.Init());
                     m_tableDic.Add(table.GetType(), table);
+                    yield return table.Init();
                 }
             }
 

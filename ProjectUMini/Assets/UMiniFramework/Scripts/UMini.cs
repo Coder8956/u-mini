@@ -51,7 +51,7 @@ namespace UMiniFramework.Scripts
         /// </summary>
         public static UMAssetModule Asset { get; private set; }
 
-        [SerializeField] private UMAssetModule m_resourcesModule = null;
+        [SerializeField] private UMAssetModule m_assetModule = null;
 
         /// <summary>
         /// UI模块
@@ -108,8 +108,8 @@ namespace UMiniFramework.Scripts
             PersiData.InitPriority = 0;
             m_moduleList.Add(PersiData);
 
-            Asset = m_resourcesModule;
-            Asset.InitPriority = 0;
+            Asset = m_assetModule;
+            Asset.InitPriority = -1;
             m_moduleList.Add(Asset);
 
             UI = m_UIModule;
