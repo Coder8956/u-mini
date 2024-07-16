@@ -31,14 +31,9 @@ namespace Game.Scripts.Gameplay
         void Update()
         {
             Vector3 mouseWorldPos = GetMousePosInWorld();
-// 计算方向
-            Vector3 direction = mouseWorldPos - transform.position;
-
-            // 计算旋转
-            Quaternion rotation = Quaternion.LookRotation(direction);
-            
-            // 设置旋转
-            m_cannon.transform.rotation = rotation;
+            mouseWorldPos.y = m_cannon.transform.position.y;
+            m_cannon.transform.LookAt(mouseWorldPos);
+            Debug.DrawLine(m_cannon.transform.position, mouseWorldPos);
             if (Input.GetMouseButtonDown(0))
             {
             }
