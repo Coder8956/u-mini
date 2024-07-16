@@ -45,6 +45,10 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
             m_audioSource.mute = val;
         }
 
+        public bool GetMute()
+        {
+            return m_audioSource.mute;
+        }
 
         private void SwitchClip(AudioClip clip, float volume, bool loop)
         {
