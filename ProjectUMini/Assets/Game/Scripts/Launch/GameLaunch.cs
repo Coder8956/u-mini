@@ -1,9 +1,9 @@
-using System;
 using System.Collections.Generic;
 using Game.Scripts.Const;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Scripts.Modules.ConfigModule;
+using UMiniFramework.Scripts.Modules.PersistentDataModule;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,7 +24,10 @@ namespace Game.Scripts.Launch
         {
             UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
             umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
-            umConfig.ResourcesLoader = new ResourcesLoader();
+            umConfig.AssetLoader = new ResourcesLoader();
+            umConfig.DataConverter = new DefaultDataConverter();
+            umConfig.DataPers = new DefaultDataPersistence();
+            umConfig.IsPersiDataToConsole = true;
             umConfig.ConfigTableList = new List<UMConfigTable>()
             {
                 new BulletTable(),
