@@ -14,7 +14,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         {
             get { return (m_gameObjectQue != null ? m_gameObjectQue.Count : 0); }
         }
-        
+
         private Queue<GameObject> m_gameObjectQue;
         private PoolConfig m_poolConfig;
         private int m_createdNum = 0;
@@ -62,6 +62,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
                 obj = Create();
             }
 
+            obj.SetActive(true);
             m_poolConfig.OnGet?.Invoke(obj);
             return obj;
         }
@@ -76,6 +77,8 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
 
             m_poolConfig.OnBack?.Invoke(obj);
             m_gameObjectQue.Enqueue(obj);
+            obj.SetActive(false);
+            obj.transform.SetParent(transform, false);
         }
 
         public static GameObjectPool CreatePool(PoolConfig poolConfig)

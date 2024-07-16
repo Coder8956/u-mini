@@ -19,6 +19,8 @@ namespace Game.Scripts.UI.Debug
         [SerializeField] private Button m_btnPlayBGM_2;
         [SerializeField] private Button m_btnStopBGM;
         [SerializeField] private Button m_btnBGMMute;
+        [SerializeField] private Button m_btnEffectAudio_1;
+        [SerializeField] private Button m_btnEffectAudio_2;
 
         #endregion
 
@@ -36,6 +38,8 @@ namespace Game.Scripts.UI.Debug
             m_btnPlayBGM_2.onClick.AddListener(PlayBGM_2);
             m_btnStopBGM.onClick.AddListener(StopBGM);
             m_btnBGMMute.onClick.AddListener(BGMMute);
+            m_btnEffectAudio_1.onClick.AddListener(EffectAudio_1);
+            m_btnEffectAudio_2.onClick.AddListener(EffectAudio_2);
         }
 
         private void PlayBGM_1()
@@ -56,6 +60,16 @@ namespace Game.Scripts.UI.Debug
         private void BGMMute()
         {
             UMini.Audio.BGM.SetMute(!UMini.Audio.BGM.GetMute());
+        }
+
+        private void EffectAudio_1()
+        {
+            UMini.Audio.Effect.Play("Audio/Effect/Effect_Cannon_001");
+        }
+
+        private void EffectAudio_2()
+        {
+            UMini.Audio.Effect.Play("Audio/Effect/Effect_Cannon_002");
         }
 
         private void OpenLoginPanel()
