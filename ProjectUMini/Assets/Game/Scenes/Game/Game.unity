@@ -151,6 +151,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c26f097a1056434fb3365b224c5592c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_gameCamera: {fileID: 563847046}
+  m_cannon: {fileID: 1813783339}
 --- !u!4 &334960106
 Transform:
   m_ObjectHideFlags: 0
@@ -502,6 +504,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b5f460c45a9ec496c9f4bacae7201c85, type: 3}
+--- !u!1 &1813783339 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4401176285332451718, guid: b5f460c45a9ec496c9f4bacae7201c85, type: 3}
+  m_PrefabInstance: {fileID: 1813783338}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
