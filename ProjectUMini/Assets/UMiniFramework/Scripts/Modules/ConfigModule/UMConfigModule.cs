@@ -9,6 +9,20 @@ namespace UMiniFramework.Scripts.Modules.ConfigModule
     {
         private Dictionary<Type, UMConfigTable> m_tableDic;
 
+        public T GetTable<T>() where T : UMConfigTable
+        {
+            Type key = typeof(T);
+            if (m_tableDic != null && m_tableDic.ContainsKey(key))
+            {
+                return m_tableDic[key] as T;
+            }
+            else
+            {
+                UMUtils.Debug.Warning($"Table {key.Name} does not exist.");
+                return null;
+            }
+        }
+
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
             if (config.ConfigTableList != null)

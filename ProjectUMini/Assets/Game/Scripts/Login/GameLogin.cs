@@ -17,6 +17,7 @@ namespace Game.Scripts.Login
             {
                 UMini.UI.Open<DebugPanel>();
             }
+
             UMini.UI.Open<LoginPanel>();
         }
 
