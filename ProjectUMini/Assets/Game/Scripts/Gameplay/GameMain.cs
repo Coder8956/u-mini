@@ -93,6 +93,12 @@ namespace Game.Scripts.Gameplay
             if (Input.GetMouseButtonDown(0))
             {
                 UMini.Audio.Effect.Play(m_gunSoundData.path);
+                GameObject bullet = m_bulletPool.Get();
+                bullet.transform.SetParent(null);
+                bullet.transform.position = m_gameCannon.ShootingPoint.transform.position;
+                bullet.transform.rotation = m_gameCannon.ShootingPoint.transform.rotation;
+                Rigidbody bulletRig = bullet.GetComponent<Rigidbody>();
+                bulletRig.AddForce(bullet.transform.forward * 1000, ForceMode.Force);
             }
         }
 
