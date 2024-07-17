@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_gameCamera: {fileID: 563847046}
+  m_bulletExplosion: {fileID: 7561061884431601059, guid: 6547da0ccee9ef24d8e21a2a7410ad0f, type: 3}
   m_cannonPlace: {fileID: 1875149224581222356}
 --- !u!4 &334960106
 Transform:

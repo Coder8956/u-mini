@@ -10,6 +10,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
     {
         private GameObjectPool m_soundPool;
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
+        private List<string> m_loadingClip;
 
         public override void Init()
         {
@@ -25,11 +26,13 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
             );
             m_soundPool = GameObjectPool.CreatePool(poolConfig);
             m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
+            m_loadingClip = new List<string>();
         }
 
         public void Play(string audioPath, float volume = 1)
         {
             AudioClip effectAC = null;
+            if (m_loadingClip.Contains(audioPath)) return;
             if (m_cachedAudioClipDic.ContainsKey(audioPath))
             {
                 effectAC = m_cachedAudioClipDic[audioPath];
@@ -37,10 +40,12 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
             }
             else
             {
+                m_loadingClip.Add(audioPath);
                 LoadAudioClip(audioPath, (clip) =>
                 {
                     effectAC = clip;
                     m_cachedAudioClipDic.Add(audioPath, effectAC);
+                    m_loadingClip.Remove(audioPath);
                     PlayEffect(effectAC, volume);
                 });
             }

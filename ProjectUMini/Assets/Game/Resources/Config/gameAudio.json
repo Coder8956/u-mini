@@ -26,5 +26,12 @@
     "volume": 1.0,
     "isBGM": false,
     "loop": false
+  },
+  {
+    "id": "effect_248013",
+    "path": "Audio/Effect/Bullet_Explosion_001",
+    "volume": 1.0,
+    "isBGM": false,
+    "loop": false
   }
 ]

@@ -10,6 +10,7 @@ namespace Game.Scripts.Gameplay
     public class GameMain : MonoBehaviour
     {
         [SerializeField] private Camera m_gameCamera;
+        [SerializeField] private GameObject m_bulletExplosion;
         [SerializeField] private GameObject m_cannonPlace;
         private GameCannon m_gameCannon;
         private Vector3 cannonLookPos, gunLookPos;
@@ -22,6 +23,7 @@ namespace Game.Scripts.Gameplay
         private BulletData m_bulletData;
 
         private GameObjectPool m_bulletPool;
+        private GameObjectPool m_bulletExplosionPool;
 
         public static void SetGameLevel(string levelId)
         {
@@ -61,6 +63,16 @@ namespace Game.Scripts.Gameplay
                     null
                 ));
             });
+
+            // 子弹爆炸特效
+            m_bulletExplosionPool = GameObjectPool.CreatePool(new GameObjectPool.PoolConfig(
+                "BulletExplosionPool",
+                null,
+                Instantiate(m_bulletExplosion),
+                10,
+                null,
+                null
+            ));
         }
 
         void Update()
@@ -94,14 +106,9 @@ namespace Game.Scripts.Gameplay
             {
                 UMini.Audio.Effect.Play(m_gunSoundData.path);
                 m_gameCannon.FireParticle.Play();
-                GameObject bullet = m_bulletPool.Get();
-                bullet.transform.SetParent(null);
-                bullet.transform.position = m_gameCannon.ShootingPoint.transform.position;
-                bullet.transform.rotation = m_gameCannon.ShootingPoint.transform.rotation;
-                GameBullet gameBullet = bullet.GetComponent<GameBullet>();
-                gameBullet.SetPoolReference(m_bulletPool);
-                gameBullet.PrepareShoot();
-                gameBullet.BulletRig.AddForce(bullet.transform.forward * 500, ForceMode.Force);
+                GameObject bulletGO = m_bulletPool.Get();
+                GameBullet bullet = bulletGO.GetComponent<GameBullet>();
+                bullet.Shooting(m_gameCannon.ShootingPoint, 500, m_bulletPool, m_bulletExplosionPool);
             }
         }
 
