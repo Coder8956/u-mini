@@ -98,7 +98,7 @@ namespace Game.Scripts.Gameplay
                 bullet.transform.position = m_gameCannon.ShootingPoint.transform.position;
                 bullet.transform.rotation = m_gameCannon.ShootingPoint.transform.rotation;
                 Rigidbody bulletRig = bullet.GetComponent<Rigidbody>();
-                bulletRig.AddForce(bullet.transform.forward * 1000, ForceMode.Force);
+                bulletRig.AddForce(bullet.transform.forward * 500, ForceMode.Force);
             }
         }
 
