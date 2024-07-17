@@ -1,10 +1,12 @@
 ﻿[
   {
     "id": "level_11001",
+    "gunSound": "effect_248011",
     "bgmId": "bgm_238001"
   },
   {
     "id": "level_11002",
+    "gunSound": "effect_248012",
     "bgmId": "bgm_238002"
   }
 ]

@@ -15,6 +15,7 @@ namespace Game.Scripts.Gameplay
         private static string GameLevelId = string.Empty;
         private LevelData m_levelData;
         private GameAudioData m_gameAudioData;
+        private GameAudioData m_gunSound;
 
         public static void SetGameLevel(string levelId)
         {
@@ -28,6 +29,7 @@ namespace Game.Scripts.Gameplay
             m_levelData = UMini.Config.GetTable<LevelTable>().GetDataById(GameLevelId);
             m_gameAudioData = UMini.Config.GetTable<GameAudioTable>().GetDataById(m_levelData.bgmId);
             UMini.Audio.BGM.Play(m_gameAudioData.path, m_gameAudioData.volume, m_gameAudioData.loop);
+            m_gunSound = UMini.Config.GetTable<GameAudioTable>().GetDataById(m_levelData.gunSound);
         }
 
         void Update()
@@ -46,6 +48,7 @@ namespace Game.Scripts.Gameplay
             Debug.DrawLine(m_gun.transform.position, gunLookPos);
             if (Input.GetMouseButtonDown(0))
             {
+                UMini.Audio.Effect.Play(m_gunSound.path);
             }
         }
 

@@ -9,6 +9,11 @@ public class LevelData
     [JsonProperty] public readonly string id;
 
     /// <summary>
+    /// 开炮特效音
+    /// </summary>
+    [JsonProperty] public readonly string gunSound;
+
+    /// <summary>
     /// 关卡BGM
     /// </summary>
     [JsonProperty] public readonly string bgmId;
