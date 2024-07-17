@@ -10,6 +10,8 @@ namespace Game.Scripts.Gameplay
     {
         [SerializeField] private Camera m_gameCamera;
         [SerializeField] private GameObject m_cannon;
+        [SerializeField] private GameObject m_gun;
+        private Vector3 cannonLookPos, gunLookPos;
         private static string GameLevelId = string.Empty;
         private LevelData m_levelData;
         private GameAudioData m_gameAudioData;
@@ -31,9 +33,17 @@ namespace Game.Scripts.Gameplay
         void Update()
         {
             Vector3 mouseWorldPos = GetMousePosInWorld();
-            mouseWorldPos.y = m_cannon.transform.position.y;
-            m_cannon.transform.LookAt(mouseWorldPos);
-            Debug.DrawLine(m_cannon.transform.position, mouseWorldPos);
+            cannonLookPos = gunLookPos = mouseWorldPos;
+
+            // 调整炮台的位置
+            cannonLookPos.y = m_cannon.transform.position.y;
+            m_cannon.transform.LookAt(cannonLookPos);
+            Debug.DrawLine(m_cannon.transform.position, cannonLookPos);
+
+            // 调整炮管的位置
+            gunLookPos.y = Mathf.Clamp(gunLookPos.y, 2.3f, float.MaxValue);
+            m_gun.transform.LookAt(gunLookPos);
+            Debug.DrawLine(m_gun.transform.position, gunLookPos);
             if (Input.GetMouseButtonDown(0))
             {
             }
@@ -42,7 +52,7 @@ namespace Game.Scripts.Gameplay
         private Vector3 GetMousePosInWorld()
         {
             Vector3 mousePosition = Input.mousePosition;
-            mousePosition.z = 10; // 深度，具体值根据你的场景而定
+            mousePosition.z = 3; // 深度，具体值根据你的场景而定
             Vector3 worldPosition = m_gameCamera.ScreenToWorldPoint(mousePosition);
             return worldPosition;
         }
