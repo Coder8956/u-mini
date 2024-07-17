@@ -1,21 +1,16 @@
 ﻿// UMiniFramework config automatically generated, please do not modify it
 using Newtonsoft.Json;
 
-public class LevelData
+public class BulletData
 {
     /// <summary>
-    /// 关卡id
+    /// 炮弹id
     /// </summary>
     [JsonProperty] public readonly string id;
 
     /// <summary>
-    /// 加农炮id
+    /// 炮弹预制体资源路径
     /// </summary>
-    [JsonProperty] public readonly string cannonId;
-
-    /// <summary>
-    /// 关卡BGM
-    /// </summary>
-    [JsonProperty] public readonly string bgmId;
+    [JsonProperty] public readonly string bulletPath;
 
 }

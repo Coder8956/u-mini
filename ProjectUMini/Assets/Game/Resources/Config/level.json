@@ -1,12 +1,12 @@
 ﻿[
   {
     "id": "level_11001",
-    "gunSound": "effect_248011",
+    "cannonId": "cannon_91001",
     "bgmId": "bgm_238001"
   },
   {
     "id": "level_11002",
-    "gunSound": "effect_248012",
+    "cannonId": "cannon_91002",
     "bgmId": "bgm_238002"
   }
 ]

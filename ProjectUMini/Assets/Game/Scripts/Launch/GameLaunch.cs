@@ -31,7 +31,9 @@ namespace Game.Scripts.Launch
             umConfig.ConfigTableList = new List<UMConfigTable>()
             {
                 new LevelTable(),
-                new GameAudioTable()
+                new GameAudioTable(),
+                new CannonTable(),
+                new BulletTable(),
             };
             UMini.Launch(umConfig);
         }

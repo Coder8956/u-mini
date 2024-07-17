@@ -1,0 +1,14 @@
+﻿[
+  {
+    "id": "cannon_91001",
+    "cannonPath": "Cannons/Cannon_001",
+    "bulletId": "bullet_89001",
+    "gunSound": "effect_248011"
+  },
+  {
+    "id": "cannon_91002",
+    "cannonPath": "Cannons/Cannon_002",
+    "bulletId": "bullet_89002",
+    "gunSound": "effect_248012"
+  }
+]
