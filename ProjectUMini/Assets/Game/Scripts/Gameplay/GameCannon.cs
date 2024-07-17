@@ -12,5 +12,9 @@ namespace Game.Scripts.Gameplay
 
         [SerializeField] private GameObject m_shootingPoint;
         public GameObject ShootingPoint => m_shootingPoint;
+
+        [SerializeField] private ParticleSystem m_fireParticle;
+
+        public ParticleSystem FireParticle => m_fireParticle;
     }
 }
