@@ -14,6 +14,12 @@ namespace Editor.CommonUtils.Scene
             {
                 OpenScene(LAUNCHER_SCENE);
             }
+            
+            [MenuItem("TFGUtils/Scene/OpenGameScene")]
+            private static void OpenGameScene()
+            {
+                OpenScene("Assets/Game/Scenes/Game/Game.unity");
+            }
 
             private static void OpenScene(string scenePath)
             {

@@ -2,11 +2,20 @@
   {
     "id": "level_11001",
     "cannonId": "cannon_91001",
+    "monsterId": [
+      "monster_3001",
+      "monster_3002"
+    ],
     "bgmId": "bgm_238001"
   },
   {
     "id": "level_11002",
     "cannonId": "cannon_91002",
+    "monsterId": [
+      "monster_3001",
+      "monster_3002",
+      "monster_3003"
+    ],
     "bgmId": "bgm_238002"
   }
 ]
