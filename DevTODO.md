@@ -12,8 +12,8 @@
 - [x] 使用 Unity.Resources API 加载资源
 - [ ] 使用 Unity.AssetBundle API 加载资源
 #### Audio模块
-- [ ] 播放背景音乐
-- [ ] 播放音效
+- [x] 播放背景音乐
+- [x] 播放音效
 #### Config模块
 - [x] 开发 Config模块的 Inspector 面板
 - ~~[ ] 开发 Unity Editor 窗口生成配置文件~~
