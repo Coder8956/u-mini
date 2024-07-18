@@ -1,4 +1,5 @@
 ﻿using System;
+using Game.Scripts.Gameplay.MonsterCreator;
 using Game.Scripts.UI.Game;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Pool.GameObjectPool;
@@ -12,6 +13,7 @@ namespace Game.Scripts.Gameplay
         [SerializeField] private Camera m_gameCamera;
         [SerializeField] private GameObject m_bulletExplosion;
         [SerializeField] private GameObject m_cannonPlace;
+        [SerializeField] private MonsterCreatorBase[] m_monsterCreators;
         private GameCannon m_gameCannon;
         private Vector3 cannonLookPos, gunLookPos;
         private static string GameLevelId = string.Empty;
