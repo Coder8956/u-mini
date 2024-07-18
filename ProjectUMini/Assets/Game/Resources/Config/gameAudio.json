@@ -9,7 +9,7 @@
   {
     "id": "bgm_238002",
     "path": "Audio/BGM/BGM_002",
-    "volume": 1.0,
+    "volume": 0.5,
     "isBGM": true,
     "loop": true
   },
@@ -23,7 +23,7 @@
   {
     "id": "effect_248012",
     "path": "Audio/Effect/Effect_Cannon_002",
-    "volume": 1.0,
+    "volume": 0.5,
     "isBGM": false,
     "loop": false
   },

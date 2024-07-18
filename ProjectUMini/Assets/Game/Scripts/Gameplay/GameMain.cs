@@ -124,7 +124,7 @@ namespace Game.Scripts.Gameplay
             if (m_gameCannon == null) return;
             if (Input.GetMouseButtonDown(0))
             {
-                UMini.Audio.Effect.Play(m_gunSoundData.path);
+                UMini.Audio.Effect.Play(m_gunSoundData.path, m_gunSoundData.volume);
                 m_gameCannon.FireParticle.Play();
                 GameObject bulletGO = m_bulletPool.Get();
                 GameBullet bullet = bulletGO.GetComponent<GameBullet>();
