@@ -13,5 +13,7 @@ namespace Game.Scripts.Gameplay.MonsterCreator
 
         public abstract void Create();
         public abstract void Stop();
+
+        public abstract int CreateType();
     }
 }

@@ -9,5 +9,10 @@
         public override void Stop()
         {
         }
+        
+        public override int CreateType()
+        {
+            return 1;
+        }
     }
 }
