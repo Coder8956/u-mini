@@ -23,7 +23,7 @@ namespace Game.Scripts.Gameplay.MonsterCreator
                 monster.transform.SetParent(null);
                 monster.transform.position = transform.position;
                 monster.transform.rotation = transform.rotation;
-                monster.Idle(m_monsterPool);
+                monster.OnBorn(m_monsterPool);
                 yield return m_createIntervalTime;
             }
         }

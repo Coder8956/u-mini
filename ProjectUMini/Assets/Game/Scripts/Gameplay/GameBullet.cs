@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using Game.Scripts.Gameplay.Monster;
 using UMiniFramework.Scripts.Pool.GameObjectPool;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
@@ -11,7 +12,7 @@ namespace Game.Scripts.Gameplay
         private GameObjectPool m_pool;
         private GameObjectPool m_bulletExplosionPool;
         private Coroutine m_backPoolCoro;
-        private WaitForSeconds m_wfsBackPool = new WaitForSeconds(2);
+        private WaitForSeconds m_wfsBackPool = new WaitForSeconds(2.5f);
         private Rigidbody m_rig;
 
         private void OnCollisionEnter(Collision other)
@@ -20,6 +21,11 @@ namespace Game.Scripts.Gameplay
             {
                 m_hitObject = other.gameObject;
                 Explosion();
+                MonsterBase monster = m_hitObject.gameObject.GetComponent<MonsterBase>();
+                if (monster != null)
+                {
+                    monster.OnDamage(1);
+                }
             }
         }
 

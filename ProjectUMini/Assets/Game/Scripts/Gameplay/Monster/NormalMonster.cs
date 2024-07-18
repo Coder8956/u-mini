@@ -1,30 +1,33 @@
-﻿using System;
-using UMiniFramework.Scripts.Pool.GameObjectPool;
-using UMiniFramework.Scripts.Utils;
+﻿using UMiniFramework.Scripts.Pool.GameObjectPool;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay.Monster
 {
     public class NormalMonster : MonsterBase
     {
-        private bool isWalk = false;
+        [SerializeField] private float m_speed = 2;
+        private bool m_isWalk = false;
         private Animator m_animator;
         private GameObjectPool m_pool;
+        private CapsuleCollider m_collider;
+
+        private float m_hp = 3;
 
         private void Awake()
         {
             m_animator = GetComponent<Animator>();
+            m_collider = GetComponent<CapsuleCollider>();
         }
 
         private void Walk()
         {
-            isWalk = true;
+            m_isWalk = true;
             m_animator.Play("Walk");
         }
 
         public void StopWalk()
         {
-            isWalk = false;
+            m_isWalk = false;
         }
 
         private void FixedUpdate()
@@ -34,8 +37,8 @@ namespace Game.Scripts.Gameplay.Monster
 
         private void Walking()
         {
-            if (!isWalk) return;
-            transform.Translate(Vector3.forward * 1 * Time.fixedDeltaTime);
+            if (!m_isWalk) return;
+            transform.Translate(Vector3.forward * m_speed * Time.fixedDeltaTime);
         }
 
         private void OnCollisionEnter(Collision other)
@@ -61,10 +64,38 @@ namespace Game.Scripts.Gameplay.Monster
             Walk();
         }
 
-        public void Idle(GameObjectPool monsterPool)
+        public override void OnBorn(GameObjectPool monsterPool)
         {
             m_pool = monsterPool;
+            m_hp = 3;
+            m_collider.enabled = true;
             Walk();
+        }
+
+
+        public override void OnDamage(float val)
+        {
+            m_hp -= val;
+            StopWalk();
+            if (m_hp <= 0)
+            {
+                m_collider.enabled = false;
+                m_animator.Play("Death");
+            }
+            else
+            {
+                m_animator.Play("Damage");
+            }
+        }
+
+        private void OnDamageOver()
+        {
+            Walk();
+        }
+
+        private void OnDeathOver()
+        {
+            m_pool.Back(gameObject);
         }
     }
 }
