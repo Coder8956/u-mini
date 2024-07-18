@@ -7,17 +7,8 @@ namespace Game.Scripts.Gameplay.Monster
     {
         [SerializeField] private float m_speed = 2;
         private bool m_isWalk = false;
-        private Animator m_animator;
         private GameObjectPool m_pool;
-        private CapsuleCollider m_collider;
-
         private float m_hp = 3;
-
-        private void Awake()
-        {
-            m_animator = GetComponent<Animator>();
-            m_collider = GetComponent<CapsuleCollider>();
-        }
 
         private void Walk()
         {

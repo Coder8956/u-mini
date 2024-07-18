@@ -120,6 +120,7 @@ namespace Game.Scripts.Gameplay
 
         private void CannonFire()
         {
+            if (UMini.UI.IsPointerOverUIObject()) return;
             if (m_gameCannon == null) return;
             if (Input.GetMouseButtonDown(0))
             {
