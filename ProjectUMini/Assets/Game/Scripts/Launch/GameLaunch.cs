@@ -34,6 +34,7 @@ namespace Game.Scripts.Launch
                 new GameAudioTable(),
                 new CannonTable(),
                 new BulletTable(),
+                new MonsterTable(),
             };
             UMini.Launch(umConfig);
         }
