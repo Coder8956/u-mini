@@ -8,11 +8,18 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
     public class GOPoolObject : MonoBehaviour
     {
         public int RelatedPoolHashTag { get; private set; }
+        public GameObjectPool RelatedPool { get; private set; }
 
-        public void SetRelatedPoolHashTag(int poolHashTag)
+        public void SetRelatedPool(int poolHashTag, GameObjectPool relatedPool)
         {
             RelatedPoolHashTag = poolHashTag;
+            RelatedPool = relatedPool;
             gameObject.name += $"<PoolTag({RelatedPoolHashTag})>";
+        }
+
+        public void BackPool()
+        {
+            RelatedPool.Back(gameObject);
         }
     }
 }

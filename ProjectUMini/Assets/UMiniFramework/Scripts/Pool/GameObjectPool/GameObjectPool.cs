@@ -44,7 +44,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
             GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
             m_createdNum++;
             GOPoolObject poolObject = newObject.AddComponent<GOPoolObject>();
-            poolObject.SetRelatedPoolHashTag(m_hashTag);
+            poolObject.SetRelatedPool(m_hashTag, this);
             string oldName = newObject.name;
             newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNum}");
             return newObject;
