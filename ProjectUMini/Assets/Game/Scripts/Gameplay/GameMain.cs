@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.Scripts.Gameplay.MonsterCreator;
 using Game.Scripts.UI.Game;
 using UMiniFramework.Scripts;
@@ -14,6 +15,7 @@ namespace Game.Scripts.Gameplay
         [SerializeField] private GameObject m_bulletExplosion;
         [SerializeField] private GameObject m_cannonPlace;
         [SerializeField] private MonsterCreatorBase[] m_monsterCreators;
+        private Dictionary<int, MonsterCreatorBase> m_monsterCreateDic;
         private GameCannon m_gameCannon;
         private Vector3 cannonLookPos, gunLookPos;
         private static string GameLevelId = string.Empty;
@@ -75,6 +77,21 @@ namespace Game.Scripts.Gameplay
                 null,
                 null
             ));
+
+            // 初始化怪物
+            m_monsterCreateDic = new Dictionary<int, MonsterCreatorBase>();
+            foreach (var mc in m_monsterCreators)
+            {
+                m_monsterCreateDic.Add(mc.CreateType(), mc);
+            }
+
+            string[] monsterIds = m_levelData.monsterId;
+            for (var i = 0; i < monsterIds.Length; i++)
+            {
+                MonsterData md = UMini.Config.GetTable<MonsterTable>().GetDataById(monsterIds[i]);
+                m_monsterCreateDic[md.type].Init(md);
+                m_monsterCreateDic[md.type].Create();
+            }
         }
 
         void Update()

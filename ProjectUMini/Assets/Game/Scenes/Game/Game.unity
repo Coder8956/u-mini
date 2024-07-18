@@ -520,7 +520,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 0.5
+  m_Intensity: 1
   m_Range: 20
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -9163,9 +9163,10 @@ GameObject:
   - component: {fileID: 4918788813692397207}
   - component: {fileID: 4918788813704072087}
   - component: {fileID: 4918788813704072088}
+  - component: {fileID: 4918788813704072089}
   m_Layer: 0
   m_Name: HumanHome
-  m_TagString: Untagged
+  m_TagString: HumanHome
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9210,8 +9211,35 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 4.66, y: 8.17, z: 6.95}
-  m_Center: {x: 1.98, y: -0.19, z: 3.53}
+  m_Size: {x: 4.66, y: 7.59, z: 6.95}
+  m_Center: {x: 1.98, y: 2.16, z: 3.53}
+--- !u!54 &4918788813704072089
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4918788813694597207}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!65 &5053722346491414553
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -13058,10 +13086,10 @@ SceneRoots:
   m_Roots:
   - {fileID: 563847047}
   - {fileID: 812339908}
+  - {fileID: 1736490586}
   - {fileID: 334960106}
   - {fileID: 3106289562815250811}
   - {fileID: 4587957706706685146}
   - {fileID: 1586582885}
   - {fileID: 1243085233}
   - {fileID: 894625265}
-  - {fileID: 1736490586}

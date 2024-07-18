@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using UMiniFramework.Scripts.Pool.GameObjectPool;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay
 {
     public class GameBullet : MonoBehaviour
     {
+        private GameObject m_hitObject;
         private GameObjectPool m_pool;
         private GameObjectPool m_bulletExplosionPool;
         private Coroutine m_backPoolCoro;
@@ -14,7 +16,11 @@ namespace Game.Scripts.Gameplay
 
         private void OnCollisionEnter(Collision other)
         {
-            Explosion();
+            if (m_hitObject == null)
+            {
+                m_hitObject = other.gameObject;
+                Explosion();
+            }
         }
 
         private void Explosion()
@@ -40,6 +46,7 @@ namespace Game.Scripts.Gameplay
             transform.rotation = shootingPoint.transform.rotation;
             m_rig.AddForce(transform.forward * force, ForceMode.Force);
             m_backPoolCoro = StartCoroutine(BackPoolIEnum());
+            m_hitObject = null;
         }
 
         private IEnumerator BackPoolIEnum()
