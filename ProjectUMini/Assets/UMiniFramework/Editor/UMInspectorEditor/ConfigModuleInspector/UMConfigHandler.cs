@@ -24,9 +24,22 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 
         public static void UpdateConfig(string excelFolder, string scriptFolder, string dataFolder)
         {
-            ExcelFolder = excelFolder;
-            ScriptFolder = scriptFolder;
-            DataFolder = dataFolder;
+            ExcelFolder = excelFolder.Replace("\\", "/");
+            ScriptFolder = scriptFolder.Replace("\\", "/");
+            DataFolder = dataFolder.Replace("\\", "/");
+
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.AppendLine("[ExcelFolder]:");
+            stringBuilder.AppendLine(ExcelFolder);
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("[ScriptFolder]:");
+            stringBuilder.AppendLine(ScriptFolder);
+            stringBuilder.AppendLine("");
+            stringBuilder.AppendLine("[DataFolder]:");
+            stringBuilder.AppendLine(DataFolder);
+
+            bool isOK = EditorUtility.DisplayDialog("Update Config", stringBuilder.ToString(), "Ok", "Cancel");
+            if (!isOK) return;
 
             if (!Directory.Exists(excelFolder))
             {
