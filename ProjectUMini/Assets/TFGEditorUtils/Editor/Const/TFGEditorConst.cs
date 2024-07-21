@@ -2,6 +2,6 @@
 {
     public class TFGEditorConst
     {
-        
+        public const string MenuRootTitle = "TFGUtils";
     }
 }
