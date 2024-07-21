@@ -1,4 +1,5 @@
-﻿using Game.Scripts.UI.Login;
+﻿using Game.Scripts.PersistentData;
+using Game.Scripts.UI.Login;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
@@ -24,6 +25,12 @@ namespace Game.Scripts.UI.Debug
 
         #endregion
 
+        #region UMPersistentData_DEBUG
+
+        [SerializeField] private Button m_btnUpdateUserData;
+
+        #endregion
+
         public override void OnLoaded()
         {
             m_debugFuncRoot.gameObject.SetActive(false);
@@ -40,6 +47,22 @@ namespace Game.Scripts.UI.Debug
             m_btnBGMMute.onClick.AddListener(BGMMute);
             m_btnEffectAudio_1.onClick.AddListener(EffectAudio_1);
             m_btnEffectAudio_2.onClick.AddListener(EffectAudio_2);
+
+            m_btnUpdateUserData.onClick.AddListener(UpdateUserData);
+        }
+
+        private void UpdateUserData()
+        {
+            UMini.PersiData.Write<UserData>().Age = 15;
+            UMini.PersiData.Write<UserData>().Name = "TestName_xxxx";
+
+            UMini.PersiData.Write<UIData>().Scale = 105;
+            UMini.PersiData.Write<UIData>().Name = "UIData465";
+
+            UMini.PersiData.Write<GameData>().Level = 315;
+            UMini.PersiData.Write<GameData>().Name = "GameData78979";
+
+            UMini.PersiData.SaveAllData();
         }
 
         private void PlayBGM_1()

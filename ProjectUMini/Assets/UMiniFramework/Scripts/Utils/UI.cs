@@ -4,7 +4,7 @@ namespace UMiniFramework.Scripts.Utils
 {
     public partial class UMUtils
     {
-        public class UI
+        public static class UI
         {
             /// <summary>
             /// 等比缩放填充目标矩形

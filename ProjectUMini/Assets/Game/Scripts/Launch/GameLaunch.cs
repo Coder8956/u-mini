@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Game.Scripts.Const;
+using Game.Scripts.PersistentData;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Scripts.Modules.ConfigModule;
@@ -35,6 +36,12 @@ namespace Game.Scripts.Launch
                 new CannonTable(),
                 new BulletTable(),
                 new MonsterTable(),
+            };
+            umConfig.PersistentData = new List<UMPersistentData>()
+            {
+                new UserData(),
+                new GameData(),
+                new UIData(),
             };
             UMini.Launch(umConfig);
         }

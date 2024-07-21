@@ -2,7 +2,7 @@
 {
     public partial class UMUtils
     {
-        public class String
+        public static class String
         {
             /// <summary>
             /// 检测是否是有效的字符串
