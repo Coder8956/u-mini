@@ -10,25 +10,19 @@ namespace TFGEditorUtils.Editor.Scene
         {
             private const string LAUNCHER_SCENE = "Assets/Game/Scenes/Game/Launch.unity";
 
-            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenLauncherScene")]
-            private static void OpenLauncherScene()
-            {
-                OpenScene(LAUNCHER_SCENE);
-            }
-
-            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenGameScene")]
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/Game")]
             private static void OpenGameScene()
             {
                 OpenScene("Assets/Game/Scenes/Game/Game.unity");
             }
 
-            private static void OpenScene(string scenePath)
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/Launch")]
+            private static void OpenLauncherScene()
             {
-                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
-                    EditorSceneManager.OpenScene(scenePath);
+                OpenScene(LAUNCHER_SCENE);
             }
 
-            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenLauncherSceneAndPlay")]
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/LaunchAndPlay")]
             private static void PlayGame()
             {
                 if (EditorApplication.isPlaying) return;
@@ -37,6 +31,12 @@ namespace TFGEditorUtils.Editor.Scene
 
                 if (!EditorApplication.isPlaying)
                     EditorApplication.isPlaying = true;
+            }
+
+            private static void OpenScene(string scenePath)
+            {
+                if (EditorSceneManager.SaveCurrentModifiedScenesIfUserWantsTo())
+                    EditorSceneManager.OpenScene(scenePath);
             }
         }
     }
