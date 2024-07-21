@@ -57,10 +57,10 @@ namespace Game.Scripts.UI.Debug
             UMini.PersiData.Write<UserData>().Name = "TestName_xxxx";
 
             UMini.PersiData.Write<UIData>().Scale = 105;
-            UMini.PersiData.Write<UIData>().Name = "UIData465";
+            UMini.PersiData.Write<UIData>().UIName = "UIData465";
 
             UMini.PersiData.Write<GameData>().Level = 315;
-            UMini.PersiData.Write<GameData>().Name = "GameData78979";
+            UMini.PersiData.Write<GameData>().GameName = "GameData78979";
 
             UMini.PersiData.SaveAllData();
         }

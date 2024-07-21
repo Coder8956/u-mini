@@ -5,7 +5,7 @@ namespace Game.Scripts.PersistentData
     public class UIData : UMPersistentData
     {
         public int Scale;
-        public string Name;
+        public string UIName;
         public bool Opened;
     }
 }

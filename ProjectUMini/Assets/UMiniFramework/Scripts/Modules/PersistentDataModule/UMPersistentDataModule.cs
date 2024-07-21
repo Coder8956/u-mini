@@ -19,7 +19,7 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 
         public override IEnumerator Init(UMini.UMiniConfig config)
         {
-            m_persiDataRootPath = String.Concat(Application.streamingAssetsPath, "/UMPersiData");
+            m_persiDataRootPath = UMPersistentDataRootDir.GetRootDir();
             m_persistentDataDic = new Dictionary<string, UMPersistentData>();
             m_isPersiDataToConsole = config.IsPersiDataToConsole;
 
