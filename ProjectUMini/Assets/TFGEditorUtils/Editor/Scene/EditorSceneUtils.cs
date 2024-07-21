@@ -1,21 +1,22 @@
-﻿using UnityEditor;
+﻿using TFGEditorUtils.Editor.Const;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace Editor.CommonUtils.Scene
+namespace TFGEditorUtils.Editor.Scene
 {
     public class EditorSceneUtils
     {
-        public class SceneExtend
+        public class GotoScene
         {
             private const string LAUNCHER_SCENE = "Assets/Game/Scenes/Game/Launch.unity";
 
-            [MenuItem("TFGUtils/Scene/OpenLauncherScene")]
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenLauncherScene")]
             private static void OpenLauncherScene()
             {
                 OpenScene(LAUNCHER_SCENE);
             }
-            
-            [MenuItem("TFGUtils/Scene/OpenGameScene")]
+
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenGameScene")]
             private static void OpenGameScene()
             {
                 OpenScene("Assets/Game/Scenes/Game/Game.unity");
@@ -27,7 +28,7 @@ namespace Editor.CommonUtils.Scene
                     EditorSceneManager.OpenScene(scenePath);
             }
 
-            [MenuItem("TFGUtils/Scene/OpenLauncherSceneAndPlay")]
+            [MenuItem(TFGEditorConst.MenuRootTitle + "/Scene/OpenLauncherSceneAndPlay")]
             private static void PlayGame()
             {
                 if (EditorApplication.isPlaying) return;
