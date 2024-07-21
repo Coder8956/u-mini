@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 {
-    public class DefaultDataConverter : IDataConverter
+    public class UMDefaultDataConverter : IDataConverter
     {
         public T Decoder<T>(string val)
         {

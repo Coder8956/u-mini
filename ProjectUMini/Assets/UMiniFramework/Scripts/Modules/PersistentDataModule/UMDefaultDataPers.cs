@@ -2,7 +2,7 @@
 
 namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 {
-    public class DefaultDataPersistence : IDataPersistenceHandler
+    public class UMDefaultDataPers : IDataPersistenceHandler
     {
         public string Read(string key, string defaultVal)
         {
