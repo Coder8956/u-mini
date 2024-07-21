@@ -6,7 +6,8 @@
 - [ ] 扩展AssetBundle资源加载方式
 - [ ] 查看ResourceRequest源码实现
 - [x] 增加Debug界面
-- [ ] 编写框架使用手册
+- [x] 编写框架使用手册
+- [ ] 处理数据持久化加密
 ---
 #### Asset模块
 - [x] 使用 Unity.Resources API 加载资源
