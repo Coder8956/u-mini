@@ -9,20 +9,16 @@
     - AssetLoader
         - 设置资源加载器
         - 框架内置加载器:UMResourcesLoader
-    - ConfigTableList
-        - 设置在运行时需要读取的的配置表
-    - DataConverter
-        - 设置持久化数据转换器
-        - 框架内置转换器:UMDefaultDataConverter
-    - DataPers
-        - 设置持久化数据处理器
-        - 框架内置处理器:UMDefaultDataPers
     - IsPersiDataToConsole
         - 设置是否在控制台打印持久化数据的信息
         - bool值:true/false
     - IsLog
         - 是否在控制台输出UMini相关的log
         - bool值:true/false
+    - ConfigTableList
+        - 设置在运行时需要读取的的配置表
+    - PersistentData
+        - 设置需要持久化的数据
 ```
 示例代码:
 UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
@@ -33,12 +29,6 @@ umConfig.OnLaunchFinished = () => {
 
 // 使用框架内置的资源加载器
 umConfig.AssetLoader = new UMResourcesLoader();
-
-// 使用框架内置的数据转换器
-umConfig.DataConverter = new UMDefaultDataConverter();
-
-// 使用框架内置的数据处理器
-umConfig.DataPers = new UMDefaultDataPers();
 
 // 在控制台打印数据log
 umConfig.IsPersiDataToConsole = true;
@@ -56,20 +46,72 @@ umConfig.ConfigTableList = new List<UMConfigTable>()
                 new MonsterTable(),
             };
 
+// 设置需要持久化的数据
+umConfig.PersistentData = new List<UMPersistentData>()
+            {
+                new UserData(),
+                new GameData(),
+                new UIData(),
+            };
+
 // 启动框架
 UMini.Launch(umConfig);
 ```
 # Asset模块
-- UMini.Asset.LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted)
+- UMini.Asset.LoadAsync`<T>`(string path, Action<LoadResult`<T>`> onCompleted)
     - 异步加载资源
         - 参数path: 资源路径
         - 参数onCompleted: 资源加载成功后的回调
 # Audio模块
-- 使用方法待完善
+## 特效音乐
+- UMini.Audio.Effect.Play(string audioPath, float volume = 1)
+    - 播放特效音
+    - 参数audioPath: 音频路径
+    - 参数volume: 音量
+- UMini.Audio.Effect.GetMute()
+    - 获取特效音静音状态
+- UMini.Audio.Effect.SetMute(bool val)
+    - 设置特效音静音状态
+## 背景音乐
+- UMini.Audio.BGM.PlayPlay(string audioPath, float volume = 1, bool loop = true)
+    - 播放背景音乐
+    - 参数audioPath: 音频路径
+    - 参数volume: 音量
+    - 参数loop: 是否循环
+- UMini.Audio.BGM.Stop()
+    - 停止播放背景音乐
+- UMini.Audio.BGM.GetMute()
+    - 获取背景音乐静音状态
+- UMini.Audio.BGM.SetMute(bool val)
+    - 设置背景音乐静音状态
 # Config模块
-- 使用方法待完善
+- UMini.Config.GetTable`<T>`()
+    - 获取配置表数据
+    - 需要获取的数据必须已经在框架启动时进行了注册
 # PersistentData模块
-- 使用方法待完善
+- 编写需要持久化的类
+    ```
+    示例代码:
+    public class UserData : UMPersistentData
+    {
+        public int Age;
+        public string Name;
+        public bool Sex;
+    }
+    代码解释:
+    - 持久化数据类必须继承 UMPersistentData
+    - 需要持久化的字段访问权限设置为 public
+        - 或者参考 NewtonsoftJson 序列化
+        - 数据序列化最终用的是 NewtonsoftJson 提供的 API
+    ```
+- UMini.PersiData.Query`<T>`()
+    - 查询数据
+- UMini.PersiData.Save`<T>`()
+    - 保存数据
+- UMini.PersiData.ResetDefault`<T>`()
+    - 重置数据为默认值
+- UMini.PersiData.SaveAllData()
+    - 保存所有数据
 # Scene模块
 - UMini.Scene.Load(string scene)
     - 同步加载场景
@@ -103,10 +145,10 @@ UMini.Launch(umConfig);
     - [UMUIPanelInfo("填写预制体路径", 设置UI在哪一层打开)]
     - 窗口类必须继承 UMUIPanel
     ```
-- UMini.Scene.Open<T>(Action<T> completed = null)
+- UMini.Scene.Open`<T>`(Action`<T>` completed = null)
     - 打开UI
         - 参数T: 窗口类
         - 参数completed: 窗口打开的回调
-- UMini.Scene.Close<T>()
+- UMini.Scene.Close`<T>`()
     - 关闭UI
         - 参数T: 窗口类

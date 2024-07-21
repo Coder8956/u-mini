@@ -5,7 +5,6 @@ using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.PersistentDataModule;
-using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 

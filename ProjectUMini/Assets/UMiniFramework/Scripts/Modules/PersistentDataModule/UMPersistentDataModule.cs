@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
-using Game.Scripts.PersistentData;
 using Newtonsoft.Json;
-using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Utils;
 using UnityEditor;
-using UnityEngine;
-using Object = System.Object;
 
 namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 {
@@ -81,7 +76,12 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             return (m_isPersiDataToConsole);
         }
 
-        public T Write<T>() where T : UMPersistentData, new()
+        /// <summary>
+        /// 查询数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Query<T>() where T : UMPersistentData, new()
         {
             string key = GetDataKey<T>();
             if (m_persistentDataDic.ContainsKey(key))
@@ -95,6 +95,10 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             }
         }
 
+        /// <summary>
+        /// 保存数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void Save<T>() where T : UMPersistentData, new()
         {
             string key = GetDataKey<T>();
@@ -119,6 +123,10 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 #endif
         }
 
+        /// <summary>
+        /// 重置数据
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void ResetDefault<T>() where T : UMPersistentData, new()
         {
             string key = GetDataKey<T>();
@@ -132,6 +140,9 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             }
         }
 
+        /// <summary>
+        /// 保存所有数据
+        /// </summary>
         public void SaveAllData()
         {
             foreach (var kv in m_persistentDataDic)

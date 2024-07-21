@@ -11,6 +11,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
         private GameObjectPool m_soundPool;
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
         private List<string> m_loadingClip;
+        private bool m_isMute = false;
 
         public override void Init()
         {
@@ -51,6 +52,16 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
             }
         }
 
+        public void SetMute(bool val)
+        {
+            m_isMute = val;
+        }
+
+        public bool GetMute()
+        {
+            return m_isMute;
+        }
+
         private void PlayEffect(AudioClip ac, float volume)
         {
             GameObject audioEffect = m_soundPool.Get();
@@ -58,6 +69,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
             AudioSource effectAS = audioEffect.GetComponent<AudioSource>();
             effectAS.clip = ac;
             effectAS.volume = volume;
+            effectAS.mute = m_isMute;
             effectAS.Play();
             StartCoroutine(WaitEffectPlayOver(effectAS));
         }

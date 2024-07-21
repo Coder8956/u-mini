@@ -53,14 +53,14 @@ namespace Game.Scripts.UI.Debug
 
         private void UpdateUserData()
         {
-            UMini.PersiData.Write<UserData>().Age = 15;
-            UMini.PersiData.Write<UserData>().Name = "TestName_xxxx";
+            UMini.PersiData.Query<UserData>().Age = 15;
+            UMini.PersiData.Query<UserData>().Name = "TestName_xxxx";
 
-            UMini.PersiData.Write<UIData>().Scale = 105;
-            UMini.PersiData.Write<UIData>().UIName = "UIData465";
+            UMini.PersiData.Query<UIData>().Scale = 105;
+            UMini.PersiData.Query<UIData>().UIName = "UIData465";
 
-            UMini.PersiData.Write<GameData>().Level = 315;
-            UMini.PersiData.Write<GameData>().GameName = "GameData78979";
+            UMini.PersiData.Query<GameData>().Level = 315;
+            UMini.PersiData.Query<GameData>().GameName = "GameData78979";
 
             UMini.PersiData.SaveAllData();
         }
