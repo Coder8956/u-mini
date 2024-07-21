@@ -158,16 +158,6 @@ namespace UMiniFramework.Scripts
             public List<UMConfigTable> ConfigTableList { get; set; }
 
             /// <summary>
-            /// 持久化数据转换
-            /// </summary>
-            public IDataConverter DataConverter { get; set; }
-
-            /// <summary>
-            /// 数据持久化
-            /// </summary>
-            public IDataPersistenceHandler DataPers { get; set; }
-
-            /// <summary>
             /// 是否在控制台显示持久化数据
             /// </summary>
             public bool IsPersiDataToConsole { get; set; }

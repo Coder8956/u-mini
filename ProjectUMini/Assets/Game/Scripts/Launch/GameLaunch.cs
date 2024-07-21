@@ -26,8 +26,6 @@ namespace Game.Scripts.Launch
             UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
             umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
             umConfig.AssetLoader = new UMResourcesLoader();
-            umConfig.DataConverter = new UMDefaultDataConverter();
-            umConfig.DataPers = new UMDefaultDataPers();
             umConfig.IsPersiDataToConsole = true;
             umConfig.IsLog = true;
             umConfig.ConfigTableList = new List<UMConfigTable>()

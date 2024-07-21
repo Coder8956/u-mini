@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.AudioModule
 {
-    public abstract class BaseAudio : MonoBehaviour
+    public abstract class UMAudio : MonoBehaviour
     {
         public abstract void Init();
 
