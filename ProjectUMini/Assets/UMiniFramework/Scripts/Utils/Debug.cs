@@ -7,6 +7,11 @@
             private const string DEBUG_TAG = "[UM_DEBUG]";
             private static bool Enable = true;
 
+            public static void PrintLog(bool val)
+            {
+                Enable = val;
+            }
+
             public static void Log(object msg)
             {
                 if (!Enable) return;

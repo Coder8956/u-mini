@@ -29,6 +29,7 @@ namespace Game.Scripts.Launch
             umConfig.DataConverter = new UMDefaultDataConverter();
             umConfig.DataPers = new UMDefaultDataPers();
             umConfig.IsPersiDataToConsole = true;
+            umConfig.IsLog = true;
             umConfig.ConfigTableList = new List<UMConfigTable>()
             {
                 new LevelTable(),

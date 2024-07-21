@@ -20,6 +20,9 @@
     - IsPersiDataToConsole
         - 设置是否在控制台打印持久化数据的信息
         - bool值:true/false
+    - IsLog
+        - 是否在控制台输出UMini相关的log
+        - bool值:true/false
 ```
 示例代码:
 UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
@@ -39,6 +42,9 @@ umConfig.DataPers = new UMDefaultDataPers();
 
 // 在控制台打印数据log
 umConfig.IsPersiDataToConsole = true;
+
+// 输出UMini框架相关的log
+umConfig.IsLog = true;
 
 // 设置在运行时要使用的配置表
 umConfig.ConfigTableList = new List<UMConfigTable>()

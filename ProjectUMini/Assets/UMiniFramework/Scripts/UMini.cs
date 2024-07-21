@@ -88,6 +88,7 @@ namespace UMiniFramework.Scripts
 
         private void InitFramework(UMiniConfig config)
         {
+            UMUtils.Debug.PrintLog(config.IsLog);
             UMUtils.Debug.Log(">>> UMini Launch");
             m_config = config;
             m_moduleList = new List<UMModule>();
@@ -170,6 +171,11 @@ namespace UMiniFramework.Scripts
             /// 是否在控制台显示持久化数据
             /// </summary>
             public bool IsPersiDataToConsole { get; set; }
+
+            /// <summary>
+            /// 是否在控制台输出UMini相关的log
+            /// </summary>
+            public bool IsLog { get; set; }
         }
     }
 }
