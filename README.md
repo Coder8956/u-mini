@@ -69,6 +69,9 @@ UMini.Launch(umConfig);
 # PersistentData模块
 - 使用方法待完善
 # Scene模块
-- 使用方法待完善
+- Load(string scene)
+    - 同步加载场景
+- LoadSceneAsync(string scene)
+    - 异步加载场景
 # UI模块
 - 使用方法待完善
