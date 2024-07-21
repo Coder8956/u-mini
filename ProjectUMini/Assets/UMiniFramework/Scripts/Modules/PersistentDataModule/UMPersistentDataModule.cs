@@ -5,6 +5,7 @@ using Game.Scripts.PersistentData;
 using Newtonsoft.Json;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Utils;
+using UnityEditor;
 using UnityEngine;
 using Object = System.Object;
 
@@ -35,6 +36,9 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
                 }
             }
 
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
             yield return null;
         }
 
@@ -110,6 +114,9 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             {
                 UMUtils.Debug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
             }
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
         }
 
         public void ResetDefault<T>() where T : UMPersistentData, new()
@@ -139,6 +146,9 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 
                 UMUtils.IO.FileWriteAllText(filePath, jsonStr);
             }
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
         }
     }
 }

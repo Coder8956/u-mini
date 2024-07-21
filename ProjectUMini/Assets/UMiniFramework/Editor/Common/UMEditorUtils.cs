@@ -34,5 +34,30 @@ namespace UMiniFramework.Editor.Common
 
             return null;
         }
+
+        public static void OpenScriptFile(string fileName)
+        {
+            string filePath = FindFilePath(fileName, ".cs");
+            if (string.IsNullOrEmpty(filePath))
+            {
+                EditorUtility.DisplayDialog("File Not Found", "Cannot find the file: " + fileName, "OK");
+                return;
+            }
+
+            // 加载脚本资产
+            Object scriptAsset = AssetDatabase.LoadAssetAtPath<Object>(filePath);
+
+            if (scriptAsset != null)
+            {
+                // 打开指定脚本
+                AssetDatabase.OpenAsset(scriptAsset);
+            }
+            else
+            {
+                // 如果脚本路径不正确，显示错误信息
+                EditorUtility.DisplayDialog("Error", "Cannot find the script at the specified path: " + filePath,
+                    "OK");
+            }
+        }
     }
 }
