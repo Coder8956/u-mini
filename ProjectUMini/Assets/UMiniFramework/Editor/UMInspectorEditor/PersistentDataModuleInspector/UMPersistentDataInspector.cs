@@ -23,6 +23,12 @@ namespace UMiniFramework.Editor.UMInspectorEditor.PersistentDataModuleInspector
                 string fileName = "UMPersistentDataRootDir"; // 修改为你要查找的文件名
                 UMEditorUtils.OpenScriptFile(fileName);
             }
+
+            if (GUILayout.Button("Open PersistentData Dir"))
+            {
+                string folderPath = UMPersistentDataRootDir.GetRootDir(); // 这里替换为你想打开的文件夹路径
+                EditorUtility.RevealInFinder(folderPath);
+            }
         }
     }
 }
