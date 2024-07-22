@@ -6,10 +6,10 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 {
     public abstract class UMUIDialog : UMUIPanel
     {
-        private Image m_mask;
-        [SerializeField] private Sprite m_maskSprite = null;
         [SerializeField] private bool m_isMask = true;
+        [SerializeField] private Sprite m_maskSprite = null;
         [SerializeField] private Color m_maskColor = new Color(0, 0, 0, 0.7f);
+        private Image m_mask;
 
         public virtual void InitMask()
         {
