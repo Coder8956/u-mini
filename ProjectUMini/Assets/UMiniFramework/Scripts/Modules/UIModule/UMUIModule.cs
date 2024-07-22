@@ -49,6 +49,12 @@ namespace UMiniFramework.Scripts.Modules.UIModule
                         panel = panelGO.GetComponent<T>();
                         m_createdPanel.Add(panelInfo.PanelPath, panel);
                         panel.OnLoaded();
+                        if (panel is UMUIDialog)
+                        {
+                            UMUIDialog dialog = panel as UMUIDialog;
+                            dialog.InitMask();
+                        }
+
                         OnPanelOpenHandler(panel, panelInfo, completed);
                     }
                     else

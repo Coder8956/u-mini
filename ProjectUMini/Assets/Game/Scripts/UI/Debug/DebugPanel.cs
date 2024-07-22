@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.PersistentData;
+using Game.Scripts.UI.Dialog;
 using Game.Scripts.UI.Login;
 using UMiniFramework.Scripts;
 using UMiniFramework.Scripts.Modules.UIModule;
@@ -11,8 +12,10 @@ namespace Game.Scripts.UI.Debug
     public class DebugPanel : UMUIPanel
     {
         [SerializeField] private Button m_btnShowDebugFunc;
-        [SerializeField] private Button m_btnOpenLogin;
         [SerializeField] private RectTransform m_debugFuncRoot;
+
+        [SerializeField] private Button m_btnOpenLogin;
+        [SerializeField] private Button m_btnOpenDialog;
 
         #region AUDIO_DEBUG
 
@@ -40,6 +43,7 @@ namespace Game.Scripts.UI.Debug
             });
 
             m_btnOpenLogin.onClick.AddListener(OpenLoginPanel);
+            m_btnOpenDialog.onClick.AddListener(OpenDialog);
 
             m_btnPlayBGM_1.onClick.AddListener(PlayBGM_1);
             m_btnPlayBGM_2.onClick.AddListener(PlayBGM_2);
@@ -49,6 +53,11 @@ namespace Game.Scripts.UI.Debug
             m_btnEffectAudio_2.onClick.AddListener(EffectAudio_2);
 
             m_btnUpdateUserData.onClick.AddListener(UpdateUserData);
+        }
+
+        private void OpenDialog()
+        {
+            UMini.UI.Open<DialogTip>();
         }
 
         private void UpdateUserData()
