@@ -43,7 +43,7 @@ namespace Game.Scripts.Launch
                 new GameData(),
                 new UIData(),
             };
-            umConfig.MessageEventList = new List<string>()
+            umConfig.EventTypeList = new List<string>()
             {
                 GameEventConst.Launch,
                 GameEventConst.Login

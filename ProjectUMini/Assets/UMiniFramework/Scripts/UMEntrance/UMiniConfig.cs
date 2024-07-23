@@ -39,8 +39,8 @@ namespace UMiniFramework.Scripts.UMEntrance
         public List<UMPersistentData> PersistentDataList { get; set; }
 
         /// <summary>
-        /// 消息时间
+        /// 事件类型
         /// </summary>
-        public List<string> MessageEventList { get; set; }
+        public List<string> EventTypeList { get; set; }
     }
 }

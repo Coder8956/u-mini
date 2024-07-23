@@ -54,6 +54,13 @@ umConfig.PersistentDataList = new List<UMPersistentData>()
                 new UIData(),
             };
 
+// 设置需要派发的事件
+umConfig.EventTypeList = new List<string>()
+            {
+                GameEventConst.Launch,
+                GameEventConst.Login
+            };
+
 // 启动框架
 UMini.Launch(umConfig);
 ```

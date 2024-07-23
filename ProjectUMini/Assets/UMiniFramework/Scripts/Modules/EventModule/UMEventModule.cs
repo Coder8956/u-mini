@@ -13,11 +13,11 @@ namespace UMiniFramework.Scripts.Modules.EventModule
         public override IEnumerator Init(UMiniConfig config)
         {
             EventDic = new Dictionary<string, List<UMListenerInfo>>();
-            if (config.MessageEventList != null)
+            if (config.EventTypeList != null)
             {
-                for (var i = 0; i < config.MessageEventList.Count; i++)
+                for (var i = 0; i < config.EventTypeList.Count; i++)
                 {
-                    string eventType = config.MessageEventList[i];
+                    string eventType = config.EventTypeList[i];
                     EventDic.Add(eventType, new List<UMListenerInfo>());
                 }
             }
