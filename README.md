@@ -145,6 +145,10 @@ UMini.Launch(umConfig);
     - [UMUIPanelInfo("填写预制体路径", 设置UI在哪一层打开)]
     - 窗口类必须继承 UMUIPanel
     ```
+- Panel基类
+    - UMUIPanel
+- Dialog基类
+    - UMUIDialog
 - UMini.Scene.Open`<T>`(Action`<T>` completed = null)
     - 打开UI
         - 参数T: 窗口类
