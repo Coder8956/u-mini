@@ -1,6 +1,7 @@
 ﻿using Game.Scripts.Const;
+using Game.Scripts.EventBody;
 using Game.Scripts.Gameplay;
-using UMiniFramework.Scripts.Modules.MessageModule;
+using UMiniFramework.Scripts.Modules.EventModule;
 using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UMiniFramework.Scripts.Utils;
@@ -10,7 +11,7 @@ using UnityEngine.UI;
 namespace Game.Scripts.UI.Login
 {
     [UMUIPanelInfo("UI/Login/LoginPanel")]
-    public class LoginPanel : UMUIPanel, IUMMessageListener
+    public class LoginPanel : UMUIPanel, IUMEventListener
     {
         [SerializeField] private Button m_btnLevel_1;
         [SerializeField] private Button m_btnLevel_2;
@@ -23,7 +24,7 @@ namespace Game.Scripts.UI.Login
 
         public override void OnOpen()
         {
-            UMini.Message.AddListener(MsgTypeConst.Launch, this);
+            UMini.Event.AddListener(GameEventConst.Launch, this);
         }
 
         public override void OnClose()
@@ -47,9 +48,16 @@ namespace Game.Scripts.UI.Login
             UMini.UI.Close<LoginPanel>();
         }
 
-        public void UMOnReceiveMessage(UMMessageContent content)
+        public void UMOnReceiveMessage(UMEvent content)
         {
-            UMUtils.Debug.Log("LoginPanel ReceiveMessage.");
+            UMUtils.Debug.Log($"LoginPanel ReceiveMessage Type:{content.Type}.");
+            switch (content.Type)
+            {
+                case GameEventConst.Launch:
+                    EBDebug body = content.Body as EBDebug;
+                    UMUtils.Debug.Log($"{body.Str}");
+                    break;
+            }
         }
     }
 }

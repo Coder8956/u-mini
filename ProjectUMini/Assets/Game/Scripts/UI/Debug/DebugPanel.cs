@@ -1,4 +1,6 @@
-﻿using Game.Scripts.PersistentData;
+﻿using Game.Scripts.Const;
+using Game.Scripts.EventBody;
+using Game.Scripts.PersistentData;
 using Game.Scripts.UI.Dialog;
 using Game.Scripts.UI.Login;
 using UMiniFramework.Scripts.UMEntrance;
@@ -16,6 +18,7 @@ namespace Game.Scripts.UI.Debug
 
         [SerializeField] private Button m_btnOpenLogin;
         [SerializeField] private Button m_btnOpenDialog;
+        [SerializeField] private Button m_btnDispatchEvent;
 
         #region AUDIO_DEBUG
 
@@ -44,6 +47,7 @@ namespace Game.Scripts.UI.Debug
 
             m_btnOpenLogin.onClick.AddListener(OpenLoginPanel);
             m_btnOpenDialog.onClick.AddListener(OpenDialog);
+            m_btnDispatchEvent.onClick.AddListener(DispatchEvent);
 
             m_btnPlayBGM_1.onClick.AddListener(PlayBGM_1);
             m_btnPlayBGM_2.onClick.AddListener(PlayBGM_2);
@@ -53,6 +57,11 @@ namespace Game.Scripts.UI.Debug
             m_btnEffectAudio_2.onClick.AddListener(EffectAudio_2);
 
             m_btnUpdateUserData.onClick.AddListener(UpdateUserData);
+        }
+
+        private void DispatchEvent()
+        {
+            UMini.Event.Dispatch(GameEventConst.Launch, new EBDebug());
         }
 
         private void OpenDialog()

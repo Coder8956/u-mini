@@ -90,7 +90,7 @@ GameObject:
   - component: {fileID: 9217764235503942648}
   - component: {fileID: 1921414664283525415}
   m_Layer: 0
-  m_Name: MessageModule
+  m_Name: EventModule
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -594,7 +594,7 @@ MonoBehaviour:
   m_persiDataModule: {fileID: 2611441955764350924}
   m_sceneModule: {fileID: 4788927174563375405}
   m_assetModule: {fileID: 7640804203924951065}
-  m_messageModule: {fileID: 1921414664283525415}
+  m_eventModule: {fileID: 1921414664283525415}
   m_UIModule: {fileID: 2821404996314230758}
 --- !u!1 &5708005881349776058
 GameObject:

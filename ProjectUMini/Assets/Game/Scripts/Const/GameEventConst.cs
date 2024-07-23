@@ -1,6 +1,6 @@
 ﻿namespace Game.Scripts.Const
 {
-    public static class MsgTypeConst
+    public static class GameEventConst
     {
         /// <summary>
         /// 游戏启动

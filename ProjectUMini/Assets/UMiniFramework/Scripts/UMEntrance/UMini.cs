@@ -4,7 +4,7 @@ using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.AssetModule;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
-using UMiniFramework.Scripts.Modules.MessageModule;
+using UMiniFramework.Scripts.Modules.EventModule;
 using UMiniFramework.Scripts.Modules.PersistentDataModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
@@ -55,9 +55,9 @@ namespace UMiniFramework.Scripts.UMEntrance
         /// <summary>
         /// 消息模块
         /// </summary>
-        public static UMMessageModule Message { get; private set; }
+        public static UMEventModule Event { get; private set; }
 
-        [SerializeField] private UMMessageModule m_messageModule = null;
+        [SerializeField] private UMEventModule m_eventModule = null;
 
         /// <summary>
         /// UI模块
@@ -119,9 +119,9 @@ namespace UMiniFramework.Scripts.UMEntrance
             Asset.InitPriority = -1;
             m_moduleList.Add(Asset);
 
-            Message = m_messageModule;
-            Message.InitPriority = 0;
-            m_moduleList.Add(Message);
+            Event = m_eventModule;
+            Event.InitPriority = 0;
+            m_moduleList.Add(Event);
 
             UI = m_UIModule;
             UI.InitPriority = 0;

@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Scripts.Modules.MessageModule
+﻿namespace UMiniFramework.Scripts.Modules.EventModule
 {
     public enum UMListenType
     {
