@@ -591,9 +591,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_audioModule: {fileID: 8391005631356452443}
   m_configModule: {fileID: 4269275879701268751}
-  m_persiData: {fileID: 2611441955764350924}
+  m_persiDataModule: {fileID: 2611441955764350924}
   m_sceneModule: {fileID: 4788927174563375405}
   m_assetModule: {fileID: 7640804203924951065}
+  m_messageModule: {fileID: 1921414664283525415}
   m_UIModule: {fileID: 2821404996314230758}
 --- !u!1 &5708005881349776058
 GameObject:

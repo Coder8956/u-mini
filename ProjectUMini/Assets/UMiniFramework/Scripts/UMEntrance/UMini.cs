@@ -4,6 +4,7 @@ using UMiniFramework.Scripts.Modules;
 using UMiniFramework.Scripts.Modules.AssetModule;
 using UMiniFramework.Scripts.Modules.AudioModule;
 using UMiniFramework.Scripts.Modules.ConfigModule;
+using UMiniFramework.Scripts.Modules.MessageModule;
 using UMiniFramework.Scripts.Modules.PersistentDataModule;
 using UMiniFramework.Scripts.Modules.SceneModule;
 using UMiniFramework.Scripts.Modules.UIModule;
@@ -35,7 +36,7 @@ namespace UMiniFramework.Scripts.UMEntrance
         /// </summary>
         public static UMPersistentDataModule PersiData { get; private set; }
 
-        [SerializeField] private UMPersistentDataModule m_persiData = null;
+        [SerializeField] private UMPersistentDataModule m_persiDataModule = null;
 
         /// <summary>
         /// 场景模块
@@ -50,6 +51,13 @@ namespace UMiniFramework.Scripts.UMEntrance
         public static UMAssetModule Asset { get; private set; }
 
         [SerializeField] private UMAssetModule m_assetModule = null;
+
+        /// <summary>
+        /// 消息模块
+        /// </summary>
+        public static UMMessageModule Message { get; private set; }
+
+        [SerializeField] private UMMessageModule m_messageModule = null;
 
         /// <summary>
         /// UI模块
@@ -103,13 +111,17 @@ namespace UMiniFramework.Scripts.UMEntrance
             Config.InitPriority = 0;
             m_moduleList.Add(Config);
 
-            PersiData = m_persiData;
+            PersiData = m_persiDataModule;
             PersiData.InitPriority = 0;
             m_moduleList.Add(PersiData);
 
             Asset = m_assetModule;
             Asset.InitPriority = -1;
             m_moduleList.Add(Asset);
+
+            Message = m_messageModule;
+            Message.InitPriority = 0;
+            m_moduleList.Add(Message);
 
             UI = m_UIModule;
             UI.InitPriority = 0;
