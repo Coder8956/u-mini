@@ -1,7 +1,7 @@
 # UMiniFramework Manual
 - For Unity Mini Framework
 ---
-# 启动框架
+## 启动框架
 - UMini.Launch(UMiniConfig config);
 - UMiniConfig
     - OnLaunchFinished
@@ -19,6 +19,8 @@
         - 设置在运行时需要读取的的配置表
     - PersistentDataList
         - 设置需要持久化的数据
+    - EventTypeList
+        - 设置事件类型
 ```
 示例代码:
 UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
@@ -64,13 +66,13 @@ umConfig.EventTypeList = new List<string>()
 // 启动框架
 UMini.Launch(umConfig);
 ```
-# Asset模块
-- UMini.Asset.LoadAsync`<T>`(string path, Action<LoadResult`<T>`> onCompleted)
+## Asset模块
+- UMini.Asset.LoadAsync`<T>`(string path, Action<UMLoadResult`<T>`> onCompleted)
     - 异步加载资源
         - 参数path: 资源路径
         - 参数onCompleted: 资源加载成功后的回调
-# Audio模块
-## 特效音乐
+## Audio模块
+### 特效音乐
 - UMini.Audio.Effect.Play(string audioPath, float volume = 1)
     - 播放特效音
     - 参数audioPath: 音频路径
@@ -79,8 +81,8 @@ UMini.Launch(umConfig);
     - 获取特效音静音状态
 - UMini.Audio.Effect.SetMute(bool val)
     - 设置特效音静音状态
-## 背景音乐
-- UMini.Audio.BGM.PlayPlay(string audioPath, float volume = 1, bool loop = true)
+### 背景音乐
+- UMini.Audio.BGM.Play(string audioPath, float volume = 1, bool loop = true)
     - 播放背景音乐
     - 参数audioPath: 音频路径
     - 参数volume: 音量
@@ -91,11 +93,11 @@ UMini.Launch(umConfig);
     - 获取背景音乐静音状态
 - UMini.Audio.BGM.SetMute(bool val)
     - 设置背景音乐静音状态
-# Config模块
+## Config模块
 - UMini.Config.GetTable`<T>`()
     - 获取配置表数据
     - 需要获取的数据必须已经在框架启动时进行了注册
-# PersistentData模块
+## PersistentData模块
 - 编写需要持久化的类
     ```
     示例代码:
@@ -119,14 +121,14 @@ UMini.Launch(umConfig);
     - 重置数据为默认值
 - UMini.PersiData.SaveAllData()
     - 保存所有数据
-# Scene模块
+## Scene模块
 - UMini.Scene.Load(string scene)
     - 同步加载场景
         - 参数scene: 场景名字
 - UMini.Scene.LoadSceneAsync(string scene)
     - 异步加载场景
         - 参数scene: 场景名字
-# UI模块
+## UI模块
 - 编写UI窗口并挂载到预制体上
     ```
     示例代码:
@@ -163,3 +165,37 @@ UMini.Launch(umConfig);
 - UMini.Scene.Close`<T>`()
     - 关闭UI
         - 参数T: 窗口类
+## Event模块
+- UMini.Event.AddListener(string eventType, IUMEventListener listener, UMListenType type);
+    - 添加侦听器
+        - 参数eventType: 事件类型
+        - 参数listener: 侦听器对象
+        - 参数type: 侦听类型(一次/多次)
+- UMini.Event.Dispatch(string eventType, UMEventBody eventBody);
+    - 派发事件
+        - 参数eventType: 事件类型
+        - 参数eventBody: 事件参数
+- UMini.Event.RemoveListener(string eventType, IUMEventListener listener);
+    - 移除侦听器
+        - 参数eventType: 事件类型
+        - 参数listener: 侦听器对象
+- UMini.Event.RemoveAllListener();
+    - 移除所有侦听器
+- UMini.Event.RemoveAllListenerByEvnetType(string eventType);
+    - 移除指定事件的所有侦听器
+        - 参数eventType: 事件类型
+- 侦听对象需要继承 IUMEventListener
+    ```
+    示例代码:
+    public class DemoUMListener : IUMEventListener
+    {
+        public void UMOnReceiveEvent(UMEvent content)
+        {
+            // 处理侦听到的事件
+            EBDebug body = content.Body as EBDebug;
+        }
+    }
+    代码解释:
+    - content.Body 的数据类型是 UMEventBody
+        - UMEventBody 是消息体基类, 可以继承 UMEventBody 后实现自己的消息体, 本例中的自定义实现为 EBDebug
+    ```
