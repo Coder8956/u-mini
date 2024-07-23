@@ -21,11 +21,11 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
 
             UMUtils.IO.CreateDir(m_persiDataRootPath);
 
-            if (config.PersistentData != null)
+            if (config.PersistentDataList != null)
             {
-                for (var i = 0; i < config.PersistentData.Count; i++)
+                for (var i = 0; i < config.PersistentDataList.Count; i++)
                 {
-                    UMPersistentData data = config.PersistentData[i];
+                    UMPersistentData data = config.PersistentDataList[i];
                     string key = GetDataKey(data);
                     m_persistentDataDic.Add(key, InitPersistentData(key, data));
                 }

@@ -36,7 +36,7 @@ namespace Game.Scripts.Launch
                 new BulletTable(),
                 new MonsterTable(),
             };
-            umConfig.PersistentData = new List<UMPersistentData>()
+            umConfig.PersistentDataList = new List<UMPersistentData>()
             {
                 new UserData(),
                 new GameData(),

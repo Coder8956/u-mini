@@ -17,7 +17,7 @@
         - bool值:true/false
     - ConfigTableList
         - 设置在运行时需要读取的的配置表
-    - PersistentData
+    - PersistentDataList
         - 设置需要持久化的数据
 ```
 示例代码:
@@ -47,7 +47,7 @@ umConfig.ConfigTableList = new List<UMConfigTable>()
             };
 
 // 设置需要持久化的数据
-umConfig.PersistentData = new List<UMPersistentData>()
+umConfig.PersistentDataList = new List<UMPersistentData>()
             {
                 new UserData(),
                 new GameData(),

@@ -170,7 +170,12 @@ namespace UMiniFramework.Scripts
             /// <summary>
             /// 持久化数据
             /// </summary>
-            public List<UMPersistentData> PersistentData { get; set; }
+            public List<UMPersistentData> PersistentDataList { get; set; }
+
+            /// <summary>
+            /// 消息时间
+            /// </summary>
+            public List<string> MessageEventList { get; set; }
         }
     }
 }
