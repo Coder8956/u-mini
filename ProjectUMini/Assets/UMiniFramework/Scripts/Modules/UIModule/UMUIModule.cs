@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.CompilerServices;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -19,7 +19,7 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         [SerializeField] private RectTransform m_closedRoot;
         private Dictionary<string, UMUIPanel> m_createdPanel;
 
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             m_createdPanel = new Dictionary<string, UMUIPanel>();
             yield return null;

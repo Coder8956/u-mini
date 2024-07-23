@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 
 namespace UMiniFramework.Scripts.Modules.ConfigModule
@@ -23,7 +24,7 @@ namespace UMiniFramework.Scripts.Modules.ConfigModule
             }
         }
 
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             if (config.ConfigTableList != null)
             {

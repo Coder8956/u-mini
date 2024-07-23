@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using UMiniFramework.Scripts;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UnityEngine;

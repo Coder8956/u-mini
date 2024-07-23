@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 
 namespace UMiniFramework.Scripts.Modules.MessageModule
@@ -9,7 +10,7 @@ namespace UMiniFramework.Scripts.Modules.MessageModule
     {
         private Dictionary<string, List<UMListenObject>> MessageDic;
 
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             MessageDic = new Dictionary<string, List<UMListenObject>>();
             if (config.MessageEventList != null)

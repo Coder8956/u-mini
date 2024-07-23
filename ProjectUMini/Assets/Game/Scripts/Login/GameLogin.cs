@@ -1,7 +1,7 @@
 using Game.Scripts.Const;
 using Game.Scripts.UI.Debug;
 using Game.Scripts.UI.Login;
-using UMiniFramework.Scripts;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 

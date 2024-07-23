@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
+using UMiniFramework.Scripts.UMEntrance;
 using Object = UnityEngine.Object;
 
 namespace UMiniFramework.Scripts.Modules.AssetModule
@@ -9,7 +10,7 @@ namespace UMiniFramework.Scripts.Modules.AssetModule
     {
         private IAssetLoader m_assetLoader;
 
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             m_assetLoader = config.AssetLoader;
             yield return null;

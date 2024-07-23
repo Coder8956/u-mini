@@ -1,6 +1,6 @@
 ﻿using Game.Scripts.Const;
 using Game.Scripts.Gameplay;
-using UMiniFramework.Scripts;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
 using UnityEngine.UI;

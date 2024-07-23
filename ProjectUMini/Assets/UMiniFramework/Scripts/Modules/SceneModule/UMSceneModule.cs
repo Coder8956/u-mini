@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UMiniFramework.Scripts.UMEntrance;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -6,7 +7,7 @@ namespace UMiniFramework.Scripts.Modules.SceneModule
 {
     public class UMSceneModule : UMModule
     {
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             yield return null;
         }

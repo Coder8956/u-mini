@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Utils;
 using UnityEditor;
 
@@ -13,7 +14,7 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
         private const string m_persiDataFileExtend = ".json";
         private string m_persiDataRootPath;
 
-        public override IEnumerator Init(UMini.UMiniConfig config)
+        public override IEnumerator Init(UMiniConfig config)
         {
             m_persiDataRootPath = UMPersistentDataRootDir.GetRootDir();
             m_persistentDataDic = new Dictionary<string, UMPersistentData>();

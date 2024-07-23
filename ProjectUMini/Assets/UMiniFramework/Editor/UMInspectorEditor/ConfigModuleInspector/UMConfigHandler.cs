@@ -314,7 +314,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             scriptTableString.AppendLine($"using System.Collections;");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
             scriptTableString.AppendLine($"using Newtonsoft.Json;");
-            scriptTableString.AppendLine($"using UMiniFramework.Scripts;");
+            scriptTableString.AppendLine($"using UMiniFramework.Scripts.UMEntrance;");
             scriptTableString.AppendLine($"using UMiniFramework.Scripts.Utils;");
             scriptTableString.AppendLine($"using UMiniFramework.Scripts.Modules.ConfigModule;");
             scriptTableString.AppendLine($"using UnityEngine;");

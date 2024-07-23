@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UMiniFramework.Scripts.UMEntrance;
 using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules
@@ -10,6 +11,6 @@ namespace UMiniFramework.Scripts.Modules
         /// </summary>
         public int InitPriority { get; set; }
 
-        public abstract IEnumerator Init(UMini.UMiniConfig config);
+        public abstract IEnumerator Init(UMiniConfig config);
     }
 }
