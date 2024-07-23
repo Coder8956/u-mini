@@ -5,6 +5,6 @@
         /// <summary>
         /// 游戏启动
         /// </summary>
-        public const string MsgLaunch = "LAUNCH";
+        public const string Launch = "LAUNCH";
     }
 }

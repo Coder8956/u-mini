@@ -43,6 +43,10 @@ namespace Game.Scripts.Launch
                 new GameData(),
                 new UIData(),
             };
+            umConfig.MessageEventList = new List<string>()
+            {
+                MsgTypeConst.Launch
+            };
             UMini.Launch(umConfig);
         }
     }

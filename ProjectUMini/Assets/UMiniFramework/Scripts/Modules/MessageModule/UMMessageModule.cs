@@ -39,7 +39,8 @@ namespace UMiniFramework.Scripts.Modules.MessageModule
                     bool isRepeatListener = MessageDic[eventType].Exists((lObject) => lObject.Listener == listener);
                     if (isRepeatListener)
                     {
-                        UMUtils.Debug.Warning($"Repeat Listener: {listener.GetHashCode()}");
+                        UMUtils.Debug.Warning(
+                            $"Stop add listener, because added a duplicate listener. HashCode: {listener.GetHashCode()}");
                     }
                     else
                     {
