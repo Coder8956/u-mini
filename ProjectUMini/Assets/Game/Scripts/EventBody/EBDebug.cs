@@ -5,6 +5,11 @@ namespace Game.Scripts.EventBody
 {
     public class EBDebug : UMEventBody
     {
-        public string Str = "Hello, this is EventDebug.";
+        public EBDebug(string content)
+        {
+            Str = $"Hello, this is {content}.";
+        }
+
+        public string Str = string.Empty;
     }
 }

@@ -61,7 +61,8 @@ namespace Game.Scripts.UI.Debug
 
         private void DispatchEvent()
         {
-            UMini.Event.Dispatch(GameEventConst.Launch, new EBDebug());
+            UMini.Event.Dispatch(GameEventConst.Launch, new EBDebug("Launch"));
+            // UMini.Event.Dispatch(GameEventConst.Login, new EBDebug("Login"));
         }
 
         private void OpenDialog()

@@ -24,7 +24,8 @@ namespace Game.Scripts.UI.Login
 
         public override void OnOpen()
         {
-            UMini.Event.AddListener(GameEventConst.Launch, this);
+            // UMini.Event.AddListener(GameEventConst.Launch, this);
+            // UMini.Event.AddListener(GameEventConst.Login, this);
         }
 
         public override void OnClose()
@@ -33,6 +34,7 @@ namespace Game.Scripts.UI.Login
 
         private void OnClickLevel_1()
         {
+            // UMini.Event.RemoveAllListenerByEvnetType(GameEventConst.Launch);
             EnterGame("level_11001");
         }
 
@@ -48,13 +50,18 @@ namespace Game.Scripts.UI.Login
             UMini.UI.Close<LoginPanel>();
         }
 
-        public void UMOnReceiveMessage(UMEvent content)
+        public void UMOnReceiveEvent(UMEvent content)
         {
             UMUtils.Debug.Log($"LoginPanel ReceiveMessage Type:{content.Type}.");
+            EBDebug body;
             switch (content.Type)
             {
                 case GameEventConst.Launch:
-                    EBDebug body = content.Body as EBDebug;
+                    body = content.Body as EBDebug;
+                    UMUtils.Debug.Log($"{body.Str}");
+                    break;
+                case GameEventConst.Login:
+                    body = content.Body as EBDebug;
                     UMUtils.Debug.Log($"{body.Str}");
                     break;
             }

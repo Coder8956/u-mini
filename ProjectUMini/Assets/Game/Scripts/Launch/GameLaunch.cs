@@ -45,7 +45,8 @@ namespace Game.Scripts.Launch
             };
             umConfig.MessageEventList = new List<string>()
             {
-                GameEventConst.Launch
+                GameEventConst.Launch,
+                GameEventConst.Login
             };
             UMini.Launch(umConfig);
         }

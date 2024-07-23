@@ -2,6 +2,6 @@
 {
     public interface IUMEventListener
     {
-        void UMOnReceiveMessage(UMEvent content);
+        void UMOnReceiveEvent(UMEvent content);
     }
 }

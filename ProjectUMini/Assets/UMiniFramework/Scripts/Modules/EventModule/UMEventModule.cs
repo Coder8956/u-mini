@@ -8,17 +8,17 @@ namespace UMiniFramework.Scripts.Modules.EventModule
 {
     public class UMEventModule : UMModule
     {
-        private Dictionary<string, List<UMListenerInfo>> MessageDic;
+        private Dictionary<string, List<UMListenerInfo>> EventDic;
 
         public override IEnumerator Init(UMiniConfig config)
         {
-            MessageDic = new Dictionary<string, List<UMListenerInfo>>();
+            EventDic = new Dictionary<string, List<UMListenerInfo>>();
             if (config.MessageEventList != null)
             {
                 for (var i = 0; i < config.MessageEventList.Count; i++)
                 {
                     string eventType = config.MessageEventList[i];
-                    MessageDic.Add(eventType, new List<UMListenerInfo>());
+                    EventDic.Add(eventType, new List<UMListenerInfo>());
                 }
             }
 
@@ -28,7 +28,7 @@ namespace UMiniFramework.Scripts.Modules.EventModule
         public void AddListener(string eventType, IUMEventListener listener,
             UMListenType type = UMListenType.Persistent)
         {
-            if (MessageDic.Keys.Contains(eventType))
+            if (EventDic.Keys.Contains(eventType))
             {
                 if (listener == null)
                 {
@@ -36,7 +36,7 @@ namespace UMiniFramework.Scripts.Modules.EventModule
                 }
                 else
                 {
-                    bool isRepeatListener = MessageDic[eventType].Exists((lObject) => lObject.Listener == listener);
+                    bool isRepeatListener = EventDic[eventType].Exists((lObject) => lObject.Listener == listener);
                     if (isRepeatListener)
                     {
                         UMUtils.Debug.Warning(
@@ -44,7 +44,7 @@ namespace UMiniFramework.Scripts.Modules.EventModule
                     }
                     else
                     {
-                        MessageDic[eventType].Add(new UMListenerInfo(type, listener));
+                        EventDic[eventType].Add(new UMListenerInfo(type, listener));
                     }
                 }
             }
@@ -57,13 +57,39 @@ namespace UMiniFramework.Scripts.Modules.EventModule
         public void Dispatch(string eventType, UMEventBody eventBody = null)
         {
             UMEvent umEvent = new UMEvent(eventType, eventBody);
-            if (MessageDic.Keys.Contains(umEvent.Type))
+            if (EventDic.Keys.Contains(umEvent.Type))
             {
-                for (var i = 0; i < MessageDic[umEvent.Type].Count; i++)
+                for (var i = 0; i < EventDic[umEvent.Type].Count; i++)
                 {
-                    UMListenerInfo listenerInfo = MessageDic[umEvent.Type][i];
-                    listenerInfo.Listener.UMOnReceiveMessage(umEvent);
+                    UMListenerInfo listenerInfo = EventDic[umEvent.Type][i];
+                    listenerInfo.Listener.UMOnReceiveEvent(umEvent);
                 }
+
+                EventDic[umEvent.Type].RemoveAll((info) => info.Type == UMListenType.Once);
+            }
+        }
+
+        public void RemoveListener(string eventType, IUMEventListener listener)
+        {
+            if (EventDic.Keys.Contains(eventType))
+            {
+                EventDic[eventType].RemoveAll((info) => info.Listener == listener);
+            }
+        }
+
+        public void RemoveAllListener()
+        {
+            foreach (var infoList in EventDic.Values)
+            {
+                infoList.Clear();
+            }
+        }
+
+        public void RemoveAllListenerByEvnetType(string eventType)
+        {
+            if (EventDic.Keys.Contains(eventType))
+            {
+                EventDic[eventType].Clear();
             }
         }
     }
