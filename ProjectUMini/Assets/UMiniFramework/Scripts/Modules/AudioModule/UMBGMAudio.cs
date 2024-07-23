@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.AudioModule
 {
-    public class BGMAudio : UMAudio
+    public class UMBGMAudio : UMAudio
     {
         private AudioSource m_audioSource = null;
 

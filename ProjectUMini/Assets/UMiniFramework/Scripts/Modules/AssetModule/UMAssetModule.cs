@@ -8,7 +8,7 @@ namespace UMiniFramework.Scripts.Modules.AssetModule
 {
     public class UMAssetModule : UMModule
     {
-        private IAssetLoader m_assetLoader;
+        private IUMAssetLoader m_assetLoader;
 
         public override IEnumerator Init(UMiniConfig config)
         {
@@ -16,7 +16,7 @@ namespace UMiniFramework.Scripts.Modules.AssetModule
             yield return null;
         }
 
-        public void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object
+        public void LoadAsync<T>(string path, Action<UMLoadResult<T>> onCompleted) where T : Object
         {
             m_assetLoader.LoadAsync<T>(path, onCompleted);
         }

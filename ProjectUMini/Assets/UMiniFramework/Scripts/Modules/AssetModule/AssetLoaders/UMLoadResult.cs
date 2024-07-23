@@ -1,6 +1,6 @@
 ﻿namespace UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders
 {
-    public class LoadResult<T> where T : UnityEngine.Object
+    public class UMLoadResult<T> where T : UnityEngine.Object
     {
         /// <summary>
         /// 值为true资源加载成功
@@ -12,7 +12,7 @@
         /// </summary>
         public readonly T Resource = null;
 
-        public LoadResult(bool loadState, T loadResource)
+        public UMLoadResult(bool loadState, T loadResource)
         {
             State = loadState;
             Resource = loadResource;

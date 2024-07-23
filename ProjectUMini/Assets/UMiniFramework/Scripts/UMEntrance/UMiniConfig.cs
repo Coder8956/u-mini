@@ -16,7 +16,7 @@ namespace UMiniFramework.Scripts.UMEntrance
         /// <summary>
         /// 资源加载器
         /// </summary>
-        public IAssetLoader AssetLoader { get; set; }
+        public IUMAssetLoader AssetLoader { get; set; }
 
         /// <summary>
         /// 是否在控制台显示持久化数据

@@ -6,15 +6,15 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
 {
     public class UMAudioModule : UMModule
     {
-        public BGMAudio BGM { get; private set; }
-        public EffectAudio Effect { get; private set; }
+        public UMBGMAudio BGM { get; private set; }
+        public UMEffectAudio Effect { get; private set; }
 
         public override IEnumerator Init(UMiniConfig config)
         {
-            BGM = UMUtils.Common.CreateGameObject<BGMAudio>(nameof(BGMAudio), gameObject);
+            BGM = UMUtils.Common.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);
             BGM.Init();
 
-            Effect = UMUtils.Common.CreateGameObject<EffectAudio>(nameof(EffectAudio), gameObject);
+            Effect = UMUtils.Common.CreateGameObject<UMEffectAudio>(nameof(UMEffectAudio), gameObject);
             Effect.Init();
             yield return null;
         }

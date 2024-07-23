@@ -25,7 +25,8 @@ namespace UMiniFramework.Scripts.Modules.MessageModule
             yield return null;
         }
 
-        public void AddListener(string eventType, IMessageListener listener, ListenType type = ListenType.Persistent)
+        public void AddListener(string eventType, IUMMessageListener listener,
+            UMListenType type = UMListenType.Persistent)
         {
             if (MessageDic.Keys.Contains(eventType))
             {

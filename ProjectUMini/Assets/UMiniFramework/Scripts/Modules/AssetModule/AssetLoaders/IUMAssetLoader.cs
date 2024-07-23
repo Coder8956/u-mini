@@ -4,8 +4,8 @@ using Object = UnityEngine.Object;
 namespace UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders
 {
     
-    public interface IAssetLoader
+    public interface IUMAssetLoader
     {
-        void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object;
+        void LoadAsync<T>(string path, Action<UMLoadResult<T>> onCompleted) where T : Object;
     }
 }

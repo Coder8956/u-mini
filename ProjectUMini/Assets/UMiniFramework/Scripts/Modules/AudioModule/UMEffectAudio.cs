@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Modules.AudioModule
 {
-    public class EffectAudio : UMAudio
+    public class UMEffectAudio : UMAudio
     {
         private GameObjectPool m_soundPool;
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;

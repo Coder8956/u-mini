@@ -2,10 +2,10 @@
 {
     public class UMListenObject
     {
-        public readonly ListenType Type;
-        public readonly IMessageListener Listener;
+        public readonly UMListenType Type;
+        public readonly IUMMessageListener Listener;
 
-        public UMListenObject(ListenType type, IMessageListener listener)
+        public UMListenObject(UMListenType type, IUMMessageListener listener)
         {
             Type = type;
             Listener = listener;

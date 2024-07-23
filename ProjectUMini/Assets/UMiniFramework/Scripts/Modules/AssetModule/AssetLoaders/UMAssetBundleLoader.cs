@@ -3,9 +3,9 @@ using Object = UnityEngine.Object;
 
 namespace UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders
 {
-    public class AssetBundleLoader : IAssetLoader
+    public class UMAssetBundleLoader : IUMAssetLoader
     {
-        public void LoadAsync<T>(string path, Action<LoadResult<T>> onCompleted) where T : Object
+        public void LoadAsync<T>(string path, Action<UMLoadResult<T>> onCompleted) where T : Object
         {
             throw new NotImplementedException();
         }

@@ -6,7 +6,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.GameObjectPoolInspector
 {
     [CustomEditor(typeof(GameObjectPool))]
     [CanEditMultipleObjects]
-    public class GameObjectPoolEditor : UnityEditor.Editor
+    public class UMGameObjectPoolEditor : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
         {
