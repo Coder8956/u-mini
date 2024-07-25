@@ -99,16 +99,35 @@ namespace UMiniFramework.Scripts.Modules.UIModule
             UMUIPanelInfo panelInfo = GetPanelInfo<T>();
             if (m_createdPanel.Keys.Contains(panelInfo.PanelPath))
             {
-                UMUIPanel panel = m_createdPanel[panelInfo.PanelPath];
-                panel.gameObject.SetActive(false);
-                panel.OnClose();
-                panel.GetComponent<RectTransform>().SetParent(m_closedRoot);
+                UMUIPanel closePanel = m_createdPanel[panelInfo.PanelPath];
+                closePanel.gameObject.SetActive(false);
+                closePanel.OnClose();
+                closePanel.GetComponent<RectTransform>().SetParent(m_closedRoot);
+            }
+        }
+
+        public void Close(UMUIPanel panel)
+        {
+            UMUIPanelInfo panelInfo = GetPanelInfo(panel);
+            if (m_createdPanel.Keys.Contains(panelInfo.PanelPath))
+            {
+                UMUIPanel closePanel = m_createdPanel[panelInfo.PanelPath];
+                closePanel.gameObject.SetActive(false);
+                closePanel.OnClose();
+                closePanel.GetComponent<RectTransform>().SetParent(m_closedRoot);
             }
         }
 
         private UMUIPanelInfo GetPanelInfo<T>()
         {
             UMUIPanelInfo panelInfo = Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelInfo)) as UMUIPanelInfo;
+            return panelInfo;
+        }
+
+        private UMUIPanelInfo GetPanelInfo(UMUIPanel panel)
+        {
+            UMUIPanelInfo panelInfo =
+                Attribute.GetCustomAttribute(panel.GetType(), typeof(UMUIPanelInfo)) as UMUIPanelInfo;
             return panelInfo;
         }
 
