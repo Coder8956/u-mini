@@ -16,7 +16,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
         public override void Init()
         {
             // 初始化音效对象池
-            GameObject poolObjectTemplet = UMUtils.Common.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
+            GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
             GameObjectPool.PoolConfig poolConfig = new GameObjectPool.PoolConfig
             ("SoundPool",
                 gameObject,

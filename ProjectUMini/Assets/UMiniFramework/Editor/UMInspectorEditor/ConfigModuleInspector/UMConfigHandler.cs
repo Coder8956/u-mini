@@ -66,10 +66,10 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             Directory.Delete(dataFolder, true);
             Directory.CreateDirectory(dataFolder);
 
-            UMUtils.Debug.Log($"开始生成配置");
-            UMUtils.Debug.Log($"ExcelFolder:{ExcelFolder}");
-            UMUtils.Debug.Log($"ScriptFolder:{ScriptFolder}");
-            UMUtils.Debug.Log($"DataFolder:{DataFolder}");
+            UMUtilDebug.Log($"开始生成配置");
+            UMUtilDebug.Log($"ExcelFolder:{ExcelFolder}");
+            UMUtilDebug.Log($"ScriptFolder:{ScriptFolder}");
+            UMUtilDebug.Log($"DataFolder:{DataFolder}");
 
             List<string> excels = new List<string>();
 
@@ -77,10 +77,10 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 
             foreach (var excel in excels)
             {
-                UMUtils.Debug.Log($"config excel: {excel}");
+                UMUtilDebug.Log($"config excel: {excel}");
             }
 
-            UMUtils.Debug.Log($"config excel count: {excels.Count}");
+            UMUtilDebug.Log($"config excel count: {excels.Count}");
             TableClassList.Clear();
             for (var i = 0; i < excels.Count; i++)
             {
@@ -97,7 +97,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static void CreateConfigByExcel(string excel)
         {
             if (excel.Contains("~$")) return;
-            UMUtils.Debug.Log($"create config by excel : {excel}");
+            UMUtilDebug.Log($"create config by excel : {excel}");
             using (var stream = File.Open(excel, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
             {
                 using (var reader = ExcelReaderFactory.CreateReader(stream))
@@ -118,7 +118,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 
                         for (var i = 0; i < table.Columns.Count; i++)
                         {
-                            if (UMUtils.String.IsValid(fieldRow[i].ToString()))
+                            if (UMUtilString.IsValid(fieldRow[i].ToString()))
                             {
                                 ++validColumnCount;
                             }
@@ -128,7 +128,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                             }
                         }
 
-                        UMUtils.Debug.Log($"validColumnCount: {validColumnCount}");
+                        UMUtilDebug.Log($"validColumnCount: {validColumnCount}");
 
                         List<ConfigFieldInfo> fieldInfos = new List<ConfigFieldInfo>();
 
@@ -151,7 +151,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static void CreateConfigJson(List<ConfigFieldInfo> fieldInfos, DataTable table, string excelPath)
         {
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
-            UMUtils.Debug.Log($"Create config json excelName: {excelName}");
+            UMUtilDebug.Log($"Create config json excelName: {excelName}");
             if (fieldInfos == null || fieldInfos.Count < 1) return;
             string jsonConfigPath = $"{DataFolder}/{excelName}.json";
 
@@ -166,7 +166,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                 for (int j = 0; j < fieldInfos.Count; j++)
                 {
                     // 检查是否是有效行
-                    if (!UMUtils.String.IsValid(table.Rows[i][0].ToString()))
+                    if (!UMUtilString.IsValid(table.Rows[i][0].ToString()))
                     {
                         isVaildRow = false;
                         break;
@@ -187,7 +187,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 string[] strArr = currentValue.Split(ARR_SPLIT);
                                 foreach (var s in strArr)
                                 {
-                                    if (UMUtils.String.IsValid(s))
+                                    if (UMUtilString.IsValid(s))
                                     {
                                         stringJArray.Add(s);
                                     }
@@ -203,7 +203,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 string[] strFloatArr = currentValue.Split(ARR_SPLIT);
                                 foreach (var s in strFloatArr)
                                 {
-                                    if (UMUtils.String.IsValid(s))
+                                    if (UMUtilString.IsValid(s))
                                     {
                                         floatJArray.Add(float.Parse(s));
                                     }
@@ -219,7 +219,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 string[] strIntArr = currentValue.Split(ARR_SPLIT);
                                 foreach (var s in strIntArr)
                                 {
-                                    if (UMUtils.String.IsValid(s))
+                                    if (UMUtilString.IsValid(s))
                                     {
                                         intJArray.Add(int.Parse(s));
                                     }
@@ -235,7 +235,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 string[] strBoolArr = currentValue.Split(ARR_SPLIT);
                                 foreach (var s in strBoolArr)
                                 {
-                                    if (UMUtils.String.IsValid(s))
+                                    if (UMUtilString.IsValid(s))
                                     {
                                         boolJArray.Add(bool.Parse(s));
                                     }
@@ -244,7 +244,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                                 dataItem[currentKey] = boolJArray;
                                 break;
                             default:
-                                UMUtils.Debug.Log(
+                                UMUtilDebug.Log(
                                     $"Invaild fieldType: {cfi.Type.ToLower()}, excel path: {excelPath}");
                                 break;
                         }
@@ -272,7 +272,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         private static void CreateConfigScript(List<ConfigFieldInfo> fieldInfos, string excelPath)
         {
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
-            UMUtils.Debug.Log($"Create config script excelName: {excelName}");
+            UMUtilDebug.Log($"Create config script excelName: {excelName}");
             if (fieldInfos == null || fieldInfos.Count < 1) return;
 
             // 生成 Data 脚本
@@ -285,7 +285,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             scriptDataString.AppendLine("{");
             foreach (var cfi in fieldInfos)
             {
-                if (UMUtils.String.IsValid(cfi.Comments))
+                if (UMUtilString.IsValid(cfi.Comments))
                 {
                     scriptDataString.AppendLine($"    /// <summary>");
                     scriptDataString.AppendLine($"    /// {cfi.Comments}");
@@ -351,7 +351,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                     string idType = cfi.Type.ToLower();
                     if (idType != "string")
                     {
-                        UMUtils.Debug.Error(
+                        UMUtilDebug.Error(
                             $"invalid id type in excel. path: {excelPath}; id type must use string");
                         return;
                     }
@@ -370,7 +370,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
                     scriptTableString.AppendLine($"            return m_dataDicById[id];");
                     scriptTableString.AppendLine($"        else");
                     scriptTableString.AppendLine(
-                        $"            UMUtils.Debug.Warning($\"{tableClassName} id does not exist {{id}}\");");
+                        $"            UMUtilDebug.Warning($\"{tableClassName} id does not exist {{id}}\");");
                     scriptTableString.AppendLine($"        return null;");
                     scriptTableString.AppendLine($"    }}");
                     isHasId = true;
@@ -404,12 +404,12 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             scriptTableString.AppendLine(
-                $"        UMUtils.Debug.Log($\"Init Config: {{GetType().FullName}} Succeed.\");");
+                $"        UMUtilDebug.Log($\"Init Config: {{GetType().FullName}} Succeed.\");");
             scriptTableString.AppendLine($"        }}");
             scriptTableString.AppendLine($"        else");
             scriptTableString.AppendLine($"        {{");
             scriptTableString.AppendLine(
-                $"            UMUtils.Debug.Warning($\"config load failed. path: {{ConfigLoadPath}}\");");
+                $"            UMUtilDebug.Warning($\"config load failed. path: {{ConfigLoadPath}}\");");
             scriptTableString.AppendLine($"        }}}});");
             scriptTableString.AppendLine($"        yield return new WaitUntil(() => {{ return TableData != null; }});");
             scriptTableString.AppendLine($"    }}");

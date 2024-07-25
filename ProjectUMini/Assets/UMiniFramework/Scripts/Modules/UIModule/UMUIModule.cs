@@ -23,6 +23,8 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         {
             m_createdPanel = new Dictionary<string, UMUIPanel>();
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void Open<T>(Action<T> completed = null) where T : UMUIPanel
@@ -59,7 +61,7 @@ namespace UMiniFramework.Scripts.Modules.UIModule
                     }
                     else
                     {
-                        UMUtils.Debug.Warning($"Load Panel Failed. Path:{panelInfo.PanelPath}");
+                        UMUtilDebug.Warning($"Load Panel Failed. Path:{panelInfo.PanelPath}");
                     }
                 });
             }
@@ -76,7 +78,7 @@ namespace UMiniFramework.Scripts.Modules.UIModule
             RectTransform panelRectTrans = panel.GetComponent<RectTransform>();
             int uiLayer = (int) info.Layer;
             panelRectTrans.SetParent(m_UILayerRoots[uiLayer]);
-            UMUtils.UI.FillParent(panelRectTrans);
+            UMUtilUI.FillParent(panelRectTrans);
             panel.OnOpen();
             completed?.Invoke(panel as T);
         }

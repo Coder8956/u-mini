@@ -23,6 +23,8 @@ namespace UMiniFramework.Scripts.Modules.EventModule
             }
 
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void AddListener(string eventType, IUMEventListener listener,
@@ -32,14 +34,14 @@ namespace UMiniFramework.Scripts.Modules.EventModule
             {
                 if (listener == null)
                 {
-                    UMUtils.Debug.Warning($"AddListener listener is null.");
+                    UMUtilDebug.Warning($"AddListener listener is null.");
                 }
                 else
                 {
                     bool isRepeatListener = EventDic[eventType].Exists((lObject) => lObject.Listener == listener);
                     if (isRepeatListener)
                     {
-                        UMUtils.Debug.Warning(
+                        UMUtilDebug.Warning(
                             $"Stop add listener, because added a duplicate listener. HashCode: {listener.GetHashCode()}");
                     }
                     else
@@ -50,7 +52,7 @@ namespace UMiniFramework.Scripts.Modules.EventModule
             }
             else
             {
-                UMUtils.Debug.Warning($"Invalid message type:{eventType}.");
+                UMUtilDebug.Warning($"Invalid message type:{eventType}.");
             }
         }
 

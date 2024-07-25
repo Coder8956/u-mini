@@ -11,12 +11,14 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
 
         public override IEnumerator Init(UMiniConfig config)
         {
-            BGM = UMUtils.Common.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);
+            BGM = UMUtilCommon.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);
             BGM.Init();
 
-            Effect = UMUtils.Common.CreateGameObject<UMEffectAudio>(nameof(UMEffectAudio), gameObject);
+            Effect = UMUtilCommon.CreateGameObject<UMEffectAudio>(nameof(UMEffectAudio), gameObject);
             Effect.Init();
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
     }
 }

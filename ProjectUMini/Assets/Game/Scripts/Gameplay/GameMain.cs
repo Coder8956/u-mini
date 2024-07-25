@@ -36,7 +36,7 @@ namespace Game.Scripts.Gameplay
 
         private void Start()
         {
-            UMUtils.Debug.Log($"Level Id: {GameLevelId}");
+            Debug.Log($"Level Id: {GameLevelId}");
             UMini.UI.Open<GamePanel>();
 
             m_levelData = UMini.Config.GetTable<LevelTable>().GetDataById(GameLevelId);

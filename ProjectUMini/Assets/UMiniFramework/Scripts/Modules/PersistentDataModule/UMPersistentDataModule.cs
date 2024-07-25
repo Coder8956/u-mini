@@ -20,7 +20,7 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             m_persistentDataDic = new Dictionary<string, UMPersistentData>();
             m_isPersiDataToConsole = config.IsPersiDataToConsole;
 
-            UMUtils.IO.CreateDir(m_persiDataRootPath);
+            UMUtilIO.CreateDir(m_persiDataRootPath);
 
             if (config.PersistentDataList != null)
             {
@@ -36,21 +36,23 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             AssetDatabase.Refresh();
 #endif
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         private UMPersistentData InitPersistentData(string key, UMPersistentData defaultData)
         {
             UMPersistentData PersiData = null;
             string filePath = GetDataFilePath(key);
-            if (UMUtils.IO.IsExistsFile(filePath))
+            if (UMUtilIO.IsExistsFile(filePath))
             {
-                string jsonStr = UMUtils.IO.FileReadAllText(filePath);
+                string jsonStr = UMUtilIO.FileReadAllText(filePath);
                 PersiData = JsonConvert.DeserializeObject(jsonStr, defaultData.GetType()) as UMPersistentData;
             }
             else
             {
                 string jsonStr = defaultData.ToJson();
-                UMUtils.IO.FileWriteAllText(filePath, jsonStr);
+                UMUtilIO.FileWriteAllText(filePath, jsonStr);
                 PersiData = defaultData;
             }
 
@@ -91,7 +93,7 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             }
             else
             {
-                UMUtils.Debug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
+                UMUtilDebug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
                 return null;
             }
         }
@@ -110,14 +112,14 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
                 if (IsPrintLog())
                 {
                     string log = $"[Save] key:{key};\n{jsonStr}";
-                    UMUtils.Debug.Log(log);
+                    UMUtilDebug.Log(log);
                 }
 
-                UMUtils.IO.FileWriteAllText(filePath, jsonStr);
+                UMUtilIO.FileWriteAllText(filePath, jsonStr);
             }
             else
             {
-                UMUtils.Debug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
+                UMUtilDebug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
             }
 #if UNITY_EDITOR
             AssetDatabase.Refresh();
@@ -137,7 +139,7 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
             }
             else
             {
-                UMUtils.Debug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
+                UMUtilDebug.Warning($"UMPersistentDataDic The key [{key}] does not exist.");
             }
         }
 
@@ -153,10 +155,10 @@ namespace UMiniFramework.Scripts.Modules.PersistentDataModule
                 if (IsPrintLog())
                 {
                     string log = $"[SaveAllData] key:{kv.Key};\n{jsonStr}";
-                    UMUtils.Debug.Log(log);
+                    UMUtilDebug.Log(log);
                 }
 
-                UMUtils.IO.FileWriteAllText(filePath, jsonStr);
+                UMUtilIO.FileWriteAllText(filePath, jsonStr);
             }
 #if UNITY_EDITOR
             AssetDatabase.Refresh();

@@ -19,7 +19,7 @@ namespace UMiniFramework.Scripts.Modules.ConfigModule
             }
             else
             {
-                UMUtils.Debug.Warning($"Table {key.Name} does not exist.");
+                UMUtilDebug.Warning($"Table {key.Name} does not exist.");
                 return null;
             }
         }
@@ -37,6 +37,8 @@ namespace UMiniFramework.Scripts.Modules.ConfigModule
             }
 
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
     }
 }

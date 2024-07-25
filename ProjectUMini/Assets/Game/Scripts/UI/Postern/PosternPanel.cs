@@ -8,10 +8,10 @@ using UMiniFramework.Scripts.Modules.UIModule;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Scripts.UI.Debug
+namespace Game.Scripts.UI.Postern
 {
-    [UMUIPanelInfo("UI/Debug/DebugPanel", UMUILayer.TOP)]
-    public class DebugPanel : UMUIPanel
+    [UMUIPanelInfo("UI/Postern/PosternPanel", UMUILayer.TOP)]
+    public class PosternPanel : UMUIPanel
     {
         [SerializeField] private Button m_btnShowDebugFunc;
         [SerializeField] private RectTransform m_debugFuncRoot;

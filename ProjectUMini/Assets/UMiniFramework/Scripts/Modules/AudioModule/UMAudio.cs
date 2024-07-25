@@ -19,7 +19,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
                 }
                 else
                 {
-                    UMUtils.Debug.Warning($"Audio load failed. Path: {audioPath}");
+                    UMUtilDebug.Warning($"Audio load failed. Path: {audioPath}");
                 }
             });
         }

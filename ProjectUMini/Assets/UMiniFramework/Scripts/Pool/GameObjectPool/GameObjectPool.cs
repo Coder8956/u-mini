@@ -84,7 +84,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         public static GameObjectPool CreatePool(PoolConfig poolConfig)
         {
             GameObjectPool newGameObjectPool =
-                UMUtils.Common.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
+                UMUtilCommon.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
             newGameObjectPool.Init(poolConfig);
             return newGameObjectPool;
         }

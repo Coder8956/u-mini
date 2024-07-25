@@ -4,7 +4,6 @@ using Game.Scripts.Gameplay;
 using UMiniFramework.Scripts.Modules.EventModule;
 using UMiniFramework.Scripts.UMEntrance;
 using UMiniFramework.Scripts.Modules.UIModule;
-using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -52,17 +51,18 @@ namespace Game.Scripts.UI.Login
 
         public void UMOnReceiveEvent(UMEvent content)
         {
-            UMUtils.Debug.Log($"LoginPanel ReceiveMessage Type:{content.Type}.");
+            
+            Debug.Log($"LoginPanel ReceiveMessage Type:{content.Type}.");
             EBDebug body;
             switch (content.Type)
             {
                 case GameEventConst.Launch:
                     body = content.Body as EBDebug;
-                    UMUtils.Debug.Log($"{body.Str}");
+                    Debug.Log($"{body.Str}");
                     break;
                 case GameEventConst.Login:
                     body = content.Body as EBDebug;
-                    UMUtils.Debug.Log($"{body.Str}");
+                    Debug.Log($"{body.Str}");
                     break;
             }
         }

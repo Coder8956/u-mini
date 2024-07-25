@@ -29,7 +29,7 @@ namespace Game.Scripts.Launch
             umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
             umConfig.LaunchProgress = (progressTag, progressVal) =>
             {
-                UMUtils.Debug.Log($"UMini LaunchProgress: {progressTag}, prograssVal: {progressVal}.");
+                Debug.Log($"UMini LaunchProgress: {progressTag}, prograssVal: {progressVal}.");
             };
             umConfig.AssetLoader = new UMResourcesLoader();
             umConfig.IsPersiDataToConsole = true;

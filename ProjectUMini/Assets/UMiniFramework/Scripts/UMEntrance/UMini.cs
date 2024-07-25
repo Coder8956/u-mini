@@ -80,7 +80,7 @@ namespace UMiniFramework.Scripts.UMEntrance
             else
             {
                 Destroy(gameObject);
-                UMUtils.Debug.Warning("Destroy duplicate UMEntity instances on awake");
+                UMUtilDebug.Warning("Destroy duplicate UMEntity instances on awake");
             }
         }
 
@@ -94,8 +94,8 @@ namespace UMiniFramework.Scripts.UMEntrance
 
         private void InitFramework(UMiniConfig config)
         {
-            UMUtils.Debug.PrintLog(config.IsLog);
-            UMUtils.Debug.Log(">>> UMini Launch");
+            UMUtilDebug.PrintLog(config.IsLog);
+            UMUtilDebug.Log(">>> UMini Launch");
             m_config = config;
             m_moduleList = new List<UMModule>();
 
@@ -142,19 +142,21 @@ namespace UMiniFramework.Scripts.UMEntrance
         {
             int initStepCount = m_moduleList.Count + 1;
             int initStepProgress = 0;
+            string progressTag = string.Empty;
             foreach (var module in m_moduleList)
             {
                 initStepProgress++;
                 float progressVal = (float) initStepProgress / initStepCount;
                 string moduleName = module.GetType().Name;
-                string progressTag = $"UMiniInit{moduleName}";
-                UMUtils.Debug.Log($"UMiniInitModules => {progressTag}");
+                progressTag = $"Init_{moduleName}";
+                UMUtilDebug.Log($"UMiniInitModules => {progressTag}; InitFinishedVal: {module.InitFinished}");
                 m_config.LaunchProgress?.Invoke(progressTag, progressVal);
                 yield return module.Init(m_config);
             }
 
-            m_config.LaunchProgress?.Invoke("UMiniLaunchFinished", 1);
-            UMUtils.Debug.Log($">>> UMini Launch Finished.");
+            progressTag = "UMiniLaunchFinished";
+            m_config.LaunchProgress?.Invoke(progressTag, 1);
+            UMUtilDebug.Log($">>> UMini Launch Finished.");
             m_config?.OnLaunchFinished?.Invoke();
         }
     }

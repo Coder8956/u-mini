@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UMiniFramework.Scripts.UMEntrance;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,6 +11,8 @@ namespace UMiniFramework.Scripts.Modules.SceneModule
         public override IEnumerator Init(UMiniConfig config)
         {
             yield return null;
+            m_initFinished = true;
+            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void Load(string scene)

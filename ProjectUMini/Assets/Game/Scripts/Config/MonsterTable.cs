@@ -30,7 +30,7 @@ public class MonsterTable : UMConfigTable
         if (m_dataDicById.ContainsKey(id))
             return m_dataDicById[id];
         else
-            UMUtils.Debug.Warning($"MonsterTable id does not exist {id}");
+            UMUtilDebug.Warning($"MonsterTable id does not exist {id}");
         return null;
     }
 
@@ -46,11 +46,11 @@ public class MonsterTable : UMConfigTable
             foreach (var data in TableData){
                 m_dataDicById.Add(data.id, data);
             }
-        UMUtils.Debug.Log($"Init Config: {GetType().FullName} Succeed.");
+        UMUtilDebug.Log($"Init Config: {GetType().FullName} Succeed.");
         }
         else
         {
-            UMUtils.Debug.Warning($"config load failed. path: {ConfigLoadPath}");
+            UMUtilDebug.Warning($"config load failed. path: {ConfigLoadPath}");
         }});
         yield return new WaitUntil(() => { return TableData != null; });
     }
