@@ -26,10 +26,16 @@ namespace Game.Scripts.Launch
         void Start()
         {
             UMiniConfig umConfig = new UMiniConfig();
-            umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
+            umConfig.OnLaunchFinished = () =>
+            {
+                Debug.Log($"LaunchFinished >>> UMini Init　Finished: {UMini.UMInitFinished}");
+                m_btnEnterGame.gameObject.SetActive(true);
+            };
             umConfig.LaunchProgress = (progressTag, progressVal) =>
             {
-                Debug.Log($"UMini LaunchProgress: {progressTag}, prograssVal: {progressVal}.");
+                Debug.Log($"UMini Init　Finished: {UMini.UMInitFinished}; " +
+                          $"LaunchProgressTag: {progressTag}, " +
+                          $"ProgressVal: {progressVal}.");
             };
             umConfig.AssetLoader = new UMResourcesLoader();
             umConfig.IsPersiDataToConsole = true;

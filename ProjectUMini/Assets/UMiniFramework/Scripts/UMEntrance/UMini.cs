@@ -70,6 +70,16 @@ namespace UMiniFramework.Scripts.UMEntrance
 
         private UMiniConfig m_config = null;
 
+        private static bool m_UMInitFinished = false;
+
+        /// <summary>
+        /// UM框架初始化完成
+        /// </summary>
+        public static bool UMInitFinished
+        {
+            get { return m_UMInitFinished; }
+        }
+
         private void Awake()
         {
             if (GlobalInstance == null)
@@ -154,9 +164,11 @@ namespace UMiniFramework.Scripts.UMEntrance
                 yield return module.Init(m_config);
             }
 
+            // 初始化完成后执行的代码
+            UMUtilDebug.Log($">>> UMini Launch Finished.");
+            m_UMInitFinished = true;
             progressTag = "UMiniLaunchFinished";
             m_config.LaunchProgress?.Invoke(progressTag, 1);
-            UMUtilDebug.Log($">>> UMini Launch Finished.");
             m_config?.OnLaunchFinished?.Invoke();
         }
     }
