@@ -14,6 +14,11 @@ namespace UMiniFramework.Scripts.UMEntrance
         public Action OnLaunchFinished { get; set; }
 
         /// <summary>
+        /// 框架启动进度
+        /// </summary>
+        public Action<string, float> LaunchProgress { get; set; }
+
+        /// <summary>
         /// 资源加载器
         /// </summary>
         public IUMAssetLoader AssetLoader { get; set; }

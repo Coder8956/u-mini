@@ -6,6 +6,7 @@ using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Scripts.Modules.ConfigModule;
 using UMiniFramework.Scripts.Modules.PersistentDataModule;
 using UMiniFramework.Scripts.UMEntrance;
+using UMiniFramework.Scripts.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -26,6 +27,10 @@ namespace Game.Scripts.Launch
         {
             UMiniConfig umConfig = new UMiniConfig();
             umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
+            umConfig.LaunchProgress = (tag, val) =>
+            {
+                UMUtils.Debug.Log($"UMini LaunchProgress: {tag}, prograssVal: {val}.");
+            };
             umConfig.AssetLoader = new UMResourcesLoader();
             umConfig.IsPersiDataToConsole = true;
             umConfig.IsLog = true;

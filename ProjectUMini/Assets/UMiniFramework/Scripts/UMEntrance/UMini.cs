@@ -140,13 +140,21 @@ namespace UMiniFramework.Scripts.UMEntrance
         /// <returns></returns>
         private IEnumerator InitModules()
         {
+            int initStepCount = m_moduleList.Count + 1;
+            int initStepProgress = 0;
             foreach (var module in m_moduleList)
             {
-                UMUtils.Debug.Log($"{module.GetType().Name} Start Init.");
+                initStepProgress++;
+                float progressVal = (float) initStepProgress / initStepCount;
+                string moduleName = module.GetType().Name;
+                string progressTag = $"UMiniInit{moduleName}";
+                UMUtils.Debug.Log($"UMiniInitModules => {progressTag}");
+                m_config.LaunchProgress?.Invoke(progressTag, progressVal);
                 yield return module.Init(m_config);
             }
 
-            UMUtils.Debug.Log(">>> UMini Launch Finished.");
+            m_config.LaunchProgress?.Invoke("UMiniLaunchFinished", 1);
+            UMUtils.Debug.Log($">>> UMini Launch Finished.");
             m_config?.OnLaunchFinished?.Invoke();
         }
     }
