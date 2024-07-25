@@ -66,7 +66,7 @@ namespace UMiniFramework.Editor.Common
         {
             if (!Directory.Exists(folderPath))
             {
-                EditorUtility.DisplayDialog("无效路径", folderPath, "确认");
+                EditorUtility.DisplayDialog("Invalid Folder", folderPath, "OK");
                 return;
             }
 

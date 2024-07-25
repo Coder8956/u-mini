@@ -38,24 +38,24 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             stringBuilder.AppendLine("[DataFolder]:");
             stringBuilder.AppendLine(DataFolder);
 
-            bool isOK = EditorUtility.DisplayDialog("Update Config", stringBuilder.ToString(), "Ok", "Cancel");
+            bool isOK = EditorUtility.DisplayDialog("Update Config", stringBuilder.ToString(), "OK", "Cancel");
             if (!isOK) return;
 
             if (!Directory.Exists(excelFolder))
             {
-                EditorUtility.DisplayDialog("无效路径", scriptFolder, "确认");
+                EditorUtility.DisplayDialog("Invalid Folder", scriptFolder, "OK");
                 return;
             }
 
             if (!Directory.Exists(scriptFolder))
             {
-                EditorUtility.DisplayDialog("无效路径", scriptFolder, "确认");
+                EditorUtility.DisplayDialog("Invalid Folder", scriptFolder, "OK");
                 return;
             }
 
             if (!Directory.Exists(dataFolder))
             {
-                EditorUtility.DisplayDialog("无效路径", dataFolder, "确认");
+                EditorUtility.DisplayDialog("Invalid Folder", dataFolder, "OK");
                 return;
             }
 
