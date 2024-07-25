@@ -13,14 +13,14 @@ namespace Game.Scripts.UI.Postern
     [UMUIPanelInfo("UI/Postern/PosternPanel", UMUILayer.TOP)]
     public class PosternPanel : UMUIPanel
     {
-        [SerializeField] private Button m_btnShowDebugFunc;
-        [SerializeField] private RectTransform m_debugFuncRoot;
+        [SerializeField] private Button m_btnShowPosternFunc;
+        [SerializeField] private RectTransform m_posternFuncRoot;
 
         [SerializeField] private Button m_btnOpenLogin;
         [SerializeField] private Button m_btnOpenDialog;
         [SerializeField] private Button m_btnDispatchEvent;
 
-        #region AUDIO_DEBUG
+        #region AUDIO_Postern
 
         [SerializeField] private Button m_btnPlayBGM_1;
         [SerializeField] private Button m_btnPlayBGM_2;
@@ -31,7 +31,7 @@ namespace Game.Scripts.UI.Postern
 
         #endregion
 
-        #region UMPersistentData_DEBUG
+        #region UMPersistentData_Postern
 
         [SerializeField] private Button m_btnUpdateUserData;
 
@@ -39,10 +39,10 @@ namespace Game.Scripts.UI.Postern
 
         public override void OnLoaded()
         {
-            m_debugFuncRoot.gameObject.SetActive(false);
-            m_btnShowDebugFunc.onClick.AddListener(() =>
+            m_posternFuncRoot.gameObject.SetActive(false);
+            m_btnShowPosternFunc.onClick.AddListener(() =>
             {
-                m_debugFuncRoot.gameObject.SetActive(!m_debugFuncRoot.gameObject.activeSelf);
+                m_posternFuncRoot.gameObject.SetActive(!m_posternFuncRoot.gameObject.activeSelf);
             });
 
             m_btnOpenLogin.onClick.AddListener(OpenLoginPanel);
