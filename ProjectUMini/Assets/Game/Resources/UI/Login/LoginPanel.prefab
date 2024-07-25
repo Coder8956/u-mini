@@ -601,6 +601,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83c1aa22599d42c780544b379c908669, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isHasBtnClose: 0
+  m_btnClose: {fileID: 0}
   m_btnLevel_1: {fileID: 3891834431567122059}
   m_btnLevel_2: {fileID: 5286307891629545602}
 --- !u!1 &8253271650460967553

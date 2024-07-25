@@ -1462,6 +1462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39729c68cad34c52898da6f15289488c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isHasBtnClose: 0
+  m_btnClose: {fileID: 0}
   m_btnShowPosternFunc: {fileID: 7693517745381708279}
   m_posternFuncRoot: {fileID: 4645615558515225399}
   m_btnOpenLogin: {fileID: 5099770250497999130}
@@ -3076,7 +3078,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0.0005060025}
+  m_AnchoredPosition: {x: 0, y: 0.0005364918}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &8510239800964348032
@@ -3347,7 +3349,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 5467910129678735943}
   m_Direction: 2
   m_Value: 0
-  m_Size: 1
+  m_Size: 0.99998915
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

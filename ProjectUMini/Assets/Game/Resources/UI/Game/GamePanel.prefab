@@ -313,4 +313,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73f2262ac9ed414fa9177952c2581912, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  m_isHasBtnClose: 0
+  m_btnClose: {fileID: 0}
   m_btnBackLogin: {fileID: 4327521270288341310}

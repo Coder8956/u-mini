@@ -72,5 +72,40 @@ namespace UMiniFramework.Editor.Common
 
             EditorUtility.RevealInFinder(folderPath);
         }
+
+        public static void DrawDefaultInspectorExcept(UnityEditor.Editor editor, string[] propertyNames)
+        {
+            // 复制原有的序列化对象
+            var prop = editor.serializedObject.GetIterator();
+            bool enterChildren = true;
+
+            // 遍历所有属性
+            while (prop.NextVisible(true))
+            {
+                // 仅绘制可见属性，并排除指定的属性
+                if (System.Array.IndexOf(propertyNames, prop.name) == -1)
+                {
+                    EditorGUILayout.PropertyField(prop, true);
+                }
+
+                enterChildren = false;
+            }
+
+            // 只排除一个属性的代码
+            // // 复制原有的序列化对象
+            // var prop = serializedObject.GetIterator();
+            // bool enterChildren = true;
+            //
+            // // 遍历所有属性
+            // while (prop.NextVisible(enterChildren))
+            // {
+            //     // 仅绘制可见属性，并排除指定的属性
+            //     if (prop.name != propertyName)
+            //     {
+            //         EditorGUILayout.PropertyField(prop, true);
+            //     }
+            //     enterChildren = false;
+            // }
+        }
     }
 }
