@@ -6,6 +6,8 @@
 - UMiniConfig
     - OnLaunchFinished
         - 设置框架启动完成的回调
+    - LaunchProgress
+        - 获取框架启动进度的回调
     - AssetLoader
         - 设置资源加载器
         - 框架内置加载器:UMResourcesLoader
@@ -25,9 +27,17 @@
 示例代码:
 UMini.UMiniConfig umConfig = new UMini.UMiniConfig();
 
-umConfig.OnLaunchFinished = () => {
-    // UMini 启动完成后的回调
-    UMUtils.Debug.Log("UMini Launch Finished."); };
+// UMini 启动完成后的回调
+umConfig.OnLaunchFinished = () => 
+            {
+                UMUtils.Debug.Log("UMini Launch Finished."); 
+            };
+
+// UMini 框架启动进度的回调
+umConfig.LaunchProgress = (progressTag, progressVal) =>
+            {
+                UMUtils.Debug.Log($"UMini LaunchProgress: {progressTag}, prograssVal: {progressVal}.");
+            };
 
 // 使用框架内置的资源加载器
 umConfig.AssetLoader = new UMResourcesLoader();

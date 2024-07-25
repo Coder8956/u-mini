@@ -27,9 +27,9 @@ namespace Game.Scripts.Launch
         {
             UMiniConfig umConfig = new UMiniConfig();
             umConfig.OnLaunchFinished = () => { m_btnEnterGame.gameObject.SetActive(true); };
-            umConfig.LaunchProgress = (tag, val) =>
+            umConfig.LaunchProgress = (progressTag, progressVal) =>
             {
-                UMUtils.Debug.Log($"UMini LaunchProgress: {tag}, prograssVal: {val}.");
+                UMUtils.Debug.Log($"UMini LaunchProgress: {progressTag}, prograssVal: {progressVal}.");
             };
             umConfig.AssetLoader = new UMResourcesLoader();
             umConfig.IsPersiDataToConsole = true;
