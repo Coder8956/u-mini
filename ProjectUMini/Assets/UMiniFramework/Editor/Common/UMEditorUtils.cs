@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 namespace UMiniFramework.Editor.Common
@@ -17,7 +18,7 @@ namespace UMiniFramework.Editor.Common
         /// </summary>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public static string FindFilePath(string fileName, string fileNameExtension)
+        public static string FindFilePath(string fileName, string extension)
         {
             // 在项目中查找文件
             string[] guids = AssetDatabase.FindAssets(fileName);
@@ -26,7 +27,7 @@ namespace UMiniFramework.Editor.Common
             foreach (string guid in guids)
             {
                 string path = AssetDatabase.GUIDToAssetPath(guid);
-                if (System.IO.Path.GetFileName(path) == $"{fileName}{fileNameExtension}")
+                if (System.IO.Path.GetFileName(path) == $"{fileName}{extension}")
                 {
                     return path;
                 }
@@ -35,7 +36,7 @@ namespace UMiniFramework.Editor.Common
             return null;
         }
 
-        public static void OpenScriptFile(string fileName)
+        public static void OpenAssetScriptFile(string fileName)
         {
             string filePath = FindFilePath(fileName, ".cs");
             if (string.IsNullOrEmpty(filePath))
@@ -58,6 +59,18 @@ namespace UMiniFramework.Editor.Common
                 EditorUtility.DisplayDialog("Error", "Cannot find the script at the specified path: " + filePath,
                     "OK");
             }
+        }
+
+
+        public static void OpenFolder(string folderPath)
+        {
+            if (!Directory.Exists(folderPath))
+            {
+                EditorUtility.DisplayDialog("无效路径", folderPath, "确认");
+                return;
+            }
+
+            EditorUtility.RevealInFinder(folderPath);
         }
     }
 }

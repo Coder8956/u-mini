@@ -14,6 +14,9 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
         {
             base.OnInspectorGUI();
             DrawModifyConfigPath();
+            DrawOpenExcelFolder();
+            DrawOpenScriptFolder();
+            DrawOpenDataFolder();
             DrawUpdateConfig();
         }
 
@@ -31,7 +34,31 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             if (GUILayout.Button("Modify Config Path"))
             {
                 string fileName = "UMConfigPathConst"; // 修改为你要查找的文件名
-                UMEditorUtils.OpenScriptFile(fileName);
+                UMEditorUtils.OpenAssetScriptFile(fileName);
+            }
+        }
+
+        private void DrawOpenExcelFolder()
+        {
+            if (GUILayout.Button("Open Excel Folder"))
+            {
+                UMEditorUtils.OpenFolder(UMConfigPathConst.EXCELS_DIR);
+            }
+        }
+
+        private void DrawOpenScriptFolder()
+        {
+            if (GUILayout.Button("Open Script Folder"))
+            {
+                UMEditorUtils.OpenFolder(UMConfigPathConst.SCRIPTS_DIR);
+            }
+        }
+
+        private void DrawOpenDataFolder()
+        {
+            if (GUILayout.Button("Open Data Folder"))
+            {
+                UMEditorUtils.OpenFolder(UMConfigPathConst.DATA_DIR);
             }
         }
     }
