@@ -30,6 +30,7 @@ namespace Game.Scripts.Launch
             {
                 Debug.Log($"LaunchFinished >>> UMini Init　Finished: {UMini.UMInitFinished}");
                 m_btnEnterGame.gameObject.SetActive(true);
+                // UMini.UI.Interactable = true;
             };
             umConfig.LaunchProgress = (progressTag, progressVal) =>
             {

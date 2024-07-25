@@ -17,11 +17,22 @@ namespace UMiniFramework.Scripts.Modules.UIModule
         [SerializeField] private RectTransform m_openedRoot;
         [SerializeField] private RectTransform[] m_UILayerRoots;
         [SerializeField] private RectTransform m_closedRoot;
+        private CanvasGroup m_UMUIRootCanvasGroup;
         private Dictionary<string, UMUIPanel> m_createdPanel;
+
+        /// <summary>
+        /// 控制UMini全局的UI是否可以交互
+        /// </summary>
+        public bool Interactable
+        {
+            get { return m_UMUIRootCanvasGroup.interactable; }
+            set { m_UMUIRootCanvasGroup.interactable = value; }
+        }
 
         public override IEnumerator Init(UMiniConfig config)
         {
             m_createdPanel = new Dictionary<string, UMUIPanel>();
+            m_UMUIRootCanvasGroup = m_UMUIRootCanvas.GetComponent<CanvasGroup>();
             yield return null;
             m_initFinished = true;
             UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
