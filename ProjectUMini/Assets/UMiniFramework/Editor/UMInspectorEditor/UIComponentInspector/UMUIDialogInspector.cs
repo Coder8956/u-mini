@@ -24,7 +24,7 @@ public class UMUIDialogInspector : UMUIPanelInspector
     {
         serializedObject.Update();
         UMEditorUtils.DrawDefaultInspectorExcept(this, m_exceptProps.ToArray());
-        DrawHasBtnClose();
+        DrawSetBtnClosePanel();
         DrawHasMask();
         serializedObject.ApplyModifiedProperties();
     }

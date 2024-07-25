@@ -6,27 +6,27 @@ namespace UMiniFramework.Scripts.Modules.UIModule
 {
     public abstract class UMUIPanel : MonoBehaviour
     {
-        [SerializeField] private bool m_isHasBtnClose = false;
+        [SerializeField] private bool m_setBtnClosePanel = false;
 
-        protected bool IsHasBtnClose
+        protected bool SetBtnClosePanel
         {
-            get => m_isHasBtnClose;
-            set => m_isHasBtnClose = value;
+            get => m_setBtnClosePanel;
+            set => m_setBtnClosePanel = value;
         }
 
-        [SerializeField] private Button m_btnClose = null;
+        [SerializeField] private Button m_btnClosePanel = null;
 
         protected Button BtnClose
         {
-            get => m_btnClose;
-            set => m_btnClose = value;
+            get => m_btnClosePanel;
+            set => m_btnClosePanel = value;
         }
 
         protected virtual void Awake()
         {
-            if (m_isHasBtnClose && m_btnClose != null)
+            if (m_setBtnClosePanel && m_btnClosePanel != null)
             {
-                m_btnClose.onClick.AddListener(OnClickBtnClose);
+                m_btnClosePanel.onClick.AddListener(OnClickBtnClose);
             }
         }
 

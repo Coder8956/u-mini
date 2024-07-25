@@ -6,32 +6,32 @@ using UnityEditor;
 [CustomEditor(typeof(UMUIPanel), true)]
 public class UMUIPanelInspector : Editor
 {
-    private SerializedProperty m_isHasBtnCloseProp;
-    private SerializedProperty m_btnCloseProp;
+    private SerializedProperty m_setBtnClosePanelProp;
+    private SerializedProperty m_btnClosePanelProp;
     protected List<string> m_exceptProps = new List<string>();
 
     protected virtual void OnEnable()
     {
-        m_isHasBtnCloseProp = serializedObject.FindProperty("m_isHasBtnClose");
-        m_btnCloseProp = serializedObject.FindProperty("m_btnClose");
-        m_exceptProps.Add("m_isHasBtnClose");
-        m_exceptProps.Add("m_btnClose");
+        m_setBtnClosePanelProp = serializedObject.FindProperty("m_setBtnClosePanel");
+        m_btnClosePanelProp = serializedObject.FindProperty("m_btnClosePanel");
+        m_exceptProps.Add("m_setBtnClosePanel");
+        m_exceptProps.Add("m_btnClosePanel");
     }
 
     public override void OnInspectorGUI()
     {
         serializedObject.Update();
         UMEditorUtils.DrawDefaultInspectorExcept(this, m_exceptProps.ToArray());
-        DrawHasBtnClose();
+        DrawSetBtnClosePanel();
         serializedObject.ApplyModifiedProperties();
     }
 
-    protected void DrawHasBtnClose()
+    protected void DrawSetBtnClosePanel()
     {
-        EditorGUILayout.PropertyField(m_isHasBtnCloseProp);
-        if (m_isHasBtnCloseProp.boolValue)
+        EditorGUILayout.PropertyField(m_setBtnClosePanelProp);
+        if (m_setBtnClosePanelProp.boolValue)
         {
-            EditorGUILayout.PropertyField(m_btnCloseProp);
+            EditorGUILayout.PropertyField(m_btnClosePanelProp);
         }
     }
 }

@@ -125,8 +125,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d91aa768cd4541caa1371d7ca599e537, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_isHasBtnClose: 0
-  m_btnClose: {fileID: 0}
+  m_setBtnClosePanel: 0
+  m_btnClosePanel: {fileID: 0}
   m_isMask: 0
   m_maskSprite: {fileID: 0}
   m_maskColor: {r: 0, g: 0, b: 0, a: 0.7}
