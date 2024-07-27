@@ -7,7 +7,7 @@ namespace Game.Scripts.Gameplay.Monster
     {
         [SerializeField] private float m_speed = 2;
         private bool m_isWalk = false;
-        private GameObjectPool m_pool;
+        private UMGameObjectPool m_pool;
         private float m_hp = 3;
 
         private void Walk()
@@ -55,7 +55,7 @@ namespace Game.Scripts.Gameplay.Monster
             Walk();
         }
 
-        public override void OnBorn(GameObjectPool monsterPool)
+        public override void OnBorn(UMGameObjectPool monsterPool)
         {
             m_pool = monsterPool;
             m_hp = 3;

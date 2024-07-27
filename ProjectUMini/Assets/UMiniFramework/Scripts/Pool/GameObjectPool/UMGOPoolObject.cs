@@ -5,12 +5,12 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
     /// <summary>
     /// 游戏对象池生成的物体
     /// </summary>
-    public class GOPoolObject : MonoBehaviour
+    public class UMGOPoolObject : MonoBehaviour
     {
         public int RelatedPoolHashTag { get; private set; }
-        public GameObjectPool RelatedPool { get; private set; }
+        public UMGameObjectPool RelatedPool { get; private set; }
 
-        public void SetRelatedPool(int poolHashTag, GameObjectPool relatedPool)
+        public void SetRelatedPool(int poolHashTag, UMGameObjectPool relatedPool)
         {
             RelatedPoolHashTag = poolHashTag;
             RelatedPool = relatedPool;

@@ -8,10 +8,10 @@ namespace Game.Scripts.Gameplay
     public class BulletExplosion : MonoBehaviour
     {
         private ParticleSystem m_particleSystem;
-        private GameObjectPool m_pool;
+        private UMGameObjectPool m_pool;
         private static GameAudioData m_ExplosionAudioData;
 
-        public void Play(Vector3 worldPos, GameObjectPool pool)
+        public void Play(Vector3 worldPos, UMGameObjectPool pool)
         {
             if (m_ExplosionAudioData == null)
             {

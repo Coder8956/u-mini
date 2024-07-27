@@ -26,8 +26,8 @@ namespace Game.Scripts.Gameplay
         private CannonData m_cannonData;
         private BulletData m_bulletData;
 
-        private GameObjectPool m_bulletPool;
-        private GameObjectPool m_bulletExplosionPool;
+        private UMGameObjectPool m_bulletPool;
+        private UMGameObjectPool m_bulletExplosionPool;
 
         public static void SetGameLevel(string levelId)
         {
@@ -58,7 +58,7 @@ namespace Game.Scripts.Gameplay
             UMini.Asset.LoadAsync<GameObject>(m_bulletData.bulletPath, (res) =>
             {
                 GameObject bullet = Instantiate(res.Resource);
-                m_bulletPool = GameObjectPool.CreatePool(new GameObjectPool.PoolConfig(
+                m_bulletPool = UMGameObjectPool.CreatePool(new UMGameObjectPool.UMPoolConfig(
                     "BulletPool",
                     null,
                     bullet,
@@ -69,7 +69,7 @@ namespace Game.Scripts.Gameplay
             });
 
             // 子弹爆炸特效
-            m_bulletExplosionPool = GameObjectPool.CreatePool(new GameObjectPool.PoolConfig(
+            m_bulletExplosionPool = UMGameObjectPool.CreatePool(new UMGameObjectPool.UMPoolConfig(
                 "BulletExplosionPool",
                 null,
                 Instantiate(m_bulletExplosion),

@@ -14,7 +14,7 @@ namespace Game.Scripts.Gameplay.Monster
             m_collider = GetComponent<CapsuleCollider>();
         }
 
-        public abstract void OnBorn(GameObjectPool monsterPool);
+        public abstract void OnBorn(UMGameObjectPool monsterPool);
         public abstract void OnDamage(float val);
     }
 }

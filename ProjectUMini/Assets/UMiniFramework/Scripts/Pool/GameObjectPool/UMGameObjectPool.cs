@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Scripts.Pool.GameObjectPool
 {
-    public class GameObjectPool : MonoBehaviour
+    public class UMGameObjectPool : MonoBehaviour
     {
         /// <summary>
         /// 池内对象数量
@@ -16,12 +16,12 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         }
 
         private Queue<GameObject> m_gameObjectQue;
-        private PoolConfig m_poolConfig;
+        private UMPoolConfig m_poolConfig;
         private int m_createdNum = 0;
         private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
         private int m_hashTag = 0;
 
-        private void Init(PoolConfig poolConfig)
+        private void Init(UMPoolConfig poolConfig)
         {
             m_poolConfig = poolConfig;
             m_gameObjectQue = new Queue<GameObject>();
@@ -43,7 +43,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
         {
             GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
             m_createdNum++;
-            GOPoolObject poolObject = newObject.AddComponent<GOPoolObject>();
+            UMGOPoolObject poolObject = newObject.AddComponent<UMGOPoolObject>();
             poolObject.SetRelatedPool(m_hashTag, this);
             string oldName = newObject.name;
             newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNum}");
@@ -69,7 +69,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
 
         public void Back(GameObject obj)
         {
-            int relatedPoolTag = obj.GetComponent<GOPoolObject>().RelatedPoolHashTag;
+            int relatedPoolTag = obj.GetComponent<UMGOPoolObject>().RelatedPoolHashTag;
             if (m_hashTag != relatedPoolTag)
             {
                 throw new Exception("The object returned to the wrong object pool");
@@ -81,15 +81,15 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
             obj.transform.SetParent(transform, false);
         }
 
-        public static GameObjectPool CreatePool(PoolConfig poolConfig)
+        public static UMGameObjectPool CreatePool(UMPoolConfig poolConfig)
         {
-            GameObjectPool newGameObjectPool =
-                UMUtilCommon.CreateGameObject<GameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
+            UMGameObjectPool newGameObjectPool =
+                UMUtilCommon.CreateGameObject<UMGameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
             newGameObjectPool.Init(poolConfig);
             return newGameObjectPool;
         }
 
-        public class PoolConfig
+        public class UMPoolConfig
         {
             public readonly string PoolName;
             public readonly GameObject PoolParent;
@@ -98,7 +98,7 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
             public readonly Action<GameObject> OnGet;
             public readonly Action<GameObject> OnBack;
 
-            public PoolConfig(
+            public UMPoolConfig(
                 string poolName,
                 GameObject poolParent,
                 GameObject objectTemplet,

@@ -9,8 +9,8 @@ namespace Game.Scripts.Gameplay
     public class GameBullet : MonoBehaviour
     {
         private GameObject m_hitObject;
-        private GameObjectPool m_pool;
-        private GameObjectPool m_bulletExplosionPool;
+        private UMGameObjectPool m_pool;
+        private UMGameObjectPool m_bulletExplosionPool;
         private Coroutine m_backPoolCoro;
         private WaitForSeconds m_wfsBackPool = new WaitForSeconds(2.5f);
         private Rigidbody m_rig;
@@ -37,8 +37,8 @@ namespace Game.Scripts.Gameplay
             BackPool();
         }
 
-        public void Shooting(GameObject shootingPoint, int force, GameObjectPool bulletPool,
-            GameObjectPool bulletExplosionPool)
+        public void Shooting(GameObject shootingPoint, int force, UMGameObjectPool bulletPool,
+            UMGameObjectPool bulletExplosionPool)
         {
             m_bulletExplosionPool = bulletExplosionPool;
             if (m_rig == null)

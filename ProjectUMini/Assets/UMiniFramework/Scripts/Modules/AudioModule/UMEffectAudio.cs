@@ -8,7 +8,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
 {
     public class UMEffectAudio : UMAudio
     {
-        private GameObjectPool m_soundPool;
+        private UMGameObjectPool m_soundPool;
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
         private List<string> m_loadingClip;
         private bool m_isMute = false;
@@ -17,7 +17,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
         {
             // 初始化音效对象池
             GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
-            GameObjectPool.PoolConfig poolConfig = new GameObjectPool.PoolConfig
+            UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
             ("SoundPool",
                 gameObject,
                 poolObjectTemplet,
@@ -25,7 +25,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
                 null,
                 null
             );
-            m_soundPool = GameObjectPool.CreatePool(poolConfig);
+            m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
             m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
             m_loadingClip = new List<string>();
         }

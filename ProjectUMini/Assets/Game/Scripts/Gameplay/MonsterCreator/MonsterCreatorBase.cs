@@ -7,7 +7,7 @@ namespace Game.Scripts.Gameplay.MonsterCreator
     public abstract class MonsterCreatorBase : MonoBehaviour
     {
         protected MonsterData m_monsterData;
-        protected GameObjectPool m_monsterPool;
+        protected UMGameObjectPool m_monsterPool;
 
         public virtual void Init(MonsterData data)
         {
@@ -16,7 +16,7 @@ namespace Game.Scripts.Gameplay.MonsterCreator
                 (res) =>
                 {
                     m_monsterPool =
-                        GameObjectPool.CreatePool(new GameObjectPool.PoolConfig(
+                        UMGameObjectPool.CreatePool(new UMGameObjectPool.UMPoolConfig(
                             $"MonsterType-[{m_monsterData.type}]",
                             gameObject,
                             Instantiate(res.Resource),

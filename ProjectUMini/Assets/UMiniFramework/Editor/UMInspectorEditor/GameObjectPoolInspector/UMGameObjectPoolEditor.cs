@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Editor.UMInspectorEditor.GameObjectPoolInspector
 {
-    [CustomEditor(typeof(GameObjectPool))]
+    [CustomEditor(typeof(UMGameObjectPool))]
     [CanEditMultipleObjects]
     public class UMGameObjectPoolEditor : UnityEditor.Editor
     {
@@ -12,11 +12,11 @@ namespace UMiniFramework.Editor.UMInspectorEditor.GameObjectPoolInspector
         {
             // base.OnInspectorGUI();
 
-            GameObjectPool GoPool = (GameObjectPool) target;
+            UMGameObjectPool GoPool = (UMGameObjectPool) target;
 
             // 绘制默认的 Inspector GUI（包括其他字段）
             DrawDefaultInspector();
-            
+
             GUI.enabled = false;
             // 使用反射访问和编辑属性
             EditorGUILayout.LabelField("ObjectCount", GoPool.ObjectCount.ToString());
