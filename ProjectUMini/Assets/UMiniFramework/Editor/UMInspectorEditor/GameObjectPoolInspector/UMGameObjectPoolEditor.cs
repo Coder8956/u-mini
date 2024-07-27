@@ -18,8 +18,8 @@ namespace UMiniFramework.Editor.UMInspectorEditor.GameObjectPoolInspector
             DrawDefaultInspector();
 
             GUI.enabled = false;
-            // 使用反射访问和编辑属性
-            EditorGUILayout.LabelField("ObjectCount", GoPool.ObjectCount.ToString());
+            EditorGUILayout.LabelField("CreatedNum", GoPool.CreatedNum.ToString());
+            EditorGUILayout.LabelField("ObjectInPoolCount", GoPool.ObjectCount.ToString());
             GUI.enabled = true;
 
             // 保存更改

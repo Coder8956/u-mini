@@ -15,9 +15,11 @@ namespace UMiniFramework.Scripts.Pool.GameObjectPool
             get { return (m_gameObjectQue != null ? m_gameObjectQue.Count : 0); }
         }
 
+        private int m_createdNum = 0;
+        public int CreatedNum => m_createdNum;
+
         private Queue<GameObject> m_gameObjectQue;
         private UMPoolConfig m_poolConfig;
-        private int m_createdNum = 0;
         private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
         private int m_hashTag = 0;
 
