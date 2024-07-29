@@ -1,9 +1,9 @@
 ﻿using Game.Scripts.Const;
 using Game.Scripts.EventBody;
 using Game.Scripts.Gameplay;
-using UMiniFramework.Scripts.Modules.EventModule;
-using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Modules.UIModule;
+using UMiniFramework.Runtime.Modules.EventModule;
+using UMiniFramework.Runtime.UMEntrance;
+using UMiniFramework.Runtime.Modules.UIModule;
 using UnityEngine;
 using UnityEngine.UI;
 

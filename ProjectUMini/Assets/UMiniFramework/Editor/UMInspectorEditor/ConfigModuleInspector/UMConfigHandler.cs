@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using ExcelDataReader;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
-using UMiniFramework.Scripts.Utils;
+using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -311,12 +311,12 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             string tableClassName = $"{CapitalizeFirstWord(excelName)}Table";
             TableClassList.Add(tableClassName);
             scriptTableString.AppendLine($"{ScriptTip}");
+            scriptTableString.AppendLine($"using UMiniFramework.Runtime.UMEntrance;");
+            scriptTableString.AppendLine($"using UMiniFramework.Runtime.Utils;");
+            scriptTableString.AppendLine($"using UMiniFramework.Runtime.Modules.ConfigModule;");
             scriptTableString.AppendLine($"using System.Collections;");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
             scriptTableString.AppendLine($"using Newtonsoft.Json;");
-            scriptTableString.AppendLine($"using UMiniFramework.Scripts.UMEntrance;");
-            scriptTableString.AppendLine($"using UMiniFramework.Scripts.Utils;");
-            scriptTableString.AppendLine($"using UMiniFramework.Scripts.Modules.ConfigModule;");
             scriptTableString.AppendLine($"using UnityEngine;");
             scriptTableString.AppendLine($"");
             scriptTableString.AppendLine($"public class {tableClassName} : UMConfigTable");

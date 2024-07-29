@@ -1,5 +1,5 @@
-﻿using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Pool.GameObjectPool;
+﻿using UMiniFramework.Runtime.Pool.GameObjectPool;
+using UMiniFramework.Runtime.UMEntrance;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay.MonsterCreator

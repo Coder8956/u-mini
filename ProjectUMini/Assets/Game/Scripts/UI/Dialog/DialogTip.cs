@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Scripts.Modules.UIModule;
+﻿using UMiniFramework.Runtime.Modules.UIModule;
 
 namespace Game.Scripts.UI.Dialog
 {

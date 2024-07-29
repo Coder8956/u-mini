@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Scripts.Modules.PersistentDataModule;
+﻿using UMiniFramework.Runtime.Modules.PersistentDataModule;
 
 namespace Game.Scripts.PersistentData
 {

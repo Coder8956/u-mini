@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using Game.Scripts.Gameplay.Monster;
-using UMiniFramework.Scripts.Pool.GameObjectPool;
-using UMiniFramework.Scripts.Utils;
+using UMiniFramework.Runtime.Pool.GameObjectPool;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay

@@ -1,10 +1,10 @@
 ﻿// UMiniFramework config automatically generated, please do not modify it
+using UMiniFramework.Runtime.UMEntrance;
+using UMiniFramework.Runtime.Utils;
+using UMiniFramework.Runtime.Modules.ConfigModule;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
-using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Utils;
-using UMiniFramework.Scripts.Modules.ConfigModule;
 using UnityEngine;
 
 public class GameAudioTable : UMConfigTable

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UMiniFramework.Editor.Common;
-using UMiniFramework.Scripts.Modules.UIModule;
+using UMiniFramework.Runtime.Modules.UIModule;
 using UnityEditor;
 
 [CustomEditor(typeof(UMUIPanel), true)]

@@ -1,7 +1,7 @@
 using Game.Scripts.Const;
 using Game.Scripts.UI.Login;
 using Game.Scripts.UI.Postern;
-using UMiniFramework.Scripts.UMEntrance;
+using UMiniFramework.Runtime.UMEntrance;
 using UnityEngine;
 
 namespace Game.Scripts.Login

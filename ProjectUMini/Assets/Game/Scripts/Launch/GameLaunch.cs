@@ -1,12 +1,10 @@
 using System.Collections.Generic;
 using Game.Scripts.Const;
 using Game.Scripts.PersistentData;
-using UMiniFramework.Scripts;
-using UMiniFramework.Scripts.Modules.AssetModule.AssetLoaders;
-using UMiniFramework.Scripts.Modules.ConfigModule;
-using UMiniFramework.Scripts.Modules.PersistentDataModule;
-using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Utils;
+using UMiniFramework.Runtime.Modules.AssetModule.AssetLoaders;
+using UMiniFramework.Runtime.Modules.ConfigModule;
+using UMiniFramework.Runtime.Modules.PersistentDataModule;
+using UMiniFramework.Runtime.UMEntrance;
 using UnityEngine;
 using UnityEngine.UI;
 

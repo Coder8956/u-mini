@@ -3,8 +3,8 @@ using Game.Scripts.EventBody;
 using Game.Scripts.PersistentData;
 using Game.Scripts.UI.Dialog;
 using Game.Scripts.UI.Login;
-using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Modules.UIModule;
+using UMiniFramework.Runtime.UMEntrance;
+using UMiniFramework.Runtime.Modules.UIModule;
 using UnityEngine;
 using UnityEngine.UI;
 

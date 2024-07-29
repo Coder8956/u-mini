@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Scripts.Pool.GameObjectPool;
+﻿using UMiniFramework.Runtime.Pool.GameObjectPool;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay.Monster

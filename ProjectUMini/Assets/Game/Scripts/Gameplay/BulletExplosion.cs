@@ -1,6 +1,6 @@
 ﻿using System.Collections;
-using UMiniFramework.Scripts.UMEntrance;
-using UMiniFramework.Scripts.Pool.GameObjectPool;
+using UMiniFramework.Runtime.UMEntrance;
+using UMiniFramework.Runtime.Pool.GameObjectPool;
 using UnityEngine;
 
 namespace Game.Scripts.Gameplay
