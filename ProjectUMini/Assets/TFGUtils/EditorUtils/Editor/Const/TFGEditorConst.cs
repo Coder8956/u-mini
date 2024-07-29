@@ -1,4 +1,4 @@
-﻿namespace TFGEditorUtils.Editor.Const
+﻿namespace TFGUtils.EditorUtils.Editor.Const
 {
     public class TFGEditorConst
     {

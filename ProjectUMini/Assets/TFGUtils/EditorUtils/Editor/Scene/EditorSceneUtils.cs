@@ -1,8 +1,8 @@
-﻿using TFGEditorUtils.Editor.Const;
+﻿using TFGUtils.EditorUtils.Editor.Const;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 
-namespace TFGEditorUtils.Editor.Scene
+namespace TFGUtils.EditorUtils.Editor.Scene
 {
     public class EditorSceneUtils
     {

@@ -37,6 +37,7 @@ namespace UMiniFramework.Scripts.Modules.AudioModule
 
         public void Stop()
         {
+            if (m_audioSource == null) return;
             m_audioSource.Stop();
         }
 
