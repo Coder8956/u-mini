@@ -7,9 +7,9 @@ using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-namespace UMiniFramework.Runtime.Modules.UIModule
+namespace UMiniFramework.Runtime.Modules.UI
 {
-    public class UMUIModule : UMBaseModule
+    public class UMUI : UMBaseModule
     {
         [SerializeField] private Canvas m_UMUIRootCanvas = null;
         [SerializeField] private Camera m_UMUICamera = null;

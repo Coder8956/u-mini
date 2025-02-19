@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.UIModule
+﻿namespace UMiniFramework.Runtime.Modules.UI
 {
     public enum UMUILayer
     {

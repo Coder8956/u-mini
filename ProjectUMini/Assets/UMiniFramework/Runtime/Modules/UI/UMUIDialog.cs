@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UMiniFramework.Runtime.Modules.UIModule
+namespace UMiniFramework.Runtime.Modules.UI
 {
     public abstract class UMUIDialog : UMUIPanel
     {

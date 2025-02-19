@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UMiniFramework.Runtime.Modules.UIModule
+namespace UMiniFramework.Runtime.Modules.UI
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class UMUIPanelInfo : Attribute

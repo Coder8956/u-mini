@@ -1,5 +1,5 @@
 ﻿using UMiniFramework.Editor.Common;
-using UMiniFramework.Runtime.Modules.UIModule;
+using UMiniFramework.Runtime.Modules.UI;
 using UnityEditor;
 
 [CustomEditor(typeof(UMUIDialog), true)]
