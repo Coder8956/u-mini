@@ -25,9 +25,9 @@ namespace UMiniFramework.Runtime.Modules.Manager
         public static void Launch()
         {
             if (m_globalLaunched) return;
-            m_UMGRGameObject = new GameObject(UMGR_GO_NAME);
+            m_umgrInstance = UMUtilCommon.CreateGameObject<UMGR>(UMGR_GO_NAME, null);
+            m_UMGRGameObject = m_umgrInstance.gameObject;
             DontDestroyOnLoad(m_UMGRGameObject);
-            m_umgrInstance = m_UMGRGameObject.AddComponent<UMGR>();
             m_moduleDic = new Dictionary<string, UMBaseModule>();
             m_globalLaunched = true;
             UMUtilDebug.Log($"UMGR Launched.");
@@ -35,11 +35,22 @@ namespace UMiniFramework.Runtime.Modules.Manager
 
         private static string GetModuleKey<T>() where T : UMBaseModule
         {
-            return typeof(T).FullName;
+            return typeof(T).Name;
         }
 
         public static void Register<T>() where T : UMBaseModule
         {
+            string key = GetModuleKey<T>();
+            if (m_moduleDic.ContainsKey(key))
+            {
+                UMUtilDebug.Warning($"Incorrect operation. The {key} was registered repeatedly.");
+            }
+            else
+            {
+                T module = UMUtilCommon.CreateGameObject<T>(key, m_UMGRGameObject);
+                m_moduleDic.Add(key, module);
+                UMUtilDebug.Log($"UMGR register module: {key}.");
+            }
         }
 
         public static T Get<T>() where T : UMBaseModule

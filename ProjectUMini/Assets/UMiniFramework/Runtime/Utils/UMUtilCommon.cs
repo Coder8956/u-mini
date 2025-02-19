@@ -13,7 +13,7 @@ namespace UMiniFramework.Runtime.Utils
             }
 
             moduleGo.transform.localPosition = Vector3.zero;
-            Debug.Log($"The {name} is created");
+            // Debug.Log($"The {name} is created");
             return moduleGo.GetComponent<T>();
         }
 

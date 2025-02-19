@@ -9,8 +9,8 @@ namespace Game.Scripts.Launch
     {
         private void Awake()
         {
-            UMGR.Register<UMUI>();
             UMGR.Launch();
+            UMGR.Register<UMUI>();
             UMGR.Get<UMUI>();
         }
     }
