@@ -11,17 +11,17 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
 
         protected void LoadAudioClip(string audioPath, Action<AudioClip> onCompleted)
         {
-            UMGR.Asset.LoadAsync<AudioClip>(audioPath, (res) =>
-            {
-                if (res.State)
-                {
-                    onCompleted?.Invoke(res.Resource);
-                }
-                else
-                {
-                    UMUtilDebug.Warning($"Audio load failed. Path: {audioPath}");
-                }
-            });
+            // UMGR.Asset.LoadAsync<AudioClip>(audioPath, (res) =>
+            // {
+            //     if (res.State)
+            //     {
+            //         onCompleted?.Invoke(res.Resource);
+            //     }
+            //     else
+            //     {
+            //         UMUtilDebug.Warning($"Audio load failed. Path: {audioPath}");
+            //     }
+            // });
         }
     }
 }

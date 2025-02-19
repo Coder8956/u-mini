@@ -55,27 +55,27 @@ namespace UMiniFramework.Runtime.Modules.UIModule
             else
             {
                 // 加载界面
-                UMGR.Asset.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
-                {
-                    if (result.State)
-                    {
-                        GameObject panelGO = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
-                        panel = panelGO.GetComponent<T>();
-                        m_createdPanel.Add(panelInfo.PanelPath, panel);
-                        panel.OnLoaded();
-                        if (panel is UMUIDialog)
-                        {
-                            UMUIDialog dialog = panel as UMUIDialog;
-                            dialog.InitMask();
-                        }
-
-                        OnPanelOpenHandler(panel, panelInfo, completed);
-                    }
-                    else
-                    {
-                        UMUtilDebug.Warning($"Load Panel Failed. Path:{panelInfo.PanelPath}");
-                    }
-                });
+                // UMGR.Asset.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
+                // {
+                //     if (result.State)
+                //     {
+                //         GameObject panelGO = Instantiate(result.Resource, m_UMUIRootCanvas.transform);
+                //         panel = panelGO.GetComponent<T>();
+                //         m_createdPanel.Add(panelInfo.PanelPath, panel);
+                //         panel.OnLoaded();
+                //         if (panel is UMUIDialog)
+                //         {
+                //             UMUIDialog dialog = panel as UMUIDialog;
+                //             dialog.InitMask();
+                //         }
+                //
+                //         OnPanelOpenHandler(panel, panelInfo, completed);
+                //     }
+                //     else
+                //     {
+                //         UMUtilDebug.Warning($"Load Panel Failed. Path:{panelInfo.PanelPath}");
+                //     }
+                // });
             }
         }
 

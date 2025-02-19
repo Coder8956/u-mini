@@ -5,28 +5,28 @@ namespace UMiniFramework.Runtime.Utils
     public static class UMUtilDebug
     {
         private const string DEBUG_TAG = "[UM_DEBUG]";
-        private static bool Enable = true;
+        private static bool ENABLE = true;
 
-        public static void PrintLog(bool val)
+        public static void Enable(bool val)
         {
-            Enable = val;
+            ENABLE = val;
         }
 
         public static void Log(object msg)
         {
-            if (!Enable) return;
+            if (!ENABLE) return;
             Debug.Log(MessageAddTag(msg));
         }
 
         public static void Warning(object msg)
         {
-            if (!Enable) return;
+            if (!ENABLE) return;
             Debug.LogWarning(MessageAddTag(msg));
         }
 
         public static void Error(object msg)
         {
-            if (!Enable) return;
+            if (!ENABLE) return;
             Debug.LogError(MessageAddTag(msg));
         }
 

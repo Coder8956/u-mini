@@ -32,7 +32,7 @@ namespace UMiniFramework.Runtime.Modules.UIModule
 
         protected virtual void OnClickBtnClose()
         {
-            UMGR.UI.Close(this);
+            // UMGR.UI.Close(this);
         }
 
         public abstract void OnLoaded();
