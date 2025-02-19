@@ -9,13 +9,6 @@ namespace Game.Scripts.Launch
     {
         private void Awake()
         {
-            StartCoroutine(WaitUMGRInited());
-        }
-
-        private IEnumerator WaitUMGRInited()
-        {
-            yield return new WaitUntil(() => UMGR.State == UMGR_STATE.INITED);
-            Debug.Log("Can use UMGR");
             UMGR.Register<UMUI>();
             UMGR.Launch();
             UMGR.Get<UMUI>();

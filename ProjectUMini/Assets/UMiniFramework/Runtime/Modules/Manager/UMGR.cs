@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data.SqlTypes;
 using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
@@ -8,44 +9,28 @@ namespace UMiniFramework.Runtime.Modules.Manager
 {
     public class UMGR : MonoBehaviour
     {
-        private static UMGR m_instance;
+        /// <summary>
+        /// 全局启动标记
+        /// </summary>
+        private static bool m_globalLaunched = false;
 
-        private static UMGR_STATE m_state = UMGR_STATE.INVALID;
+        private static UMGR m_umgrInstance;
 
-        public static UMGR_STATE State => m_state;
+        private const string UMGR_GO_NAME = "UMini-UMGR";
 
-        private static Dictionary<string, UMBaseModule> m_moduleDic;
+        private static GameObject m_UMGRGameObject = null;
 
-        private void Awake()
-        {
-            if (m_instance == null)
-            {
-                m_instance = GetComponent<UMGR>();
-                DontDestroyOnLoad(gameObject);
-                Init();
-            }
-            else
-            {
-                Destroy(gameObject);
-            }
-        }
-
-        private static void Init()
-        {
-            m_state = UMGR_STATE.INVALID;
-            UMUtilDebug.Log($"Start init UMGR State:{m_state}");
-            m_moduleDic = new Dictionary<string, UMBaseModule>();
-            m_state = UMGR_STATE.INITED;
-            UMUtilDebug.Log($"UMGR init Finished State:{m_state}");
-        }
+        private static Dictionary<string, UMBaseModule> m_moduleDic = null;
 
         public static void Launch()
         {
-            m_state = UMGR_STATE.LAUNCHING;
-            UMUtilDebug.Log($"UMGR State:{m_state}");
-
-            m_state = UMGR_STATE.LAUNCHED;
-            UMUtilDebug.Log($"UMGR State:{m_state}");
+            if (m_globalLaunched) return;
+            m_UMGRGameObject = new GameObject(UMGR_GO_NAME);
+            DontDestroyOnLoad(m_UMGRGameObject);
+            m_umgrInstance = m_UMGRGameObject.AddComponent<UMGR>();
+            m_moduleDic = new Dictionary<string, UMBaseModule>();
+            m_globalLaunched = true;
+            UMUtilDebug.Log($"UMGR Launched.");
         }
 
         private static string GetModuleKey<T>() where T : UMBaseModule
