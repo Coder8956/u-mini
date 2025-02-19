@@ -4,7 +4,7 @@ using UMiniFramework.Runtime.Pool.GameObjectPool;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.AudioModule
+namespace UMiniFramework.Runtime.Modules.Audio
 {
     public class UMEffectAudio : UMAudio
     {
@@ -13,22 +13,22 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
         private List<string> m_loadingClip;
         private bool m_isMute = false;
 
-        public override void Init()
-        {
-            // 初始化音效对象池
-            GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
-            UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
-            ("SoundPool",
-                gameObject,
-                poolObjectTemplet,
-                5,
-                null,
-                null
-            );
-            m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
-            m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
-            m_loadingClip = new List<string>();
-        }
+        // public override void Init()
+        // {
+        //     // 初始化音效对象池
+        //     GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
+        //     UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
+        //     ("SoundPool",
+        //         gameObject,
+        //         poolObjectTemplet,
+        //         5,
+        //         null,
+        //         null
+        //     );
+        //     m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
+        //     m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
+        //     m_loadingClip = new List<string>();
+        // }
 
         public void Play(string audioPath, float volume = 1)
         {
@@ -42,13 +42,13 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
             else
             {
                 m_loadingClip.Add(audioPath);
-                LoadAudioClip(audioPath, (clip) =>
-                {
-                    effectAC = clip;
-                    m_cachedAudioClipDic.Add(audioPath, effectAC);
-                    m_loadingClip.Remove(audioPath);
-                    PlayEffect(effectAC, volume);
-                });
+                // LoadAudioClip(audioPath, (clip) =>
+                // {
+                //     effectAC = clip;
+                //     m_cachedAudioClipDic.Add(audioPath, effectAC);
+                //     m_loadingClip.Remove(audioPath);
+                //     PlayEffect(effectAC, volume);
+                // });
             }
         }
 

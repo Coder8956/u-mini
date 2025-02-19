@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.AudioModule
+namespace UMiniFramework.Runtime.Modules.Audio
 {
     public class UMBGMAudio : UMAudio
     {
@@ -9,12 +9,12 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
 
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
 
-        public override void Init()
-        {
-            m_audioSource = gameObject.AddComponent<AudioSource>();
-            m_audioSource.loop = true;
-            m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
-        }
+        // public override void Init()
+        // {
+        //     m_audioSource = gameObject.AddComponent<AudioSource>();
+        //     m_audioSource.loop = true;
+        //     m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
+        // }
 
         public void Play(string audioPath, float volume = 1, bool loop = true)
         {
@@ -26,12 +26,12 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
             }
             else
             {
-                LoadAudioClip(audioPath, (clip) =>
-                {
-                    bgmAC = clip;
-                    m_cachedAudioClipDic.Add(audioPath, bgmAC);
-                    SwitchClip(bgmAC, volume, loop);
-                });
+                // LoadAudioClip(audioPath, (clip) =>
+                // {
+                //     bgmAC = clip;
+                //     m_cachedAudioClipDic.Add(audioPath, bgmAC);
+                //     SwitchClip(bgmAC, volume, loop);
+                // });
             }
         }
 

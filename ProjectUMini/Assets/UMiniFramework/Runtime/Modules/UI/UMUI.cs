@@ -31,11 +31,12 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         public override IEnumerator Init()
         {
-            m_createdPanel = new Dictionary<string, UMUIPanel>();
-            m_UMUIRootCanvasGroup = m_UMUIRootCanvas.GetComponent<CanvasGroup>();
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_createdPanel = new Dictionary<string, UMUIPanel>();
+            // m_UMUIRootCanvasGroup = m_UMUIRootCanvas.GetComponent<CanvasGroup>();
+            // yield return null;
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void Open<T>(Action<T> completed = null) where T : UMUIPanel

@@ -1,9 +1,9 @@
+using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Data.SqlTypes;
 using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
-using UnityEngine.WSA;
 
 namespace UMiniFramework.Runtime.Modules.Manager
 {
@@ -51,6 +51,33 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 m_moduleDic.Add(key, module);
                 UMUtilDebug.Log($"UMGR register module: {key}.");
             }
+        }
+
+        public static void InitModules(Action<InitModuleInfo> initCallback)
+        {
+            m_umgrInstance.StartCoroutine(m_umgrInstance.InitModulesCoro(initCallback));
+        }
+
+        private IEnumerator InitModulesCoro(Action<InitModuleInfo> initCallback)
+        {
+            InitModuleInfo initInfo = new InitModuleInfo();
+            initInfo.InitState = false;
+            float moduleCount = m_moduleDic.Count;
+            int initedNum = 0;
+
+            foreach (var ele in m_moduleDic)
+            {
+                UMBaseModule module = ele.Value;
+                initInfo.InitModule = module;
+                initInfo.InitProgress = initedNum / moduleCount;
+                initCallback?.Invoke(initInfo);
+                yield return module.Init();
+                initedNum++;
+            }
+
+            initInfo.InitModule = null;
+            initInfo.InitProgress = initedNum / moduleCount;
+            initCallback?.Invoke(initInfo);
         }
 
         public static T Get<T>() where T : UMBaseModule

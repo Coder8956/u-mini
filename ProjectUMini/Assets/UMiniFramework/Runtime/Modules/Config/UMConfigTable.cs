@@ -1,6 +1,6 @@
 ﻿using System.Collections;
 
-namespace UMiniFramework.Runtime.Modules.ConfigModule
+namespace UMiniFramework.Runtime.Modules.Config
 {
     public abstract class UMConfigTable
     {

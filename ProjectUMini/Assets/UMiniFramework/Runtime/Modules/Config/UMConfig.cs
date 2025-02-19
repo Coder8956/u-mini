@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.Utils;
 
-namespace UMiniFramework.Runtime.Modules.ConfigModule
+namespace UMiniFramework.Runtime.Modules.Config
 {
-    public class UMConfigModule : UMBaseModule
+    public class UMConfig : UMBaseModule
     {
         private Dictionary<Type, UMConfigTable> m_tableDic;
 
@@ -37,8 +37,8 @@ namespace UMiniFramework.Runtime.Modules.ConfigModule
             // }
 
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
     }
 }

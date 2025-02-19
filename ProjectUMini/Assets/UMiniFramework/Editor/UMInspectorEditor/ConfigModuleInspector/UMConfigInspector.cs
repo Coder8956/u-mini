@@ -1,12 +1,12 @@
 ﻿using System.IO;
 using UMiniFramework.Editor.Common;
-using UMiniFramework.Runtime.Modules.ConfigModule;
+using UMiniFramework.Runtime.Modules.Config;
 using UnityEditor;
 using UnityEngine;
 
 namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
 {
-    [CustomEditor(typeof(UMConfigModule))]
+    [CustomEditor(typeof(UMConfig))]
     public class UMConfigInspector : UnityEditor.Editor
     {
         public override void OnInspectorGUI()
