@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.AudioModule
@@ -10,7 +9,7 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
         public UMBGMAudio BGM { get; private set; }
         public UMEffectAudio Effect { get; private set; }
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
             BGM = UMUtilCommon.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);
             BGM.Init();

@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using UMiniFramework.Runtime.UMEntrance;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.BaseModule
@@ -21,6 +20,6 @@ namespace UMiniFramework.Runtime.Modules.BaseModule
             get { return m_initFinished; }
         }
 
-        public abstract IEnumerator Init(UMiniConfig config);
+        public abstract IEnumerator Init();
     }
 }

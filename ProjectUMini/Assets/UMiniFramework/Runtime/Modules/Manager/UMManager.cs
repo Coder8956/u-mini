@@ -1,4 +1,3 @@
-using System;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
@@ -10,7 +9,9 @@ namespace UMiniFramework.Runtime.Modules.Manager
 
         public static UMManager UMGR => m_UMGR;
 
-        private UMGR_STATE state = UMGR_STATE.DEFAULT;
+        private UMGR_STATE m_state = UMGR_STATE.DEFAULT;
+
+        public UMGR_STATE State => m_state;
 
         private void Awake()
         {
@@ -28,11 +29,11 @@ namespace UMiniFramework.Runtime.Modules.Manager
 
         private void Init()
         {
-            state = UMGR_STATE.DEFAULT;
-            UMUtilDebug.Log($"Start init UMGR. State:{state}");
+            m_state = UMGR_STATE.DEFAULT;
+            UMUtilDebug.Log($"Start init UMGR. State:{m_state}");
 
-            state = UMGR_STATE.INITED;
-            UMUtilDebug.Log($"UMGR init Finished. State:{state}");
+            m_state = UMGR_STATE.INITED;
+            UMUtilDebug.Log($"UMGR init Finished. State:{m_state}");
         }
     }
 }

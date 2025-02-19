@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -30,7 +29,7 @@ namespace UMiniFramework.Runtime.Modules.UIModule
             set { m_UMUIRootCanvasGroup.interactable = value; }
         }
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
             m_createdPanel = new Dictionary<string, UMUIPanel>();
             m_UMUIRootCanvasGroup = m_UMUIRootCanvas.GetComponent<CanvasGroup>();

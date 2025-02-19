@@ -1,5 +1,4 @@
 ﻿using System;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 

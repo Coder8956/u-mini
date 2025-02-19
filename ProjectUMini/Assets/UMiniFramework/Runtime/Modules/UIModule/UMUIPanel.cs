@@ -1,5 +1,4 @@
-﻿using UMiniFramework.Runtime.UMEntrance;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UMiniFramework.Runtime.Modules.UIModule

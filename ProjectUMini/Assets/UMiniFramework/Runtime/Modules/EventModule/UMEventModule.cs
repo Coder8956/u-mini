@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.EventModule
@@ -11,17 +10,17 @@ namespace UMiniFramework.Runtime.Modules.EventModule
     {
         private Dictionary<string, List<UMListenerInfo>> EventDic;
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
-            EventDic = new Dictionary<string, List<UMListenerInfo>>();
-            if (config.EventTypeList != null)
-            {
-                for (var i = 0; i < config.EventTypeList.Count; i++)
-                {
-                    string eventType = config.EventTypeList[i];
-                    EventDic.Add(eventType, new List<UMListenerInfo>());
-                }
-            }
+            // EventDic = new Dictionary<string, List<UMListenerInfo>>();
+            // if (config.EventTypeList != null)
+            // {
+            //     for (var i = 0; i < config.EventTypeList.Count; i++)
+            //     {
+            //         string eventType = config.EventTypeList[i];
+            //         EventDic.Add(eventType, new List<UMListenerInfo>());
+            //     }
+            // }
 
             yield return null;
             m_initFinished = true;

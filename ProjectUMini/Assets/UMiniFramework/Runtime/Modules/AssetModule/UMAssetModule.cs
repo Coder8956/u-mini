@@ -2,7 +2,6 @@
 using System.Collections;
 using UMiniFramework.Runtime.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using Object = UnityEngine.Object;
 
@@ -12,9 +11,9 @@ namespace UMiniFramework.Runtime.Modules.AssetModule
     {
         private IUMAssetLoader m_assetLoader;
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
-            m_assetLoader = config.AssetLoader;
+            // m_assetLoader = config.AssetLoader;
             yield return null;
             m_initFinished = true;
             UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);

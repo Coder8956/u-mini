@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using Newtonsoft.Json;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 
@@ -15,23 +14,23 @@ namespace UMiniFramework.Runtime.Modules.PersistentDataModule
         private const string m_persiDataFileExtend = ".json";
         private string m_persiDataRootPath;
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
-            m_persiDataRootPath = UMPersistentDataRootDir.GetRootDir();
-            m_persistentDataDic = new Dictionary<string, UMPersistentData>();
-            m_isPersiDataToConsole = config.IsPersiDataToConsole;
-
-            UMUtilIO.CreateDir(m_persiDataRootPath);
-
-            if (config.PersistentDataList != null)
-            {
-                for (var i = 0; i < config.PersistentDataList.Count; i++)
-                {
-                    UMPersistentData data = config.PersistentDataList[i];
-                    string key = GetDataKey(data);
-                    m_persistentDataDic.Add(key, InitPersistentData(key, data));
-                }
-            }
+            // m_persiDataRootPath = UMPersistentDataRootDir.GetRootDir();
+            // m_persistentDataDic = new Dictionary<string, UMPersistentData>();
+            // m_isPersiDataToConsole = config.IsPersiDataToConsole;
+            //
+            // UMUtilIO.CreateDir(m_persiDataRootPath);
+            //
+            // if (config.PersistentDataList != null)
+            // {
+            //     for (var i = 0; i < config.PersistentDataList.Count; i++)
+            //     {
+            //         UMPersistentData data = config.PersistentDataList[i];
+            //         string key = GetDataKey(data);
+            //         m_persistentDataDic.Add(key, InitPersistentData(key, data));
+            //     }
+            // }
 
 #if UNITY_EDITOR
             AssetDatabase.Refresh();

@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.BaseModule;
-using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.ConfigModule
@@ -25,17 +24,17 @@ namespace UMiniFramework.Runtime.Modules.ConfigModule
             }
         }
 
-        public override IEnumerator Init(UMiniConfig config)
+        public override IEnumerator Init()
         {
-            if (config.ConfigTableList != null)
-            {
-                m_tableDic = new Dictionary<Type, UMConfigTable>();
-                foreach (var table in config.ConfigTableList)
-                {
-                    m_tableDic.Add(table.GetType(), table);
-                    yield return table.Init();
-                }
-            }
+            // if (config.ConfigTableList != null)
+            // {
+            //     m_tableDic = new Dictionary<Type, UMConfigTable>();
+            //     foreach (var table in config.ConfigTableList)
+            //     {
+            //         m_tableDic.Add(table.GetType(), table);
+            //         yield return table.Init();
+            //     }
+            // }
 
             yield return null;
             m_initFinished = true;
