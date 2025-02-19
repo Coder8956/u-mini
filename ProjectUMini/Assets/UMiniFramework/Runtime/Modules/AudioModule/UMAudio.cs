@@ -11,7 +11,7 @@ namespace UMiniFramework.Runtime.Modules.AudioModule
 
         protected void LoadAudioClip(string audioPath, Action<AudioClip> onCompleted)
         {
-            UMini.Asset.LoadAsync<AudioClip>(audioPath, (res) =>
+            UMGR.Asset.LoadAsync<AudioClip>(audioPath, (res) =>
             {
                 if (res.State)
                 {

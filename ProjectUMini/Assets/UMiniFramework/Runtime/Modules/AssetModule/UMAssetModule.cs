@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections;
 using UMiniFramework.Runtime.Modules.AssetModule.AssetLoaders;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using Object = UnityEngine.Object;
 
 namespace UMiniFramework.Runtime.Modules.AssetModule
 {
-    public class UMAssetModule : UMModule
+    public class UMAssetModule : UMBaseModule
     {
         private IUMAssetLoader m_assetLoader;
 

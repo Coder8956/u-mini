@@ -1,10 +1,11 @@
 ﻿using System.Collections;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.AudioModule
 {
-    public class UMAudioModule : UMModule
+    public class UMAudioModule : UMBaseModule
     {
         public UMBGMAudio BGM { get; private set; }
         public UMEffectAudio Effect { get; private set; }

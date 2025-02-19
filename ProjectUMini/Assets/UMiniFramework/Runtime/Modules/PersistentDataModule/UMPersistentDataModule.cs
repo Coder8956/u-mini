@@ -1,13 +1,14 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 
 namespace UMiniFramework.Runtime.Modules.PersistentDataModule
 {
-    public class UMPersistentDataModule : UMModule
+    public class UMPersistentDataModule : UMBaseModule
     {
         private bool m_isPersiDataToConsole = true;
         private Dictionary<string, UMPersistentData> m_persistentDataDic;

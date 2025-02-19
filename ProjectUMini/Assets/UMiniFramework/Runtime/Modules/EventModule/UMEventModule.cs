@@ -1,12 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.EventModule
 {
-    public class UMEventModule : UMModule
+    public class UMEventModule : UMBaseModule
     {
         private Dictionary<string, List<UMListenerInfo>> EventDic;
 

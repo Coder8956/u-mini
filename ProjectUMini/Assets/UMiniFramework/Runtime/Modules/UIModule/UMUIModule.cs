@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
@@ -9,7 +10,7 @@ using UnityEngine.EventSystems;
 
 namespace UMiniFramework.Runtime.Modules.UIModule
 {
-    public class UMUIModule : UMModule
+    public class UMUIModule : UMBaseModule
     {
         [SerializeField] private Canvas m_UMUIRootCanvas = null;
         [SerializeField] private Camera m_UMUICamera = null;
@@ -54,7 +55,7 @@ namespace UMiniFramework.Runtime.Modules.UIModule
             else
             {
                 // 加载界面
-                UMini.Asset.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
+                UMGR.Asset.LoadAsync<GameObject>(panelInfo.PanelPath, (result) =>
                 {
                     if (result.State)
                     {

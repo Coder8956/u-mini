@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UMiniFramework.Runtime.Modules.BaseModule;
 using UMiniFramework.Runtime.UMEntrance;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.ConfigModule
 {
-    public class UMConfigModule : UMModule
+    public class UMConfigModule : UMBaseModule
     {
         private Dictionary<Type, UMConfigTable> m_tableDic;
 
