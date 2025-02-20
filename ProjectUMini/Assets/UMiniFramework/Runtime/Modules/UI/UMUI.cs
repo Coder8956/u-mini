@@ -2,7 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
-using Game.Scripts.UI.PanelMain;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
@@ -185,6 +184,11 @@ namespace UMiniFramework.Runtime.Modules.UI
             return panel;
         }
 
+        /// <summary>
+        /// 打开界面
+        /// </summary>
+        /// <param name="panel">界面对象</param>
+        /// <param name="layerIndex">层级索引</param>
         public void Open(UMUIPanel panel, int layerIndex = 0)
         {
             int layIndex = Mathf.Clamp(layerIndex, 0, m_uiLayers.Count - 1);
@@ -201,6 +205,10 @@ namespace UMiniFramework.Runtime.Modules.UI
             OnOpenPanel.Invoke(panel, null);
         }
 
+        /// <summary>
+        /// 关闭界面
+        /// </summary>
+        /// <param name="panel">界面对象</param>
         public void Close(UMUIPanel panel)
         {
             panel.gameObject.SetActive(false);
@@ -210,6 +218,10 @@ namespace UMiniFramework.Runtime.Modules.UI
             OnClosePanel.Invoke(panel, null);
         }
 
+        /// <summary>
+        /// 销毁界面
+        /// </summary>
+        /// <param name="panel">界面对象</param>
         public void Destroy(UMUIPanel panel)
         {
             MethodInfo OnClosePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
@@ -224,6 +236,9 @@ namespace UMiniFramework.Runtime.Modules.UI
             Destroy(panel.gameObject);
         }
 
+        /// <summary>
+        /// 输出所有已经创建的界面
+        /// </summary>
         public void DumpCreatedUI()
         {
             int index = 0;
