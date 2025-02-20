@@ -16,10 +16,5 @@ namespace UMiniFramework.Runtime.Utils
             // Debug.Log($"The {name} is created");
             return moduleGo.GetComponent<T>();
         }
-
-        public static void PrintModuleInitFinishedLog(string moduleName, bool finished)
-        {
-            Debug.Log($"{moduleName}; InitFinishedVal: {finished}");
-        }
     }
 }

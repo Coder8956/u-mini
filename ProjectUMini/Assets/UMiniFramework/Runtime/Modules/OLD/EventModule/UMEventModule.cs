@@ -23,8 +23,8 @@ namespace UMiniFramework.Runtime.Modules.EventModule
             // }
 
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void AddListener(string eventType, IUMEventListener listener,

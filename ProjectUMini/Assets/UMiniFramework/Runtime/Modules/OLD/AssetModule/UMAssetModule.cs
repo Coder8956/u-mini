@@ -15,8 +15,8 @@ namespace UMiniFramework.Runtime.Modules.AssetModule
         {
             // m_assetLoader = config.AssetLoader;
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void LoadAsync<T>(string path, Action<UMLoadResult<T>> onCompleted) where T : Object

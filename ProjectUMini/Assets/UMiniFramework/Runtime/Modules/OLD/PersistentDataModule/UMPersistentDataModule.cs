@@ -36,8 +36,8 @@ namespace UMiniFramework.Runtime.Modules.PersistentDataModule
             AssetDatabase.Refresh();
 #endif
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         private UMPersistentData InitPersistentData(string key, UMPersistentData defaultData)

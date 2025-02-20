@@ -11,8 +11,8 @@ namespace UMiniFramework.Runtime.Modules.SceneModule
         public override IEnumerator Init()
         {
             yield return null;
-            m_initFinished = true;
-            UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
+            // m_initFinished = true;
+            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
 
         public void Load(string scene)
