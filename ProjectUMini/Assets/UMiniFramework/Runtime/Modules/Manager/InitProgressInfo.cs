@@ -2,7 +2,7 @@
 
 namespace UMiniFramework.Runtime.Modules.Manager
 {
-    public class InitModuleInfo
+    public class InitProgressInfo
     {
         private bool m_initState = false;
 

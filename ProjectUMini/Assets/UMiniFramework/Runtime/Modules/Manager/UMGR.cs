@@ -20,54 +20,18 @@ namespace UMiniFramework.Runtime.Modules.Manager
 
         private static GameObject m_UMGRGameObject = null;
 
-        private static Dictionary<string, UMBaseModule> m_moduleDic = null;
+        private static Dictionary<string, ModuleRegisterInfo> m_moduleDic = null;
 
-        public static void Launch()
+        private IEnumerator InitModulesCoro(Action<InitProgressInfo> initCallback)
         {
-            if (m_globalLaunched) return;
-            m_umgrInstance = UMUtilCommon.CreateGameObject<UMGR>(UMGR_GO_NAME, null);
-            m_UMGRGameObject = m_umgrInstance.gameObject;
-            DontDestroyOnLoad(m_UMGRGameObject);
-            m_moduleDic = new Dictionary<string, UMBaseModule>();
-            m_globalLaunched = true;
-            UMUtilDebug.Log($"UMGR Launched.");
-        }
-
-        private static string GetModuleKey<T>() where T : UMBaseModule
-        {
-            return typeof(T).Name;
-        }
-
-        public static void Register<T>() where T : UMBaseModule
-        {
-            string key = GetModuleKey<T>();
-            if (m_moduleDic.ContainsKey(key))
-            {
-                UMUtilDebug.Warning($"Incorrect operation. The {key} was registered repeatedly.");
-            }
-            else
-            {
-                T module = UMUtilCommon.CreateGameObject<T>(key, m_UMGRGameObject);
-                m_moduleDic.Add(key, module);
-                UMUtilDebug.Log($"UMGR register module: {key}.");
-            }
-        }
-
-        public static void InitModules(Action<InitModuleInfo> initCallback)
-        {
-            m_umgrInstance.StartCoroutine(m_umgrInstance.InitModulesCoro(initCallback));
-        }
-
-        private IEnumerator InitModulesCoro(Action<InitModuleInfo> initCallback)
-        {
-            InitModuleInfo initInfo = new InitModuleInfo();
+            InitProgressInfo initInfo = new InitProgressInfo();
             initInfo.InitState = false;
             float moduleCount = m_moduleDic.Count;
             int initedNum = 0;
 
             foreach (var ele in m_moduleDic)
             {
-                UMBaseModule module = ele.Value;
+                UMBaseModule module = ele.Value.Module;
                 initInfo.InitModule = module;
                 initInfo.InitProgress = initedNum / moduleCount;
                 initCallback?.Invoke(initInfo);
@@ -79,7 +43,44 @@ namespace UMiniFramework.Runtime.Modules.Manager
             initInfo.InitProgress = initedNum / moduleCount;
             initCallback?.Invoke(initInfo);
         }
+        
+        private static string GetModuleKey<T>() where T : UMBaseModule
+        {
+            return typeof(T).Name;
+        }
+        
+        public static void Launch()
+        {
+            if (m_globalLaunched) return;
+            m_umgrInstance = UMUtilCommon.CreateGameObject<UMGR>(UMGR_GO_NAME, null);
+            m_UMGRGameObject = m_umgrInstance.gameObject;
+            DontDestroyOnLoad(m_UMGRGameObject);
+            m_moduleDic = new Dictionary<string, ModuleRegisterInfo>();
+            m_globalLaunched = true;
+            UMUtilDebug.Log($"UMGR Launched.");
+        }
+        
+        public static void Register<T>(UMModuleConfig config = null) where T : UMBaseModule
+        {
+            string key = GetModuleKey<T>();
+            if (m_moduleDic.ContainsKey(key))
+            {
+                UMUtilDebug.Warning($"Incorrect operation. The {key} was registered repeatedly.");
+            }
+            else
+            {
+                T module = UMUtilCommon.CreateGameObject<T>(key, m_UMGRGameObject);
+                ModuleRegisterInfo registerInfo = new ModuleRegisterInfo(module, config);
+                m_moduleDic.Add(key, registerInfo);
+                UMUtilDebug.Log($"UMGR register module: {key}.");
+            }
+        }
 
+        public static void InitModules(Action<InitProgressInfo> initCallback)
+        {
+            m_umgrInstance.StartCoroutine(m_umgrInstance.InitModulesCoro(initCallback));
+        }
+        
         public static T Get<T>() where T : UMBaseModule
         {
             string key = GetModuleKey<T>();
