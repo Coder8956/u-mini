@@ -12,6 +12,7 @@ namespace Game.Scripts.Launch
         {
             UMUIConfig umuiConfig = new UMUIConfig();
             umuiConfig.IsCreateEventSystem = true;
+            umuiConfig.UILayerCount = 5;
 
 
             UMGR.Launch();

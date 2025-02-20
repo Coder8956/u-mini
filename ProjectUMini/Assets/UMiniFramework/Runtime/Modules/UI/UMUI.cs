@@ -15,6 +15,7 @@ namespace UMiniFramework.Runtime.Modules.UI
     public class UMUI : UMBaseModule
     {
         private const string EVENT_SYSTEM_NAME = "UM_EventSystem";
+        private const string UI_LAYER_PREFIX = "UM_UI_Layer_";
 
         private UMUIConfig m_config = null;
         private RectTransform m_rectTransform = null;
@@ -22,6 +23,12 @@ namespace UMiniFramework.Runtime.Modules.UI
         private CanvasScaler m_canvasScaler = null;
         private GraphicRaycaster m_graphicRaycaster = null;
         private GameObject m_goEventSystem;
+
+        private void SetUILayer(GameObject go)
+        {
+            // 设置为UI层.索引值是5.
+            go.layer = 5;
+        }
 
         /// <summary>
         /// 创建事件系统
@@ -42,8 +49,10 @@ namespace UMiniFramework.Runtime.Modules.UI
         {
             // 添加 Canvas 组件
             m_canvas = gameObject.AddComponent<Canvas>();
-            if (m_config == null) return;
-            m_canvas.renderMode = m_config.CanvasRenderMode;
+            if (m_config == null)
+                m_canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            else
+                m_canvas.renderMode = m_config.CanvasRenderMode;
         }
 
         /// <summary>
@@ -64,12 +73,38 @@ namespace UMiniFramework.Runtime.Modules.UI
             m_graphicRaycaster = gameObject.AddComponent<GraphicRaycaster>();
         }
 
+        // 创建UI层级
+        private void CreateUILayer()
+        {
+            int layerCount = 1;
+            if (m_config != null)
+            {
+                layerCount = m_config.UILayerCount < 1 ? 1 : m_config.UILayerCount;
+            }
+
+            for (int i = 0; i < layerCount; i++)
+            {
+                RectTransform uiLayerRT = UMUtilCommon.CreateGameObject<RectTransform>(UI_LAYER_PREFIX + i, gameObject);
+
+                // 修改锚点
+                uiLayerRT.anchorMin = Vector2.zero;
+                uiLayerRT.anchorMax = Vector2.one;
+
+                // 修改边界偏移量
+                uiLayerRT.offsetMin = Vector2.zero;
+                uiLayerRT.offsetMax = Vector2.zero;
+
+                GameObject uiLayerGo = uiLayerRT.gameObject;
+                SetUILayer(uiLayerGo);
+            }
+        }
+
+
         public override IEnumerator Init(UMModuleConfig config)
         {
             m_config = UMUtilCommon.ConvertObjectClass<UMUIConfig>(config);
 
-            // 设置为UI层.索引值是5.
-            gameObject.layer = 5;
+            SetUILayer(gameObject);
 
             // 添加 RectTransform 组件
             m_rectTransform = gameObject.AddComponent<RectTransform>();
@@ -77,7 +112,9 @@ namespace UMiniFramework.Runtime.Modules.UI
             CreateCanvas();
             CreateCanvasScaler();
             CreateGraphicRaycaster();
+            CreateUILayer();
             CreateEventSystem();
+
             yield return null;
         }
 

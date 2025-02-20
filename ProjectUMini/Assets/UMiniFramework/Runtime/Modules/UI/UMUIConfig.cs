@@ -9,5 +9,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         public bool IsCreateEventSystem { get; set; }
 
         public RenderMode CanvasRenderMode = RenderMode.ScreenSpaceOverlay;
+
+        public int UILayerCount = 0;
     }
 }
