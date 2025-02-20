@@ -1,4 +1,6 @@
 ﻿using UMiniFramework.Runtime.Common;
+using UMiniFramework.Runtime.Utils;
+using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Audio
 {
@@ -12,6 +14,8 @@ namespace UMiniFramework.Runtime.Modules.Audio
         public readonly bool IsPreLoad;
         public readonly UMResPathType PathType;
 
+        public AudioClip Clip { get; private set; }
+
         public AudioClipInfo(
             string id,
             string path,
@@ -22,6 +26,18 @@ namespace UMiniFramework.Runtime.Modules.Audio
             Path = path;
             IsPreLoad = isPreLoad;
             PathType = pathType;
+        }
+
+        private void LoadClip()
+        {
+            if (PathType == UMResPathType.Resources)
+            {
+                Clip = Resources.Load<AudioClip>(Path);
+            }
+            else
+            {
+                UMUtilDebug.Warning($"Invalid parameter: {PathType}");
+            }
         }
     }
 }

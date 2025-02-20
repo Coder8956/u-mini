@@ -12,7 +12,6 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private const string BGM_GO_NAME = "BGM_UMAUDIO";
         private const string EFFECT_GO_NAME = "EFFECT_UMAUDIO";
         private UMAudioConfig m_config = null;
-
         public UMAudioBGM BGM { get; private set; }
         public UMAudioEffect Effect { get; private set; }
 

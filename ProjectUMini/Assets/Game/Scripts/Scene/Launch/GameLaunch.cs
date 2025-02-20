@@ -22,8 +22,8 @@ namespace Game.Scripts.Scene.Launch
             UMAudioConfig umAudioConfig = new UMAudioConfig();
             umAudioConfig.BGMClips = new List<AudioClipInfo>()
             {
-                new(GameAudio.Effect_1, "Audio/BGM/BGM_001"),
-                new(GameAudio.Effect_2, "Audio/BGM/BGM_002", true),
+                new(GameAudio.BGM_1, "Audio/BGM/BGM_001"),
+                new(GameAudio.BGM_2, "Audio/BGM/BGM_002", true),
             };
 
 
