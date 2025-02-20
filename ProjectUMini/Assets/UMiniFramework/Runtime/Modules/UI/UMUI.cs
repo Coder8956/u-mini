@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
@@ -17,6 +19,7 @@ namespace UMiniFramework.Runtime.Modules.UI
     {
         private const string EVENT_SYSTEM_NAME = "UM_EventSystem";
         private const string UI_LAYER_PREFIX = "UM_UI_Layer_";
+        private const string UI_CACHE = "UM_UI_CACHE";
 
         private UMUIConfig m_config = null;
         private RectTransform m_rectTransform = null;
@@ -24,6 +27,10 @@ namespace UMiniFramework.Runtime.Modules.UI
         private CanvasScaler m_canvasScaler = null;
         private GraphicRaycaster m_graphicRaycaster = null;
         private GameObject m_goEventSystem;
+        private List<RectTransform> m_uiLayers = null;
+        private Dictionary<int, UMUIPanel> m_panelDic = null;
+
+        private RectTransform m_uiCache = null;
 
         private void SetUILayer(GameObject go)
         {
@@ -77,6 +84,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         // 创建UI层级
         private void CreateUILayer()
         {
+            m_uiLayers = new List<RectTransform>();
             int layerCount = 1;
             if (m_config != null)
             {
@@ -87,17 +95,20 @@ namespace UMiniFramework.Runtime.Modules.UI
             {
                 RectTransform uiLayerRT = UMUtilCommon.CreateGameObject<RectTransform>(UI_LAYER_PREFIX + i, gameObject);
 
-                // 修改锚点
-                uiLayerRT.anchorMin = Vector2.zero;
-                uiLayerRT.anchorMax = Vector2.one;
-
-                // 修改边界偏移量
-                uiLayerRT.offsetMin = Vector2.zero;
-                uiLayerRT.offsetMax = Vector2.zero;
+                UMUtilUI.FillParent(uiLayerRT);
 
                 GameObject uiLayerGo = uiLayerRT.gameObject;
                 SetUILayer(uiLayerGo);
+
+                m_uiLayers.Add(uiLayerRT);
             }
+        }
+
+        private void CreateUICache()
+        {
+            m_uiCache = UMUtilCommon.CreateGameObject<RectTransform>(UI_CACHE, gameObject);
+            UMUtilUI.FillParent(m_uiCache);
+            SetUILayer(m_uiCache.gameObject);
         }
 
         private GameObject ResLoadUI(string path)
@@ -115,10 +126,13 @@ namespace UMiniFramework.Runtime.Modules.UI
             // 添加 RectTransform 组件
             m_rectTransform = gameObject.AddComponent<RectTransform>();
 
+            m_panelDic = new Dictionary<int, UMUIPanel>();
+
             CreateCanvas();
             CreateCanvasScaler();
             CreateGraphicRaycaster();
             CreateUILayer();
+            CreateUICache();
             CreateEventSystem();
 
             yield return null;
@@ -138,9 +152,29 @@ namespace UMiniFramework.Runtime.Modules.UI
             T panel = null;
             if (uiConfig.PathType == PathEnum.Resources)
             {
+                // 加载界面并设置界面引用值
                 panel = ResLoadUI(uiConfig.Path).GetComponent<T>();
-                panel.transform.SetParent(gameObject.transform);
-                // TODO: UI初始化, 设置UI层级
+
+                // 通过反射调用界面的创建方法
+                MethodInfo OnCreatePanel = UMUtilCommon.GetObjectNoPublicMethod(typeof(T), "OnCreatePanel");
+                OnCreatePanel.Invoke(panel, null);
+
+                // 失活界面
+                panel.gameObject.SetActive(false);
+
+                // 获取界面游戏物体的HashCode
+                int panelHashCode = panel.gameObject.GetHashCode();
+
+                // 将界面存入字典
+                m_panelDic.Add(panelHashCode, panel);
+
+                // 将界面放入缓存节点
+                panel.transform.SetParent(m_uiCache);
+
+                string panelName = panel.gameObject.name.Replace("(Clone)", $"[{panelHashCode}]");
+                panel.gameObject.name = panelName;
+
+                UMUtilUI.FillParent(panel.GetComponent<RectTransform>());
             }
             else
             {
@@ -148,6 +182,21 @@ namespace UMiniFramework.Runtime.Modules.UI
             }
 
             return panel;
+        }
+
+        public void Open(UMUIPanel panel, int layerIndex = 0)
+        {
+            int layIndex = Mathf.Clamp(layerIndex, 0, m_uiLayers.Count - 1);
+
+            // 设置界面的显示层
+            panel.transform.SetParent(m_uiLayers[layIndex]);
+
+            UMUtilUI.FillParent(panel.GetComponent<RectTransform>());
+
+            panel.gameObject.SetActive(true);
+
+            MethodInfo OnCreatePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
+            OnCreatePanel.Invoke(panel, null);
         }
     }
 }

@@ -2,14 +2,14 @@
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
 
-namespace Game.Scripts.UI.PanelMain
+namespace Game.Scripts.UI.PanelGame
 {
-    [UMUIPanelConfig("UI/PanelMain/PanelMain")]
-    public class PanelMain : UMUIPanel
+    [UMUIPanelConfig("UI/PanelMain/PanelGame")]
+    public class PanelGame : UMUIPanel
     {
         protected override void OnCreatePanel()
         {
-            Debug.Log("Create-PanelMain");
+            Debug.Log("Create-PanelGame");
         }
 
         protected override void OnDestroyPanel()
@@ -18,7 +18,7 @@ namespace Game.Scripts.UI.PanelMain
 
         protected override void OnOpenPanel()
         {
-            Debug.Log("Open-PanelMain");
+            Debug.Log("Open-PanelGame");
         }
 
         protected override void OnClosePanel()

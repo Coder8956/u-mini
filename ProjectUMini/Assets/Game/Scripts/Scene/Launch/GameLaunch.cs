@@ -1,4 +1,5 @@
-﻿using Game.Scripts.UI.PanelMain;
+﻿using Game.Scripts.UI.PanelGame;
+using Game.Scripts.UI.PanelMain;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
@@ -25,7 +26,11 @@ namespace Game.Scripts.Scene.Launch
                 Debug.Log($"Init modules progress: {val.InitProgress}");
                 if (val.InitState)
                 {
-                    UMGR.Get<UMUI>().Create<PanelMain>();
+                    PanelGame pGame = UMGR.Get<UMUI>().Create<PanelGame>();
+                    PanelMain pMain = UMGR.Get<UMUI>().Create<PanelMain>();
+
+                    UMGR.Get<UMUI>().Open(pMain, 5);
+                    UMGR.Get<UMUI>().Open(pGame);
                 }
             });
         }

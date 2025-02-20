@@ -41,8 +41,11 @@ namespace UMiniFramework.Runtime.Utils
 
         public static void FillParent(RectTransform rt)
         {
-            rt.anchorMax = Vector2.one;
+            // 修改锚点
             rt.anchorMin = Vector2.zero;
+            rt.anchorMax = Vector2.one;
+
+            // 修改边界偏移量
             rt.offsetMin = Vector2.zero;
             rt.offsetMax = Vector2.zero;
         }
