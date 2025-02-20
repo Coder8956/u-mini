@@ -223,5 +223,15 @@ namespace UMiniFramework.Runtime.Modules.UI
 
             Destroy(panel.gameObject);
         }
+
+        public void DumpCreatedUI()
+        {
+            int index = 0;
+            foreach (var el in m_panelDic)
+            {
+                UMUtilDebug.Log($"[index:{index}]-({el.Key})-({el.Value.gameObject.name})");
+                index++;
+            }
+        }
     }
 }

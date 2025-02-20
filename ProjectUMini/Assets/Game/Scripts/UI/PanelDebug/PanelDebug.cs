@@ -11,6 +11,7 @@ namespace Game.Scripts.UI.PanelDebug
     public class PanelDebug : UMUIPanel
     {
         [SerializeField] private Button m_btnOpenPanelMain = null;
+        [SerializeField] private Button m_btnDumpCreatedUI = null;
 
         protected override void OnCreatePanel()
         {
@@ -19,6 +20,12 @@ namespace Game.Scripts.UI.PanelDebug
             {
                 // 打开主界面
                 UMGR.Get<UMUI>().Open(GameUI.PanelMain, 5);
+            });
+
+            m_btnDumpCreatedUI?.onClick.AddListener(() =>
+            {
+                // 打开主界面
+                UMGR.Get<UMUI>().DumpCreatedUI();
             });
             // UMGR.Get<UMUI>().Open(pGame);
         }
