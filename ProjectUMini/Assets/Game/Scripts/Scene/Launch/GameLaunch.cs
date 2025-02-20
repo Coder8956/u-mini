@@ -26,6 +26,13 @@ namespace Game.Scripts.Scene.Launch
                 new(GameAudio.BGM_2, "Audio/BGM/BGM_002", true),
             };
 
+            umAudioConfig.EffectClips = new List<AudioClipInfo>()
+            {
+                new(GameAudio.Effect_1, "Audio/Effect/Bullet_Explosion_001"),
+                new(GameAudio.Effect_2, "Audio/Effect/Effect_Cannon_001", true),
+                new(GameAudio.Effect_3, "Audio/Effect/Effect_Cannon_002"),
+            };
+
 
             UMGR.Launch();
             UMGR.Register<UMUI>(umUIConfig);

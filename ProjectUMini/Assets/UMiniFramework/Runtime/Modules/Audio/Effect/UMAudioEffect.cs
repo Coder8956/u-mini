@@ -7,60 +7,52 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
 {
     public class UMAudioEffect : UMAudioFunc
     {
-        // private UMGameObjectPool m_soundPool;
-        private Dictionary<string, AudioClip> m_cachedAudioClipDic;
-        private List<string> m_loadingClip;
-        private bool m_isMute = false;
+        private Dictionary<string, AudioClipInfo> m_EffectClipDic;
         private UMAudioConfig m_config;
+        private Queue<AudioSource> m_asQue;
+
+        /// <summary>
+        /// 初始化 Effect Clip 字典
+        /// </summary>
+        private void InitEffectClipDic()
+        {
+            m_EffectClipDic = new Dictionary<string, AudioClipInfo>();
+            if (m_config == null) return;
+            if (m_config.EffectClips == null) return;
+            AudioClipInfo aci = null;
+            for (var i = 0; i < m_config.EffectClips.Count; i++)
+            {
+                aci = m_config.EffectClips[i];
+                m_EffectClipDic.Add(aci.ID, aci);
+                if (aci.IsPreLoad)
+                {
+                    LoadClipInACI(aci);
+                }
+            }
+        }
 
         protected override void Init(UMAudioConfig config)
         {
             m_config = config;
-            // 初始化音效对象池
-            // GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
-            // UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
-            // ("SoundPool",
-            //     gameObject,
-            //     poolObjectTemplet,
-            //     5,
-            //     null,
-            //     null
-            // );
-            // m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
-            // m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
-            // m_loadingClip = new List<string>();
+            InitEffectClipDic();
+
+            m_asQue = new Queue<AudioSource>();
+            
+            // TODO: 开始处理 as 队列
         }
 
         public void Play(string audioPath, float volume = 1)
         {
-            AudioClip effectAC = null;
-            if (m_loadingClip.Contains(audioPath)) return;
-            if (m_cachedAudioClipDic.ContainsKey(audioPath))
-            {
-                effectAC = m_cachedAudioClipDic[audioPath];
-                PlayEffect(effectAC, volume);
-            }
-            else
-            {
-                m_loadingClip.Add(audioPath);
-                // LoadAudioClip(audioPath, (clip) =>
-                // {
-                //     effectAC = clip;
-                //     m_cachedAudioClipDic.Add(audioPath, effectAC);
-                //     m_loadingClip.Remove(audioPath);
-                //     PlayEffect(effectAC, volume);
-                // });
-            }
         }
 
         public void SetMute(bool val)
         {
-            m_isMute = val;
+            // m_isMute = val;
         }
 
         public bool GetMute()
         {
-            return m_isMute;
+            return false; //m_isMute;
         }
 
         private void PlayEffect(AudioClip ac, float volume)
