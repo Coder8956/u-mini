@@ -194,9 +194,10 @@ namespace UMiniFramework.Runtime.Modules.UI
             UMUtilUI.FillParent(panel.GetComponent<RectTransform>());
 
             panel.gameObject.SetActive(true);
+            panel.transform.SetAsLastSibling();
 
-            MethodInfo OnCreatePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
-            OnCreatePanel.Invoke(panel, null);
+            MethodInfo OnOpenPanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
+            OnOpenPanel.Invoke(panel, null);
         }
     }
 }
