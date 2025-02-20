@@ -21,7 +21,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
         private static GameObject m_UMGRGameObject = null;
 
         private static Dictionary<string, ModuleRegisterInfo> m_moduleDic = null;
-
+        
         private IEnumerator InitModulesCoro(Action<InitProgressInfo> initCallback)
         {
             InitProgressInfo initInfo = new InitProgressInfo();

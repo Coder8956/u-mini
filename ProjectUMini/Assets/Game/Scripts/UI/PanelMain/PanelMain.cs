@@ -3,7 +3,7 @@ using UMiniFramework.Runtime.Modules.UI.Base;
 
 namespace Game.Scripts.UI.PanelMain
 {
-    [UMUIPanelConfig("", 0)]
+    [UMUIPanelConfig("UI/PanelMain/PanelMain")]
     public class PanelMain : UMUIPanel
     {
         public override void OnCreatePanel()
