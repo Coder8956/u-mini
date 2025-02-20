@@ -11,7 +11,7 @@ namespace UMiniFramework.Runtime.Modules.AssetModule
     {
         private IUMAssetLoader m_assetLoader;
 
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMModuleConfig config)
         {
             // m_assetLoader = config.AssetLoader;
             yield return null;

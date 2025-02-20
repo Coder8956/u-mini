@@ -8,7 +8,7 @@ namespace UMiniFramework.Runtime.Modules.SceneModule
 {
     public class UMSceneModule : UMBaseModule
     {
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMModuleConfig config)
         {
             yield return null;
             // m_initFinished = true;

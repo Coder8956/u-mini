@@ -380,7 +380,7 @@ namespace UMiniFramework.Editor.UMInspectorEditor.ConfigModuleInspector
             }
 
             scriptTableString.AppendLine($"");
-            scriptTableString.AppendLine($"    public override IEnumerator Init()");
+            scriptTableString.AppendLine($"    public override IEnumerator Init(UMModuleConfig config)");
             scriptTableString.AppendLine($"    {{");
             if (isHasId)
             {

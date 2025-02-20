@@ -31,11 +31,11 @@ namespace UMiniFramework.Runtime.Modules.Manager
 
             foreach (var ele in m_moduleDic)
             {
-                UMBaseModule module = ele.Value.Module;
-                initInfo.InitModule = module;
+                ModuleRegisterInfo registerInfo = ele.Value;
+                initInfo.InitModule = registerInfo.Module;
                 initInfo.InitProgress = initedNum / moduleCount;
                 initCallback?.Invoke(initInfo);
-                yield return module.Init();
+                yield return registerInfo.Module.Init(registerInfo.Config);
                 initedNum++;
             }
 
@@ -43,12 +43,12 @@ namespace UMiniFramework.Runtime.Modules.Manager
             initInfo.InitProgress = initedNum / moduleCount;
             initCallback?.Invoke(initInfo);
         }
-        
+
         private static string GetModuleKey<T>() where T : UMBaseModule
         {
             return typeof(T).Name;
         }
-        
+
         public static void Launch()
         {
             if (m_globalLaunched) return;
@@ -59,7 +59,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
             m_globalLaunched = true;
             UMUtilDebug.Log($"UMGR Launched.");
         }
-        
+
         public static void Register<T>(UMModuleConfig config = null) where T : UMBaseModule
         {
             string key = GetModuleKey<T>();
@@ -80,7 +80,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
         {
             m_umgrInstance.StartCoroutine(m_umgrInstance.InitModulesCoro(initCallback));
         }
-        
+
         public static T Get<T>() where T : UMBaseModule
         {
             string key = GetModuleKey<T>();

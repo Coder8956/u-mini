@@ -5,7 +5,7 @@ namespace UMiniFramework.Runtime.Modules.UI
 {
     public class UMUI : UMBaseModule
     {
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMModuleConfig config)
         {
             
             yield return null;

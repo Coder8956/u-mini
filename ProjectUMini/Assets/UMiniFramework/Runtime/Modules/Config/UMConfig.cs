@@ -24,7 +24,7 @@ namespace UMiniFramework.Runtime.Modules.Config
             }
         }
 
-        public override IEnumerator Init()
+        public override IEnumerator Init(UMModuleConfig config)
         {
             // if (config.ConfigTableList != null)
             // {
