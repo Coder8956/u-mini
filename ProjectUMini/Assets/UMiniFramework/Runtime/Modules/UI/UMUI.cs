@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using Game.Scripts.UI.PanelMain;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
@@ -198,6 +199,29 @@ namespace UMiniFramework.Runtime.Modules.UI
 
             MethodInfo OnOpenPanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
             OnOpenPanel.Invoke(panel, null);
+        }
+
+        public void Close(UMUIPanel panel)
+        {
+            panel.gameObject.SetActive(false);
+            panel.transform.SetParent(m_uiCache);
+
+            MethodInfo OnClosePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
+            OnClosePanel.Invoke(panel, null);
+        }
+
+        public void Destroy(UMUIPanel panel)
+        {
+            MethodInfo OnClosePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
+            OnClosePanel.Invoke(panel, null);
+
+            // 获取界面游戏物体的HashCode
+            int panelHashCode = panel.gameObject.GetHashCode();
+
+            // 将界面移出字典
+            m_panelDic.Remove(panelHashCode);
+
+            Destroy(panel.gameObject);
         }
     }
 }
