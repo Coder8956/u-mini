@@ -10,8 +10,12 @@ namespace Game.Scripts.Launch
     {
         private void Start()
         {
+            UMUIConfig umuiConfig = new UMUIConfig();
+            umuiConfig.IsCreateEventSystem = true;
+
+
             UMGR.Launch();
-            UMGR.Register<UMUI>();
+            UMGR.Register<UMUI>(umuiConfig);
             UMGR.Register<UMAudio>();
             UMGR.Register<UMConfig>();
             UMGR.InitModules((val) => { Debug.Log($"Init modules progress: {val.InitProgress}"); });

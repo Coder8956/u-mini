@@ -16,5 +16,19 @@ namespace UMiniFramework.Runtime.Utils
             // Debug.Log($"The {name} is created");
             return moduleGo.GetComponent<T>();
         }
+
+        /// <summary>
+        /// 转换对象类型(class)
+        /// </summary>
+        /// <param name="obj">对象</param>
+        /// <typeparam name="T">目标类型</typeparam>
+        /// <returns>转换失败返回 null</returns>
+        public static T ConvertObjectClass<T>(object obj) where T : class
+        {
+            if (obj is T)
+                return (T) obj;
+            else
+                return null;
+        }
     }
 }
