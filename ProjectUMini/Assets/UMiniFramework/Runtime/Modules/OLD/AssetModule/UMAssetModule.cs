@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using UMiniFramework.Runtime.Modules.AssetModule.AssetLoaders;
-using UMiniFramework.Runtime.Modules.BaseModule;
+using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using Object = UnityEngine.Object;
 

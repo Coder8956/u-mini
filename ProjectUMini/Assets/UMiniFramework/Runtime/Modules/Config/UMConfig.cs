@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UMiniFramework.Runtime.Modules.BaseModule;
+using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.Config

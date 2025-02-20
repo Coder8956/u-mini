@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using UMiniFramework.Runtime.Modules.BaseModule;
+using UMiniFramework.Runtime.Modules.Base;
 
 namespace UMiniFramework.Runtime.Modules.UI
 {
@@ -7,6 +7,7 @@ namespace UMiniFramework.Runtime.Modules.UI
     {
         public override IEnumerator Init()
         {
+            
             yield return null;
             // m_createdPanel = new Dictionary<string, UMUIPanel>();
             // m_UMUIRootCanvasGroup = m_UMUIRootCanvas.GetComponent<CanvasGroup>();

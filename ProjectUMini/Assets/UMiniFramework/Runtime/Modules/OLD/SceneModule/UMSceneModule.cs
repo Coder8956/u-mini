@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using UMiniFramework.Runtime.Modules.BaseModule;
+using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.SceneManagement;

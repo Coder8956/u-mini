@@ -1,5 +1,5 @@
 ﻿using System.Collections;
-using UMiniFramework.Runtime.Modules.BaseModule;
+using UMiniFramework.Runtime.Modules.Base;
 
 namespace UMiniFramework.Runtime.Modules.Audio
 {
