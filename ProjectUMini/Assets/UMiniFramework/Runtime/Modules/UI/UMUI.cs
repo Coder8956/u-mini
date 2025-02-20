@@ -98,8 +98,7 @@ namespace UMiniFramework.Runtime.Modules.UI
                 SetUILayer(uiLayerGo);
             }
         }
-
-
+        
         public override IEnumerator Init(UMModuleConfig config)
         {
             m_config = UMUtilCommon.ConvertObjectClass<UMUIConfig>(config);

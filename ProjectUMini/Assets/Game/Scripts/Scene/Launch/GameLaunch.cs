@@ -4,7 +4,7 @@ using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
 
-namespace Game.Scripts.Launch
+namespace Game.Scripts.Scene.Launch
 {
     public class GameLaunch : MonoBehaviour
     {
