@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using UMiniFramework.Runtime.Modules.Base;
+﻿using UMiniFramework.Runtime.Modules.Base;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.UI
