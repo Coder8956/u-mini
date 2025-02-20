@@ -1,24 +1,34 @@
 ﻿using System.Collections;
+using System.Reflection;
 using UMiniFramework.Runtime.Modules.Base;
+using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.Audio
 {
     public class UMAudio : UMBaseModule
     {
-        public UMBGMAudio BGM { get; private set; }
-        public UMEffectAudio Effect { get; private set; }
+        private const string BGM_GO_NAME = "BGM_UMAUDIO";
+        private const string EFFECT_GO_NAME = "EFFECT_UMAUDIO";
+        private UMAudioConfig m_config = null;
+
+        public UMAudioBGM BGM { get; private set; }
+        public UMAudioEffect Effect { get; private set; }
 
         protected override IEnumerator Init(UMModuleConfig config)
         {
+            m_config = UMUtilCommon.ConvertObjectClass<UMAudioConfig>(config);
+
+            // 初始化 BGM
+            BGM = UMUtilCommon.CreateGameObject<UMAudioBGM>(BGM_GO_NAME, gameObject);
+            MethodInfo BGMInit = UMUtilCommon.GetObjectNoPublicMethod(BGM.GetType(), "Init");
+            BGMInit.Invoke(BGM, null);
+
+            // 初始化 Effect
+            Effect = UMUtilCommon.CreateGameObject<UMAudioEffect>(EFFECT_GO_NAME, gameObject);
+            MethodInfo EffectInit = UMUtilCommon.GetObjectNoPublicMethod(Effect.GetType(), "Init");
+            EffectInit.Invoke(Effect, null);
+
             yield return null;
-            // BGM = UMUtilCommon.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);
-            // BGM.Init();
-            //
-            // Effect = UMUtilCommon.CreateGameObject<UMEffectAudio>(nameof(UMEffectAudio), gameObject);
-            // Effect.Init();
-            // yield return null;
-            // m_initFinished = true;
-            // UMUtilCommon.PrintModuleInitFinishedLog(GetType().Name, m_initFinished);
         }
     }
 }

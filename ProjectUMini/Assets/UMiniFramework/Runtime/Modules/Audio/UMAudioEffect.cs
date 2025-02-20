@@ -1,34 +1,33 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-// using UMiniFramework.Runtime.Pool.GameObjectPool;
-using UMiniFramework.Runtime.Utils;
+using UMiniFramework.Runtime.Modules.Audio.Base;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Audio
 {
-    public class UMEffectAudio : UMAudio
+    public class UMAudioEffect : UMAudioFunc
     {
         // private UMGameObjectPool m_soundPool;
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
         private List<string> m_loadingClip;
         private bool m_isMute = false;
 
-        // public override void Init()
-        // {
-        //     // 初始化音效对象池
-        //     GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
-        //     UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
-        //     ("SoundPool",
-        //         gameObject,
-        //         poolObjectTemplet,
-        //         5,
-        //         null,
-        //         null
-        //     );
-        //     m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
-        //     m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
-        //     m_loadingClip = new List<string>();
-        // }
+        protected override void Init()
+        {
+            // 初始化音效对象池
+            // GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
+            // UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig
+            // ("SoundPool",
+            //     gameObject,
+            //     poolObjectTemplet,
+            //     5,
+            //     null,
+            //     null
+            // );
+            // m_soundPool = UMGameObjectPool.CreatePool(poolConfig);
+            // m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
+            // m_loadingClip = new List<string>();
+        }
 
         public void Play(string audioPath, float volume = 1)
         {

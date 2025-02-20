@@ -3,6 +3,9 @@ using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.UI
 {
+    /// <summary>
+    /// UM UI模块配置
+    /// </summary>
     public class UMUIConfig : UMModuleConfig
     {
         public bool IsCreateEventSystem { get; set; }

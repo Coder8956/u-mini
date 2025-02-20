@@ -1,20 +1,21 @@
 ﻿using System.Collections.Generic;
+using UMiniFramework.Runtime.Modules.Audio.Base;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Audio
 {
-    public class UMBGMAudio : UMAudio
+    public class UMAudioBGM : UMAudioFunc
     {
         private AudioSource m_audioSource = null;
 
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
 
-        // public override void Init()
-        // {
-        //     m_audioSource = gameObject.AddComponent<AudioSource>();
-        //     m_audioSource.loop = true;
-        //     m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
-        // }
+        protected override void Init()
+        {
+            m_audioSource = gameObject.AddComponent<AudioSource>();
+            m_audioSource.loop = true;
+            // m_cachedAudioClipDic = new Dictionary<string, AudioClip>();
+        }
 
         public void Play(string audioPath, float volume = 1, bool loop = true)
         {
