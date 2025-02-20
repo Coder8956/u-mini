@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
@@ -150,7 +151,7 @@ namespace UMiniFramework.Runtime.Modules.UI
                 (UMUIPanelConfig) Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelConfig));
 
             T panel = null;
-            if (uiConfig.PathType == PathEnum.Resources)
+            if (uiConfig.PathType == UMResPathType.Resources)
             {
                 // 加载界面并设置界面引用值
                 panel = ResLoadUI(uiConfig.Path).GetComponent<T>();

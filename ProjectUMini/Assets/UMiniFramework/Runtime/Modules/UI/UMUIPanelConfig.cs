@@ -1,13 +1,8 @@
 ﻿using System;
+using UMiniFramework.Runtime.Common;
 
 namespace UMiniFramework.Runtime.Modules.UI
 {
-    public enum PathEnum
-    {
-        Resources,
-        AssetBundle
-    }
-
     [AttributeUsage(AttributeTargets.Class)]
     public class UMUIPanelConfig : Attribute
     {
@@ -15,9 +10,9 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         public readonly int Layer = 0;
 
-        public readonly PathEnum PathType = PathEnum.Resources;
+        public readonly UMResPathType PathType = UMResPathType.Resources;
 
-        public UMUIPanelConfig(string panelPath, int layer = 0, PathEnum pathType = PathEnum.Resources)
+        public UMUIPanelConfig(string panelPath, int layer = 0, UMResPathType pathType = UMResPathType.Resources)
         {
             Path = panelPath;
             Layer = layer;

@@ -5,6 +5,13 @@
     /// </summary>
     public class AudioClipInfo
     {
-        
+        public readonly string Path;
+        public bool IsPreLoad;
+
+        public AudioClipInfo(string path, bool isPreLoad)
+        {
+            Path = path;
+            IsPreLoad = isPreLoad;
+        }
     }
 }
