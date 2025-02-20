@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Modules.Audio.Base;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Audio
+namespace UMiniFramework.Runtime.Modules.Audio.BGM
 {
     public class UMAudioBGM : UMAudioFunc
     {
@@ -10,8 +10,11 @@ namespace UMiniFramework.Runtime.Modules.Audio
 
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
 
-        protected override void Init()
+        private UMAudioConfig m_config;
+
+        protected override void Init(UMAudioConfig config)
         {
+            m_config = config;
             m_audioSource = gameObject.AddComponent<AudioSource>();
             m_audioSource.loop = true;
             // m_cachedAudioClipDic = new Dictionary<string, AudioClip>();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.Audio.Base;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Audio
+namespace UMiniFramework.Runtime.Modules.Audio.Effect
 {
     public class UMAudioEffect : UMAudioFunc
     {
@@ -11,9 +11,11 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private Dictionary<string, AudioClip> m_cachedAudioClipDic;
         private List<string> m_loadingClip;
         private bool m_isMute = false;
+        private UMAudioConfig m_config;
 
-        protected override void Init()
+        protected override void Init(UMAudioConfig config)
         {
+            m_config = config;
             // 初始化音效对象池
             // GameObject poolObjectTemplet = UMUtilCommon.CreateGameObject<AudioSource>("Sound", gameObject).gameObject;
             // UMGameObjectPool.UMPoolConfig poolConfig = new UMGameObjectPool.UMPoolConfig

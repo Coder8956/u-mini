@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Reflection;
+using UMiniFramework.Runtime.Modules.Audio.BGM;
+using UMiniFramework.Runtime.Modules.Audio.Effect;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
@@ -21,12 +23,12 @@ namespace UMiniFramework.Runtime.Modules.Audio
             // 初始化 BGM
             BGM = UMUtilCommon.CreateGameObject<UMAudioBGM>(BGM_GO_NAME, gameObject);
             MethodInfo BGMInit = UMUtilCommon.GetObjectNoPublicMethod(BGM.GetType(), "Init");
-            BGMInit.Invoke(BGM, null);
+            BGMInit.Invoke(BGM, new object[] {m_config});
 
             // 初始化 Effect
             Effect = UMUtilCommon.CreateGameObject<UMAudioEffect>(EFFECT_GO_NAME, gameObject);
             MethodInfo EffectInit = UMUtilCommon.GetObjectNoPublicMethod(Effect.GetType(), "Init");
-            EffectInit.Invoke(Effect, null);
+            EffectInit.Invoke(Effect, new object[] {m_config});
 
             yield return null;
         }

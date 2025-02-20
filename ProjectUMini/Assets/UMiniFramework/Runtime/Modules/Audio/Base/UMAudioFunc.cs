@@ -4,6 +4,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.Base
 {
     public abstract class UMAudioFunc : MonoBehaviour
     {
-        protected abstract void Init();
+        protected abstract void Init(UMAudioConfig config);
     }
 }

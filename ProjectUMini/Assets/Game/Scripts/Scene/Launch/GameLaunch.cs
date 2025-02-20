@@ -1,9 +1,8 @@
-﻿using Game.Scripts.Common;
+﻿using System.Collections.Generic;
+using Game.Scripts.Common;
 using Game.Scripts.UI.PanelDebug;
-using Game.Scripts.UI.PanelGame;
 using Game.Scripts.UI.PanelMain;
 using UMiniFramework.Runtime.Modules.Audio;
-using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
@@ -14,14 +13,23 @@ namespace Game.Scripts.Scene.Launch
     {
         private void Start()
         {
-            UMUIConfig umuiConfig = new UMUIConfig();
-            umuiConfig.IsCreateEventSystem = true;
-            umuiConfig.UILayerCount = 5;
+            // UI 配置
+            UMUIConfig umUIConfig = new UMUIConfig();
+            umUIConfig.IsCreateEventSystem = true;
+            umUIConfig.UILayerCount = 5;
+
+            // 音频配置
+            UMAudioConfig umAudioConfig = new UMAudioConfig();
+            umAudioConfig.BGMClips = new List<AudioClipInfo>()
+            {
+                new(GameAudio.Effect_1, "Audio/BGM/BGM_001"),
+                new(GameAudio.Effect_2, "Audio/BGM/BGM_002", true),
+            };
 
 
             UMGR.Launch();
-            UMGR.Register<UMUI>(umuiConfig);
-            UMGR.Register<UMAudio>();
+            UMGR.Register<UMUI>(umUIConfig);
+            UMGR.Register<UMAudio>(umAudioConfig);
             // UMGR.Register<UMConfig>();
             UMGR.InitModules((val) =>
             {
