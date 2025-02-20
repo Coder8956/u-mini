@@ -22,19 +22,24 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Launch();
             UMGR.Register<UMUI>(umuiConfig);
             UMGR.Register<UMAudio>();
-            UMGR.Register<UMConfig>();
+            // UMGR.Register<UMConfig>();
             UMGR.InitModules((val) =>
             {
                 Debug.Log($"Init modules progress: {val.InitProgress}");
                 if (val.InitState)
                 {
-                    // PanelGame pGame = UMGR.Get<UMUI>().Create<PanelGame>();
-                    GameUI.PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
-                    PanelDebug pDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
-
-                    UMGR.Get<UMUI>().Open(pDebug);
+                    OnUMGRInitModulesFinished();
                 }
             });
+        }
+
+        private void OnUMGRInitModulesFinished()
+        {
+            // PanelGame pGame = UMGR.Get<UMUI>().Create<PanelGame>();
+            GameUI.PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
+            PanelDebug pDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
+
+            UMGR.Get<UMUI>().Open(pDebug);
         }
     }
 }
