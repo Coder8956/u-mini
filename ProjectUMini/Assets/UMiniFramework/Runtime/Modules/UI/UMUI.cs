@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UMiniFramework.Runtime.Modules.Base;
+using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -78,6 +79,16 @@ namespace UMiniFramework.Runtime.Modules.UI
             CreateGraphicRaycaster();
             CreateEventSystem();
             yield return null;
+        }
+
+        /// <summary>
+        /// 创建界面
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        public T Create<T>() where T : UMUIPanel
+        {
+            return null;
         }
     }
 }

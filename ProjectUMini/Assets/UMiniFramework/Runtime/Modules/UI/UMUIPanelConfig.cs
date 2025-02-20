@@ -3,13 +3,13 @@
 namespace UMiniFramework.Runtime.Modules.UI
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class UMUIPanelInfo : Attribute
+    public class UMUIPanelConfig : Attribute
     {
         public readonly string PanelPath = null;
 
-        public readonly UMUILayer Layer = UMUILayer.Middle;
+        public readonly int Layer = 0;
 
-        public UMUIPanelInfo(string panelPath, UMUILayer layer = UMUILayer.Middle)
+        public UMUIPanelConfig(string panelPath, int layer = 0)
         {
             PanelPath = panelPath;
             Layer = layer;
