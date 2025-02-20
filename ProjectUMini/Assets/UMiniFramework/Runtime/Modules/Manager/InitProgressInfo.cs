@@ -4,6 +4,9 @@ namespace UMiniFramework.Runtime.Modules.Manager
 {
     public class InitProgressInfo
     {
+        /// <summary>
+        /// 标记初始化状态,初始化完成为 true
+        /// </summary>
         private bool m_initState = false;
 
         public bool InitState

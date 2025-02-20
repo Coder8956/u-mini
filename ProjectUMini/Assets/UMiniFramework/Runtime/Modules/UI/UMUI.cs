@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
@@ -98,8 +99,14 @@ namespace UMiniFramework.Runtime.Modules.UI
                 SetUILayer(uiLayerGo);
             }
         }
-        
-        public override IEnumerator Init(UMModuleConfig config)
+
+        private GameObject ResLoadUI(string path)
+        {
+            GameObject uiGo = Resources.Load<GameObject>(path);
+            return Instantiate(uiGo);
+        }
+
+        protected override IEnumerator Init(UMModuleConfig config)
         {
             m_config = UMUtilCommon.ConvertObjectClass<UMUIConfig>(config);
 
@@ -124,7 +131,23 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// <returns></returns>
         public T Create<T>() where T : UMUIPanel
         {
-            return null;
+            // 获取配置特性标签
+            UMUIPanelConfig uiConfig =
+                (UMUIPanelConfig) Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelConfig));
+
+            T panel = null;
+            if (uiConfig.PathType == PathEnum.Resources)
+            {
+                panel = ResLoadUI(uiConfig.Path).GetComponent<T>();
+                panel.transform.SetParent(gameObject.transform);
+                // TODO: UI初始化, 设置UI层级
+            }
+            else
+            {
+                UMUtilDebug.Warning($"Invalid parameter: {uiConfig.PathType}");
+            }
+
+            return panel;
         }
     }
 }

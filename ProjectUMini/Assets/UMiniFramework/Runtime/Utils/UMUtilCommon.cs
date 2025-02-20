@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Reflection;
+using UnityEngine;
 
 namespace UMiniFramework.Runtime.Utils
 {
@@ -29,6 +31,17 @@ namespace UMiniFramework.Runtime.Utils
                 return (T) obj;
             else
                 return null;
+        }
+
+        /// <summary>
+        /// 获取非公共方法的对象方法
+        /// </summary>
+        /// <param name="type">对象类型</param>
+        /// <param name="methodName">方法名</param>
+        /// <returns></returns>
+        public static MethodInfo GetObjectNoPublicMethod(Type type, string methodName)
+        {
+            return type.GetMethod(methodName, BindingFlags.NonPublic | BindingFlags.Instance);
         }
     }
 }

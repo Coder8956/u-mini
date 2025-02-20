@@ -8,7 +8,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
         public UMBGMAudio BGM { get; private set; }
         public UMEffectAudio Effect { get; private set; }
 
-        public override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleConfig config)
         {
             yield return null;
             // BGM = UMUtilCommon.CreateGameObject<UMBGMAudio>(nameof(UMBGMAudio), gameObject);

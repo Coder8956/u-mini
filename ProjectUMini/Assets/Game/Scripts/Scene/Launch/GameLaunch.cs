@@ -1,4 +1,5 @@
-﻿using UMiniFramework.Runtime.Modules.Audio;
+﻿using Game.Scripts.UI.PanelMain;
+using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
@@ -19,7 +20,14 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Register<UMUI>(umuiConfig);
             UMGR.Register<UMAudio>();
             UMGR.Register<UMConfig>();
-            UMGR.InitModules((val) => { Debug.Log($"Init modules progress: {val.InitProgress}"); });
+            UMGR.InitModules((val) =>
+            {
+                Debug.Log($"Init modules progress: {val.InitProgress}");
+                if (val.InitState)
+                {
+                    UMGR.Get<UMUI>().Create<PanelMain>();
+                }
+            });
         }
     }
 }

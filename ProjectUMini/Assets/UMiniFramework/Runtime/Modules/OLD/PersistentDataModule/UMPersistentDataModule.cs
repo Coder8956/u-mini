@@ -14,7 +14,7 @@ namespace UMiniFramework.Runtime.Modules.PersistentDataModule
         private const string m_persiDataFileExtend = ".json";
         private string m_persiDataRootPath;
 
-        public override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleConfig config)
         {
             // m_persiDataRootPath = UMPersistentDataRootDir.GetRootDir();
             // m_persistentDataDic = new Dictionary<string, UMPersistentData>();

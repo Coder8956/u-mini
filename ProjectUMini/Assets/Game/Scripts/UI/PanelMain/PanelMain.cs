@@ -6,19 +6,19 @@ namespace Game.Scripts.UI.PanelMain
     [UMUIPanelConfig("UI/PanelMain/PanelMain")]
     public class PanelMain : UMUIPanel
     {
-        public override void OnCreatePanel()
+        protected override void OnCreatePanel()
         {
         }
 
-        public override void OnDestroyPanel()
+        protected override void OnDestroyPanel()
         {
         }
 
-        public override void OnOpenPanel()
+        protected override void OnOpenPanel()
         {
         }
 
-        public override void OnClosePanel()
+        protected override void OnClosePanel()
         {
         }
     }

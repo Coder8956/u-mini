@@ -6,9 +6,9 @@ namespace UMiniFramework.Runtime.Modules.UI.Base
 {
     public abstract class UMUIPanel : MonoBehaviour
     {
-        public abstract void OnCreatePanel();
-        public abstract void OnDestroyPanel();
-        public abstract void OnOpenPanel();
-        public abstract void OnClosePanel();
+        protected abstract void OnCreatePanel();
+        protected abstract void OnDestroyPanel();
+        protected abstract void OnOpenPanel();
+        protected abstract void OnClosePanel();
     }
 }

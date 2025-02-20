@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
@@ -21,13 +22,14 @@ namespace UMiniFramework.Runtime.Modules.Manager
         private static GameObject m_UMGRGameObject = null;
 
         private static Dictionary<string, ModuleRegisterInfo> m_moduleDic = null;
-        
+
         private IEnumerator InitModulesCoro(Action<InitProgressInfo> initCallback)
         {
             InitProgressInfo initInfo = new InitProgressInfo();
             initInfo.InitState = false;
             float moduleCount = m_moduleDic.Count;
             int initedNum = 0;
+            MethodInfo ModuleInitMethod = null;
 
             foreach (var ele in m_moduleDic)
             {
@@ -35,12 +37,15 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 initInfo.InitModule = registerInfo.Module;
                 initInfo.InitProgress = initedNum / moduleCount;
                 initCallback?.Invoke(initInfo);
-                yield return registerInfo.Module.Init(registerInfo.Config);
+                Type moduleType = registerInfo.Module.GetType();
+                ModuleInitMethod = UMUtilCommon.GetObjectNoPublicMethod(moduleType, "Init");
+                yield return ModuleInitMethod.Invoke(registerInfo.Module, new object[] {registerInfo.Config});
                 initedNum++;
             }
 
             initInfo.InitModule = null;
             initInfo.InitProgress = initedNum / moduleCount;
+            initInfo.InitState = true;
             initCallback?.Invoke(initInfo);
         }
 
@@ -86,7 +91,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
             string key = GetModuleKey<T>();
             if (m_moduleDic.ContainsKey(key))
             {
-                return m_moduleDic[key] as T;
+                return m_moduleDic[key].Module as T;
             }
 
             UMUtilDebug.Warning($"UMGR The {key} module is not registered");

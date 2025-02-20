@@ -8,6 +8,6 @@ namespace UMiniFramework.Runtime.Modules.Base
     /// </summary>
     public abstract class UMBaseModule : MonoBehaviour
     {
-        public abstract IEnumerator Init(UMModuleConfig config);
+        protected abstract IEnumerator Init(UMModuleConfig config);
     }
 }
