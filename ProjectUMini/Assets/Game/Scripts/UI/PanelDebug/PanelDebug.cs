@@ -16,9 +16,11 @@ namespace Game.Scripts.UI.PanelDebug
 
         [SerializeField] private Button m_btnPlayBGM_1 = null;
         [SerializeField] private Button m_btnPlayBGM_2 = null;
+
         [SerializeField] private Button m_btnPlayEffect_1 = null;
         [SerializeField] private Button m_btnPlayEffect_2 = null;
         [SerializeField] private Button m_btnPlayEffect_3 = null;
+        [SerializeField] private Button m_btnPrintASInfo = null;
 
         protected override void OnCreatePanel()
         {
@@ -61,6 +63,12 @@ namespace Game.Scripts.UI.PanelDebug
             {
                 // 播放 effect-3
                 UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_3);
+            });
+
+            m_btnPrintASInfo?.onClick.AddListener(() =>
+            {
+                // 打印音效数量
+                UMGR.Get<UMAudio>().Effect.PrintASInfo();
             });
             // UMGR.Get<UMUI>().Open(pGame);
         }

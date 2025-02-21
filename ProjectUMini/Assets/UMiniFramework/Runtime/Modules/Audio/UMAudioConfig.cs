@@ -18,10 +18,10 @@ namespace UMiniFramework.Runtime.Modules.Audio
 
         #region Effect-Config
 
-        private int m_defaultASCount = 5;
+        private int m_defaultASCount = 0;
 
         /// <summary>
-        /// 默认AudioSource数量.最小不能低于3;
+        /// 默认AudioSource数量.有效值 >=10;
         /// </summary>
         public int DefaultAsCount
         {

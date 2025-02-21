@@ -10,9 +10,12 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
     {
         private Dictionary<string, AudioClipInfo> m_EffectClipDic;
         private UMAudioConfig m_config;
+
         private Queue<AudioSource> m_asQue;
 
-        private const int MIN_AS_COUNT = 3;
+        private List<AudioSource> m_asPlayingList;
+
+        private const int MIN_AS_COUNT = 10;
         private int m_initASCount = 0;
         private int m_createdASCount = 0;
 
@@ -47,12 +50,18 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             }
 
             m_asQue = new Queue<AudioSource>();
+            m_asPlayingList = new List<AudioSource>();
+
             for (int i = 0; i < m_initASCount; i++)
             {
-                m_asQue.Enqueue(CreateAS());
+                BackAS(CreateAS());
             }
         }
 
+        /// <summary>
+        /// 从 AudioSource 队列中获取一个对象
+        /// </summary>
+        /// <returns></returns>
         private AudioSource GetAS()
         {
             AudioSource getAS = null;
@@ -71,13 +80,29 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             return getAS;
         }
 
+        /// <summary>
+        /// 将 AudioSource 对象放回队列
+        /// </summary>
+        /// <returns></returns>
         private void BackAS(AudioSource backAS)
         {
             backAS.clip = null;
             backAS.enabled = false;
-            m_asQue.Enqueue(backAS);
+
+            if (m_asQue.Count >= m_initASCount)
+            {
+                Destroy(backAS);
+            }
+            else
+            {
+                m_asQue.Enqueue(backAS);
+            }
         }
 
+        /// <summary>
+        /// 创建一个 AudioSource 对象
+        /// </summary>
+        /// <returns></returns>
         private AudioSource CreateAS()
         {
             AudioSource new_as = gameObject.AddComponent<AudioSource>();
@@ -87,9 +112,15 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             return new_as;
         }
 
+        /// <summary>
+        /// 等待音频播放完成
+        /// </summary>
+        /// <param name="audioSource"></param>
+        /// <returns></returns>
         private IEnumerator WaitEffectPlayOver(AudioSource audioSource)
         {
             yield return new WaitWhile(() => audioSource.isPlaying);
+            m_asPlayingList.Remove(audioSource);
             BackAS(audioSource);
         }
 
@@ -100,7 +131,11 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             InitASQue();
         }
 
-
+        /// <summary>
+        /// 播放音效
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="volume"></param>
         public void Play(string id, float volume = 1)
         {
             AudioClipInfo aci = m_EffectClipDic[id];
@@ -111,17 +146,27 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             }
 
             AudioSource curtAS = GetAS();
+            m_asPlayingList.Add(curtAS);
+
             curtAS.clip = aci.Clip;
             curtAS.volume = volume;
             curtAS.Play();
 
+
             StartCoroutine(WaitEffectPlayOver(curtAS));
         }
 
-        public void PrintASCount()
+        /// <summary>
+        /// 输出 AudioSource 相关信息
+        /// </summary>
+        public void PrintASInfo()
         {
-            UMUtilDebug.Log($"Created AS Count: {m_createdASCount}");
-            UMUtilDebug.Log($"AS  Count: {m_createdASCount}");
+            UMUtilDebug.Log(
+                $"=== Print AS Info ===\n" +
+                $"Created AS Count: {m_createdASCount}\n" +
+                $"AS Queue Count: {m_asQue.Count}\n" +
+                $"AS Playing List Count: {m_asPlayingList.Count}\n" +
+                $"=====================");
         }
     }
 }
