@@ -18,6 +18,17 @@ namespace UMiniFramework.Runtime.Modules.Audio
 
         #region Effect-Config
 
+        private int m_defaultASCount = 5;
+
+        /// <summary>
+        /// 默认AudioSource数量.最小不能低于5;
+        /// </summary>
+        public int DefaultAsCount
+        {
+            get => m_defaultASCount;
+            set => m_defaultASCount = value;
+        }
+
         public List<AudioClipInfo> EffectClips;
 
         #endregion

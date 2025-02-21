@@ -26,6 +26,7 @@ namespace Game.Scripts.Scene.Launch
                 new(GameAudio.BGM_2, "Audio/BGM/BGM_002", true),
             };
 
+            umAudioConfig.DefaultAsCount = 6;
             umAudioConfig.EffectClips = new List<AudioClipInfo>()
             {
                 new(GameAudio.Effect_1, "Audio/Effect/Bullet_Explosion_001"),
