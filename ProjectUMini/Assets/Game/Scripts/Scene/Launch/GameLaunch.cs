@@ -66,6 +66,8 @@ namespace Game.Scripts.Scene.Launch
 
         private void OnUMGRInitModulesFinished()
         {
+            GameUI.OpenDebug();
+
             // 进入主界面
             UMGR.Get<UMScene>().Load(GameScene.Main);
         }

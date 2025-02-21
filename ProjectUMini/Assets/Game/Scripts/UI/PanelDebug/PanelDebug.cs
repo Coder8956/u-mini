@@ -11,6 +11,9 @@ namespace Game.Scripts.UI.PanelDebug
     [UMUIPanelConfig("UI/PanelMain/PanelDebug")]
     public class PanelDebug : UMUIPanel
     {
+        [SerializeField] private GameObject m_DebugGO;
+        [SerializeField] private Button m_btnSwitch = null;
+
         [SerializeField] private Button m_btnOpenPanelMain = null;
         [SerializeField] private Button m_btnDumpCreatedUI = null;
 
@@ -24,6 +27,14 @@ namespace Game.Scripts.UI.PanelDebug
 
         protected override void OnCreatePanel()
         {
+            m_DebugGO.SetActive(false);
+
+            m_btnSwitch?.onClick.AddListener(() =>
+            {
+                // 打开/关闭 debug 对象
+                m_DebugGO.SetActive(!m_DebugGO.activeSelf);
+            });
+
             // Debug.Log("Create-PanelDebug");
             m_btnOpenPanelMain?.onClick.AddListener(() =>
             {
