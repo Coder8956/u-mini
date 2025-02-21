@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Game.Scripts.UI.PanelGame
 {
-    [UMUIPanelConfig("UI/PanelMain/PanelGame")]
+    [UMUIPanelConfig("UI/PanelGame/PanelGame")]
     public class PanelGame : UMUIPanel
     {
         protected override void OnCreatePanel()

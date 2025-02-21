@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace Game.Scripts.UI.PanelDebug
 {
-    [UMUIPanelConfig("UI/PanelMain/PanelDebug")]
+    [UMUIPanelConfig("UI/PanelDebug/PanelDebug")]
     public class PanelDebug : UMUIPanel
     {
         [SerializeField] private GameObject m_DebugGO;
