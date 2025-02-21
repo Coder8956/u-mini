@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
@@ -8,6 +9,8 @@ namespace UMiniFramework.Runtime.Modules.EventModule
 {
     public class UMEventModule : UMBaseModule
     {
+        public override UMModuleType ModuleType { get; }
+
         private Dictionary<string, List<UMListenerInfo>> EventDic;
 
         protected override IEnumerator Init(UMModuleConfig config)

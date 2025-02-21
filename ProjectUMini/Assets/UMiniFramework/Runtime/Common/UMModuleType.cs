@@ -1,0 +1,10 @@
+﻿namespace UMiniFramework.Runtime.Common
+{
+    public enum UMModuleType
+    {
+        UI,
+        Audio,
+        Config,
+        
+    }
+}

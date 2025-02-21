@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
@@ -9,6 +10,11 @@ namespace UMiniFramework.Runtime.Modules.Config
     public class UMConfig : UMBaseModule
     {
         private Dictionary<Type, UMConfigTable> m_tableDic;
+
+        public override UMModuleType ModuleType
+        {
+            get => UMModuleType.Config;
+        }
 
         public T GetTable<T>() where T : UMConfigTable
         {

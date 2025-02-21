@@ -6,11 +6,14 @@ using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Scripts.Scene.Launch
 {
     public class GameLaunch : MonoBehaviour
     {
+        [SerializeField] private Slider m_launchProgress;
+
         private void Start()
         {
             // UI 配置
@@ -41,7 +44,8 @@ namespace Game.Scripts.Scene.Launch
             // UMGR.Register<UMConfig>();
             UMGR.InitModules((val) =>
             {
-                Debug.Log($"Init modules progress: {val.InitProgress}");
+                Debug.Log($"Init modules progress: {val.InitProgress}. module: {val.InitModule}");
+                m_launchProgress.value = val.InitProgress;
                 if (val.InitState)
                 {
                     OnUMGRInitModulesFinished();
@@ -52,10 +56,10 @@ namespace Game.Scripts.Scene.Launch
         private void OnUMGRInitModulesFinished()
         {
             // PanelGame pGame = UMGR.Get<UMUI>().Create<PanelGame>();
-            GameUI.PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
-            PanelDebug pDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
-
-            UMGR.Get<UMUI>().Open(pDebug);
+            // GameUI.PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
+            // PanelDebug pDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
+            //
+            // UMGR.Get<UMUI>().Open(pDebug);
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
@@ -8,6 +9,8 @@ namespace UMiniFramework.Runtime.Modules.SceneModule
 {
     public class UMSceneModule : UMBaseModule
     {
+        public override UMModuleType ModuleType { get; }
+
         protected override IEnumerator Init(UMModuleConfig config)
         {
             yield return null;

@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using UMiniFramework.Runtime.Common;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Base
@@ -8,6 +9,7 @@ namespace UMiniFramework.Runtime.Modules.Base
     /// </summary>
     public abstract class UMBaseModule : MonoBehaviour
     {
+        public abstract UMModuleType ModuleType { get; }
         protected abstract IEnumerator Init(UMModuleConfig config);
     }
 }

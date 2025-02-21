@@ -33,6 +33,11 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         private RectTransform m_uiCache = null;
 
+        public override UMModuleType ModuleType
+        {
+            get => UMModuleType.UI;
+        }
+
         private void SetUILayer(GameObject go)
         {
             // 设置为UI层.索引值是5.

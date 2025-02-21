@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Reflection;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Audio.BGM;
 using UMiniFramework.Runtime.Modules.Audio.Effect;
 using UMiniFramework.Runtime.Modules.Base;
@@ -14,6 +15,11 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private UMAudioConfig m_config = null;
         public UMAudioBGM BGM { get; private set; }
         public UMAudioEffect Effect { get; private set; }
+
+        public override UMModuleType ModuleType
+        {
+            get => UMModuleType.Audio;
+        }
 
         protected override IEnumerator Init(UMModuleConfig config)
         {

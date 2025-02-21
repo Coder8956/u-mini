@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.AssetModule.AssetLoaders;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
@@ -10,6 +11,8 @@ namespace UMiniFramework.Runtime.Modules.AssetModule
     public class UMAssetModule : UMBaseModule
     {
         private IUMAssetLoader m_assetLoader;
+
+        public override UMModuleType ModuleType { get; }
 
         protected override IEnumerator Init(UMModuleConfig config)
         {
