@@ -1,4 +1,5 @@
 ﻿using Game.Scripts.Common;
+using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
@@ -39,12 +40,12 @@ namespace Game.Scripts.UI.PanelDebug
             m_btnOpenPanelMain?.onClick.AddListener(() =>
             {
                 // 打开主界面
-                UMGR.Get<UMUI>().Open(GameUI.PanelMain, 5);
+                GameUI.OpenMain();
             });
 
             m_btnDumpCreatedUI?.onClick.AddListener(() =>
             {
-                // 打开主界面
+                // 输出创建的 UI
                 UMGR.Get<UMUI>().DumpCreatedUI();
             });
 
@@ -81,7 +82,6 @@ namespace Game.Scripts.UI.PanelDebug
                 // 打印音效数量
                 UMGR.Get<UMAudio>().Effect.PrintASInfo();
             });
-            // UMGR.Get<UMUI>().Open(pGame);
         }
 
         protected override void OnDestroyPanel()
