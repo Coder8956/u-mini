@@ -38,6 +38,14 @@ namespace UMiniFramework.Runtime.Modules.UI
             get => UMModuleType.UI;
         }
 
+        /// <summary>
+        /// 顶层 LayerIndex
+        /// </summary>
+        public int TopLayerIndex
+        {
+            get { return m_uiLayers.Count - 1; }
+        }
+
         private void SetUILayer(GameObject go)
         {
             // 设置为UI层.索引值是5.

@@ -10,22 +10,20 @@ namespace Game.Scripts.UI.PanelMain
     [UMUIPanelConfig("UI/PanelMain/PanelMain")]
     public class PanelMain : UMUIPanel
     {
-        [SerializeField] private Button m_btnClose;
-        [SerializeField] private Button m_btnDestroy;
+        [SerializeField] private Button m_btnStartGame;
+        [SerializeField] private Button m_btnSet;
 
         protected override void OnCreatePanel()
         {
             // Debug.Log("Create-PanelMain");
-            m_btnClose.onClick.AddListener(() =>
+            m_btnStartGame.onClick.AddListener(() =>
             {
-                // 关闭界面
-                UMGR.Get<UMUI>().Close(this);
+                // 进入游戏
             });
 
-            m_btnDestroy.onClick.AddListener(() =>
+            m_btnSet.onClick.AddListener(() =>
             {
-                // 销毁界面
-                UMGR.Get<UMUI>().Destroy(this);
+                // 打开游戏设置
             });
         }
 
