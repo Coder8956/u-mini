@@ -5,6 +5,6 @@
         UI,
         Audio,
         Config,
-        
+        Scene,
     }
 }

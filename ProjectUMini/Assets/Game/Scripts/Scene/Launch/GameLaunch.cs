@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using Game.Scripts.Common;
-using Game.Scripts.UI.PanelDebug;
-using Game.Scripts.UI.PanelMain;
 using UMiniFramework.Runtime.Modules.Audio;
+using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,10 +12,13 @@ namespace Game.Scripts.Scene.Launch
 {
     public class GameLaunch : MonoBehaviour
     {
-        [SerializeField] private Slider m_launchProgress;
+        [SerializeField] private Slider m_slidLaunchProgress;
+        [SerializeField] private Text m_txtProgressTip;
 
         private void Start()
         {
+            m_txtProgressTip.text = string.Empty;
+
             // UI 配置
             UMUIConfig umUIConfig = new UMUIConfig();
             umUIConfig.IsCreateEventSystem = true;
@@ -39,13 +42,21 @@ namespace Game.Scripts.Scene.Launch
 
 
             UMGR.Launch();
+
             UMGR.Register<UMUI>(umUIConfig);
             UMGR.Register<UMAudio>(umAudioConfig);
-            // UMGR.Register<UMConfig>();
+            UMGR.Register<UMScene>();
+
             UMGR.InitModules((val) =>
             {
-                Debug.Log($"Init modules progress: {val.InitProgress}. module: {val.InitModule}");
-                m_launchProgress.value = val.InitProgress;
+                UMBaseModule module = val.InitModule;
+
+                string moduleTypeStr = module == null ? "Finished" : module.ModuleType.ToString();
+
+                m_txtProgressTip.text = $"Loading {moduleTypeStr}. {val.InitProgress * 100}%";
+
+                Debug.Log($"Init modules progress: {val.InitProgress}. module: {moduleTypeStr}");
+                m_slidLaunchProgress.value = val.InitProgress;
                 if (val.InitState)
                 {
                     OnUMGRInitModulesFinished();
@@ -55,11 +66,8 @@ namespace Game.Scripts.Scene.Launch
 
         private void OnUMGRInitModulesFinished()
         {
-            // PanelGame pGame = UMGR.Get<UMUI>().Create<PanelGame>();
-            // GameUI.PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
-            // PanelDebug pDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
-            //
-            // UMGR.Get<UMUI>().Open(pDebug);
+            // 进入主界面
+            UMGR.Get<UMScene>().Load(GameScene.Main);
         }
     }
 }
