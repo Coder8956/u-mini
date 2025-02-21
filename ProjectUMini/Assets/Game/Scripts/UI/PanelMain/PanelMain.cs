@@ -1,4 +1,6 @@
-﻿using UMiniFramework.Runtime.Modules.Manager;
+﻿using Game.Scripts.Common;
+using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using Unity.VisualScripting;
@@ -19,6 +21,8 @@ namespace Game.Scripts.UI.PanelMain
             m_btnStartGame.onClick.AddListener(() =>
             {
                 // 进入游戏
+                UMGR.Get<UMScene>().Load(GameScene.Game);
+                UMGR.Get<UMUI>().Close(GameUI.PanelMain);
             });
 
             m_btnSet.onClick.AddListener(() =>
