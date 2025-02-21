@@ -13,8 +13,12 @@ namespace Game.Scripts.UI.PanelDebug
     {
         [SerializeField] private Button m_btnOpenPanelMain = null;
         [SerializeField] private Button m_btnDumpCreatedUI = null;
+
         [SerializeField] private Button m_btnPlayBGM_1 = null;
         [SerializeField] private Button m_btnPlayBGM_2 = null;
+        [SerializeField] private Button m_btnPlayEffect_1 = null;
+        [SerializeField] private Button m_btnPlayEffect_2 = null;
+        [SerializeField] private Button m_btnPlayEffect_3 = null;
 
         protected override void OnCreatePanel()
         {
@@ -41,6 +45,22 @@ namespace Game.Scripts.UI.PanelDebug
             {
                 // 播放 bgm-2
                 UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_2);
+            });
+
+            m_btnPlayEffect_1?.onClick.AddListener(() =>
+            {
+                // 播放 effect-1
+                UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_1);
+            });
+            m_btnPlayEffect_2?.onClick.AddListener(() =>
+            {
+                // 播放 effect-2
+                UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_2);
+            });
+            m_btnPlayEffect_3?.onClick.AddListener(() =>
+            {
+                // 播放 effect-3
+                UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_3);
             });
             // UMGR.Get<UMUI>().Open(pGame);
         }

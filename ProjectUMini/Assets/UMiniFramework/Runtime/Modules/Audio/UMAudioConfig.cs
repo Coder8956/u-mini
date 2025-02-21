@@ -21,7 +21,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private int m_defaultASCount = 5;
 
         /// <summary>
-        /// 默认AudioSource数量.最小不能低于5;
+        /// 默认AudioSource数量.最小不能低于3;
         /// </summary>
         public int DefaultAsCount
         {

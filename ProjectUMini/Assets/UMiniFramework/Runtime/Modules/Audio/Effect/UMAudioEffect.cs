@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.Audio.Base;
+using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Audio.Effect
@@ -11,7 +12,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private UMAudioConfig m_config;
         private Queue<AudioSource> m_asQue;
 
-        private int m_defaultASCount = 5;
+        private const int MIN_AS_COUNT = 3;
+        private int m_initASCount = 0;
+        private int m_createdASCount = 0;
 
         /// <summary>
         /// 初始化 Effect Clip 字典
@@ -38,11 +41,41 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         private void InitASQue()
         {
+            if (m_config != null)
+            {
+                m_initASCount = Mathf.Clamp(m_config.DefaultAsCount, MIN_AS_COUNT, int.MaxValue);
+            }
+
             m_asQue = new Queue<AudioSource>();
-            for (int i = 0; i < m_defaultASCount; i++)
+            for (int i = 0; i < m_initASCount; i++)
             {
                 m_asQue.Enqueue(CreateAS());
             }
+        }
+
+        private AudioSource GetAS()
+        {
+            AudioSource getAS = null;
+
+            if (m_asQue.Count == 0)
+            {
+                getAS = CreateAS();
+            }
+            else
+            {
+                getAS = m_asQue.Dequeue();
+            }
+
+            getAS.enabled = true;
+
+            return getAS;
+        }
+
+        private void BackAS(AudioSource backAS)
+        {
+            backAS.clip = null;
+            backAS.enabled = false;
+            m_asQue.Enqueue(backAS);
         }
 
         private AudioSource CreateAS()
@@ -50,27 +83,19 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             AudioSource new_as = gameObject.AddComponent<AudioSource>();
             new_as.playOnAwake = false;
             new_as.enabled = false;
+            m_createdASCount++;
             return new_as;
-        }
-
-        private void ReadConfig(UMAudioConfig config)
-        {
-            m_config = config;
-            if (m_config == null) return;
-            m_defaultASCount = Mathf.Clamp(m_config.DefaultAsCount, 5, int.MaxValue);
         }
 
         private IEnumerator WaitEffectPlayOver(AudioSource audioSource)
         {
             yield return new WaitWhile(() => audioSource.isPlaying);
-            audioSource.clip = null;
-            audioSource.enabled = false;
-            m_asQue.Enqueue(audioSource);
+            BackAS(audioSource);
         }
 
         protected override void Init(UMAudioConfig config)
         {
-            ReadConfig(config);
+            m_config = config;
             InitEffectClipDic();
             InitASQue();
         }
@@ -85,22 +110,18 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
                 LoadClipInACI(aci);
             }
 
-            AudioSource curtAS = null;
-
-            if (m_asQue.Count == 0)
-            {
-                curtAS = CreateAS();
-            }
-            else
-            {
-                curtAS = m_asQue.Dequeue();
-            }
-
+            AudioSource curtAS = GetAS();
             curtAS.clip = aci.Clip;
             curtAS.volume = volume;
             curtAS.Play();
 
             StartCoroutine(WaitEffectPlayOver(curtAS));
+        }
+
+        public void PrintASCount()
+        {
+            UMUtilDebug.Log($"Created AS Count: {m_createdASCount}");
+            UMUtilDebug.Log($"AS  Count: {m_createdASCount}");
         }
     }
 }
