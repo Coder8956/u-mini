@@ -7,6 +7,7 @@ using UMiniFramework.Editor.EUtils;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -16,10 +17,13 @@ namespace UMiniFramework.Editor.UMEModules.UI
     {
         private const string GUI_STYLE_HELPBOX = "HelpBox";
         private const string PREFAB_EXTENSION = ".prefab";
+        private const string RESOURCES_FOLDER_NAME = "Resources";
 
         private int selectedTabIndex = 0; // 当前选中的 tab 的索引
 
         private string[] tabNames = {"Create Panel", "Create Dialog", "Common"}; // 导航条的选项
+
+        private GUIStyle m_redLabelStyle;
 
         #region CreatePanel Field
 
@@ -35,8 +39,8 @@ namespace UMiniFramework.Editor.UMEModules.UI
         private string[] uiClass_options = null;
         private int uiClass_selectedIndex = 0; // 默认选中的项
 
-        // 记录 Resources 文件夹路径
-        private string m_resourcesFolderPath = string.Empty;
+        // 记录 UI Prefab 文件夹根路径
+        private string m_panelPrefabRootFolder = string.Empty;
 
         // 记录 PanelPrefab 完整路径
         private string m_panelPrefabFullPath = string.Empty;
@@ -99,6 +103,11 @@ namespace UMiniFramework.Editor.UMEModules.UI
             // 判断一下当选择的 UI 更新了,再更新相关数据
             if (oldIndex != uiClass_selectedIndex)
             {
+                // UMUtilDebug.Log($"Curt UI Class Option: {CurtUIClassOption()}");
+                
+                // 清除路径
+                m_panelPrefabRootFolder = string.Empty;
+                
                 if (CurtUIClassOption() == INVALID_UMUI)
                 {
                     m_createPanelType = null;
@@ -123,12 +132,13 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void DrawSelectUIPanelPrefabRootFolder()
         {
+            if (CurtUIClassOption() == INVALID_UMUI) return;
             EditorGUILayout.BeginHorizontal();
 
             int layoutHeight = 20;
 
             // GUILayout.Label("Select UIPanel Prefab Folder:", EditorStyles.boldLabel);
-            GUILayout.Label("UI Prefab Root Folder", GUILayout.Width(120), GUILayout.Height(layoutHeight));
+            GUILayout.Label("UI Prefab Root Folder", GUILayout.Width(125), GUILayout.Height(layoutHeight));
 
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
@@ -137,15 +147,15 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
-                    if (UMEUtilCommon.IsContainsDataPath(selectedPath))
+                    if (!selectedPath.Contains(Application.dataPath))
                     {
-                        // m_panelPrefabRootFolder = selectedPath;
+                        EditorUtility.DisplayDialog("Tip",
+                            $"The selected folder is invalid. Please select a folder inside path {Application.dataPath}",
+                            "OK");
                     }
                     else
                     {
-                        EditorUtility.DisplayDialog("Tip",
-                            "Only the path under the current project Assets folder can be selected.",
-                            "OK");
+                        m_panelPrefabRootFolder = selectedPath;
                     }
                 }
             }
@@ -153,15 +163,41 @@ namespace UMiniFramework.Editor.UMEModules.UI
             if (GUILayout.Button("Clear", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 清除路径
-                // m_panelPrefabRootFolder = string.Empty;
+                m_panelPrefabRootFolder = string.Empty;
             }
 
             // GUILayout.Label("Selected Folder Path: ", GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
-            // GUILayout.Label(m_panelPrefabRootFolder, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
+            GUILayout.Label(m_panelPrefabRootFolder, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
 
             EditorGUILayout.EndHorizontal();
 
             // GUI.enabled = m_panelPrefabRootFolder != string.Empty;
+        }
+
+        /// <summary>
+        /// 绘制创建 UI Panel 的路径Label
+        /// </summary>
+        private void DrawUIPanelCreatePath()
+        {
+            if (CurtUIClassOption() == INVALID_UMUI) return;
+            if (m_panelPrefabRootFolder == String.Empty) return;
+
+            m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, m_createPanelConfig.LoadPath);
+            m_panelPrefabFullPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabFullPath);
+            m_panelPrefabFullPath = string.Concat(m_panelPrefabFullPath, PREFAB_EXTENSION);
+
+            m_panelPrefabAssetDataPath = UMEUtilCommon.GetAssetDataPath(m_panelPrefabFullPath);
+
+            GUILayout.Label($"Prefab AssetData Path: {m_panelPrefabAssetDataPath}", GUI_STYLE_HELPBOX);
+            GUILayout.Label($"Prefab Full Path: {m_panelPrefabFullPath}", GUI_STYLE_HELPBOX);
+
+            if (m_createPanelConfig.LoadType == UMResLoadType.Resources
+                && !m_panelPrefabAssetDataPath.Contains(RESOURCES_FOLDER_NAME))
+            {
+                GUILayout.Label(
+                    "This UIPanel is loaded as Resources, but the AssetData path does not contain the Resources folder.",
+                    m_redLabelStyle);
+            }
         }
 
         /// <summary>
@@ -174,50 +210,18 @@ namespace UMiniFramework.Editor.UMEModules.UI
         }
 
         /// <summary>
-        /// 绘制创建 UIPanel 信息
+        /// 绘制 UIPanel 信息
         /// </summary>
         private void DrawUIPanelInfo()
         {
-            return;
-            if (CurtUIClassOption() == INVALID_UMUI) return;
-            // if (CurtUIClassOption() != INVALID_UMUI
-            //     && oldIndex != uiClass_selectedIndex)
-            // {
-            //     m_createPanelType = m_allUITypesDic[uiClass_options[uiClass_selectedIndex]];
-            //     m_createPanelConfig =
-            //         (UMUIPanelConfig) Attribute.GetCustomAttribute(m_createPanelType, typeof(UMUIPanelConfig));
-            //     // // 更新 UI 路径
-            //     // string loadPathWithExtension = string.Concat(m_createPanelConfig.LoadPath, PREFAB_EXTENSION);
-            //     // m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, loadPathWithExtension);
-            //     // m_panelPrefabFullPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabFullPath);
-            //     //
-            //     // m_panelPrefabAssetDataPath = UMEUtilCommon.GetAssetDataPath(m_panelPrefabFullPath);
-            //     // m_panelPrefabAssetDataPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabAssetDataPath);
-            // }
-
-            // 创建一个新的 GUIStyle
-            GUIStyle redLabelStyle = new GUIStyle(GUI.skin.label);
-            // 设置字体颜色为红色
-            redLabelStyle.normal.textColor = Color.red;
-
-            if (m_createPanelConfig.LoadType != UMResLoadType.Resources)
+            if (CurtUIClassOption() == INVALID_UMUI)
             {
-                GUILayout.Label($"Invalid Path Type:{m_createPanelConfig.LoadType}", redLabelStyle);
-                return;
+                GUILayout.Label("Please select a valid UI Class.", m_redLabelStyle);
             }
-
-            GUILayout.Label($"Prefab Load Type: {m_createPanelConfig.LoadType.ToString()}", GUI_STYLE_HELPBOX);
-            GUILayout.Label($"Prefab Load Path: {m_createPanelConfig.LoadPath}", GUI_STYLE_HELPBOX);
-            GUILayout.Label($"Prefab AssetData Path: {m_panelPrefabAssetDataPath}", GUI_STYLE_HELPBOX);
-            GUILayout.Label($"Prefab Full Path: {m_panelPrefabFullPath}", GUI_STYLE_HELPBOX);
-
-            // 如果是从Resources加载 UIPanel, 判断一下是否是有效的 Resources 加载路径
-            if (m_createPanelConfig.LoadType == UMResLoadType.Resources
-                && !m_panelPrefabAssetDataPath.Contains("Resources"))
+            else
             {
-                GUILayout.Label(
-                    "This UIPanel will be loaded from Resources, but the current path is an invalid Resources load path.",
-                    redLabelStyle);
+                GUILayout.Label($"Load Type: {m_createPanelConfig.LoadType.ToString()}", GUI_STYLE_HELPBOX);
+                GUILayout.Label($"Load Path: {m_createPanelConfig.LoadPath}", GUI_STYLE_HELPBOX);
             }
         }
 
@@ -226,15 +230,13 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void DrawCreateUIPanelBtn()
         {
-            // bool enable = CurtUIClassOption() != INVALID_UMUI
-            //               && m_panelPrefabRootFolder != string.Empty;
-            // GUI.enabled = enable;
-            // if (GUILayout.Button("Create Panel Prefab"))
-            // {
-            //     CreateUIPanelPrefab();
-            // }
-            //
-            // GUI.enabled = true;
+            if (CurtUIClassOption() == INVALID_UMUI) return;
+            if (m_panelPrefabRootFolder == String.Empty) return;
+            
+            if (GUILayout.Button("Create Panel Prefab"))
+            {
+                CreateUIPanelPrefab();
+            }
         }
 
         /// <summary>
@@ -297,6 +299,14 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
         private void OnGUI()
         {
+            if (m_redLabelStyle == null)
+            {
+                // 创建一个新的 GUIStyle
+                m_redLabelStyle = new GUIStyle(GUI.skin.label);
+                // 设置字体颜色为红色
+                m_redLabelStyle.normal.textColor = Color.red;
+            }
+
             // 创建一个水平布局的导航条
             EditorGUILayout.BeginHorizontal("box");
 
@@ -340,12 +350,11 @@ namespace UMiniFramework.Editor.UMEModules.UI
         private void ShowCreatePanelContent()
         {
             // EditorGUILayout.HelpBox("This is the content of Tab 1.", MessageType.Info);
-            // 选择 UIPanel 类型
-            // 显示 UIPanel 加载类型
             DrawPopupUIPanel();
             DrawUIPanelInfo();
-            // DrawSelectUIPanelPrefabRootFolder();
-            // DrawCreateUIPanelBtn();
+            DrawSelectUIPanelPrefabRootFolder();
+            DrawUIPanelCreatePath();
+            DrawCreateUIPanelBtn();
         }
 
         /// <summary>
