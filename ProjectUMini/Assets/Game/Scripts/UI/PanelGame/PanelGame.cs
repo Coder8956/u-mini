@@ -1,15 +1,26 @@
-﻿using UMiniFramework.Runtime.Modules.UI;
+﻿using Game.Scripts.Common;
+using Game.Scripts.Common.GameUI;
+using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Scene;
+using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
     [UMUIPanelConfig("UI/PanelGame/PanelGame")]
     public class PanelGame : UMUIPanel
     {
+        [SerializeField] private Button m_btnBackMain;
+
         protected override void OnCreatePanel()
         {
-            Debug.Log("Create-PanelGame");
+            m_btnBackMain.onClick.AddListener(() =>
+            {
+                GameUI.CloseGame();
+                UMGR.Get<UMScene>().Load(GameScene.Main);
+            });
         }
 
         protected override void OnDestroyPanel()
@@ -18,7 +29,6 @@ namespace Game.Scripts.UI
 
         protected override void OnOpenPanel()
         {
-            Debug.Log("Open-PanelGame");
         }
 
         protected override void OnClosePanel()

@@ -28,6 +28,7 @@ namespace Game.Scripts.UI
             m_btnSet.onClick.AddListener(() =>
             {
                 // 打开游戏设置
+                GameUI.OpenSet();
             });
         }
 
