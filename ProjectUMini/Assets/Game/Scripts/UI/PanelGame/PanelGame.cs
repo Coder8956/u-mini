@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
 
-namespace Game.Scripts.UI.PanelGame
+namespace Game.Scripts.UI
 {
     [UMUIPanelConfig("UI/PanelGame/PanelGame")]
     public class PanelGame : UMUIPanel

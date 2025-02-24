@@ -1,5 +1,4 @@
-﻿using Game.Scripts.UI.PanelMain;
-using Game.Scripts.UI.PanelMain;
+﻿using Game.Scripts.UI;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 

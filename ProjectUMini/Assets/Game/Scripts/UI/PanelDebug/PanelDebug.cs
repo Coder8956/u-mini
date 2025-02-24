@@ -7,7 +7,7 @@ using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Scripts.UI.PanelDebug
+namespace Game.Scripts.UI
 {
     [UMUIPanelConfig("UI/PanelDebug/PanelDebug")]
     public class PanelDebug : UMUIPanel
@@ -16,6 +16,7 @@ namespace Game.Scripts.UI.PanelDebug
         [SerializeField] private Button m_btnSwitch = null;
 
         [SerializeField] private Button m_btnOpenPanelMain = null;
+        [SerializeField] private Button m_btnOpenPanelSet = null;
         [SerializeField] private Button m_btnDumpCreatedUI = null;
 
         [SerializeField] private Button m_btnPlayBGM_1 = null;
@@ -41,6 +42,12 @@ namespace Game.Scripts.UI.PanelDebug
             {
                 // 打开主界面
                 GameUI.OpenMain();
+            });
+
+            m_btnOpenPanelSet?.onClick.AddListener(() =>
+            {
+                // 打开设置界面
+                GameUI.OpenSet();
             });
 
             m_btnDumpCreatedUI?.onClick.AddListener(() =>

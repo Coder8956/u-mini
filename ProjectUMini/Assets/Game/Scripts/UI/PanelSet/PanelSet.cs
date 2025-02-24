@@ -1,8 +1,7 @@
-﻿using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.UI;
+﻿using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 
-namespace Game.Scripts.UI.PanelMain
+namespace Game.Scripts.UI
 {
     [UMUIPanelConfig("UI/PanelSet/PanelSet")]
     public class PanelSet : UMUIPanel

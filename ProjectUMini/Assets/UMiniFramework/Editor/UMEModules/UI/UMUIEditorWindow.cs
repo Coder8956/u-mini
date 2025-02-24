@@ -10,6 +10,7 @@ using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UMiniFramework.Editor.UMEModules.UI
 {
@@ -26,6 +27,8 @@ namespace UMiniFramework.Editor.UMEModules.UI
         private GUIStyle m_redLabelStyle;
 
         #region CreatePanel Field
+
+        private bool m_isAddImageComponent = true;
 
         /// <summary>
         /// 存放所有继承 UMUIPanel 的子类
@@ -104,10 +107,10 @@ namespace UMiniFramework.Editor.UMEModules.UI
             if (oldIndex != uiClass_selectedIndex)
             {
                 // UMUtilDebug.Log($"Curt UI Class Option: {CurtUIClassOption()}");
-                
+
                 // 清除路径
                 m_panelPrefabRootFolder = string.Empty;
-                
+
                 if (CurtUIClassOption() == INVALID_UMUI)
                 {
                     m_createPanelType = null;
@@ -179,9 +182,6 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void DrawUIPanelCreatePath()
         {
-            if (CurtUIClassOption() == INVALID_UMUI) return;
-            if (m_panelPrefabRootFolder == String.Empty) return;
-
             m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, m_createPanelConfig.LoadPath);
             m_panelPrefabFullPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabFullPath);
             m_panelPrefabFullPath = string.Concat(m_panelPrefabFullPath, PREFAB_EXTENSION);
@@ -226,13 +226,19 @@ namespace UMiniFramework.Editor.UMEModules.UI
         }
 
         /// <summary>
+        /// 绘制创建 UIPanel 的选项
+        /// </summary>
+        private void DrawUIPanelCreateOptions()
+        {
+            // 绘制一个 bool 选项，控制是否添加 Image 组件
+            m_isAddImageComponent = EditorGUILayout.Toggle("Add Image Component", m_isAddImageComponent);
+        }
+
+        /// <summary>
         /// 绘制创建 UIPanel 按钮 
         /// </summary>
         private void DrawCreateUIPanelBtn()
         {
-            if (CurtUIClassOption() == INVALID_UMUI) return;
-            if (m_panelPrefabRootFolder == String.Empty) return;
-            
             if (GUILayout.Button("Create Panel Prefab"))
             {
                 CreateUIPanelPrefab();
@@ -253,11 +259,21 @@ namespace UMiniFramework.Editor.UMEModules.UI
             }
             else
             {
+                List<Type> components = new List<Type>();
+                
+                components.Add(typeof(RectTransform));
+                components.Add(typeof(CanvasRenderer));
+
+                if (m_isAddImageComponent)
+                {
+                    components.Add(typeof(Image));
+                }
+
+                components.Add(m_allUITypesDic[CurtUIClassOption()]);
+
+
                 GameObject createPanel =
-                    new GameObject(m_allUITypesDic[CurtUIClassOption()].Name,
-                        typeof(RectTransform),
-                        typeof(CanvasRenderer),
-                        m_allUITypesDic[CurtUIClassOption()]);
+                    new GameObject(m_allUITypesDic[CurtUIClassOption()].Name, components.ToArray());
 
                 RectTransform crt = createPanel.GetComponent<RectTransform>();
 
@@ -353,8 +369,14 @@ namespace UMiniFramework.Editor.UMEModules.UI
             DrawPopupUIPanel();
             DrawUIPanelInfo();
             DrawSelectUIPanelPrefabRootFolder();
-            DrawUIPanelCreatePath();
-            DrawCreateUIPanelBtn();
+
+            if (CurtUIClassOption() != INVALID_UMUI
+                && (m_panelPrefabRootFolder != String.Empty))
+            {
+                DrawUIPanelCreatePath();
+                DrawUIPanelCreateOptions();
+                DrawCreateUIPanelBtn();
+            }
         }
 
         /// <summary>
