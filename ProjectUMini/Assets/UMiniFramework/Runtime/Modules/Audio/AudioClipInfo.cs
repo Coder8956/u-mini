@@ -12,7 +12,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
         public readonly string ID;
         public readonly string Path;
         public readonly bool IsPreLoad;
-        public readonly UMResPathType PathType;
+        public readonly UMResLoadType PathType;
 
         public AudioClip Clip { get; private set; }
 
@@ -20,7 +20,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
             string id,
             string path,
             bool isPreLoad = false,
-            UMResPathType pathType = UMResPathType.Resources)
+            UMResLoadType pathType = UMResLoadType.Resources)
         {
             ID = id;
             Path = path;
@@ -30,7 +30,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
 
         private void LoadClip()
         {
-            if (PathType == UMResPathType.Resources)
+            if (PathType == UMResLoadType.Resources)
             {
                 Clip = Resources.Load<AudioClip>(Path);
             }

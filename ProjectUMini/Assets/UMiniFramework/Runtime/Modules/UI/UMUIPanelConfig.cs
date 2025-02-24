@@ -6,17 +6,17 @@ namespace UMiniFramework.Runtime.Modules.UI
     [AttributeUsage(AttributeTargets.Class)]
     public class UMUIPanelConfig : Attribute
     {
-        public readonly string Path = null;
+        public readonly string LoadPath = null;
 
         public readonly int Layer = 0;
 
-        public readonly UMResPathType PathType = UMResPathType.Resources;
+        public readonly UMResLoadType LoadType = UMResLoadType.Resources;
 
-        public UMUIPanelConfig(string panelPath, int layer = 0, UMResPathType pathType = UMResPathType.Resources)
+        public UMUIPanelConfig(string panelPath, int layer = 0, UMResLoadType pathType = UMResLoadType.Resources)
         {
-            Path = panelPath;
+            LoadPath = panelPath;
             Layer = layer;
-            PathType = pathType;
+            LoadType = pathType;
         }
     }
 }

@@ -164,10 +164,10 @@ namespace UMiniFramework.Runtime.Modules.UI
                 (UMUIPanelConfig) Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelConfig));
 
             T panel = null;
-            if (uiConfig.PathType == UMResPathType.Resources)
+            if (uiConfig.LoadType == UMResLoadType.Resources)
             {
                 // 加载界面并设置界面引用值
-                panel = ResLoadUI(uiConfig.Path).GetComponent<T>();
+                panel = ResLoadUI(uiConfig.LoadPath).GetComponent<T>();
 
                 // 通过反射调用界面的创建方法
                 MethodInfo OnCreatePanel = UMUtilCommon.GetObjectNoPublicMethod(typeof(T), "OnCreatePanel");
@@ -192,7 +192,7 @@ namespace UMiniFramework.Runtime.Modules.UI
             }
             else
             {
-                UMUtilDebug.Warning($"Invalid parameter: {uiConfig.PathType}");
+                UMUtilDebug.Warning($"Invalid parameter: {uiConfig.LoadType}");
             }
 
             return panel;

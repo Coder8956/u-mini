@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Reflection;
+using UMiniFramework.Editor.EUtils;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
     public class UMUIEditorWindow : EditorWindow
     {
         private const string GUI_STYLE_HELPBOX = "HelpBox";
+        private const string PREFAB_EXTENSION = ".prefab";
 
         private int selectedTabIndex = 0; // 当前选中的 tab 的索引
 
@@ -35,6 +37,13 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
         // 记录 PanelPrefab 根文件夹路径
         private string m_panelPrefabRootFolder = string.Empty;
+
+        // 记录 PanelPrefab 完整路径
+        private string m_panelPrefabFullPath = string.Empty;
+
+        // 记录 PanelPrefab AssetData 路径
+        private string m_panelPrefabAssetDataPath = string.Empty;
+
 
         // 需要创建的 UIPanel Type
         private Type m_createPanelType;
@@ -94,6 +103,14 @@ namespace UMiniFramework.Editor.UMEModules.UI
                     m_createPanelType = m_allUITypesDic[uiClass_options[uiClass_selectedIndex]];
                     m_createPanelConfig =
                         (UMUIPanelConfig) Attribute.GetCustomAttribute(m_createPanelType, typeof(UMUIPanelConfig));
+
+                    // 更新 UI 路径
+                    string loadPathWithExtension = string.Concat(m_createPanelConfig.LoadPath, PREFAB_EXTENSION);
+                    m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, loadPathWithExtension);
+                    m_panelPrefabFullPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabFullPath);
+
+                    m_panelPrefabAssetDataPath = UMEUtilCommon.GetAssetDataPath(m_panelPrefabFullPath);
+                    m_panelPrefabAssetDataPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabAssetDataPath);
                 }
             }
 
@@ -122,7 +139,16 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
-                    m_panelPrefabRootFolder = selectedPath;
+                    if (UMEUtilCommon.IsContainsDataPath(selectedPath))
+                    {
+                        m_panelPrefabRootFolder = selectedPath;
+                    }
+                    else
+                    {
+                        EditorUtility.DisplayDialog("Tip",
+                            "Only the path under the current project Assets folder can be selected.",
+                            "OK");
+                    }
                 }
             }
 
@@ -155,22 +181,21 @@ namespace UMiniFramework.Editor.UMEModules.UI
         private void DrawUIPanelInfo()
         {
             if (CurtUIClassOption() == INVALID_UMUI) return;
-            GUILayout.Label($"Prefab Path Type: {m_createPanelConfig.PathType.ToString()}", GUI_STYLE_HELPBOX);
-            GUILayout.Label($"Prefab Load Path: {m_createPanelConfig.Path}", GUI_STYLE_HELPBOX);
+            if (m_createPanelConfig.LoadType != UMResLoadType.Resources)
+            {
+                // 创建一个新的 GUIStyle
+                GUIStyle redLabelStyle = new GUIStyle(GUI.skin.label);
+                // 设置字体颜色为红色
+                redLabelStyle.normal.textColor = Color.red;
 
-            string prefabCreatePath = string.Empty;
-            if (m_createPanelConfig.PathType == UMResPathType.Resources)
-            {
-                prefabCreatePath = $"{m_panelPrefabRootFolder}/{m_createPanelConfig.Path}";
-            }
-            else
-            {
-                prefabCreatePath = "invalid path";
+                GUILayout.Label($"Invalid Path Type:{m_createPanelConfig.LoadType}", redLabelStyle);
+                return;
             }
 
-            GUILayout.Label($"Prefab Create Path: {prefabCreatePath}", GUI_STYLE_HELPBOX);
-            
-            // TODO:检测文件是否存在
+            GUILayout.Label($"Prefab Load Type: {m_createPanelConfig.LoadType.ToString()}", GUI_STYLE_HELPBOX);
+            GUILayout.Label($"Prefab Load Path: {m_createPanelConfig.LoadPath}", GUI_STYLE_HELPBOX);
+            GUILayout.Label($"Prefab AssetData Path: {m_panelPrefabAssetDataPath}", GUI_STYLE_HELPBOX);
+            GUILayout.Label($"Prefab Full Path: {m_panelPrefabFullPath}", GUI_STYLE_HELPBOX);
         }
 
         /// <summary>
@@ -178,7 +203,8 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void DrawCreateUIPanelBtn()
         {
-            bool enable = CurtUIClassOption() != INVALID_UMUI;
+            bool enable = CurtUIClassOption() != INVALID_UMUI
+                          && m_panelPrefabRootFolder != string.Empty;
             GUI.enabled = enable;
             if (GUILayout.Button("Create Panel Prefab"))
             {
@@ -193,6 +219,42 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void CreateUIPanelPrefab()
         {
+            bool exists = UMEUtilCommon.CheckPrefabExists(m_panelPrefabAssetDataPath);
+            if (exists)
+            {
+                EditorUtility.DisplayDialog("Tip",
+                    $"Cannot create. Because the {m_panelPrefabAssetDataPath}.prefab already exists.",
+                    "OK");
+            }
+            else
+            {
+                GameObject createPanel =
+                    new GameObject(m_allUITypesDic[CurtUIClassOption()].Name,
+                        typeof(RectTransform),
+                        typeof(CanvasRenderer),
+                        m_allUITypesDic[CurtUIClassOption()]);
+
+                RectTransform crt = createPanel.GetComponent<RectTransform>();
+
+                // 修改锚点
+                crt.anchorMin = Vector2.zero;
+                crt.anchorMax = Vector2.one;
+
+                // 修改边界偏移量
+                crt.offsetMin = Vector2.zero;
+                crt.offsetMax = Vector2.zero;
+
+                // 判断存放预制体的文件夹是否存在
+                string panelFolder = Path.GetDirectoryName(m_panelPrefabFullPath);
+                if (!Directory.Exists(panelFolder))
+                {
+                    Directory.CreateDirectory(panelFolder);
+                }
+                
+                PrefabUtility.SaveAsPrefabAsset(createPanel, m_panelPrefabAssetDataPath);
+                DestroyImmediate(createPanel);
+                AssetDatabase.Refresh();
+            }
         }
 
         #endregion

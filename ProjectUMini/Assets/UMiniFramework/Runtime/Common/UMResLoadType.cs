@@ -1,6 +1,6 @@
 ﻿namespace UMiniFramework.Runtime.Common
 {
-    public enum UMResPathType
+    public enum UMResLoadType
     {
         Resources,
         AssetBundle

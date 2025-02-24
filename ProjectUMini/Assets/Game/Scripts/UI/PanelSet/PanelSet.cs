@@ -1,4 +1,5 @@
-﻿using UMiniFramework.Runtime.Modules.UI;
+﻿using UMiniFramework.Runtime.Common;
+using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 
 namespace Game.Scripts.UI.PanelMain
