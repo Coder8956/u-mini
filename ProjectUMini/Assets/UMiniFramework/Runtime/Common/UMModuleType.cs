@@ -6,5 +6,6 @@
         Audio,
         Config,
         Scene,
+        UMDataPer,
     }
 }
