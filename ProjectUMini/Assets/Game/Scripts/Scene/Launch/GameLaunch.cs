@@ -4,6 +4,8 @@ using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Config;
+using UMiniFramework.Runtime.Modules.Config.Base;
+using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers;
 using UMiniFramework.Runtime.Modules.DataPer;
 using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Manager;
@@ -25,20 +27,18 @@ namespace Game.Scripts.Scene.Launch
             m_txtProgressTip.text = string.Empty;
 
             // UI 配置
-            UMUIInitArgs umUIConfig = new UMUIInitArgs();
-            umUIConfig.IsCreateEventSystem = true;
-            umUIConfig.UILayerCount = 5;
+            UMUIInitArgs umUIInitArgs = new UMUIInitArgs();
+            umUIInitArgs.IsCreateEventSystem = true;
+            umUIInitArgs.UILayerCount = 5;
 
             // 音频配置
-            UMAudioInitArgs umAudioConfig = new UMAudioInitArgs();
-            umAudioConfig.BGMClips = new List<AudioClipInfo>()
+            UMAudioInitArgs umAudioInitArgs = new UMAudioInitArgs();
+            umAudioInitArgs.BGMClips = new List<AudioClipInfo>()
             {
                 new(GameAudio.BGM_1, "Audio/BGM/BGM_001"),
                 new(GameAudio.BGM_2, "Audio/BGM/BGM_002", true),
             };
-
-            // umAudioConfig.DefaultAsCount = 0;
-            umAudioConfig.EffectClips = new List<AudioClipInfo>()
+            umAudioInitArgs.EffectClips = new List<AudioClipInfo>()
             {
                 new(GameAudio.Effect_1, "Audio/Effect/Bullet_Explosion_001"),
                 new(GameAudio.Effect_2, "Audio/Effect/Effect_Cannon_001", true),
@@ -46,17 +46,25 @@ namespace Game.Scripts.Scene.Launch
             };
 
             // 数据持久化配置
-            UMDataPerInitArgs umDataPerConfig = new UMDataPerInitArgs();
-            // umDataPerConfig.DataPerHandler = new UMDataUnityPrefsHandler();
-            umDataPerConfig.DataPerHandler = new UMDataJsonFileHandler();
+            UMDataPerInitArgs umDataPerInitArgs = new UMDataPerInitArgs();
+            umDataPerInitArgs.DataPerHandler = new UMDataJsonFileHandler();
+
+            UMConfigInitArgs umConfigInitArgs = new UMConfigInitArgs();
+            umConfigInitArgs.LoadConfigHandler = new ResLoadConfigHandler();
+            umConfigInitArgs.ConfigTables = new List<UMConfigTable>();
+
+            umConfigInitArgs.ConfigTables.Add(new BulletTable());
+            umConfigInitArgs.ConfigTables.Add(new CannonTable());
+            umConfigInitArgs.ConfigTables.Add(new LevelTable());
+            umConfigInitArgs.ConfigTables.Add(new MonsterTable());
+            umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
 
             UMGR.Launch();
-
-            UMGR.Register<UMUI>(umUIConfig);
-            UMGR.Register<UMAudio>(umAudioConfig);
+            UMGR.Register<UMUI>(umUIInitArgs);
+            UMGR.Register<UMAudio>(umAudioInitArgs);
             UMGR.Register<UMScene>();
-            UMGR.Register<UMDataPer>(umDataPerConfig);
-            UMGR.Register<UMConfig>();
+            UMGR.Register<UMDataPer>(umDataPerInitArgs);
+            UMGR.Register<UMConfig>(umConfigInitArgs);
 
             UMGR.InitModules((val) =>
             {

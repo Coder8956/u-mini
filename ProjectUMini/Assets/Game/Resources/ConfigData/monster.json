@@ -1,0 +1,17 @@
+﻿[
+  {
+    "id": "monster_3001",
+    "monsterPath": "Monster/Monster_normal",
+    "type": 0
+  },
+  {
+    "id": "monster_3002",
+    "monsterPath": "Monster/Monster_elite",
+    "type": 1
+  },
+  {
+    "id": "monster_3003",
+    "monsterPath": "Monster/Monster_boss",
+    "type": 2
+  }
+]

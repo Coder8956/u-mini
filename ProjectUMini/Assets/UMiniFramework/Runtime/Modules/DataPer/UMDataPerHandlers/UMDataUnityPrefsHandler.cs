@@ -7,7 +7,6 @@ namespace UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers
     {
         void IUMDataPerHandler.Init()
         {
-            
         }
 
         void IUMDataPerHandler.Save(string key, string val)
