@@ -3,9 +3,12 @@ using Game.Scripts.Common;
 using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Base;
+using UMiniFramework.Runtime.Modules.DataPer;
+using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
+using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -41,12 +44,17 @@ namespace Game.Scripts.Scene.Launch
                 new(GameAudio.Effect_3, "Audio/Effect/Effect_Cannon_002"),
             };
 
+            // 数据持久化配置
+            UMDataPerConfig umDataPerConfig = new UMDataPerConfig();
+            umDataPerConfig.DataPerHandler = new UMDataUnityPrefsHandler();
+            // umDataPerConfig.DataPerHandler = new UMDataJsonFileHandler();
 
             UMGR.Launch();
 
             UMGR.Register<UMUI>(umUIConfig);
             UMGR.Register<UMAudio>(umAudioConfig);
             UMGR.Register<UMScene>();
+            UMGR.Register<UMDataPer>(umDataPerConfig);
 
             UMGR.InitModules((val) =>
             {

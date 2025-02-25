@@ -4,6 +4,7 @@ using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -28,7 +29,12 @@ namespace Game.Scripts.UI
         [SerializeField] private Button m_btnPrintASInfo = null;
         [SerializeField] private Toggle m_togAudioEffect;
         [SerializeField] private Slider m_sldAudioEffect;
-        
+
+        [SerializeField] private Button m_btnDataSave = null;
+        [SerializeField] private Button m_btnDataRead = null;
+        [SerializeField] private Button m_btnDataDelete = null;
+        [SerializeField] private Button m_btnDataDeleteAll = null;
+
         protected override void OnCreatePanel()
         {
             m_DebugGO.SetActive(false);
@@ -85,13 +91,13 @@ namespace Game.Scripts.UI
                 // 播放 effect-3
                 UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_3);
             });
-            
+
             m_togAudioEffect.onValueChanged.AddListener((val) =>
             {
                 // 控制音效是否静音
                 UMGR.Get<UMAudio>().Effect.Mute = val;
             });
-            
+
             m_sldAudioEffect.onValueChanged.AddListener((val) =>
             {
                 // 控制音效音量
@@ -103,6 +109,23 @@ namespace Game.Scripts.UI
                 // 打印音效数量
                 UMGR.Get<UMAudio>().Effect.PrintASInfo();
             });
+
+            InitDataPerDebug();
+        }
+
+        private void InitDataPerDebug()
+        {
+            string key = "tttteee";
+            string val = "ddd-0000";
+            string defaultVal = "dddffff";
+            m_btnDataSave?.onClick.AddListener(() => { UMGR.Get<UMDataPer>().Save(key, val); });
+            m_btnDataRead?.onClick.AddListener(() =>
+            {
+                string readVal = UMGR.Get<UMDataPer>().Read(key, defaultVal);
+                Debug.Log($"Read Data Per: {readVal}");
+            });
+            m_btnDataDelete?.onClick.AddListener(() => { UMGR.Get<UMDataPer>().Delete(key); });
+            m_btnDataDeleteAll?.onClick.AddListener(() => { UMGR.Get<UMDataPer>().DeleteAll(); });
         }
 
         protected override void OnDestroyPanel()
