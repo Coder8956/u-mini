@@ -10,6 +10,25 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         private AudioSource m_audioSource = null;
         private UMAudioConfig m_config;
         private Dictionary<string, AudioClipInfo> m_BGMClipDic;
+
+        /// <summary>
+        /// 静音属性
+        /// </summary>
+        public bool Mute
+        {
+            get { return m_audioSource.mute; }
+            set { m_audioSource.mute = value; }
+        }
+        
+        /// <summary>
+        /// 音量属性
+        /// </summary>
+        public float Volume
+        {
+            get { return m_audioSource.volume; }
+            set { m_audioSource.volume = value; }
+        }
+
         public string CurtBGMID { get; private set; }
 
         /// <summary>
@@ -65,16 +84,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         {
             if (m_audioSource == null) return;
             m_audioSource.Stop();
-        }
-
-        public void SetMute(bool val)
-        {
-            m_audioSource.mute = val;
-        }
-
-        public bool GetMute()
-        {
-            return m_audioSource.mute;
         }
     }
 }

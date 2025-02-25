@@ -39,6 +39,27 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             }
         }
 
+        private bool m_mute = false;
+        private float m_volume = 1;
+
+        /// <summary>
+        /// 静音属性
+        /// </summary>
+        public bool Mute
+        {
+            get { return m_mute; }
+            set { m_mute = value; }
+        }
+
+        /// <summary>
+        /// 音量属性
+        /// </summary>
+        public float Volume
+        {
+            get { return m_volume; }
+            set { m_volume = value; }
+        }
+
         /// <summary>
         /// 初始化 AudioSource 队列
         /// </summary>
