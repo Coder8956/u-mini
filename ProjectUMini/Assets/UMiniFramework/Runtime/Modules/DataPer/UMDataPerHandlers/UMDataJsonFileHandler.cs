@@ -38,8 +38,6 @@ namespace UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers
                 m_dataDic = new Dictionary<string, string>();
                 SaveJsonFile();
             }
-
-            UMUtilDebug.Log($"UMDataJsonFileHandler Save Path: {m_jsonFilePath}");
         }
 
         private void SaveJsonFile()
