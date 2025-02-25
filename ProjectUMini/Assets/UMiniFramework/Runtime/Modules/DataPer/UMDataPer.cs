@@ -14,6 +14,7 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
         private IUMDataPerHandler m_dataPerHandler;
         private UMDataPerConfig m_config = null;
 
+        private MethodInfo m_initMethod = null;
         private MethodInfo m_saveMethod = null;
         private MethodInfo m_readMethod = null;
         private MethodInfo m_deleteMethod = null;
@@ -36,10 +37,13 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
 
             Type dataPerHandlerType = typeof(IUMDataPerHandler);
             // UMUtilDebug.Log($"dataPerHandler name: {dataPerHandlerType.Name}");
+            m_initMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Init");
             m_saveMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Save");
             m_readMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Read");
             m_deleteMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Delete");
             m_deleteAllMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "DeleteAll");
+
+            m_initMethod.Invoke(m_dataPerHandler, null);
 
             yield return null;
         }

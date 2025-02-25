@@ -5,6 +5,11 @@ namespace UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers
 {
     public class UMDataUnityPrefsHandler : IUMDataPerHandler
     {
+        void IUMDataPerHandler.Init()
+        {
+            
+        }
+
         void IUMDataPerHandler.Save(string key, string val)
         {
             PlayerPrefs.SetString(key, val);

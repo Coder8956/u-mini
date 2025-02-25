@@ -3,6 +3,11 @@
     public interface IUMDataPerHandler
     {
         /// <summary>
+        /// 初始化处理器
+        /// </summary>
+        protected void Init();
+
+        /// <summary>
         /// 存数据
         /// </summary>
         /// <param name="key"></param>

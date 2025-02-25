@@ -35,5 +35,15 @@ namespace UMiniFramework.Runtime.Utils
         {
             File.WriteAllText(path, content, Encoding.UTF8);
         }
+        
+        /// <summary>
+        /// 格式化路径分割符
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static string FormatPathSeparator(string path)
+        {
+            return path.Replace('\\', '/');
+        }
     }
 }

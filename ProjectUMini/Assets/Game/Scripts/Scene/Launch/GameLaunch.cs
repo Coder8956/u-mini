@@ -46,8 +46,8 @@ namespace Game.Scripts.Scene.Launch
 
             // 数据持久化配置
             UMDataPerConfig umDataPerConfig = new UMDataPerConfig();
-            umDataPerConfig.DataPerHandler = new UMDataUnityPrefsHandler();
-            // umDataPerConfig.DataPerHandler = new UMDataJsonFileHandler();
+            // umDataPerConfig.DataPerHandler = new UMDataUnityPrefsHandler();
+            umDataPerConfig.DataPerHandler = new UMDataJsonFileHandler();
 
             UMGR.Launch();
 
