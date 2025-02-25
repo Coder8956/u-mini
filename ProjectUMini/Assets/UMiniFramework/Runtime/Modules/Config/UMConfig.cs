@@ -32,6 +32,8 @@ namespace UMiniFramework.Runtime.Modules.Config
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
+            //TODO: 开始处理游戏配置模块
+            
             // if (config.ConfigTableList != null)
             // {
             //     m_tableDic = new Dictionary<Type, UMConfigTable>();

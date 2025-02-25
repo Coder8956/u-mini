@@ -3,6 +3,7 @@ using Game.Scripts.Common;
 using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Base;
+using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.DataPer;
 using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Manager;
@@ -55,6 +56,7 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Register<UMAudio>(umAudioConfig);
             UMGR.Register<UMScene>();
             UMGR.Register<UMDataPer>(umDataPerConfig);
+            UMGR.Register<UMConfig>();
 
             UMGR.InitModules((val) =>
             {
