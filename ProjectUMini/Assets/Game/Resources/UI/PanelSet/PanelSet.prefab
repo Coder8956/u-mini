@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 484500844264059122}
   - component: {fileID: 285675413974428555}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: TogAudioEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9818833, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8455283, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -702,7 +702,7 @@ GameObject:
   - component: {fileID: 820588584217223136}
   - component: {fileID: 899015601708861767}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: SldAudioEffect
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -911,7 +911,7 @@ GameObject:
   - component: {fileID: 7183215406072871473}
   - component: {fileID: 5547054274473694043}
   m_Layer: 0
-  m_Name: Slider
+  m_Name: SldBGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1128,7 +1128,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8455283, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1204,7 +1204,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.8455283, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1497,6 +1497,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_btnClose: {fileID: 7173325347071913154}
+  m_togAudioBGM: {fileID: 6392160265077743112}
+  m_sldAudioBGM: {fileID: 5547054274473694043}
+  m_togAudioEffect: {fileID: 285675413974428555}
+  m_sldAudioEffect: {fileID: 899015601708861767}
 --- !u!1 &7388757894859322028
 GameObject:
   m_ObjectHideFlags: 0
@@ -1634,7 +1638,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9818833, g: 1, b: 0, a: 1}
+  m_Color: {r: 1, g: 0.8455283, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -1773,7 +1777,7 @@ GameObject:
   - component: {fileID: 4892265810332474131}
   - component: {fileID: 6392160265077743112}
   m_Layer: 0
-  m_Name: Toggle
+  m_Name: TogBGM
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

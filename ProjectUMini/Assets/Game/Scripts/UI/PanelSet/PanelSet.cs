@@ -10,7 +10,13 @@ namespace Game.Scripts.UI
     public class PanelSet : UMUIPanel
     {
         [SerializeField] private Button m_btnClose;
+        
+        [SerializeField] private Toggle m_togAudioBGM;
+        [SerializeField] private Slider m_sldAudioBGM;
 
+        [SerializeField] private Toggle m_togAudioEffect;
+        [SerializeField] private Slider m_sldAudioEffect;
+        
         protected override void OnCreatePanel()
         {
             m_btnClose.onClick.AddListener(() => { GameUI.CloseSet(); });
