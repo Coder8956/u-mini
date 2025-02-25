@@ -6,7 +6,7 @@ namespace UMiniFramework.Runtime.Modules.Base
     /// <summary>
     /// UM模块配置基类
     /// </summary>
-    public abstract class UMModuleConfig
+    public abstract class UMModuleInitArgs
     {
     }
 }

@@ -12,7 +12,7 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
     public class UMDataPer : UMBaseModule
     {
         private IUMDataPerHandler m_dataPerHandler;
-        private UMDataPerConfig m_config = null;
+        private UMDataPerInitArgs m_config = null;
 
         private MethodInfo m_initMethod = null;
         private MethodInfo m_saveMethod = null;
@@ -25,9 +25,9 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
             get => UMModuleType.UMDataPer;
         }
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
-            m_config = UMUtilCommon.ConvertObjectClass<UMDataPerConfig>(config);
+            m_config = UMUtilCommon.ConvertObjectClass<UMDataPerInitArgs>(initArgs);
             if (m_config.DataPerHandler == null)
             {
                 UMUtilDebug.Error("m_config.DataPerHandler is null");

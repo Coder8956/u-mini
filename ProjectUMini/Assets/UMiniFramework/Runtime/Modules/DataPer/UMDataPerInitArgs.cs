@@ -6,7 +6,7 @@ namespace UMiniFramework.Runtime.Modules.DataPer
     /// <summary>
     /// UM 模块配置
     /// </summary>
-    public class UMDataPerConfig : UMModuleConfig
+    public class UMDataPerInitArgs : UMModuleInitArgs
     {
         /// <summary>
         /// 数据持久化处理器类型

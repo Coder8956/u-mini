@@ -13,7 +13,7 @@ namespace UMiniFramework.Runtime.Modules.EventModule
 
         private Dictionary<string, List<UMListenerInfo>> EventDic;
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             // EventDic = new Dictionary<string, List<UMListenerInfo>>();
             // if (config.EventTypeList != null)

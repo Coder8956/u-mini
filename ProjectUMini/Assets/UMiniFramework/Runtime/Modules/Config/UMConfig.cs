@@ -30,7 +30,7 @@ namespace UMiniFramework.Runtime.Modules.Config
             }
         }
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             // if (config.ConfigTableList != null)
             // {

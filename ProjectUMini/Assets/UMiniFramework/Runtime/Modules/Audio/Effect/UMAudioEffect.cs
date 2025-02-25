@@ -9,7 +9,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
     public class UMAudioEffect : UMAudioFunc
     {
         private Dictionary<string, AudioClipInfo> m_EffectClipDic;
-        private UMAudioConfig m_config;
+        private UMAudioInitArgs m_initArgs;
 
         private Queue<AudioSource> m_asQue;
 
@@ -25,12 +25,12 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private void InitEffectClipDic()
         {
             m_EffectClipDic = new Dictionary<string, AudioClipInfo>();
-            if (m_config == null) return;
-            if (m_config.EffectClips == null) return;
+            if (m_initArgs == null) return;
+            if (m_initArgs.EffectClips == null) return;
             AudioClipInfo aci = null;
-            for (var i = 0; i < m_config.EffectClips.Count; i++)
+            for (var i = 0; i < m_initArgs.EffectClips.Count; i++)
             {
-                aci = m_config.EffectClips[i];
+                aci = m_initArgs.EffectClips[i];
                 m_EffectClipDic.Add(aci.ID, aci);
                 if (aci.IsPreLoad)
                 {
@@ -79,9 +79,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         private void InitASQue()
         {
-            if (m_config != null)
+            if (m_initArgs != null)
             {
-                m_initASCount = Mathf.Clamp(m_config.DefaultAsCount, MIN_AS_COUNT, int.MaxValue);
+                m_initASCount = Mathf.Clamp(m_initArgs.DefaultAsCount, MIN_AS_COUNT, int.MaxValue);
             }
 
             m_asQue = new Queue<AudioSource>();
@@ -159,9 +159,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             BackAS(audioSource);
         }
 
-        protected override void Init(UMAudioConfig config)
+        protected override void Init(UMAudioInitArgs initArgs)
         {
-            m_config = config;
+            m_initArgs = initArgs;
             InitEffectClipDic();
             InitASQue();
         }

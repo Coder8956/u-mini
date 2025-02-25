@@ -24,12 +24,12 @@ namespace Game.Scripts.Scene.Launch
             m_txtProgressTip.text = string.Empty;
 
             // UI 配置
-            UMUIConfig umUIConfig = new UMUIConfig();
+            UMUIInitArgs umUIConfig = new UMUIInitArgs();
             umUIConfig.IsCreateEventSystem = true;
             umUIConfig.UILayerCount = 5;
 
             // 音频配置
-            UMAudioConfig umAudioConfig = new UMAudioConfig();
+            UMAudioInitArgs umAudioConfig = new UMAudioInitArgs();
             umAudioConfig.BGMClips = new List<AudioClipInfo>()
             {
                 new(GameAudio.BGM_1, "Audio/BGM/BGM_001"),
@@ -45,7 +45,7 @@ namespace Game.Scripts.Scene.Launch
             };
 
             // 数据持久化配置
-            UMDataPerConfig umDataPerConfig = new UMDataPerConfig();
+            UMDataPerInitArgs umDataPerConfig = new UMDataPerInitArgs();
             // umDataPerConfig.DataPerHandler = new UMDataUnityPrefsHandler();
             umDataPerConfig.DataPerHandler = new UMDataJsonFileHandler();
 

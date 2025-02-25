@@ -39,7 +39,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 initCallback?.Invoke(initInfo);
                 Type moduleType = registerInfo.Module.GetType();
                 ModuleInitMethod = UMUtilCommon.GetObjectNoPublicMethod(moduleType, "Init");
-                yield return ModuleInitMethod.Invoke(registerInfo.Module, new object[] {registerInfo.Config});
+                yield return ModuleInitMethod.Invoke(registerInfo.Module, new object[] {registerInfo.InitArgs});
                 initedNum++;
             }
 
@@ -65,7 +65,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
             UMUtilDebug.Log($"UMGR Launched.");
         }
 
-        public static void Register<T>(UMModuleConfig config = null) where T : UMBaseModule
+        public static void Register<T>(UMModuleInitArgs initArgs = null) where T : UMBaseModule
         {
             string key = GetModuleKey<T>();
             if (m_moduleDic.ContainsKey(key))
@@ -75,7 +75,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
             else
             {
                 T module = UMUtilCommon.CreateGameObject<T>(key, m_UMGRGameObject);
-                ModuleRegisterInfo registerInfo = new ModuleRegisterInfo(module, config);
+                ModuleRegisterInfo registerInfo = new ModuleRegisterInfo(module, initArgs);
                 m_moduleDic.Add(key, registerInfo);
                 UMUtilDebug.Log($"UMGR register module: {key}.");
             }

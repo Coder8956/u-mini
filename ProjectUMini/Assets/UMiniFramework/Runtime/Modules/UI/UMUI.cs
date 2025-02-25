@@ -22,7 +22,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         private const string UI_LAYER_PREFIX = "UM_UI_Layer_";
         private const string UI_CACHE = "UM_UI_CACHE";
 
-        private UMUIConfig m_config = null;
+        private UMUIInitArgs m_initArgs = null;
         private RectTransform m_rectTransform = null;
         private Canvas m_canvas = null;
         private CanvasScaler m_canvasScaler = null;
@@ -57,8 +57,8 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// </summary>
         private void CreateEventSystem()
         {
-            if (m_config == null) return;
-            if (!m_config.IsCreateEventSystem) return;
+            if (m_initArgs == null) return;
+            if (!m_initArgs.IsCreateEventSystem) return;
             EventSystem es = UMUtilCommon.CreateGameObject<EventSystem>(EVENT_SYSTEM_NAME, gameObject);
             es.AddComponent<StandaloneInputModule>();
             m_goEventSystem = es.gameObject;
@@ -71,10 +71,10 @@ namespace UMiniFramework.Runtime.Modules.UI
         {
             // 添加 Canvas 组件
             m_canvas = gameObject.AddComponent<Canvas>();
-            if (m_config == null)
+            if (m_initArgs == null)
                 m_canvas.renderMode = RenderMode.ScreenSpaceOverlay;
             else
-                m_canvas.renderMode = m_config.CanvasRenderMode;
+                m_canvas.renderMode = m_initArgs.CanvasRenderMode;
         }
 
         /// <summary>
@@ -100,9 +100,9 @@ namespace UMiniFramework.Runtime.Modules.UI
         {
             m_uiLayers = new List<RectTransform>();
             int layerCount = 1;
-            if (m_config != null)
+            if (m_initArgs != null)
             {
-                layerCount = m_config.UILayerCount < 1 ? 1 : m_config.UILayerCount;
+                layerCount = m_initArgs.UILayerCount < 1 ? 1 : m_initArgs.UILayerCount;
             }
 
             for (int i = 0; i < layerCount; i++)
@@ -131,9 +131,9 @@ namespace UMiniFramework.Runtime.Modules.UI
             return Instantiate(uiGo);
         }
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
-            m_config = UMUtilCommon.ConvertObjectClass<UMUIConfig>(config);
+            m_initArgs = UMUtilCommon.ConvertObjectClass<UMUIInitArgs>(initArgs);
 
             SetUILayer(gameObject);
 

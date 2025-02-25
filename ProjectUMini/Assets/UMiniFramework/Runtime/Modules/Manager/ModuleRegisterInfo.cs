@@ -7,18 +7,18 @@ namespace UMiniFramework.Runtime.Modules.Manager
     /// </summary>
     public class ModuleRegisterInfo
     {
-        public ModuleRegisterInfo(UMBaseModule module, UMModuleConfig config)
+        public ModuleRegisterInfo(UMBaseModule module, UMModuleInitArgs initArgs)
         {
             m_module = module;
-            m_config = config;
+            m_initArgs = initArgs;
         }
 
         private UMBaseModule m_module;
 
         public UMBaseModule Module => m_module;
 
-        private UMModuleConfig m_config;
+        private UMModuleInitArgs m_initArgs;
 
-        public UMModuleConfig Config => m_config;
+        public UMModuleInitArgs InitArgs => m_initArgs;
     }
 }

@@ -10,6 +10,6 @@ namespace UMiniFramework.Runtime.Modules.Base
     public abstract class UMBaseModule : MonoBehaviour
     {
         public abstract UMModuleType ModuleType { get; }
-        protected abstract IEnumerator Init(UMModuleConfig config);
+        protected abstract IEnumerator Init(UMModuleInitArgs initArgs);
     }
 }

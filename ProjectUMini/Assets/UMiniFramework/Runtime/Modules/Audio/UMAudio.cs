@@ -12,7 +12,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
     {
         private const string BGM_GO_NAME = "BGM_UMAUDIO";
         private const string EFFECT_GO_NAME = "EFFECT_UMAUDIO";
-        private UMAudioConfig m_config = null;
+        private UMAudioInitArgs m_initArgs = null;
         public UMAudioBGM BGM { get; private set; }
         public UMAudioEffect Effect { get; private set; }
 
@@ -21,19 +21,19 @@ namespace UMiniFramework.Runtime.Modules.Audio
             get => UMModuleType.Audio;
         }
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
-            m_config = UMUtilCommon.ConvertObjectClass<UMAudioConfig>(config);
+            m_initArgs = UMUtilCommon.ConvertObjectClass<UMAudioInitArgs>(initArgs);
 
             // 初始化 BGM
             BGM = UMUtilCommon.CreateGameObject<UMAudioBGM>(BGM_GO_NAME, gameObject);
             MethodInfo BGMInit = UMUtilCommon.GetObjectNoPublicMethod(BGM.GetType(), "Init");
-            BGMInit.Invoke(BGM, new object[] {m_config});
+            BGMInit.Invoke(BGM, new object[] {m_initArgs});
 
             // 初始化 Effect
             Effect = UMUtilCommon.CreateGameObject<UMAudioEffect>(EFFECT_GO_NAME, gameObject);
             MethodInfo EffectInit = UMUtilCommon.GetObjectNoPublicMethod(Effect.GetType(), "Init");
-            EffectInit.Invoke(Effect, new object[] {m_config});
+            EffectInit.Invoke(Effect, new object[] {m_initArgs});
 
             yield return null;
         }

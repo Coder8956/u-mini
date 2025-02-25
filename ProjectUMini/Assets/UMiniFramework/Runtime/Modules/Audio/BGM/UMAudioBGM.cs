@@ -8,7 +8,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
     {
         private const string INVALID_BGM_ID = "UM_INVALID_BGM_ID";
         private AudioSource m_audioSource = null;
-        private UMAudioConfig m_config;
+        private UMAudioInitArgs m_initArgs;
         private Dictionary<string, AudioClipInfo> m_BGMClipDic;
 
         /// <summary>
@@ -37,12 +37,12 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         private void InitBGMClipDic()
         {
             m_BGMClipDic = new Dictionary<string, AudioClipInfo>();
-            if (m_config == null) return;
-            if (m_config.BGMClips == null) return;
+            if (m_initArgs == null) return;
+            if (m_initArgs.BGMClips == null) return;
             AudioClipInfo aci = null;
-            for (var i = 0; i < m_config.BGMClips.Count; i++)
+            for (var i = 0; i < m_initArgs.BGMClips.Count; i++)
             {
-                aci = m_config.BGMClips[i];
+                aci = m_initArgs.BGMClips[i];
                 m_BGMClipDic.Add(aci.ID, aci);
                 if (aci.IsPreLoad)
                 {
@@ -51,11 +51,11 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
             }
         }
 
-        protected override void Init(UMAudioConfig config)
+        protected override void Init(UMAudioInitArgs initArgs)
         {
             CurtBGMID = INVALID_BGM_ID;
 
-            m_config = config;
+            m_initArgs = initArgs;
 
             InitBGMClipDic();
 

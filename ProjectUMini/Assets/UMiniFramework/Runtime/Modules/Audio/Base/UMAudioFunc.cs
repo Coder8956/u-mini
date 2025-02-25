@@ -8,7 +8,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Base
     {
         private MethodInfo m_LoadClipMethod;
 
-        protected abstract void Init(UMAudioConfig config);
+        protected abstract void Init(UMAudioInitArgs initArgs);
 
         protected void LoadClipInACI(AudioClipInfo aci)
         {

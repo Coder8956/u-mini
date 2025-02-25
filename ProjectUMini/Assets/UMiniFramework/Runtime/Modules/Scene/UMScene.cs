@@ -14,7 +14,7 @@ namespace UMiniFramework.Runtime.Modules.Scene
             get => UMModuleType.Scene;
         }
 
-        protected override IEnumerator Init(UMModuleConfig config)
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             yield return null;
         }
