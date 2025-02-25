@@ -26,7 +26,9 @@ namespace Game.Scripts.UI
         [SerializeField] private Button m_btnPlayEffect_2 = null;
         [SerializeField] private Button m_btnPlayEffect_3 = null;
         [SerializeField] private Button m_btnPrintASInfo = null;
-
+        [SerializeField] private Toggle m_togAudioEffect;
+        [SerializeField] private Slider m_sldAudioEffect;
+        
         protected override void OnCreatePanel()
         {
             m_DebugGO.SetActive(false);
@@ -83,6 +85,18 @@ namespace Game.Scripts.UI
                 // 播放 effect-3
                 UMGR.Get<UMAudio>().Effect.Play(GameAudio.Effect_3);
             });
+            
+            m_togAudioEffect.onValueChanged.AddListener((val) =>
+            {
+                // 控制音效是否静音
+                UMGR.Get<UMAudio>().Effect.Mute = val;
+            });
+            
+            m_sldAudioEffect.onValueChanged.AddListener((val) =>
+            {
+                // 控制音效音量
+                UMGR.Get<UMAudio>().Effect.Volume = val;
+            });
 
             m_btnPrintASInfo?.onClick.AddListener(() =>
             {
@@ -97,7 +111,8 @@ namespace Game.Scripts.UI
 
         protected override void OnOpenPanel()
         {
-            Debug.Log("Open-PanelDebug");
+            m_togAudioEffect.isOn = UMGR.Get<UMAudio>().Effect.Mute;
+            m_sldAudioEffect.value = UMGR.Get<UMAudio>().Effect.Volume;
         }
 
         protected override void OnClosePanel()

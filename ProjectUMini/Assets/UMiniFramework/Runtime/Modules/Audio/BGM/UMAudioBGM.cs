@@ -19,7 +19,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
             get { return m_audioSource.mute; }
             set { m_audioSource.mute = value; }
         }
-        
+
         /// <summary>
         /// 音量属性
         /// </summary>
@@ -64,7 +64,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
             m_audioSource.loop = true;
         }
 
-        public void Play(string id, float volume = 1, bool loop = true)
+        public void Play(string id, bool loop = true)
         {
             CurtBGMID = id;
             AudioClipInfo aci = m_BGMClipDic[CurtBGMID];
@@ -75,7 +75,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
             }
 
             m_audioSource.clip = aci.Clip;
-            m_audioSource.volume = volume;
             m_audioSource.loop = loop;
             m_audioSource.Play();
         }

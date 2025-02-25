@@ -48,7 +48,14 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         public bool Mute
         {
             get { return m_mute; }
-            set { m_mute = value; }
+            set
+            {
+                m_mute = value;
+                for (var i = 0; i < m_asPlayingList.Count; i++)
+                {
+                    m_asPlayingList[i].mute = m_mute;
+                }
+            }
         }
 
         /// <summary>
@@ -57,7 +64,14 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         public float Volume
         {
             get { return m_volume; }
-            set { m_volume = value; }
+            set
+            {
+                m_volume = value;
+                for (var i = 0; i < m_asPlayingList.Count; i++)
+                {
+                    m_asPlayingList[i].volume = m_volume;
+                }
+            }
         }
 
         /// <summary>
@@ -157,7 +171,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         /// <param name="id"></param>
         /// <param name="volume"></param>
-        public void Play(string id, float volume = 1)
+        public void Play(string id)
         {
             AudioClipInfo aci = m_EffectClipDic[id];
 
@@ -170,9 +184,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             m_asPlayingList.Add(curtAS);
 
             curtAS.clip = aci.Clip;
-            curtAS.volume = volume;
+            curtAS.volume = m_volume;
+            curtAS.mute = m_mute;
             curtAS.Play();
-
 
             StartCoroutine(WaitEffectPlayOver(curtAS));
         }

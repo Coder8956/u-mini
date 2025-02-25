@@ -22,6 +22,12 @@ namespace Game.Scripts.UI
         protected override void OnCreatePanel()
         {
             m_btnClose.onClick.AddListener(() => { GameUI.CloseSet(); });
+            
+            m_togAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Mute = val; });
+            m_sldAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Volume = val; });
+            
+            m_togAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Mute = val; });
+            m_sldAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Volume = val; });
         }
 
         protected override void OnDestroyPanel()
