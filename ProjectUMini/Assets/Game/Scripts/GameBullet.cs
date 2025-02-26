@@ -1,4 +1,5 @@
-﻿using UMiniFramework.Runtime.Modules.Audio;
+﻿using Game.Scripts.Common;
+using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UnityEngine;
 
@@ -21,6 +22,8 @@ namespace Game.Scripts
             }
 
             UMGR.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
+            Instantiate(GameGlobalVar.VFX_Explosion, transform.position, Quaternion.identity);
+
             Destroy(gameObject);
         }
     }

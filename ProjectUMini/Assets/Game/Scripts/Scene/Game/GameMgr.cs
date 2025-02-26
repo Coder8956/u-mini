@@ -26,6 +26,11 @@ namespace Game.Scripts.Scene.Game
 
         private void Start()
         {
+            if (GameGlobalVar.VFX_Explosion == null)
+            {
+                GameGlobalVar.VFX_Explosion = UMGR.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
+            }
+
             m_levelData = UMGR.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
             m_bulletData = UMGR.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
             m_blockData = UMGR.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
