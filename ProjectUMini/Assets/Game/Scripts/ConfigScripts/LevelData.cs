@@ -9,14 +9,9 @@ public class LevelData
     [JsonProperty] public readonly string id;
 
     /// <summary>
-    /// 加农炮id
+    /// 炮弹id
     /// </summary>
-    [JsonProperty] public readonly string cannonId;
-
-    /// <summary>
-    /// 怪物id
-    /// </summary>
-    [JsonProperty] public readonly string[] monsterId;
+    [JsonProperty] public readonly string bulletId;
 
     /// <summary>
     /// 关卡BGM

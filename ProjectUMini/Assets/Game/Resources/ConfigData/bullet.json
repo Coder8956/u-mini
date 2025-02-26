@@ -1,10 +1,14 @@
 ﻿[
   {
     "id": "bullet_89001",
-    "bulletPath": "Bullets/NormalBullet_001"
+    "bulletPath": "Bullet/Bullet_1"
   },
   {
     "id": "bullet_89002",
-    "bulletPath": "Bullets/NormalBullet_002"
+    "bulletPath": "Bullet/Bullet_2"
+  },
+  {
+    "id": "bullet_89003",
+    "bulletPath": "Bullet/Bullet_3"
   }
 ]

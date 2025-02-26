@@ -26,6 +26,9 @@ namespace UMiniFramework.Editor.UMEModules.Config
             ScriptFolder = scriptFolder.Replace("\\", "/");
             DataFolder = dataFolder.Replace("\\", "/");
 
+            UMUtilIO.ClearDir(ScriptFolder);
+            UMUtilIO.ClearDir(DataFolder);
+
             if (!Directory.Exists(scriptFolder))
             {
                 EditorUtility.DisplayDialog("Invalid Folder", scriptFolder, "OK");
@@ -220,10 +223,10 @@ namespace UMiniFramework.Editor.UMEModules.Config
 
             jsonConfigContent = Regex.Unescape(jsonConfigContent);
 
-            if (File.Exists(jsonConfigPath))
-            {
-                File.Delete(jsonConfigPath);
-            }
+            // if (File.Exists(jsonConfigPath))
+            // {
+            //     File.Delete(jsonConfigPath);
+            // }
 
             File.WriteAllText(jsonConfigPath, jsonConfigContent, Encoding.UTF8);
         }
@@ -363,10 +366,11 @@ namespace UMiniFramework.Editor.UMEModules.Config
             scriptTableString.AppendLine("}");
 
             string tableScriptSavePath = $"{ScriptFolder}/{tableClassName}.cs";
-            if (File.Exists(tableScriptSavePath))
-            {
-                File.Delete(tableScriptSavePath);
-            }
+
+            // if (File.Exists(tableScriptSavePath))
+            // {
+            //     File.Delete(tableScriptSavePath);
+            // }
 
             File.WriteAllText(tableScriptSavePath, scriptTableString.ToString(), Encoding.UTF8);
         }

@@ -51,9 +51,7 @@ namespace Game.Scripts.Scene.Launch
             umConfigInitArgs.ConfigTables = new List<UMConfigTable>();
 
             umConfigInitArgs.ConfigTables.Add(new BulletTable());
-            umConfigInitArgs.ConfigTables.Add(new CannonTable());
             umConfigInitArgs.ConfigTables.Add(new LevelTable());
-            umConfigInitArgs.ConfigTables.Add(new MonsterTable());
             umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
 
             // 资源加载配置

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
 
@@ -15,6 +16,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
         private string m_configScriptOutputDir = string.Empty;
         private string m_readFilseTip = string.Empty;
         private string m_configJsonOutputDir = string.Empty;
+        private GUIStyle m_redLabelStyle;
 
         // 滚动视图位置
         private Vector2 m_scrollPosition;
@@ -41,7 +43,8 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Config Input Folder", Application.dataPath, "");
+                string selectedPath =
+                    EditorUtility.OpenFolderPanel("Select Config Input Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
@@ -74,7 +77,8 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Script Output Folder", Application.dataPath, "");
+                string selectedPath =
+                    EditorUtility.OpenFolderPanel("Select Script Output Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
@@ -104,7 +108,8 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Json Output Folder", Application.dataPath, "");
+                string selectedPath =
+                    EditorUtility.OpenFolderPanel("Select Json Output Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
@@ -121,6 +126,13 @@ namespace UMiniFramework.Editor.UMEModules.Config
             GUILayout.Label(m_configJsonOutputDir, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
 
             EditorGUILayout.EndHorizontal();
+        }
+
+        private void DrawOutputDirClearWarning()
+        {
+            GUILayout.Label(
+                "The output directory is cleared when the [Update Config] is performed.",
+                m_redLabelStyle);
         }
 
         private void DrawCreateConfig()
@@ -189,11 +201,20 @@ namespace UMiniFramework.Editor.UMEModules.Config
 
         private void OnGUI()
         {
+            if (m_redLabelStyle == null)
+            {
+                // 创建一个新的 GUIStyle
+                m_redLabelStyle = new GUIStyle(GUI.skin.label);
+                // 设置字体颜色为红色
+                m_redLabelStyle.normal.textColor = Color.red;
+            }
+
             DrawSelectConfigInputFolder();
             DrawReadConfigFiles();
             GUI.enabled = m_configFiles.Count > 0;
             DrawSelectConfigScriptOutputFolder();
             DrawSelectConfigJsonOutputFolder();
+            DrawOutputDirClearWarning();
             DrawCreateConfig();
         }
     }

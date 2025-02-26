@@ -45,5 +45,30 @@ namespace UMiniFramework.Runtime.Utils
         {
             return path.Replace('\\', '/');
         }
+        
+        /// <summary>
+        /// 清空目录
+        /// </summary>
+        /// <param name="dirPath"></param>
+        public static void ClearDir(string dirPath)
+        {
+            string directoryPath = dirPath;  // 你要清空的目录路径
+
+            // 获取目录中的所有文件和子目录
+            string[] files = Directory.GetFiles(directoryPath);
+            string[] directories = Directory.GetDirectories(directoryPath);
+
+            // 删除文件
+            foreach (var file in files)
+            {
+                File.Delete(file);
+            }
+
+            // 删除子目录
+            foreach (var dir in directories)
+            {
+                Directory.Delete(dir, true);
+            }
+        }
     }
 }

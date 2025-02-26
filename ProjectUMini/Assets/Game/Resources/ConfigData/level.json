@@ -1,30 +1,17 @@
 ﻿[
   {
     "id": "level_11001",
-    "cannonId": "cannon_91001",
-    "monsterId": [
-      "monster_3001",
-      "monster_3002"
-    ],
+    "bulletId": "bullet_89001",
     "bgmId": "bgm_238002"
   },
   {
     "id": "level_11002",
-    "cannonId": "cannon_91002",
-    "monsterId": [
-      "monster_3001",
-      "monster_3003"
-    ],
+    "bulletId": "bullet_89002",
     "bgmId": "bgm_238003"
   },
   {
     "id": "level_11003",
-    "cannonId": "cannon_91002",
-    "monsterId": [
-      "monster_3001",
-      "monster_3002",
-      "monster_3003"
-    ],
+    "bulletId": "bullet_89003",
     "bgmId": "bgm_238004"
   }
 ]
