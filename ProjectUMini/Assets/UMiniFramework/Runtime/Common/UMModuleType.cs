@@ -6,6 +6,7 @@
         Audio,
         Config,
         Scene,
-        UMDataPer,
+        DataPer,
+        Resource,
     }
 }

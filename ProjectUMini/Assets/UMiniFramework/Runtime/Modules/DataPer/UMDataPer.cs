@@ -22,7 +22,7 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
 
         public override UMModuleType ModuleType
         {
-            get => UMModuleType.UMDataPer;
+            get => UMModuleType.DataPer;
         }
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)

@@ -9,6 +9,7 @@ using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers;
 using UMiniFramework.Runtime.Modules.DataPer;
 using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UMDataPer;
@@ -65,6 +66,7 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Register<UMScene>();
             UMGR.Register<UMDataPer>(umDataPerInitArgs);
             UMGR.Register<UMConfig>(umConfigInitArgs);
+            UMGR.Register<UMResource>(umConfigInitArgs);
 
             UMGR.InitModules((val) =>
             {

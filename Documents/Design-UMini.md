@@ -23,6 +23,7 @@
 - [文档-数据持久化模块](./Modules/04-DataPersistence/00-数据持久化模块.md)
 
 ## 配置模块
+- [文档-配置模块](./Modules/05-Config/00-配置模块.md)
 
 ## 资源模块
 
