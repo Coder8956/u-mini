@@ -1,7 +1,4 @@
-﻿using Game.Scripts.Common;
-using Game.Scripts.Common.GameUI;
-using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.Scene;
+﻿using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
@@ -20,9 +17,8 @@ namespace Game.Scripts.UI
             // Debug.Log("Create-PanelMain");
             m_btnStartGame.onClick.AddListener(() =>
             {
-                // 进入游戏
-                UMGR.Get<UMScene>().Load(GameScene.Game);
-                GameUI.CloseMain();
+                // 打开关卡选择界面
+                GameUI.OpenSelectLevel();
             });
 
             m_btnSet.onClick.AddListener(() =>
