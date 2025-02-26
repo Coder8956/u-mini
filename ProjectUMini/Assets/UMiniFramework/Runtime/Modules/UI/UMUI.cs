@@ -262,5 +262,14 @@ namespace UMiniFramework.Runtime.Modules.UI
                 index++;
             }
         }
+
+        /// <summary>
+        /// 判断是否点击了UI
+        /// </summary>
+        /// <returns></returns>
+        public bool IsClickUI()
+        {
+            return EventSystem.current.IsPointerOverGameObject();
+        }
     }
 }

@@ -4,6 +4,8 @@ using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Resource;
+using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,17 +16,23 @@ namespace Game.Scripts.Scene.Game
         [SerializeField] private Camera m_gameCamera;
 
         private LevelData m_levelData = null;
+        private BulletData m_bulletData = null;
+        private GameObject m_bulletGo = null;
 
         private void Start()
         {
-            // m_levelData = UMGR.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
-            // UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
-            // GameUI.OpenGame();
+            m_levelData = UMGR.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
+            m_bulletData = UMGR.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
+            m_bulletGo = UMGR.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
+
+            UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
+            GameUI.OpenGame();
         }
 
         private void Update()
         {
-            if (Input.GetMouseButtonDown(0))
+            if (Input.GetMouseButtonDown(0)
+                && !UMGR.Get<UMUI>().IsClickUI())
             {
                 // Debug.Log("shoot");
 
@@ -42,14 +50,11 @@ namespace Game.Scripts.Scene.Game
                 // 打印鼠标在3D空间中的位置
                 // Debug.Log(mouseWorldPosition);
 
-                GameObject go = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                // go.transform.position = mouseWorldPosition;
-                go.AddComponent<Rigidbody>();
                 // 计算发射方向
                 Vector3 shootDirec = mouseWorldPosition - m_gameCamera.transform.position;
-                
+
                 // 在射线碰撞点实例化一个球体
-                GameObject ball = Instantiate(go, m_gameCamera.transform.position, Quaternion.identity);
+                GameObject ball = Instantiate(m_bulletGo, m_gameCamera.transform.position, Quaternion.identity);
 
                 // 获取球体的 Rigidbody 组件
                 Rigidbody rb = ball.GetComponent<Rigidbody>();
