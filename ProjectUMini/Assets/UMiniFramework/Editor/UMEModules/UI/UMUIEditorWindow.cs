@@ -259,7 +259,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
             else
             {
                 List<Type> components = new List<Type>();
-                
+
                 components.Add(typeof(RectTransform));
                 components.Add(typeof(CanvasRenderer));
 
@@ -294,6 +294,16 @@ namespace UMiniFramework.Editor.UMEModules.UI
                 PrefabUtility.SaveAsPrefabAsset(createPanel, m_panelPrefabAssetDataPath);
                 DestroyImmediate(createPanel);
                 AssetDatabase.Refresh();
+                EditorUtility.DisplayDialog("Tip", $"{CurtUIClassOption()} Prefab is created.", "OK");
+
+                // 找到你想高亮的 UI 资源
+                string uiPrefabPath = m_panelPrefabAssetDataPath; // 资源的路径
+                UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(uiPrefabPath);
+                if (asset != null)
+                {
+                    // 高亮这个资源
+                    EditorGUIUtility.PingObject(asset);
+                }
             }
         }
 
