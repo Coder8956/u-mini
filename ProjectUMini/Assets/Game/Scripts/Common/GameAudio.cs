@@ -2,8 +2,8 @@
 {
     public class GameAudio
     {
-        public const string BGM_1 = "BGM_1";
-        public const string BGM_2 = "BGM_2";
+        public const string BGM_1 = "bgm_238001";
+        public const string BGM_2 = "bgm_238002";
 
         //================================
 

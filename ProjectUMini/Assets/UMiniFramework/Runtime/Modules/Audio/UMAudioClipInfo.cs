@@ -7,7 +7,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
     /// <summary>
     /// 音频信息
     /// </summary>
-    public class AudioClipInfo
+    public class UMAudioClipInfo
     {
         public readonly string ID;
         public readonly string Path;
@@ -16,7 +16,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
 
         public AudioClip Clip { get; private set; }
 
-        public AudioClipInfo(
+        public UMAudioClipInfo(
             string id,
             string path,
             bool isPreLoad = false,

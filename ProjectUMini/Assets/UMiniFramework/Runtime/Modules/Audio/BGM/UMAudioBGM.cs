@@ -9,7 +9,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         private const string INVALID_BGM_ID = "UM_INVALID_BGM_ID";
         private AudioSource m_audioSource = null;
         private UMAudioInitArgs m_initArgs;
-        private Dictionary<string, AudioClipInfo> m_BGMClipDic;
+        private Dictionary<string, UMAudioClipInfo> m_BGMClipDic;
 
         /// <summary>
         /// 静音属性
@@ -36,18 +36,14 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         /// </summary>
         private void InitBGMClipDic()
         {
-            m_BGMClipDic = new Dictionary<string, AudioClipInfo>();
+            m_BGMClipDic = new Dictionary<string, UMAudioClipInfo>();
             if (m_initArgs == null) return;
             if (m_initArgs.BGMClips == null) return;
-            AudioClipInfo aci = null;
+            UMAudioClipInfo aci = null;
             for (var i = 0; i < m_initArgs.BGMClips.Count; i++)
             {
                 aci = m_initArgs.BGMClips[i];
-                m_BGMClipDic.Add(aci.ID, aci);
-                if (aci.IsPreLoad)
-                {
-                    LoadClipInACI(aci);
-                }
+                AddAudioClip(aci);
             }
         }
 
@@ -64,10 +60,19 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
             m_audioSource.loop = true;
         }
 
+        public void AddAudioClip(UMAudioClipInfo aci)
+        {
+            m_BGMClipDic.Add(aci.ID, aci);
+            if (aci.IsPreLoad)
+            {
+                LoadClipInACI(aci);
+            }
+        }
+
         public void Play(string id, bool loop = true)
         {
             CurtBGMID = id;
-            AudioClipInfo aci = m_BGMClipDic[CurtBGMID];
+            UMAudioClipInfo aci = m_BGMClipDic[CurtBGMID];
 
             if (aci.Clip == null)
             {

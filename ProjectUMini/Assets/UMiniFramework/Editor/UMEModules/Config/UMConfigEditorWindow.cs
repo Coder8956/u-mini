@@ -41,7 +41,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, "");
+                string selectedPath = EditorUtility.OpenFolderPanel("Select Config Input Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
@@ -74,7 +74,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, "");
+                string selectedPath = EditorUtility.OpenFolderPanel("Select Script Output Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {
@@ -104,7 +104,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath = EditorUtility.OpenFolderPanel("Select Folder", Application.dataPath, "");
+                string selectedPath = EditorUtility.OpenFolderPanel("Select Json Output Folder", Application.dataPath, "");
 
                 if (!string.IsNullOrEmpty(selectedPath))
                 {

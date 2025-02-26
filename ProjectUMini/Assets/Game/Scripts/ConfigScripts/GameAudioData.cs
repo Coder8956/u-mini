@@ -14,14 +14,9 @@ public class GameAudioData
     [JsonProperty] public readonly string path;
 
     /// <summary>
-    /// 音量
+    /// 音乐类型. 0-bgm; 1-音效
     /// </summary>
-    [JsonProperty] public readonly float volume;
-
-    /// <summary>
-    /// 是否是背景音乐
-    /// </summary>
-    [JsonProperty] public readonly bool isBGM;
+    [JsonProperty] public readonly int type;
 
     /// <summary>
     /// 是否循环

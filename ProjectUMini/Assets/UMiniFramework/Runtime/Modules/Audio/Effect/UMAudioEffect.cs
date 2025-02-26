@@ -8,7 +8,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
 {
     public class UMAudioEffect : UMAudioFunc
     {
-        private Dictionary<string, AudioClipInfo> m_EffectClipDic;
+        private Dictionary<string, UMAudioClipInfo> m_EffectClipDic;
         private UMAudioInitArgs m_initArgs;
 
         private Queue<AudioSource> m_asQue;
@@ -24,10 +24,10 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         private void InitEffectClipDic()
         {
-            m_EffectClipDic = new Dictionary<string, AudioClipInfo>();
+            m_EffectClipDic = new Dictionary<string, UMAudioClipInfo>();
             if (m_initArgs == null) return;
             if (m_initArgs.EffectClips == null) return;
-            AudioClipInfo aci = null;
+            UMAudioClipInfo aci = null;
             for (var i = 0; i < m_initArgs.EffectClips.Count; i++)
             {
                 aci = m_initArgs.EffectClips[i];
@@ -173,7 +173,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// <param name="volume"></param>
         public void Play(string id)
         {
-            AudioClipInfo aci = m_EffectClipDic[id];
+            UMAudioClipInfo aci = m_EffectClipDic[id];
 
             if (aci.Clip == null)
             {

@@ -10,7 +10,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
     {
         #region BGM-Config
 
-        public List<AudioClipInfo> BGMClips;
+        public List<UMAudioClipInfo> BGMClips;
 
         #endregion
 
@@ -29,7 +29,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
             set => m_defaultASCount = value;
         }
 
-        public List<AudioClipInfo> EffectClips;
+        public List<UMAudioClipInfo> EffectClips;
 
         #endregion
     }

@@ -35,12 +35,7 @@ namespace Game.Scripts.Scene.Launch
 
             // 音频配置
             UMAudioInitArgs umAudioInitArgs = new UMAudioInitArgs();
-            umAudioInitArgs.BGMClips = new List<AudioClipInfo>()
-            {
-                new(GameAudio.BGM_1, "Audio/BGM/BGM_001"),
-                new(GameAudio.BGM_2, "Audio/BGM/BGM_002", true),
-            };
-            umAudioInitArgs.EffectClips = new List<AudioClipInfo>()
+            umAudioInitArgs.EffectClips = new List<UMAudioClipInfo>()
             {
                 new(GameAudio.Effect_1, "Audio/Effect/Bullet_Explosion_001"),
                 new(GameAudio.Effect_2, "Audio/Effect/Effect_Cannon_001", true),
@@ -92,6 +87,17 @@ namespace Game.Scripts.Scene.Launch
 
         private void OnUMGRInitModulesFinished()
         {
+            GameAudioTable gameAudioTable = UMGR.Get<UMConfig>().GetTable<GameAudioTable>();
+            for (var i = 0; i < gameAudioTable.TableData.Count; i++)
+            {
+                GameAudioData gad = gameAudioTable.TableData[i];
+                if (gad.type == 0)
+                {
+                    UMAudioClipInfo aci = new UMAudioClipInfo(gad.id, gad.path);
+                    UMGR.Get<UMAudio>().BGM.AddAudioClip(aci);
+                }
+            }
+
             GameUI.OpenDebug();
             // 进入主界面
             UMGR.Get<UMScene>().Load(GameScene.Main);

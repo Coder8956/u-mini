@@ -1,37 +1,44 @@
 ﻿[
   {
     "id": "bgm_238001",
-    "path": "Audio/BGM/BGM_001",
-    "volume": 1.0,
-    "isBGM": true,
+    "path": "Audio/BGM/bgm_main",
+    "type": 0,
     "loop": true
   },
   {
     "id": "bgm_238002",
-    "path": "Audio/BGM/BGM_002",
-    "volume": 0.5,
-    "isBGM": true,
+    "path": "Audio/BGM/bgm_level_1",
+    "type": 0,
+    "loop": true
+  },
+  {
+    "id": "bgm_238003",
+    "path": "Audio/BGM/bgm_level_2",
+    "type": 0,
+    "loop": true
+  },
+  {
+    "id": "bgm_238004",
+    "path": "Audio/BGM/bgm_level_3",
+    "type": 0,
     "loop": true
   },
   {
     "id": "effect_248011",
     "path": "Audio/Effect/Effect_Cannon_001",
-    "volume": 1.0,
-    "isBGM": false,
+    "type": 1,
     "loop": false
   },
   {
     "id": "effect_248012",
     "path": "Audio/Effect/Effect_Cannon_002",
-    "volume": 0.5,
-    "isBGM": false,
+    "type": 1,
     "loop": false
   },
   {
     "id": "effect_248013",
     "path": "Audio/Effect/Bullet_Explosion_001",
-    "volume": 1.0,
-    "isBGM": false,
+    "type": 1,
     "loop": false
   }
 ]
