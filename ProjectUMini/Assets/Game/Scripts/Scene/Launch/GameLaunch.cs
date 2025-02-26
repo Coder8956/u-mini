@@ -35,12 +35,6 @@ namespace Game.Scripts.Scene.Launch
 
             // 音频配置
             UMAudioInitArgs umAudioInitArgs = new UMAudioInitArgs();
-            umAudioInitArgs.EffectClips = new List<UMAudioClipInfo>()
-            {
-                new(GameAudio.Effect_1, "Audio/Effect/Bullet_Explosion_001"),
-                new(GameAudio.Effect_2, "Audio/Effect/Effect_Cannon_001", true),
-                new(GameAudio.Effect_3, "Audio/Effect/Effect_Cannon_002"),
-            };
 
             // 数据持久化配置
             UMDataPerInitArgs umDataPerInitArgs = new UMDataPerInitArgs();
@@ -53,6 +47,7 @@ namespace Game.Scripts.Scene.Launch
             umConfigInitArgs.ConfigTables.Add(new BulletTable());
             umConfigInitArgs.ConfigTables.Add(new LevelTable());
             umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
+            umConfigInitArgs.ConfigTables.Add(new BlockTable());
 
             // 资源加载配置
             UMResInitArgs umResourceInitArgs = new UMResInitArgs();
@@ -89,10 +84,15 @@ namespace Game.Scripts.Scene.Launch
             for (var i = 0; i < gameAudioTable.TableData.Count; i++)
             {
                 GameAudioData gad = gameAudioTable.TableData[i];
-                if (gad.type == 0)
+                UMAudioClipInfo aci = new UMAudioClipInfo(gad.id, gad.path);
+                switch (gad.type)
                 {
-                    UMAudioClipInfo aci = new UMAudioClipInfo(gad.id, gad.path);
-                    UMGR.Get<UMAudio>().BGM.AddAudioClip(aci);
+                    case 0:
+                        UMGR.Get<UMAudio>().BGM.AddAudioClip(aci);
+                        break;
+                    case 1:
+                        UMGR.Get<UMAudio>().Effect.AddAudioClip(aci);
+                        break;
                 }
             }
 

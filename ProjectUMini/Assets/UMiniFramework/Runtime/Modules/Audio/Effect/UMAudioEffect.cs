@@ -31,11 +31,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             for (var i = 0; i < m_initArgs.EffectClips.Count; i++)
             {
                 aci = m_initArgs.EffectClips[i];
-                m_EffectClipDic.Add(aci.ID, aci);
-                if (aci.IsPreLoad)
-                {
-                    LoadClipInACI(aci);
-                }
+                AddAudioClip(aci);
             }
         }
 
@@ -189,6 +185,15 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             curtAS.Play();
 
             StartCoroutine(WaitEffectPlayOver(curtAS));
+        }
+
+        public void AddAudioClip(UMAudioClipInfo aci)
+        {
+            m_EffectClipDic.Add(aci.ID, aci);
+            if (aci.IsPreLoad)
+            {
+                LoadClipInACI(aci);
+            }
         }
 
         /// <summary>

@@ -14,6 +14,11 @@ public class LevelData
     [JsonProperty] public readonly string bulletId;
 
     /// <summary>
+    /// 砖块Id
+    /// </summary>
+    [JsonProperty] public readonly string blockId;
+
+    /// <summary>
     /// 关卡BGM
     /// </summary>
     [JsonProperty] public readonly string bgmId;

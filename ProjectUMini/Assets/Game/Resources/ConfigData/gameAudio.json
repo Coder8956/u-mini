@@ -25,18 +25,6 @@
   },
   {
     "id": "effect_248011",
-    "path": "Audio/Effect/Effect_Cannon_001",
-    "type": 1,
-    "loop": false
-  },
-  {
-    "id": "effect_248012",
-    "path": "Audio/Effect/Effect_Cannon_002",
-    "type": 1,
-    "loop": false
-  },
-  {
-    "id": "effect_248013",
     "path": "Audio/Effect/Bullet_Explosion_001",
     "type": 1,
     "loop": false

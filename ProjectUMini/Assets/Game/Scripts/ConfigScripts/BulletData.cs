@@ -13,4 +13,9 @@ public class BulletData
     /// </summary>
     [JsonProperty] public readonly string bulletPath;
 
+    /// <summary>
+    /// 炮弹爆炸音效Id
+    /// </summary>
+    [JsonProperty] public readonly string exploAudioId;
+
 }
