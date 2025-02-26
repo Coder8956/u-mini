@@ -3,6 +3,7 @@ using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Modules.UMDataPer;
@@ -37,6 +38,8 @@ namespace Game.Scripts.UI
         [SerializeField] private Button m_btnDataDeleteAll = null;
 
         [SerializeField] private Button m_btnReadConfig = null;
+
+        [SerializeField] private Button m_btnLoadRes = null;
 
         protected override void OnCreatePanel()
         {
@@ -115,6 +118,7 @@ namespace Game.Scripts.UI
 
             InitDataPerDebug();
             InitConfigDebug();
+            InitResourceDebug();
         }
 
         private void InitDataPerDebug()
@@ -139,6 +143,16 @@ namespace Game.Scripts.UI
             {
                 BulletData data = UMGR.Get<UMConfig>().GetTable<BulletTable>().GetDataById(id);
                 Debug.Log($"configData: id: {data.id};  {data.bulletPath}");
+            });
+        }
+
+        private void InitResourceDebug()
+        {
+            string path = "Bullet/Bullet_0";
+            m_btnLoadRes?.onClick.AddListener(() =>
+            {
+                GameObject go = UMGR.Get<UMResource>().Load<GameObject>(path);
+                Instantiate(go);
             });
         }
 

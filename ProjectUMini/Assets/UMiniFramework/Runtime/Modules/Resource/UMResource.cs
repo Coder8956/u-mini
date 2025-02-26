@@ -45,7 +45,8 @@ namespace UMiniFramework.Runtime.Modules.Resource
         /// <returns></returns>
         public T Load<T>(string path) where T : UnityEngine.Object
         {
-            return (T) m_handlerLoad.Invoke(m_resourceHandler, new object[] {path});
+            MethodInfo genericMethod = m_handlerLoad.MakeGenericMethod(typeof(T)); // 传入泛型参数
+            return (T) genericMethod.Invoke(m_resourceHandler, new object[] {path});
         }
     }
 }

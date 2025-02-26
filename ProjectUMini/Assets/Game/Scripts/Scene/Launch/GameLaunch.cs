@@ -10,6 +10,7 @@ using UMiniFramework.Runtime.Modules.DataPer;
 using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
+using UMiniFramework.Runtime.Modules.Resource.UMResourceHandlers;
 using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UMDataPer;
@@ -60,13 +61,17 @@ namespace Game.Scripts.Scene.Launch
             umConfigInitArgs.ConfigTables.Add(new MonsterTable());
             umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
 
+            // 资源加载配置
+            UMResourceInitArgs umResourceInitArgs = new UMResourceInitArgs();
+            umResourceInitArgs.ResourceHandler = new UMResHandler();
+            
             UMGR.Launch();
             UMGR.Register<UMUI>(umUIInitArgs);
             UMGR.Register<UMAudio>(umAudioInitArgs);
             UMGR.Register<UMScene>();
             UMGR.Register<UMDataPer>(umDataPerInitArgs);
             UMGR.Register<UMConfig>(umConfigInitArgs);
-            UMGR.Register<UMResource>(umConfigInitArgs);
+            UMGR.Register<UMResource>(umResourceInitArgs);
 
             UMGR.InitModules((val) =>
             {
