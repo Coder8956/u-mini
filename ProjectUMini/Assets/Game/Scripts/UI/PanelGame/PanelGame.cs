@@ -13,6 +13,7 @@ namespace Game.Scripts.UI
     public class PanelGame : UMUIPanel
     {
         [SerializeField] private Button m_btnBackMain;
+        [SerializeField] private Text m_txtLevelId;
 
         protected override void OnCreatePanel()
         {
@@ -29,6 +30,7 @@ namespace Game.Scripts.UI
 
         protected override void OnOpenPanel()
         {
+            m_txtLevelId.text = string.Format("Level Id: {0}", GameGlobalVar.SelectLevelId);
         }
 
         protected override void OnClosePanel()
