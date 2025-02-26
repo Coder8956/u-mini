@@ -7,11 +7,11 @@ namespace UMiniFramework.Runtime.Modules.Resource
     /// <summary>
     /// 资源模块初始化配置
     /// </summary>
-    public class UMResourceInitArgs : UMModuleInitArgs
+    public class UMResInitArgs : UMModuleInitArgs
     {
         /// <summary>
         /// 资源加载处理器类型
         /// </summary>
-        public IUMResourceHandler ResourceHandler { get; set; }
+        public IUMResHandler ResHandler { get; set; }
     }
 }

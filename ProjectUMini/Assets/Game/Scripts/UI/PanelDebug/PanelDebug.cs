@@ -151,7 +151,7 @@ namespace Game.Scripts.UI
             string path = "Bullet/Bullet_0";
             m_btnLoadRes?.onClick.AddListener(() =>
             {
-                GameObject go = UMGR.Get<UMResource>().Load<GameObject>(path);
+                GameObject go = UMGR.Get<UMRes>().Load<GameObject>(path);
                 Instantiate(go);
             });
         }

@@ -12,10 +12,10 @@ namespace UMiniFramework.Runtime.Modules.Resource
     /// <summary>
     /// UI模块, 同时也是UI的根Canvas
     /// </summary>
-    public class UMResource : UMBaseModule
+    public class UMRes : UMBaseModule
     {
-        private IUMResourceHandler m_resourceHandler;
-        private UMResourceInitArgs m_initArgs = null;
+        private IUMResHandler m_resourceHandler;
+        private UMResInitArgs m_initArgs = null;
         private MethodInfo m_handlerLoad = null;
 
         public override UMModuleType ModuleType
@@ -25,14 +25,14 @@ namespace UMiniFramework.Runtime.Modules.Resource
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMResourceInitArgs>(initArgs);
-            if (m_initArgs.ResourceHandler == null)
+            m_initArgs = UMUtilCommon.ConvertObjectClass<UMResInitArgs>(initArgs);
+            if (m_initArgs.ResHandler == null)
             {
                 UMUtilDebug.Error("m_initArgs.ResourceHandler is null");
             }
 
-            m_resourceHandler = m_initArgs.ResourceHandler;
-            Type handlerType = typeof(IUMResourceHandler);
+            m_resourceHandler = m_initArgs.ResHandler;
+            Type handlerType = typeof(IUMResHandler);
             m_handlerLoad = UMUtilCommon.GetObjectNoPublicMethod(handlerType, "Load");
             yield return null;
         }
