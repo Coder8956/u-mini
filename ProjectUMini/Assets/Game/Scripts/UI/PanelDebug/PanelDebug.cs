@@ -72,14 +72,14 @@ namespace Game.Scripts.UI
 
             m_btnPlayBGM_1?.onClick.AddListener(() =>
             {
-                // 播放 bgm-1
-                UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_1);
+                // 播放 BGM_Main
+                UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_Main);
             });
 
             m_btnPlayBGM_2?.onClick.AddListener(() =>
             {
-                // 播放 bgm-2
-                UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_2);
+                // 播放 BGM_0
+                UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_0);
             });
 
             m_btnPlayEffect_1?.onClick.AddListener(() =>
