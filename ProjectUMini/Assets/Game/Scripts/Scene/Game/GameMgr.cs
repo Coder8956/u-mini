@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using Game.Scripts.Common;
 using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
@@ -6,6 +7,7 @@ using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;
+using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,6 +24,8 @@ namespace Game.Scripts.Scene.Game
         private GameObject m_bulletPrefab = null;
         private GameObject m_blockPrefab = null;
 
+        private List<GameObject> m_blocks = null;
+
         private float m_bulletInitSpeed = 5;
 
         private void Start()
@@ -31,6 +35,7 @@ namespace Game.Scripts.Scene.Game
                 GameGlobalVar.VFX_Explosion = UMGR.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
             }
 
+            m_blocks = new List<GameObject>();
             m_levelData = UMGR.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
             m_bulletData = UMGR.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
             m_blockData = UMGR.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
@@ -68,7 +73,8 @@ namespace Game.Scripts.Scene.Game
                 for (int c = 0; c < column; c++)
                 {
                     blockPos.y = c;
-                    Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    GameObject block = Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    m_blocks.Add(block);
                 }
 
                 blockPos.x += 1;
@@ -85,10 +91,20 @@ namespace Game.Scripts.Scene.Game
                 for (int c = 0; c < column; c++)
                 {
                     blockPos.y = c;
-                    Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    GameObject block = Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    m_blocks.Add(block);
                 }
 
                 blockPos.x += 1;
+            }
+        }
+
+        private void OnDestroyBlock(GameObject block)
+        {
+            m_blocks.Remove(block);
+            if (m_blocks.Count < 1)
+            {
+                UMUtilDebug.Log("Game Victory!!!");
             }
         }
 
@@ -102,7 +118,8 @@ namespace Game.Scripts.Scene.Game
                 for (int c = 0; c < column; c++)
                 {
                     blockPos.y = c;
-                    Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    GameObject block = Instantiate(m_blockPrefab, blockPos, Quaternion.identity);
+                    m_blocks.Add(block);
                 }
 
                 blockPos.x += 1;
@@ -139,18 +156,13 @@ namespace Game.Scripts.Scene.Game
                 Vector3 shootDirec = mouseWorldPosition - m_gameCamera.transform.position;
 
                 // 在射线碰撞点实例化一个球体
-                GameObject ball = Instantiate(m_bulletPrefab, m_gameCamera.transform.position, Quaternion.identity);
+                GameObject shootBullet =
+                    Instantiate(m_bulletPrefab, m_gameCamera.transform.position, Quaternion.identity);
+                GameBullet bulletComponent = shootBullet.GetComponent<GameBullet>();
 
-                ball.GetComponent<GameBullet>().SetData(m_bulletData);
-
-                // 获取球体的 Rigidbody 组件
-                Rigidbody rb = ball.GetComponent<Rigidbody>();
-                if (rb != null)
-                {
-                    // 让球体沿射线方向发射
-                    Vector3 direction = shootDirec;
-                    rb.velocity = direction * m_bulletInitSpeed; // 赋予球体一个初速度
-                }
+                bulletComponent.SetData(m_bulletData);
+                bulletComponent.OnDestroyBlock = OnDestroyBlock;
+                bulletComponent.Shoot(shootDirec, m_bulletInitSpeed);
             }
         }
     }

@@ -30,17 +30,14 @@ namespace Game.Scripts.UI
 
         protected override void OnDestroyPanel()
         {
-            Debug.Log("Destroy-PanelMain");
         }
 
         protected override void OnOpenPanel()
         {
-            Debug.Log("Open-PanelMain");
         }
 
         protected override void OnClosePanel()
         {
-            Debug.Log("Close-PanelMain");
         }
     }
 }
