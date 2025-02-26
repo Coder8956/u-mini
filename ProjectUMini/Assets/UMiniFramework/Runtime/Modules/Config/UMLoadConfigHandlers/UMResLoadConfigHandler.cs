@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers
 {
-    public class ResLoadConfigHandler : ILoadConfigHandler
+    public class UMResLoadConfigHandler : ILoadConfigHandler
     {
         string ILoadConfigHandler.LoadConfig(string path)
         {

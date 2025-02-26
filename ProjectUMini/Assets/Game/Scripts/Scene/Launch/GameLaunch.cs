@@ -52,7 +52,7 @@ namespace Game.Scripts.Scene.Launch
             umDataPerInitArgs.DataPerHandler = new UMDataJsonFileHandler();
 
             UMConfigInitArgs umConfigInitArgs = new UMConfigInitArgs();
-            umConfigInitArgs.LoadConfigHandler = new ResLoadConfigHandler();
+            umConfigInitArgs.LoadConfigHandler = new UMResLoadConfigHandler();
             umConfigInitArgs.ConfigTables = new List<UMConfigTable>();
 
             umConfigInitArgs.ConfigTables.Add(new BulletTable());
@@ -64,7 +64,7 @@ namespace Game.Scripts.Scene.Launch
             // 资源加载配置
             UMResourceInitArgs umResourceInitArgs = new UMResourceInitArgs();
             umResourceInitArgs.ResourceHandler = new UMResHandler();
-            
+
             UMGR.Launch();
             UMGR.Register<UMUI>(umUIInitArgs);
             UMGR.Register<UMAudio>(umAudioInitArgs);
