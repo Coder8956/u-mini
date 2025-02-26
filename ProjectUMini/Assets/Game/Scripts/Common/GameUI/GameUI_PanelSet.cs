@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 
-namespace Game.Scripts.Common.GameUI
+namespace Game.Scripts.Common
 {
     public partial class GameUI
     {

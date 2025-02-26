@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Game.Scripts.Common.GameUI
+namespace Game.Scripts.Common
 {
     public partial class GameUI
     {

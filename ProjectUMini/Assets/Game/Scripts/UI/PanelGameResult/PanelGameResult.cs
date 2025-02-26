@@ -2,21 +2,31 @@
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelGame/PanelGame")]
-    public class PanelGame : UMUIPanel
+    [UMUIPanelConfig("UI/PanelGameResult/PanelGameResult")]
+    public class PanelGameResult : UMUIPanel
     {
+        [SerializeField] private Button m_btnAgain;
         [SerializeField] private Button m_btnBackMain;
-        [SerializeField] private Text m_txtLevelId;
+
+        public UnityAction OnAgain { get; set; }
 
         protected override void OnCreatePanel()
         {
+            m_btnAgain.onClick.AddListener(() =>
+            {
+                OnAgain?.Invoke();
+                GameUI.CloseGameResult();
+            });
+
             m_btnBackMain.onClick.AddListener(() =>
             {
                 GameGlobalFunc.BackMain();
+                GameUI.CloseGameResult();
             });
         }
 
@@ -26,7 +36,6 @@ namespace Game.Scripts.UI
 
         protected override void OnOpenPanel()
         {
-            m_txtLevelId.text = string.Format("Level Id: {0}", GameGlobalVar.SelectLevelId);
         }
 
         protected override void OnClosePanel()

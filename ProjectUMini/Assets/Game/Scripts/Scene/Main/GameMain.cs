@@ -1,5 +1,4 @@
 ﻿using Game.Scripts.Common;
-using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UnityEngine;

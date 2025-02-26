@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Game.Scripts.Common;
-using Game.Scripts.Common.GameUI;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Manager;
@@ -9,7 +7,6 @@ using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Game.Scripts.Scene.Game
 {
@@ -46,27 +43,14 @@ namespace Game.Scripts.Scene.Game
             UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
             GameUI.OpenGame();
 
-            switch (m_levelData.id)
-            {
-                case "level_11001":
-                    CreateLevelBlock_1();
-                    break;
-                case "level_11002":
-                    CreateLevelBlock_2();
-                    break;
-                case "level_11003":
-                    CreateLevelBlock_3();
-                    break;
-                default:
-                    CreateLevelBlock_3();
-                    break;
-            }
+            InitGame();
         }
 
         private void CreateLevelBlock_1()
         {
             int row = 8;
             int column = 6;
+
             Vector3 blockPos = new Vector3(-row / 2 + 0.5f, 0, 0);
             for (int r = 0; r < row; r++)
             {
@@ -99,15 +83,6 @@ namespace Game.Scripts.Scene.Game
             }
         }
 
-        private void OnDestroyBlock(GameObject block)
-        {
-            m_blocks.Remove(block);
-            if (m_blocks.Count < 1)
-            {
-                UMUtilDebug.Log("Game Victory!!!");
-            }
-        }
-
         private void CreateLevelBlock_3()
         {
             int row = 20;
@@ -123,6 +98,35 @@ namespace Game.Scripts.Scene.Game
                 }
 
                 blockPos.x += 1;
+            }
+        }
+
+        private void InitGame()
+        {
+            switch (m_levelData.id)
+            {
+                case "level_11001":
+                    CreateLevelBlock_1();
+                    break;
+                case "level_11002":
+                    CreateLevelBlock_2();
+                    break;
+                case "level_11003":
+                    CreateLevelBlock_3();
+                    break;
+                default:
+                    CreateLevelBlock_3();
+                    break;
+            }
+        }
+
+        private void OnDestroyBlock(GameObject block)
+        {
+            m_blocks.Remove(block);
+            if (m_blocks.Count < 1)
+            {
+                // UMUtilDebug.Log("Game Victory!!!");
+                GameUI.OpenGameResult(InitGame);
             }
         }
 
