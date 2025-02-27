@@ -37,7 +37,6 @@ namespace Game.Scripts
         private void OnCollisionEnter(Collision other)
         {
             UMGR.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
-            Instantiate(GameGlobalVar.VFX_Explosion, transform.position, Quaternion.identity);
             // m_rb.AddExplosionForce(10, transform.position, 10);
 
             if (other.gameObject.CompareTag("Monster"))

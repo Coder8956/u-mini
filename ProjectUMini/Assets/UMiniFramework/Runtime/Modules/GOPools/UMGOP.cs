@@ -100,7 +100,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             OnBack?.Invoke(backGO);
             backGO.SetActive(false);
             backGO.transform.SetParent(transform);
-            m_prototype.transform.localPosition = Vector3.zero;
+            backGO.transform.localPosition = Vector3.zero;
             m_outPoolGos.Remove(backGO);
             m_goQue.Enqueue(backGO);
         }

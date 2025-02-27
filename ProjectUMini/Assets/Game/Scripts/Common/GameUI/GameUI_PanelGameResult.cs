@@ -9,7 +9,7 @@ namespace Game.Scripts.Common
     {
         private static PanelGameResult PanelGameResult = null;
 
-        public static void OpenGameResult(UnityAction onAgain)
+        public static void OpenGameResult(UnityAction onAgain = null, UnityAction onBackMain = null)
         {
             if (PanelGameResult == null)
             {

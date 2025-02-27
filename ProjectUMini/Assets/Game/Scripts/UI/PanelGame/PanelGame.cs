@@ -2,6 +2,7 @@
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
@@ -12,10 +13,13 @@ namespace Game.Scripts.UI
         [SerializeField] private Button m_btnBackMain;
         [SerializeField] private Text m_txtLevelId;
 
+        public UnityAction OnBackMain { get; set; }
+
         protected override void OnCreatePanel()
         {
             m_btnBackMain.onClick.AddListener(() =>
             {
+                OnBackMain?.Invoke();
                 GameGlobalFunc.BackMain();
             });
         }

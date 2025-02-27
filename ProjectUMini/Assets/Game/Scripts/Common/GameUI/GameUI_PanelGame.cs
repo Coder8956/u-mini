@@ -1,14 +1,15 @@
 ﻿using Game.Scripts.UI;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
+using UnityEngine.Events;
 
 namespace Game.Scripts.Common
 {
     public partial class GameUI
     {
         private static PanelGame PanelGame = null;
-        
-        public static void OpenGame()
+
+        public static void OpenGame(UnityAction onBackMain = null)
         {
             if (PanelGame == null)
             {
@@ -16,6 +17,7 @@ namespace Game.Scripts.Common
             }
 
             UMGR.Get<UMUI>().Open(PanelGame);
+            PanelGame.OnBackMain = onBackMain;
         }
 
         public static void CloseGame()

@@ -7,6 +7,8 @@ namespace Game.Scripts
     {
         private ParticleSystem m_particleSystem;
 
+        public Action<GameObject> OnPlayOver;
+
         private void Awake()
         {
             m_particleSystem = GetComponent<ParticleSystem>();
@@ -16,7 +18,8 @@ namespace Game.Scripts
         {
             if (!m_particleSystem.isPlaying)
             {
-                Destroy(gameObject);
+                OnPlayOver?.Invoke(gameObject);
+                OnPlayOver = null;
                 // 粒子播放完成
                 // Debug.Log("Particle system has finished playing!");
             }

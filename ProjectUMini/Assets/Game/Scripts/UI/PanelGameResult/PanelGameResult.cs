@@ -14,6 +14,7 @@ namespace Game.Scripts.UI
         [SerializeField] private Button m_btnBackMain;
 
         public UnityAction OnAgain { get; set; }
+        public UnityAction OnBackMain { get; set; }
 
         protected override void OnCreatePanel()
         {
@@ -25,6 +26,7 @@ namespace Game.Scripts.UI
 
             m_btnBackMain.onClick.AddListener(() =>
             {
+                OnBackMain?.Invoke();
                 GameGlobalFunc.BackMain();
                 GameUI.CloseGameResult();
             });

@@ -40,6 +40,12 @@ namespace UMiniFramework.Runtime.Modules.GOPools
 
         public UMGOP CreatePool(string poolTag, GameObject prototype, int initObjectCount = PoolInitObjectCount)
         {
+            if (m_poolDic.ContainsKey(poolTag))
+            {
+                UMUtilDebug.Warning($"Failed to create a pool. The poolTag [{poolTag}] is repeated");
+                return null;
+            }
+
             GameObject newPoolGO = new GameObject(poolTag, typeof(UMGOP));
             newPoolGO.transform.SetParent(transform);
             newPoolGO.transform.position = Vector3.zero;
