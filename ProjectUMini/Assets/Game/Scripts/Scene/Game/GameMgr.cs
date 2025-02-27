@@ -2,6 +2,7 @@
 using Game.Scripts.Common;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
+using UMiniFramework.Runtime.Modules.GOPools;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;
@@ -24,6 +25,8 @@ namespace Game.Scripts.Scene.Game
         private List<GameObject> m_blocks = null;
 
         private float m_bulletInitSpeed = 5;
+        private UMGOP m_bulletPool;
+        private const string BulletPoolTag = "GameBulletPool";
 
         private void Start()
         {
@@ -38,12 +41,20 @@ namespace Game.Scripts.Scene.Game
             m_blockData = UMGR.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
 
             m_bulletPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
+            m_bulletPool = UMGR.Get<UMGOPools>().CreatePool(BulletPoolTag, m_bulletPrefab);
+            m_bulletPool.OnGet = OnGetBullet;
             m_blockPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_blockData.blockPath);
 
             UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
             GameUI.OpenGame();
 
             InitGame();
+        }
+
+        private void OnGetBullet(GameObject bullet)
+        {
+            bullet.transform.position = m_gameCamera.transform.position;
+            bullet.transform.rotation = Quaternion.identity;
         }
 
         private void CreateLevelBlock_1()
@@ -130,6 +141,11 @@ namespace Game.Scripts.Scene.Game
             }
         }
 
+        private void OnHitBlock(GameObject bullet)
+        {
+            m_bulletPool.Back(bullet);
+        }
+
         private bool IsCanShoot()
         {
             return Input.GetMouseButtonDown(0)
@@ -160,11 +176,10 @@ namespace Game.Scripts.Scene.Game
                 Vector3 shootDirec = mouseWorldPosition - m_gameCamera.transform.position;
 
                 // 在射线碰撞点实例化一个球体
-                GameObject shootBullet =
-                    Instantiate(m_bulletPrefab, m_gameCamera.transform.position, Quaternion.identity);
+                GameObject shootBullet = m_bulletPool.Get();
                 GameBullet bulletComponent = shootBullet.GetComponent<GameBullet>();
-
                 bulletComponent.SetData(m_bulletData);
+                bulletComponent.OnHitBlock = OnHitBlock;
                 bulletComponent.OnDestroyBlock = OnDestroyBlock;
                 bulletComponent.Shoot(shootDirec, m_bulletInitSpeed);
             }

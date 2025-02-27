@@ -9,6 +9,10 @@ namespace UMiniFramework.Runtime.Pool.GameObjectPools
     public class UMGOPObject : MonoBehaviour
     {
         private UMGOP m_bornPool;
-        public UMGOP BornPool => m_bornPool;
+
+        // public void BackBornPool()
+        // {
+        //     m_bornPool.Back(gameObject);
+        // }
     }
 }

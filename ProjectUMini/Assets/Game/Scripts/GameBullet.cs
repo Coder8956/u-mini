@@ -12,6 +12,7 @@ namespace Game.Scripts
         private BulletData m_data;
         private Rigidbody m_rb;
         public UnityAction<GameObject> OnDestroyBlock { get; set; }
+        public UnityAction<GameObject> OnHitBlock { get; set; }
 
         private void Awake()
         {
@@ -45,7 +46,8 @@ namespace Game.Scripts
                 Destroy(other.gameObject);
             }
 
-            Destroy(gameObject);
+            OnHitBlock?.Invoke(gameObject);
+            OnHitBlock = null;
         }
     }
 }

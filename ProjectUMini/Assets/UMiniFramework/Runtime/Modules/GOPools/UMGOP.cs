@@ -16,10 +16,15 @@ namespace UMiniFramework.Runtime.Modules.GOPools
 
         public UnityAction<GameObject> OnGet { get; set; }
         public UnityAction<GameObject> OnBack { get; set; }
+
         private GameObject m_prototype = null;
+        private const string PrototypeTag = "prototype";
+
         private Queue<GameObject> m_goQue;
         private List<GameObject> m_outPoolGos;
         private int m_initObjectCount;
+
+        private string m_objectName = string.Empty;
 
         private void InitPool(GameObject prototype, int initObjectCount)
         {
@@ -30,13 +35,16 @@ namespace UMiniFramework.Runtime.Modules.GOPools
 
             m_goQue = new Queue<GameObject>();
             m_outPoolGos = new List<GameObject>();
-            m_initObjectCount = Mathf.Clamp(m_initObjectCount, 0, initObjectCount);
+
+            m_initObjectCount = initObjectCount;
+            m_initObjectCount = Mathf.Clamp(m_initObjectCount, 0, int.MaxValue);
 
             m_prototype = Instantiate(prototype, transform);
+            m_objectName = m_prototype.name.Replace("(Clone)", "");
+            m_prototype.name = string.Concat(m_objectName, "-", PrototypeTag);
             m_prototype.SetActive(false);
             m_prototype.transform.localPosition = Vector3.zero;
-            UMGOPObject umgopObject = m_prototype.AddComponent<UMGOPObject>();
-            Field_UMGOPObject_BornPool.SetValue(umgopObject, this);
+            m_prototype.AddComponent<UMGOPObject>();
 
             for (int i = 0; i < m_initObjectCount; i++)
             {
@@ -46,7 +54,11 @@ namespace UMiniFramework.Runtime.Modules.GOPools
 
         private GameObject CreateObject()
         {
-            return Instantiate(m_prototype, transform);
+            GameObject cgo = Instantiate(m_prototype, transform);
+            UMGOPObject umgopObject = cgo.GetComponent<UMGOPObject>();
+            Field_UMGOPObject_BornPool.SetValue(umgopObject, this);
+            cgo.name = string.Concat(m_objectName, $"-HashCode[{cgo.GetHashCode()}]");
+            return cgo;
         }
 
         public GameObject Get()
@@ -64,18 +76,22 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             m_outPoolGos.Add(getGo);
             getGo.transform.parent = null;
             OnGet?.Invoke(getGo);
+            getGo.SetActive(true);
             return getGo;
         }
 
         public void Back(GameObject backGO)
         {
-            if (backGO.GetComponent<UMGOPObject>() == null)
+            UMGOPObject umgopObject = backGO.GetComponent<UMGOPObject>();
+
+            if (umgopObject == null)
             {
                 UMUtilDebug.Error("Not a pool object, cannot go back to the pool.");
                 return;
             }
 
-            if (backGO.GetComponent<UMGOPObject>().BornPool != this)
+            UMGOP bornUMGOP = (UMGOP) Field_UMGOPObject_BornPool.GetValue(umgopObject);
+            if (bornUMGOP != this)
             {
                 UMUtilDebug.Error("The object returned to the wrong pool.");
                 return;
@@ -86,6 +102,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             backGO.transform.SetParent(transform);
             m_prototype.transform.localPosition = Vector3.zero;
             m_outPoolGos.Remove(backGO);
+            m_goQue.Enqueue(backGO);
         }
 
         private void DestroyPool()

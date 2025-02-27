@@ -13,7 +13,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
     /// </summary>
     public class UMGOPools : UMBaseModule
     {
-        private UMGOPoolsInitArgs m_initArgs = null;
+        // private UMGOPoolsInitArgs m_initArgs = null;
 
         private const int PoolInitObjectCount = 5;
 
@@ -33,7 +33,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             m_poolDic = new Dictionary<string, UMGOP>();
             m_poolInitMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "InitPool");
             m_poolDestroyMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "DestroyPool");
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMGOPoolsInitArgs>(initArgs);
+            // m_initArgs = UMUtilCommon.ConvertObjectClass<UMGOPoolsInitArgs>(initArgs);
             yield return null;
         }
 
