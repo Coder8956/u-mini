@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UMiniFramework.Runtime.Modules.GOPools;
+using UnityEngine;
 
 namespace UMiniFramework.Runtime.Pool.GameObjectPools
 {
@@ -7,19 +8,7 @@ namespace UMiniFramework.Runtime.Pool.GameObjectPools
     /// </summary>
     public class UMGOPObject : MonoBehaviour
     {
-        // public int RelatedPoolHashTag { get; private set; }
-        // public UMGameObjectPool RelatedPool { get; private set; }
-        //
-        // public void SetRelatedPool(int poolHashTag, UMGameObjectPool relatedPool)
-        // {
-        //     RelatedPoolHashTag = poolHashTag;
-        //     RelatedPool = relatedPool;
-        //     gameObject.name += $"<PoolTag({RelatedPoolHashTag})>";
-        // }
-        //
-        // public void BackPool()
-        // {
-        //     RelatedPool.Back(gameObject);
-        // }
+        private UMGOP m_bornPool;
+        public UMGOP BornPool => m_bornPool;
     }
 }

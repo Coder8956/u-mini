@@ -27,6 +27,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             get => UMModuleType.Pools;
         }
 
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             m_poolDic = new Dictionary<string, UMGOP>();
@@ -36,14 +37,15 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             yield return null;
         }
 
-        public UMGOP CreatePool(string poolTag, GameObject gameObject, int initObjectCount = PoolInitObjectCount)
+
+        public UMGOP CreatePool(string poolTag, GameObject prototype, int initObjectCount = PoolInitObjectCount)
         {
             GameObject newPoolGO = new GameObject(poolTag, typeof(UMGOP));
             newPoolGO.transform.SetParent(transform);
             newPoolGO.transform.position = Vector3.zero;
             UMGOP poolComponent = newPoolGO.GetComponent<UMGOP>();
             m_poolDic.Add(poolTag, poolComponent);
-            m_poolInitMethod.Invoke(poolComponent, new object[] {gameObject, initObjectCount});
+            m_poolInitMethod.Invoke(poolComponent, new object[] {prototype, initObjectCount});
             return poolComponent;
         }
 
