@@ -20,7 +20,7 @@ namespace UMiniFramework.Runtime.Modules.Resource
 
         public override UMModuleType ModuleType
         {
-            get => UMModuleType.UI;
+            get => UMModuleType.Resource;
         }
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)

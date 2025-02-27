@@ -8,5 +8,6 @@
         Scene,
         DataPer,
         Resource,
+        Event,
     }
 }
