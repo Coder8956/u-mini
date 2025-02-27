@@ -9,5 +9,6 @@
         DataPer,
         Resource,
         Event,
+        Pools,
     }
 }
