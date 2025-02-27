@@ -96,7 +96,6 @@ namespace UMiniFramework.Runtime.Modules.Event
             }
         }
 
-
         public void RemoveAllListener()
         {
             foreach (var listeners in m_eventDic.Values)
