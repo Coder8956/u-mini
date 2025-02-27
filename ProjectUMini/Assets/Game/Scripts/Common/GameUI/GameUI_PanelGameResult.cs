@@ -18,6 +18,7 @@ namespace Game.Scripts.Common
 
             UMGR.Get<UMUI>().Open(PanelGameResult);
             PanelGameResult.OnAgain = onAgain;
+            PanelGameResult.OnBackMain = onBackMain;
         }
 
         public static void CloseGameResult()

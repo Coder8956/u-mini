@@ -1,7 +1,10 @@
 ﻿using System.Collections.Generic;
 using Game.Scripts.Common;
+using Game.Scripts.GameEvent;
+using Game.Scripts.Components;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
+using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.GOPools;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
@@ -20,13 +23,11 @@ namespace Game.Scripts.Scene.Game
 
         private GameObject m_bulletPrefab = null;
         private UMGOP m_bulletPool;
-        private const string BulletPoolTag = "GameBulletPool";
 
         private GameObject m_blockPrefab = null;
         private List<GameObject> m_blocks = null;
 
         private UMGOP m_explosionVFXPool = null;
-        private const string ExplosionVFXPoolTag = "ExplosionVFXPool";
 
         private float m_bulletInitSpeed = 5;
 
@@ -38,12 +39,12 @@ namespace Game.Scripts.Scene.Game
             m_blockData = UMGR.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
 
             m_bulletPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
-            m_bulletPool = UMGR.Get<UMGOPools>().CreatePool(BulletPoolTag, m_bulletPrefab);
+            m_bulletPool = UMGR.Get<UMGOPools>().CreatePool(GOPoolTags.BulletPoolTag, m_bulletPrefab);
             m_bulletPool.OnGet = OnGetBullet;
             m_blockPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_blockData.blockPath);
 
             GameObject explosionVFXPrefab = UMGR.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
-            m_explosionVFXPool = UMGR.Get<UMGOPools>().CreatePool(ExplosionVFXPoolTag, explosionVFXPrefab);
+            m_explosionVFXPool = UMGR.Get<UMGOPools>().CreatePool(GOPoolTags.ExplosionVFXPoolTag, explosionVFXPrefab);
 
             UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
             GameUI.OpenGame(OnExitGame);
@@ -133,6 +134,7 @@ namespace Game.Scripts.Scene.Game
 
         private void OnDestroyBlock(GameObject block)
         {
+            UMGR.Get<UMEvent>().Dispatch(GameEventTags.AddScore, new ECAddScore(1));
             m_blocks.Remove(block);
             if (m_blocks.Count < 1)
             {
@@ -143,11 +145,11 @@ namespace Game.Scripts.Scene.Game
 
         private void OnExitGame()
         {
-            UMGR.Get<UMGOPools>().DestroyPool(BulletPoolTag);
-            UMGR.Get<UMGOPools>().DestroyPool(ExplosionVFXPoolTag);
+            UMGR.Get<UMGOPools>().DestroyPool(GOPoolTags.BulletPoolTag);
+            UMGR.Get<UMGOPools>().DestroyPool(GOPoolTags.ExplosionVFXPoolTag);
         }
 
-        private void OnHitBlock(GameObject bullet)
+        private void OnHitGo(GameObject bullet)
         {
             PlayVFXExplosion(bullet.transform.position);
             m_bulletPool.Back(bullet);
@@ -178,6 +180,7 @@ namespace Game.Scripts.Scene.Game
             if (IsCanShoot())
             {
                 // Debug.Log("shoot");
+                UMGR.Get<UMEvent>().Dispatch(GameEventTags.AddShootCount, new ECAddShootCount(1));
 
                 // 获取鼠标在屏幕上的位置
                 Vector3 mouseScreenPosition = Input.mousePosition;
@@ -200,7 +203,7 @@ namespace Game.Scripts.Scene.Game
                 GameObject shootBullet = m_bulletPool.Get();
                 GameBullet bulletComponent = shootBullet.GetComponent<GameBullet>();
                 bulletComponent.SetData(m_bulletData);
-                bulletComponent.OnHitBlock = OnHitBlock;
+                bulletComponent.OnHitGo = OnHitGo;
                 bulletComponent.OnDestroyBlock = OnDestroyBlock;
                 bulletComponent.Shoot(shootDirec, m_bulletInitSpeed);
             }

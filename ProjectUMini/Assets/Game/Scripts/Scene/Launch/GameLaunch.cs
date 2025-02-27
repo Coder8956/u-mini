@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Game.Scripts.Common;
+using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Config;
@@ -54,6 +55,12 @@ namespace Game.Scripts.Scene.Launch
             UMResInitArgs umResourceInitArgs = new UMResInitArgs();
             umResourceInitArgs.ResHandler = new UMResDefaultHandler();
 
+            UMEventInitArgs umEventInitArgs = new UMEventInitArgs();
+            umEventInitArgs.RegisterEventTags = new List<string>();
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddScore);
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddShootCount);
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.GameAgain);
+
             UMGR.Launch();
             UMGR.Register<UMUI>(umUIInitArgs);
             UMGR.Register<UMAudio>(umAudioInitArgs);
@@ -61,7 +68,7 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Register<UMDataPer>(umDataPerInitArgs);
             UMGR.Register<UMConfig>(umConfigInitArgs);
             UMGR.Register<UMRes>(umResourceInitArgs);
-            UMGR.Register<UMEvent>();
+            UMGR.Register<UMEvent>(umEventInitArgs);
             UMGR.Register<UMGOPools>();
 
             UMGR.InitModules((val) =>

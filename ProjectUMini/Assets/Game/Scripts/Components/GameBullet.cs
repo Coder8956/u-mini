@@ -5,14 +5,14 @@ using UMiniFramework.Runtime.Modules.Manager;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace Game.Scripts
+namespace Game.Scripts.Components
 {
     public class GameBullet : MonoBehaviour
     {
         private BulletData m_data;
         private Rigidbody m_rb;
         public UnityAction<GameObject> OnDestroyBlock { get; set; }
-        public UnityAction<GameObject> OnHitBlock { get; set; }
+        public UnityAction<GameObject> OnHitGo { get; set; }
 
         private void Awake()
         {
@@ -45,8 +45,8 @@ namespace Game.Scripts
                 Destroy(other.gameObject);
             }
 
-            OnHitBlock?.Invoke(gameObject);
-            OnHitBlock = null;
+            OnHitGo?.Invoke(gameObject);
+            OnHitGo = null;
         }
     }
 }
