@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Event.Base;
@@ -39,7 +38,7 @@ namespace UMiniFramework.Runtime.Modules.Event
 
         public void AddListener(UMEventListener listener)
         {
-            if (!m_eventDic.Keys.Contains(listener.EventTag))
+            if (!m_eventDic.ContainsKey(listener.EventTag))
             {
                 UMUtilDebug.Warning($"Failed to add listener. Event flag [{listener.EventTag}] is not registered");
                 return;
@@ -63,7 +62,7 @@ namespace UMiniFramework.Runtime.Modules.Event
 
         public void Dispatch(string eventTag, UMBaseEventContent content = null)
         {
-            if (!m_eventDic.Keys.Contains(eventTag))
+            if (!m_eventDic.ContainsKey(eventTag))
             {
                 UMUtilDebug.Warning($"Failed to dispatch. Event flag [{eventTag}] is not registered");
                 return;
@@ -90,7 +89,7 @@ namespace UMiniFramework.Runtime.Modules.Event
                 throw new ArgumentNullException(nameof(listener), "The parameter cannot be null");
             }
 
-            if (m_eventDic.Keys.Contains(listener.EventTag))
+            if (m_eventDic.ContainsKey(listener.EventTag))
             {
                 m_eventDic[listener.EventTag].Remove(listener);
             }
@@ -106,7 +105,7 @@ namespace UMiniFramework.Runtime.Modules.Event
 
         public void RemoveAllListenerByEvnetTag(string eventTag)
         {
-            if (m_eventDic.Keys.Contains(eventTag))
+            if (m_eventDic.ContainsKey(eventTag))
             {
                 m_eventDic[eventTag].Clear();
             }

@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
+using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.GOPools
 {
     /// <summary>
-    /// GameObject 对象池
+    /// GameObject 对象池管理模块
     /// </summary>
     public class UMGOPools : UMBaseModule
     {
         private UMGOPoolsInitArgs m_initArgs = null;
 
-        private int m_poolInitObjectCount = 5;
+        private const int PoolInitObjectCount = 5;
+
+        private Dictionary<string, UMGOP> m_poolDic;
+
+        private MethodInfo m_poolInitMethod;
+        private MethodInfo m_poolDestroyMethod;
 
         public override UMModuleType ModuleType
         {
@@ -22,124 +29,43 @@ namespace UMiniFramework.Runtime.Modules.GOPools
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
+            m_poolDic = new Dictionary<string, UMGOP>();
+            m_poolInitMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "InitPool");
+            m_poolDestroyMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "DestroyPool");
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMGOPoolsInitArgs>(initArgs);
-            if (m_initArgs != null)
-            {
-                m_poolInitObjectCount = m_initArgs.PoolInitObjectCount;
-            }
-
             yield return null;
         }
 
-        // /// <summary>
-        // /// 池内对象数量
-        // /// </summary>
-        // public int ObjectCount
-        // {
-        //     get { return (m_gameObjectQue != null ? m_gameObjectQue.Count : 0); }
-        // }
-        //
-        // private int m_createdNum = 0;
-        // public int CreatedNum => m_createdNum;
-        //
-        // private Queue<GameObject> m_gameObjectQue;
-        // private UMPoolConfig m_poolConfig;
-        // private const string OBJECT_TEMPLET_TAG = "[TEMPLET]";
-        // private int m_hashTag = 0;
-        //
-        // private void Init(UMPoolConfig poolConfig)
-        // {
-        //     m_poolConfig = poolConfig;
-        //     m_gameObjectQue = new Queue<GameObject>();
-        //     m_poolConfig.ObjectTemplet.transform.SetParent(transform);
-        //     m_poolConfig.ObjectTemplet.name += OBJECT_TEMPLET_TAG;
-        //     m_poolConfig.ObjectTemplet.SetActive(false);
-        //
-        //     m_hashTag = GetHashCode();
-        //     // UMUtils.Debug.Log($"Pool HashTag:{m_hashTag}");
-        //     gameObject.name += $"<HashTag({m_hashTag})>";
-        //
-        //     for (int i = 0; i < poolConfig.InitNum; i++)
-        //     {
-        //         m_gameObjectQue.Enqueue(Create());
-        //     }
-        // }
-        //
-        // private GameObject Create()
-        // {
-        //     GameObject newObject = Instantiate(m_poolConfig.ObjectTemplet, gameObject.transform);
-        //     m_createdNum++;
-        //     UMGOPoolObject poolObject = newObject.AddComponent<UMGOPoolObject>();
-        //     poolObject.SetRelatedPool(m_hashTag, this);
-        //     string oldName = newObject.name;
-        //     newObject.name = oldName.Replace($"{OBJECT_TEMPLET_TAG}(Clone)", $"_{m_createdNum}");
-        //     return newObject;
-        // }
-        //
-        // public GameObject Get()
-        // {
-        //     GameObject obj = null;
-        //     if (m_gameObjectQue.Count > 0)
-        //     {
-        //         obj = m_gameObjectQue.Dequeue();
-        //     }
-        //     else
-        //     {
-        //         obj = Create();
-        //     }
-        //
-        //     obj.SetActive(true);
-        //     m_poolConfig.OnGet?.Invoke(obj);
-        //     return obj;
-        // }
-        //
-        // public void Back(GameObject obj)
-        // {
-        //     int relatedPoolTag = obj.GetComponent<UMGOPoolObject>().RelatedPoolHashTag;
-        //     if (m_hashTag != relatedPoolTag)
-        //     {
-        //         throw new Exception("The object returned to the wrong object pool");
-        //     }
-        //
-        //     m_poolConfig.OnBack?.Invoke(obj);
-        //     m_gameObjectQue.Enqueue(obj);
-        //     obj.SetActive(false);
-        //     obj.transform.SetParent(transform, false);
-        // }
-        //
-        // public static UMGameObjectPool CreatePool(UMPoolConfig poolConfig)
-        // {
-        //     UMGameObjectPool newGameObjectPool =
-        //         UMUtilCommon.CreateGameObject<UMGameObjectPool>(poolConfig.PoolName, poolConfig.PoolParent);
-        //     newGameObjectPool.Init(poolConfig);
-        //     return newGameObjectPool;
-        // }
-        //
-        // public class UMPoolConfig
-        // {
-        //     public readonly string PoolName;
-        //     public readonly GameObject PoolParent;
-        //     public readonly GameObject ObjectTemplet;
-        //     public readonly int InitNum;
-        //     public readonly Action<GameObject> OnGet;
-        //     public readonly Action<GameObject> OnBack;
-        //
-        //     public UMPoolConfig(
-        //         string poolName,
-        //         GameObject poolParent,
-        //         GameObject objectTemplet,
-        //         int initNum,
-        //         Action<GameObject> onGet,
-        //         Action<GameObject> onBack
-        //     )
-        //     {
-        //         PoolName = poolName;
-        //         PoolParent = poolParent;
-        //         ObjectTemplet = objectTemplet;
-        //         InitNum = initNum;
-        //         OnGet = onGet;
-        //         OnBack = onBack;
-        //     }
-        // }
+        public UMGOP CreatePool(string poolTag, GameObject gameObject, int initObjectCount = PoolInitObjectCount)
+        {
+            GameObject newPoolGO = new GameObject(poolTag, typeof(UMGOP));
+            newPoolGO.transform.SetParent(transform);
+            newPoolGO.transform.position = Vector3.zero;
+            UMGOP poolComponent = newPoolGO.GetComponent<UMGOP>();
+            m_poolDic.Add(poolTag, poolComponent);
+            m_poolInitMethod.Invoke(poolComponent, new object[] {gameObject, initObjectCount});
+            return poolComponent;
+        }
+
+        public UMGOP GetPool(string poolTag)
+        {
+            UMGOP pool = null;
+            if (m_poolDic.ContainsKey(poolTag))
+            {
+                pool = m_poolDic[poolTag];
+            }
+
+            return pool;
+        }
+
+        public void DestroyPool(string poolTag)
+        {
+            if (m_poolDic.ContainsKey(poolTag))
+            {
+                UMGOP pool = m_poolDic[poolTag];
+                m_poolDestroyMethod.Invoke(pool, null);
+                m_poolDic.Remove(poolTag);
+            }
+        }
     }
 }
