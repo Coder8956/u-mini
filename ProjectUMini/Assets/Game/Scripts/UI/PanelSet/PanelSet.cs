@@ -3,6 +3,7 @@ using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,10 +23,10 @@ namespace Game.Scripts.UI
         protected override void OnCreatePanel()
         {
             m_btnClose.onClick.AddListener(() => { GameUI.CloseSet(); });
-            
+
             m_togAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Mute = val; });
             m_sldAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Volume = val; });
-            
+
             m_togAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Mute = val; });
             m_sldAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Volume = val; });
         }
@@ -46,6 +47,15 @@ namespace Game.Scripts.UI
 
         protected override void OnClosePanel()
         {
+            bool audioBGMMute = UMGR.Get<UMAudio>().BGM.Mute;
+            float audioBGMVolume = UMGR.Get<UMAudio>().BGM.Volume;
+            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMMute, audioBGMMute.ToString());
+            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMVolume, audioBGMVolume.ToString());
+
+            bool audioEffectMute = UMGR.Get<UMAudio>().Effect.Mute;
+            float audioEffectVolume = UMGR.Get<UMAudio>().Effect.Volume;
+            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectMute, audioEffectMute.ToString());
+            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectVolume, audioEffectVolume.ToString());
         }
     }
 }

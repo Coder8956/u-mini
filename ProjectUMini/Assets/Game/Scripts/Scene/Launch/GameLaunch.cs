@@ -106,6 +106,16 @@ namespace Game.Scripts.Scene.Launch
                 }
             }
 
+            string audioBGMMute = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioBGMMute, false.ToString());
+            UMGR.Get<UMAudio>().BGM.Mute = bool.Parse(audioBGMMute);
+            string audioBGMVolume = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioBGMVolume, "1");
+            UMGR.Get<UMAudio>().BGM.Volume = float.Parse(audioBGMVolume);
+
+            string audioEffectMute = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioEffectMute, false.ToString());
+            UMGR.Get<UMAudio>().Effect.Mute = bool.Parse(audioEffectMute);
+            string audioEffectVolume = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioEffectVolume, "1");
+            UMGR.Get<UMAudio>().Effect.Volume = float.Parse(audioEffectVolume);
+
             GameUI.OpenDebug();
             // 进入主界面
             UMGR.Get<UMScene>().Load(GameScene.Main);

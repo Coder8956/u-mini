@@ -10,7 +10,7 @@ namespace Game.Scripts.Common
 
         public static void OpenSelectLevel()
         {
-            if (PanelSet == null)
+            if (PanelSelectLevel == null)
             {
                 PanelSelectLevel = UMGR.Get<UMUI>().Create<PanelSelectLevel>();
             }
