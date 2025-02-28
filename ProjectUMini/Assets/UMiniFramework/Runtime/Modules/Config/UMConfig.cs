@@ -13,7 +13,7 @@ namespace UMiniFramework.Runtime.Modules.Config
 {
     public class UMConfig : UMBaseModule
     {
-        private ILoadConfigHandler m_loadConfigHandler;
+        private IUMLoadConfigHandler m_loadConfigHandler;
         private UMConfigInitArgs m_initArgs = null;
         private Dictionary<Type, UMConfigTable> m_tableDic;
         private MethodInfo m_tableInit = null;
@@ -59,7 +59,7 @@ namespace UMiniFramework.Runtime.Modules.Config
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             m_tableDic = new Dictionary<Type, UMConfigTable>();
-            m_handlerLoad = UMUtilCommon.GetObjectNoPublicMethod(typeof(ILoadConfigHandler), "LoadConfig");
+            m_handlerLoad = UMUtilCommon.GetObjectNoPublicMethod(typeof(IUMLoadConfigHandler), "LoadConfig");
 
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMConfigInitArgs>(initArgs);
             if (m_initArgs == null)

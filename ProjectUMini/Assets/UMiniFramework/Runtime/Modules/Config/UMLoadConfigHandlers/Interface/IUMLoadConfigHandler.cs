@@ -1,6 +1,6 @@
 ﻿namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface
 {
-    public interface ILoadConfigHandler
+    public interface IUMLoadConfigHandler
     {
         protected string LoadConfig(string path);
     }

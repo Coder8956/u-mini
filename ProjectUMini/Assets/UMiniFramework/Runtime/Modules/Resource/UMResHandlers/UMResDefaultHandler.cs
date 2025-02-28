@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Runtime.Modules.Resource.Interface;
+﻿using UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Resource.UMResHandlers

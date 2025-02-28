@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers
 {
-    public class UMResLoadConfigHandler : ILoadConfigHandler
+    public class UMResLoadConfigHandler : IUMLoadConfigHandler
     {
-        string ILoadConfigHandler.LoadConfig(string path)
+        string IUMLoadConfigHandler.LoadConfig(string path)
         {
             return Resources.Load<TextAsset>(path).text;
         }

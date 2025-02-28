@@ -19,7 +19,7 @@ namespace UMiniFramework.Runtime.Modules.Config.InitArgs
         /// <summary>
         /// 配置加载处理器类型
         /// </summary>
-        public ILoadConfigHandler LoadConfigHandler { get; set; }
+        public IUMLoadConfigHandler LoadConfigHandler { get; set; }
 
         /// <summary>
         /// 需要读取的配置表

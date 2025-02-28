@@ -3,9 +3,10 @@ using System.Collections;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.DataPer;
-using UMiniFramework.Runtime.Modules.Resource.Interface;
+using UMiniFramework.Runtime.Modules.Resource.InitArgs;
+using UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
+using Object = UnityEngine.Object;
 
 namespace UMiniFramework.Runtime.Modules.Resource
 {
@@ -16,24 +17,38 @@ namespace UMiniFramework.Runtime.Modules.Resource
     {
         private IUMResHandler m_resourceHandler;
         private UMResInitArgs m_initArgs = null;
-        private MethodInfo m_handlerLoad = null;
+        private MethodInfo m_handlerLoadMethod = null;
 
         public override UMModuleType ModuleType
         {
             get => UMModuleType.Resource;
         }
 
+        private void UseDefaultInitArgs()
+        {
+            m_resourceHandler = UMResDIArgs.ResHandler();
+        }
+
+        private void ReadInitArgs()
+        {
+            m_resourceHandler = m_initArgs.ResHandler;
+        }
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
+            Type handlerType = typeof(IUMResHandler);
+            m_handlerLoadMethod = UMUtilCommon.GetObjectNoPublicMethod(handlerType, "Load");
+
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMResInitArgs>(initArgs);
-            if (m_initArgs.ResHandler == null)
+            if (m_initArgs == null)
             {
-                UMUtilDebug.Error("m_initArgs.ResourceHandler is null");
+                UseDefaultInitArgs();
+            }
+            else
+            {
+                ReadInitArgs();
             }
 
-            m_resourceHandler = m_initArgs.ResHandler;
-            Type handlerType = typeof(IUMResHandler);
-            m_handlerLoad = UMUtilCommon.GetObjectNoPublicMethod(handlerType, "Load");
             yield return null;
         }
 
@@ -43,9 +58,9 @@ namespace UMiniFramework.Runtime.Modules.Resource
         /// <param name="path"></param>
         /// <typeparam name="T"></typeparam>
         /// <returns></returns>
-        public T Load<T>(string path) where T : UnityEngine.Object
+        public T Load<T>(string path) where T : Object
         {
-            MethodInfo genericMethod = m_handlerLoad.MakeGenericMethod(typeof(T)); // 传入泛型参数
+            MethodInfo genericMethod = m_handlerLoadMethod.MakeGenericMethod(typeof(T)); // 传入泛型参数
             return (T) genericMethod.Invoke(m_resourceHandler, new object[] {path});
         }
     }

@@ -10,7 +10,7 @@ namespace UMiniFramework.Runtime.Modules.Config.InitArgs
     /// </summary>
     public class UMConfigDIArgs
     {
-        public static ILoadConfigHandler LoadConfigHandler()
+        public static IUMLoadConfigHandler LoadConfigHandler()
         {
             return new UMResLoadConfigHandler();
         }
