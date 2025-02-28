@@ -3,8 +3,8 @@ using System.Collections;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.DataPer;
-using UMiniFramework.Runtime.Modules.DataPer.Interface;
+using UMiniFramework.Runtime.Modules.DataPer.InitArgs;
+using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.UMDataPer
@@ -27,15 +27,11 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
 
         private void UseDefaultInitArgs()
         {
+            m_dataPerHandler = UMDataPerDIArgs.DataPerHandler();
         }
 
         private void ReadInitArgs(UMDataPerInitArgs args)
         {
-            if (m_initArgs.DataPerHandler == null)
-            {
-                UMUtilDebug.Error("m_initArgs.DataPerHandler is null");
-            }
-
             m_dataPerHandler = m_initArgs.DataPerHandler;
         }
 

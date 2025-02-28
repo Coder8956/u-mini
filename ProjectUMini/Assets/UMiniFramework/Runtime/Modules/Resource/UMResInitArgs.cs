@@ -1,5 +1,4 @@
 ﻿using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.DataPer.Interface;
 using UMiniFramework.Runtime.Modules.Resource.Interface;
 
 namespace UMiniFramework.Runtime.Modules.Resource

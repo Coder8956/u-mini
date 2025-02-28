@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.DataPer.Interface
+﻿namespace UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers.Interface
 {
     public interface IUMDataPerHandler
     {
