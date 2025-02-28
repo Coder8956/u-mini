@@ -25,15 +25,32 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
             get => UMModuleType.DataPer;
         }
 
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        private void UseDefaultInitArgs()
         {
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMDataPerInitArgs>(initArgs);
+        }
+
+        private void ReadInitArgs(UMDataPerInitArgs args)
+        {
             if (m_initArgs.DataPerHandler == null)
             {
                 UMUtilDebug.Error("m_initArgs.DataPerHandler is null");
             }
 
             m_dataPerHandler = m_initArgs.DataPerHandler;
+        }
+
+        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        {
+            m_initArgs = UMUtilCommon.ConvertObjectClass<UMDataPerInitArgs>(initArgs);
+
+            if (m_initArgs == null)
+            {
+                UseDefaultInitArgs();
+            }
+            else
+            {
+                ReadInitArgs(m_initArgs);
+            }
 
             Type dataPerHandlerType = typeof(IUMDataPerHandler);
             // UMUtilDebug.Log($"dataPerHandler name: {dataPerHandlerType.Name}");
