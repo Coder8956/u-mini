@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Runtime.Modules.Config.Interface;
+﻿using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers

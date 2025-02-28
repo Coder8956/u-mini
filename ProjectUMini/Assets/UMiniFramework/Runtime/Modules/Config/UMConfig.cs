@@ -5,9 +5,9 @@ using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Config.Base;
-using UMiniFramework.Runtime.Modules.Config.Interface;
+using UMiniFramework.Runtime.Modules.Config.InitArgs;
+using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
-using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Config
 {
@@ -38,31 +38,39 @@ namespace UMiniFramework.Runtime.Modules.Config
             }
         }
 
+        private void UseDefaultInitArgs()
+        {
+            m_loadConfigHandler = UMConfigDIArgs.LoadConfigHandler();
+        }
+
+        private void ReadInitArgs()
+        {
+            m_loadConfigHandler = m_initArgs.LoadConfigHandler;
+            for (var i = 0; i < m_initArgs.ConfigTables.Count; i++)
+            {
+                UMConfigTable table = m_initArgs.ConfigTables[i];
+                m_tableInit = UMUtilCommon.GetObjectNoPublicMethod(table.GetType(), "Init");
+                string result = (string) m_handlerLoad.Invoke(m_loadConfigHandler, new object[] {table.LoadPath});
+                m_tableInit.Invoke(table, new object[] {result});
+                m_tableDic.Add(table.GetType(), table);
+            }
+        }
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMConfigInitArgs>(initArgs);
-            if (m_initArgs.LoadConfigHandler == null)
-            {
-                UMUtilDebug.Error("m_initArgs.LoadConfigHandler is null");
-            }
-
             m_tableDic = new Dictionary<Type, UMConfigTable>();
-            m_loadConfigHandler = m_initArgs.LoadConfigHandler;
-
             m_handlerLoad = UMUtilCommon.GetObjectNoPublicMethod(typeof(ILoadConfigHandler), "LoadConfig");
 
-            if (m_initArgs.ConfigTables != null)
+            m_initArgs = UMUtilCommon.ConvertObjectClass<UMConfigInitArgs>(initArgs);
+            if (m_initArgs == null)
             {
-                for (var i = 0; i < m_initArgs.ConfigTables.Count; i++)
-                {
-                    UMConfigTable table = m_initArgs.ConfigTables[i];
-                    m_tableInit = UMUtilCommon.GetObjectNoPublicMethod(table.GetType(), "Init");
-                    string result = (string) m_handlerLoad.Invoke(m_loadConfigHandler, new object[] {table.LoadPath});
-                    m_tableInit.Invoke(table, new object[] {result});
-                    m_tableDic.Add(table.GetType(), table);
-                }
+                UseDefaultInitArgs();
             }
-
+            else
+            {
+                ReadInitArgs();
+            }
+            
             yield return null;
         }
     }

@@ -4,7 +4,7 @@ using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers.Interface;
 namespace UMiniFramework.Runtime.Modules.DataPer.InitArgs
 {
     /// <summary>
-    /// 数据持久化 模块配置
+    /// 数据持久化模块 初始化参数
     /// </summary>
     public class UMDataPerInitArgs : UMModuleInitArgs
     {

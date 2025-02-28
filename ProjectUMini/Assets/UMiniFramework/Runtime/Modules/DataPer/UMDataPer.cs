@@ -30,7 +30,7 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
             m_dataPerHandler = UMDataPerDIArgs.DataPerHandler();
         }
 
-        private void ReadInitArgs(UMDataPerInitArgs args)
+        private void ReadInitArgs()
         {
             m_dataPerHandler = m_initArgs.DataPerHandler;
         }
@@ -45,7 +45,7 @@ namespace UMiniFramework.Runtime.Modules.UMDataPer
             }
             else
             {
-                ReadInitArgs(m_initArgs);
+                ReadInitArgs();
             }
 
             Type dataPerHandlerType = typeof(IUMDataPerHandler);
