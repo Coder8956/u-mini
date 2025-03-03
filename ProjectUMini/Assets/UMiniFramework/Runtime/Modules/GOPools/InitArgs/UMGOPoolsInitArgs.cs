@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using UMiniFramework.Runtime.Modules.Base;
-
-namespace UMiniFramework.Runtime.Modules.GOPools
+﻿namespace UMiniFramework.Runtime.Modules.GOPools.InitArgs
 {
     /// <summary>
     /// 事件模块初始化配置

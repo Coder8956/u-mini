@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
+using UMiniFramework.Runtime.Modules.GOPools.Pool;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
@@ -27,7 +28,6 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             get => UMModuleType.Pools;
         }
 
-
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             m_poolDic = new Dictionary<string, UMGOP>();
@@ -36,7 +36,6 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             // m_initArgs = UMUtilCommon.ConvertObjectClass<UMGOPoolsInitArgs>(initArgs);
             yield return null;
         }
-
 
         public UMGOP CreatePool(string poolTag, GameObject prototype, int initObjectCount = PoolInitObjectCount)
         {

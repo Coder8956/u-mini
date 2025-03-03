@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
-using UMiniFramework.Runtime.Pool.GameObjectPools;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace UMiniFramework.Runtime.Modules.GOPools
+namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 {
     /// <summary>
     /// GameObject 对象池

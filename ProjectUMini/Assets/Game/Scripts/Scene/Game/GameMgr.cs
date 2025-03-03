@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.Scripts.Common;
-using Game.Scripts.GameEvent;
 using Game.Scripts.Components;
+using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Config;
 using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.GOPools;
+using UMiniFramework.Runtime.Modules.GOPools.Pool;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;

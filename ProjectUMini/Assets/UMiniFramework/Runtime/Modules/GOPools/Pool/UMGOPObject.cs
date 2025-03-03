@@ -1,7 +1,6 @@
-﻿using UMiniFramework.Runtime.Modules.GOPools;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UMiniFramework.Runtime.Pool.GameObjectPools
+namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 {
     /// <summary>
     /// 游戏对象池生成的物体
