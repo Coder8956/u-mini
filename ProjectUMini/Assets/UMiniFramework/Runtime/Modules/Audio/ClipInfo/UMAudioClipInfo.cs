@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Audio
+namespace UMiniFramework.Runtime.Modules.Audio.ClipInfo
 {
     /// <summary>
     /// 音频信息

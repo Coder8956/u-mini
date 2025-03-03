@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.Audio.Base;
+using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
@@ -9,15 +10,13 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
     public class UMAudioEffect : UMAudioFunc
     {
         private Dictionary<string, UMAudioClipInfo> m_EffectClipDic;
-        private UMAudioInitArgs m_initArgs;
-
         private Queue<AudioSource> m_asQue;
-
         private List<AudioSource> m_asPlayingList;
-
-        private const int MIN_AS_COUNT = 10;
         private int m_initASCount = 0;
         private int m_createdASCount = 0;
+        private List<UMAudioClipInfo> m_effectClips;
+
+        public const int MIN_AS_COUNT = 3;
 
         /// <summary>
         /// 初始化 Effect Clip 字典
@@ -25,12 +24,10 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private void InitEffectClipDic()
         {
             m_EffectClipDic = new Dictionary<string, UMAudioClipInfo>();
-            if (m_initArgs == null) return;
-            if (m_initArgs.EffectClips == null) return;
             UMAudioClipInfo aci = null;
-            for (var i = 0; i < m_initArgs.EffectClips.Count; i++)
+            for (var i = 0; i < m_effectClips.Count; i++)
             {
-                aci = m_initArgs.EffectClips[i];
+                aci = m_effectClips[i];
                 AddAudioClip(aci);
             }
         }
@@ -75,11 +72,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         private void InitASQue()
         {
-            if (m_initArgs != null)
-            {
-                m_initASCount = Mathf.Clamp(m_initArgs.DefaultAsCount, MIN_AS_COUNT, int.MaxValue);
-            }
-
             m_asQue = new Queue<AudioSource>();
             m_asPlayingList = new List<AudioSource>();
 
@@ -155,9 +147,10 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             BackAS(audioSource);
         }
 
-        protected override void Init(UMAudioInitArgs initArgs)
+        private void InitAudioEffect(List<UMAudioClipInfo> effectClips, int initASCount)
         {
-            m_initArgs = initArgs;
+            m_effectClips = effectClips;
+            m_initASCount = Mathf.Clamp(initASCount, MIN_AS_COUNT, int.MaxValue);
             InitEffectClipDic();
             InitASQue();
         }

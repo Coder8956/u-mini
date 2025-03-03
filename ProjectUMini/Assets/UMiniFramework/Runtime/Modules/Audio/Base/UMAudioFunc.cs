@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
@@ -7,8 +8,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.Base
     public abstract class UMAudioFunc : MonoBehaviour
     {
         private MethodInfo m_LoadClipMethod;
-
-        protected abstract void Init(UMAudioInitArgs initArgs);
 
         protected void LoadClipInACI(UMAudioClipInfo aci)
         {

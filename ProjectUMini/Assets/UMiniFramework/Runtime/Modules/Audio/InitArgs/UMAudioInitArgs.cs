@@ -1,13 +1,22 @@
 ﻿using System.Collections.Generic;
+using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Modules.Base;
 
-namespace UMiniFramework.Runtime.Modules.Audio
+namespace UMiniFramework.Runtime.Modules.Audio.InitArgs
 {
     /// <summary>
-    /// UM 模块配置
+    /// Audio模块 初始化参数
     /// </summary>
     public class UMAudioInitArgs : UMModuleInitArgs
     {
+        public UMAudioInitArgs()
+        {
+            BGMClips = UMAudioDIArgs.BGMAudioClipInfoList();
+
+            EffectClips = UMAudioDIArgs.EffectAudioClipInfoList();
+            m_defaultASCount = UMAudioDIArgs.EffectAudioDefaultAsCount();
+        }
+
         #region BGM-Config
 
         public List<UMAudioClipInfo> BGMClips;
@@ -21,7 +30,7 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private int m_defaultASCount = 0;
 
         /// <summary>
-        /// 默认AudioSource数量.有效值 >=10;
+        /// 默认AudioSource数量.有效值 >=3;
         /// </summary>
         public int DefaultAsCount
         {

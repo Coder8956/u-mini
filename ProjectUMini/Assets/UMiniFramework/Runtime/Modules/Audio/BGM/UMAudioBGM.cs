@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UMiniFramework.Runtime.Modules.Audio.Base;
+using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.Audio.BGM
@@ -8,8 +9,8 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
     {
         private const string INVALID_BGM_ID = "UM_INVALID_BGM_ID";
         private AudioSource m_audioSource = null;
-        private UMAudioInitArgs m_initArgs;
         private Dictionary<string, UMAudioClipInfo> m_BGMClipDic;
+        private List<UMAudioClipInfo> m_bgmClips;
 
         /// <summary>
         /// 静音属性
@@ -37,21 +38,18 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         private void InitBGMClipDic()
         {
             m_BGMClipDic = new Dictionary<string, UMAudioClipInfo>();
-            if (m_initArgs == null) return;
-            if (m_initArgs.BGMClips == null) return;
             UMAudioClipInfo aci = null;
-            for (var i = 0; i < m_initArgs.BGMClips.Count; i++)
+            for (var i = 0; i < m_bgmClips.Count; i++)
             {
-                aci = m_initArgs.BGMClips[i];
+                aci = m_bgmClips[i];
                 AddAudioClip(aci);
             }
         }
 
-        protected override void Init(UMAudioInitArgs initArgs)
+        private void InitAudioBGM(List<UMAudioClipInfo> bgmClips)
         {
             CurtBGMID = INVALID_BGM_ID;
-
-            m_initArgs = initArgs;
+            m_bgmClips = bgmClips;
 
             InitBGMClipDic();
 

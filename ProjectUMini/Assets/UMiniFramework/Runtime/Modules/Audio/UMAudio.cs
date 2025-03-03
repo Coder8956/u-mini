@@ -3,6 +3,7 @@ using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Audio.BGM;
 using UMiniFramework.Runtime.Modules.Audio.Effect;
+using UMiniFramework.Runtime.Modules.Audio.InitArgs;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
@@ -13,6 +14,9 @@ namespace UMiniFramework.Runtime.Modules.Audio
         private const string BGM_GO_NAME = "BGM_UMAUDIO";
         private const string EFFECT_GO_NAME = "EFFECT_UMAUDIO";
         private UMAudioInitArgs m_initArgs = null;
+        private MethodInfo m_bgmInitMethod = null;
+        private MethodInfo m_effectInitMethod = null;
+
         public UMAudioBGM BGM { get; private set; }
         public UMAudioEffect Effect { get; private set; }
 
@@ -21,19 +25,39 @@ namespace UMiniFramework.Runtime.Modules.Audio
             get => UMModuleType.Audio;
         }
 
+        private void UseDefaultInitArgs()
+        {
+            m_bgmInitMethod.Invoke(BGM, new object[] {UMAudioDIArgs.BGMAudioClipInfoList()});
+            m_effectInitMethod.Invoke(Effect,
+                new object[] {UMAudioDIArgs.EffectAudioClipInfoList(), UMAudioDIArgs.EffectAudioDefaultAsCount()});
+        }
+
+        private void ReadInitArgs()
+        {
+            m_bgmInitMethod.Invoke(BGM, new object[] {m_initArgs.BGMClips});
+            m_effectInitMethod.Invoke(Effect, new object[] {m_initArgs.EffectClips, m_initArgs.DefaultAsCount});
+        }
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
+            // 创建 BGM 对象
+            BGM = UMUtilCommon.CreateGameObject<UMAudioBGM>(BGM_GO_NAME, gameObject);
+            m_bgmInitMethod = UMUtilCommon.GetObjectNoPublicMethod(BGM.GetType(), "InitAudioBGM");
+
+            // 创建 Effect 对象
+            Effect = UMUtilCommon.CreateGameObject<UMAudioEffect>(EFFECT_GO_NAME, gameObject);
+            m_effectInitMethod = UMUtilCommon.GetObjectNoPublicMethod(Effect.GetType(), "InitAudioEffect");
+
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMAudioInitArgs>(initArgs);
 
-            // 初始化 BGM
-            BGM = UMUtilCommon.CreateGameObject<UMAudioBGM>(BGM_GO_NAME, gameObject);
-            MethodInfo BGMInit = UMUtilCommon.GetObjectNoPublicMethod(BGM.GetType(), "Init");
-            BGMInit.Invoke(BGM, new object[] {m_initArgs});
-
-            // 初始化 Effect
-            Effect = UMUtilCommon.CreateGameObject<UMAudioEffect>(EFFECT_GO_NAME, gameObject);
-            MethodInfo EffectInit = UMUtilCommon.GetObjectNoPublicMethod(Effect.GetType(), "Init");
-            EffectInit.Invoke(Effect, new object[] {m_initArgs});
+            if (m_initArgs == null)
+            {
+                UseDefaultInitArgs();
+            }
+            else
+            {
+                ReadInitArgs();
+            }
 
             yield return null;
         }
