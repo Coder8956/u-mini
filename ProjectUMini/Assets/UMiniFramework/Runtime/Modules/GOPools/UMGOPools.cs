@@ -47,7 +47,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             newPoolGO.transform.position = Vector3.zero;
             UMGOP poolComponent = newPoolGO.GetComponent<UMGOP>();
             m_poolDic.Add(poolTag, poolComponent);
-            m_poolInitMethod.Invoke(poolComponent, new object[] {prototype, initObjectCount});
+            m_poolInitMethod.Invoke(poolComponent, new object[] {poolTag, prototype, initObjectCount});
             return poolComponent;
         }
 

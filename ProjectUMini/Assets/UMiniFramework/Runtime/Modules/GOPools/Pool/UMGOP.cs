@@ -14,7 +14,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
         private static FieldInfo Field_UMGOPObject_BornPool;
         private GameObject m_prototype = null;
         private const string PrototypeTag = "prototype";
-
+        private string m_poolTag = string.Empty;
         private Queue<GameObject> m_goQue;
         private List<GameObject> m_outPoolGos;
         private int m_initObjectCount;
@@ -23,14 +23,15 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 
         public UnityAction<GameObject> OnGet { get; set; }
         public UnityAction<GameObject> OnBack { get; set; }
-        
-        private void InitPool(GameObject prototype, int initObjectCount)
+
+        private void InitPool(string poolTag,GameObject prototype, int initObjectCount)
         {
             if (Field_UMGOPObject_BornPool == null)
             {
                 Field_UMGOPObject_BornPool = UMUtilCommon.GetObjectNoPublicField(typeof(UMGOPObject), "m_bornPool");
             }
 
+            m_poolTag = poolTag;
             m_goQue = new Queue<GameObject>();
             m_outPoolGos = new List<GameObject>();
 

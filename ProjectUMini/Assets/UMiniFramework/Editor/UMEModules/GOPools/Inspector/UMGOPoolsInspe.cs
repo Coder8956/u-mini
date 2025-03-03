@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Editor.EUtils;
-using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.GOPools;
 using UMiniFramework.Runtime.Modules.GOPools.Pool;
 using UnityEditor;
@@ -21,7 +19,7 @@ namespace UMiniFramework.Editor.UMEModules.GOPools.Inspector
         private void OnEnable()
         {
             Field_UMGOPools_PoolDic = UMEUtilCommon.GetObjectNoPublicField(typeof(UMGOPools), "m_poolDic");
-            m_poolDic = (Dictionary<string, UMGOP>) Field_UMGOPools_PoolDic.GetValue((UMGOPools) target);
+            m_poolDic = (Dictionary<string, UMGOP>) Field_UMGOPools_PoolDic.GetValue(target);
 
             m_foPoolInfo = new bool[m_poolDic.Keys.Count];
         }

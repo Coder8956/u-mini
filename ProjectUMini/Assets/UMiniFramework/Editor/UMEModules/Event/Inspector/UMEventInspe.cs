@@ -26,7 +26,7 @@ namespace UMiniFramework.Editor.UMEModules.Event.Inspector
             Field_UMEvent_EventDic = UMEUtilCommon.GetObjectNoPublicField(typeof(UMEvent), "m_eventDic");
             Field_UMEL_EventHandler = UMEUtilCommon.GetObjectNoPublicField(typeof(UMEventListener), "EventHandler");
 
-            m_eventDic = (Dictionary<string, List<UMEventListener>>) Field_UMEvent_EventDic.GetValue((UMEvent) target);
+            m_eventDic = (Dictionary<string, List<UMEventListener>>) Field_UMEvent_EventDic.GetValue(target);
             m_foETListeners = new bool[m_eventDic.Keys.Count];
 
             m_listenerInfoGS = new GUIStyle("helpbox");
