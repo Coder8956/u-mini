@@ -15,11 +15,8 @@ namespace UMiniFramework.Runtime.Modules.GOPools
     public class UMGOPools : UMBaseModule
     {
         // private UMGOPoolsInitArgs m_initArgs = null;
-
         private const int PoolInitObjectCount = 5;
-
         private Dictionary<string, UMGOP> m_poolDic;
-
         private MethodInfo m_poolInitMethod;
         private MethodInfo m_poolDestroyMethod;
 
