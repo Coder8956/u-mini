@@ -9,7 +9,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
 {
     public class UMAudioEffect : UMAudioFunc
     {
-        private Dictionary<string, UMAudioClipInfo> m_EffectClipDic;
+        private Dictionary<string, UMAudioClipInfo> m_effectClipDic;
         private Queue<AudioSource> m_asQue;
         private List<AudioSource> m_asPlayingList;
         private int m_initASCount = 0;
@@ -23,7 +23,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// </summary>
         private void InitEffectClipDic()
         {
-            m_EffectClipDic = new Dictionary<string, UMAudioClipInfo>();
+            m_effectClipDic = new Dictionary<string, UMAudioClipInfo>();
             UMAudioClipInfo aci = null;
             for (var i = 0; i < m_effectClips.Count; i++)
             {
@@ -162,7 +162,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         /// <param name="volume"></param>
         public void Play(string id)
         {
-            UMAudioClipInfo aci = m_EffectClipDic[id];
+            UMAudioClipInfo aci = m_effectClipDic[id];
 
             if (aci.Clip == null)
             {
@@ -182,7 +182,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
 
         public void AddAudioClip(UMAudioClipInfo aci)
         {
-            m_EffectClipDic.Add(aci.ID, aci);
+            m_effectClipDic.Add(aci.ID, aci);
             if (aci.IsPreLoad)
             {
                 LoadClipInACI(aci);

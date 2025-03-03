@@ -54,9 +54,9 @@ namespace UMiniFramework.Editor.UMEModules.GOPools.Inspector
                     EditorGUILayout.TextField(kv.Key);
                     // 结束禁用组
                     EditorGUI.EndDisabledGroup();
+                    EditorGUILayout.EndHorizontal();
 
                     // 绘制池对象
-                    EditorGUILayout.EndHorizontal();
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField($"Pool Object: ", EditorStyles.boldLabel,
                         GUILayout.Width(90));
