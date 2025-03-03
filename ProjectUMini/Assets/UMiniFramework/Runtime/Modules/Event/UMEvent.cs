@@ -3,7 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Event.Base;
+using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
+using UMiniFramework.Runtime.Modules.Event.InitArgs;
+using UMiniFramework.Runtime.Modules.Event.Listener;
 using UMiniFramework.Runtime.Utils;
 
 namespace UMiniFramework.Runtime.Modules.Event
@@ -12,25 +14,42 @@ namespace UMiniFramework.Runtime.Modules.Event
     {
         private Dictionary<string, List<UMEventListener>> m_eventDic;
         private UMEventInitArgs m_initArgs = null;
+        private List<string> m_registerEventTags = null;
 
         public override UMModuleType ModuleType
         {
             get => UMModuleType.Event;
         }
 
+        private void UseDefaultInitArgs()
+        {
+            m_registerEventTags = UMEventDIArgs.RegisterEventTagList();
+        }
+
+        private void ReadInitArgs()
+        {
+            m_registerEventTags = m_initArgs.RegisterEventTags;
+        }
+
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             m_eventDic = new Dictionary<string, List<UMEventListener>>();
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMEventInitArgs>(initArgs);
 
-            if (m_initArgs != null
-                && m_initArgs.RegisterEventTags != null)
+            if (m_initArgs == null)
             {
-                for (var i = 0; i < m_initArgs.RegisterEventTags.Count; i++)
-                {
-                    string eventTag = m_initArgs.RegisterEventTags[i];
-                    m_eventDic.Add(eventTag, new List<UMEventListener>());
-                }
+                UseDefaultInitArgs();
+            }
+            else
+            {
+                ReadInitArgs();
+            }
+
+            for (var i = 0; i < m_registerEventTags.Count; i++)
+            {
+                string eventTag = m_registerEventTags[i];
+                m_eventDic.Add(eventTag, new List<UMEventListener>());
             }
 
             yield return null;

@@ -1,4 +1,4 @@
-﻿using UMiniFramework.Runtime.Modules.Event.Base;
+﻿using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
 
 namespace Game.Scripts.GameEvent
 {

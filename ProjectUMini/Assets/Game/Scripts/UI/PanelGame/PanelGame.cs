@@ -1,10 +1,11 @@
 ﻿using Game.Scripts.Common;
 using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Event;
-using UMiniFramework.Runtime.Modules.Event.Base;
+using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
+using UMiniFramework.Runtime.Modules.Event.Listener;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
+using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
