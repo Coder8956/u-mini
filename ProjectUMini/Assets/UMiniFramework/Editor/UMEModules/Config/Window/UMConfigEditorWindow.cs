@@ -24,7 +24,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
 
         private List<string> m_configFiles;
 
-        [MenuItem("UMUtils/Config/Config-Window")]
+        [MenuItem("UMUtils/Config/UMConfig-Window")]
         private static void ShowWindow()
         {
             var window = GetWindow<UMConfigEditorWindow>();
