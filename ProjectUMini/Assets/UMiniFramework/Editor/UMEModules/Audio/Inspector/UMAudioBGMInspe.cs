@@ -42,7 +42,7 @@ namespace UMiniFramework.Editor.UMEModules.Audio.Inspector
 
                     // 绘制 BGM ID
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField($"BGM ID: ", EditorStyles.boldLabel, GUILayout.Width(70));
+                    EditorGUILayout.LabelField($"Audio BGM ID: ", EditorStyles.boldLabel, GUILayout.Width(110));
                     // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(kv.Key);

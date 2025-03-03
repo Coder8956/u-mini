@@ -44,7 +44,7 @@ namespace UMiniFramework.Editor.UMEModules.Audio.Inspector
 
                     // 绘制 Effect ID
                     EditorGUILayout.BeginHorizontal();
-                    EditorGUILayout.LabelField($"Effect ID: ", EditorStyles.boldLabel, GUILayout.Width(70));
+                    EditorGUILayout.LabelField($"Audio Effect ID: ", EditorStyles.boldLabel, GUILayout.Width(110));
                     // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(kv.Key);
