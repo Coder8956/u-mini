@@ -1,10 +1,10 @@
 ﻿using System;
 using UMiniFramework.Runtime.Common;
 
-namespace UMiniFramework.Runtime.Modules.UI
+namespace UMiniFramework.Runtime.Modules.UI.UMUIAttribute
 {
     [AttributeUsage(AttributeTargets.Class)]
-    public class UMUIPanelConfig : Attribute
+    public class UMUIPanelATB : Attribute
     {
         public readonly string LoadPath = null;
 
@@ -12,7 +12,7 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         public readonly UMResLoadType LoadType = UMResLoadType.Resources;
 
-        public UMUIPanelConfig(string panelPath, int layer = 0, UMResLoadType pathType = UMResLoadType.Resources)
+        public UMUIPanelATB(string panelPath, int layer = 0, UMResLoadType pathType = UMResLoadType.Resources)
         {
             LoadPath = panelPath;
             Layer = layer;

@@ -92,7 +92,7 @@ namespace Game.Scripts.Scene.Launch
                 m_slidLaunchProgress.value = val.InitProgress;
                 if (val.InitState)
                 {
-                    OnUMGRInitModulesFinished();
+                    // OnUMGRInitModulesFinished();
                 }
             });
         }

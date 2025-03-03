@@ -5,6 +5,8 @@ using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.InitArgs;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UMiniFramework.Runtime.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -33,6 +35,9 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         private RectTransform m_uiCache = null;
 
+        private int m_createUILayerCount;
+        private bool m_createEventSystem;
+
         public override UMModuleType ModuleType
         {
             get => UMModuleType.UI;
@@ -57,8 +62,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// </summary>
         private void CreateEventSystem()
         {
-            if (m_initArgs == null) return;
-            if (!m_initArgs.IsCreateEventSystem) return;
+            if (!m_createEventSystem) return;
             EventSystem es = UMUtilCommon.CreateGameObject<EventSystem>(EVENT_SYSTEM_NAME, gameObject);
             es.AddComponent<StandaloneInputModule>();
             m_goEventSystem = es.gameObject;
@@ -71,10 +75,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         {
             // 添加 Canvas 组件
             m_canvas = gameObject.AddComponent<Canvas>();
-            if (m_initArgs == null)
-                m_canvas.renderMode = RenderMode.ScreenSpaceOverlay;
-            else
-                m_canvas.renderMode = m_initArgs.CanvasRenderMode;
+            m_canvas.renderMode = RenderMode.ScreenSpaceOverlay;
         }
 
         /// <summary>
@@ -99,11 +100,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         private void CreateUILayer()
         {
             m_uiLayers = new List<RectTransform>();
-            int layerCount = 1;
-            if (m_initArgs != null)
-            {
-                layerCount = m_initArgs.UILayerCount < 1 ? 1 : m_initArgs.UILayerCount;
-            }
+            int layerCount = m_createUILayerCount < 1 ? 1 : m_createUILayerCount;
 
             for (int i = 0; i < layerCount; i++)
             {
@@ -131,9 +128,30 @@ namespace UMiniFramework.Runtime.Modules.UI
             return Instantiate(uiGo);
         }
 
+        private void UseDefaultInitArgs()
+        {
+            m_createUILayerCount = UMUIDIArgs.UILayerCount();
+            m_createEventSystem = UMUIDIArgs.IsCreateEventSystem();
+        }
+
+        private void ReadInitArgs()
+        {
+            m_createUILayerCount = m_initArgs.UILayerCount;
+            m_createEventSystem = m_initArgs.IsCreateEventSystem;
+        }
+
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMUIInitArgs>(initArgs);
+
+            if (m_initArgs == null)
+            {
+                UseDefaultInitArgs();
+            }
+            else
+            {
+                ReadInitArgs();
+            }
 
             SetUILayer(gameObject);
 
@@ -160,8 +178,7 @@ namespace UMiniFramework.Runtime.Modules.UI
         public T Create<T>() where T : UMUIPanel
         {
             // 获取配置特性标签
-            UMUIPanelConfig uiConfig =
-                (UMUIPanelConfig) Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelConfig));
+            UMUIPanelATB uiConfig = (UMUIPanelATB) Attribute.GetCustomAttribute(typeof(T), typeof(UMUIPanelATB));
 
             T panel = null;
             if (uiConfig.LoadType == UMResLoadType.Resources)

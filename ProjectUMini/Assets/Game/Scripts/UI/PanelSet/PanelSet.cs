@@ -1,15 +1,15 @@
 ﻿using Game.Scripts.Common;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelSet/PanelSet")]
+    [UMUIPanelATB("UI/PanelSet/PanelSet")]
     public class PanelSet : UMUIPanel
     {
         [SerializeField] private Button m_btnClose;

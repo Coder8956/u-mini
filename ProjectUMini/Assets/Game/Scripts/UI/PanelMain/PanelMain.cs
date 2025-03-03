@@ -1,12 +1,12 @@
 ﻿using Game.Scripts.Common;
-using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelMain/PanelMain")]
+    [UMUIPanelATB("UI/PanelMain/PanelMain")]
     public class PanelMain : UMUIPanel
     {
         [SerializeField] private Button m_btnStartGame;

@@ -2,15 +2,15 @@
 using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelGameResult/PanelGameResult")]
+    [UMUIPanelATB("UI/PanelGameResult/PanelGameResult")]
     public class PanelGameResult : UMUIPanel
     {
         [SerializeField] private Button m_btnAgain;

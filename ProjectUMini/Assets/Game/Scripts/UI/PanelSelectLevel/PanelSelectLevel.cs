@@ -1,14 +1,14 @@
 ﻿using Game.Scripts.Common;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Scene;
-using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelSelectLevel/PanelSelectLevel")]
+    [UMUIPanelATB("UI/PanelSelectLevel/PanelSelectLevel")]
     public class PanelSelectLevel : UMUIPanel
     {
         [SerializeField] private Button m_btnClose;

@@ -5,11 +5,12 @@ using System.Linq;
 using System.Reflection;
 using UMiniFramework.Editor.EUtils;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace UMiniFramework.Editor.UMEModules.UI
 {
@@ -53,7 +54,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
         // 需要创建的 UIPanel Type
         private Type m_createPanelType;
-        private UMUIPanelConfig m_createPanelConfig;
+        private UMUIPanelATB m_createPanelAttribute;
 
         /// <summary>
         /// 查询所有继承 UMUIPanel 的类
@@ -113,13 +114,13 @@ namespace UMiniFramework.Editor.UMEModules.UI
                 if (CurtUIClassOption() == INVALID_UMUI)
                 {
                     m_createPanelType = null;
-                    m_createPanelConfig = null;
+                    m_createPanelAttribute = null;
                 }
                 else
                 {
                     m_createPanelType = m_allUITypesDic[uiClass_options[uiClass_selectedIndex]];
-                    m_createPanelConfig =
-                        (UMUIPanelConfig) Attribute.GetCustomAttribute(m_createPanelType, typeof(UMUIPanelConfig));
+                    m_createPanelAttribute =
+                        (UMUIPanelATB) Attribute.GetCustomAttribute(m_createPanelType, typeof(UMUIPanelATB));
                 }
             }
 
@@ -181,7 +182,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
         /// </summary>
         private void DrawUIPanelCreatePath()
         {
-            m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, m_createPanelConfig.LoadPath);
+            m_panelPrefabFullPath = Path.Combine(m_panelPrefabRootFolder, m_createPanelAttribute.LoadPath);
             m_panelPrefabFullPath = UMEUtilCommon.FormatPathSeparator(m_panelPrefabFullPath);
             m_panelPrefabFullPath = string.Concat(m_panelPrefabFullPath, PREFAB_EXTENSION);
 
@@ -190,7 +191,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
             GUILayout.Label($"Prefab AssetData Path: {m_panelPrefabAssetDataPath}", GUI_STYLE_HELPBOX);
             GUILayout.Label($"Prefab Full Path: {m_panelPrefabFullPath}", GUI_STYLE_HELPBOX);
 
-            if (m_createPanelConfig.LoadType == UMResLoadType.Resources
+            if (m_createPanelAttribute.LoadType == UMResLoadType.Resources
                 && !m_panelPrefabAssetDataPath.Contains(RESOURCES_FOLDER_NAME))
             {
                 GUILayout.Label(
@@ -219,8 +220,8 @@ namespace UMiniFramework.Editor.UMEModules.UI
             }
             else
             {
-                GUILayout.Label($"Load Type: {m_createPanelConfig.LoadType.ToString()}", GUI_STYLE_HELPBOX);
-                GUILayout.Label($"Load Path: {m_createPanelConfig.LoadPath}", GUI_STYLE_HELPBOX);
+                GUILayout.Label($"Load Type: {m_createPanelAttribute.LoadType.ToString()}", GUI_STYLE_HELPBOX);
+                GUILayout.Label($"Load Path: {m_createPanelAttribute.LoadPath}", GUI_STYLE_HELPBOX);
             }
         }
 
@@ -298,7 +299,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
                 // 找到你想高亮的 UI 资源
                 string uiPrefabPath = m_panelPrefabAssetDataPath; // 资源的路径
-                UnityEngine.Object asset = AssetDatabase.LoadAssetAtPath<UnityEngine.Object>(uiPrefabPath);
+                Object asset = AssetDatabase.LoadAssetAtPath<Object>(uiPrefabPath);
                 if (asset != null)
                 {
                     // 高亮这个资源

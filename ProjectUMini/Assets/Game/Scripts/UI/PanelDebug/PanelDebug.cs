@@ -5,13 +5,14 @@ using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.UI;
 using UMiniFramework.Runtime.Modules.UI.Base;
+using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
 using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Game.Scripts.UI
 {
-    [UMUIPanelConfig("UI/PanelDebug/PanelDebug")]
+    [UMUIPanelATB("UI/PanelDebug/PanelDebug")]
     public class PanelDebug : UMUIPanel
     {
         [SerializeField] private GameObject m_DebugGO;
