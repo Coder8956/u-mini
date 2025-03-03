@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Editor.EUtils;
-using UMiniFramework.Runtime.Modules.Audio.BGM;
 using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Modules.Audio.Effect;
 using UnityEditor;
