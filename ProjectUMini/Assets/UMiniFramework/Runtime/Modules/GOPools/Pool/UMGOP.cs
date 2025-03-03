@@ -12,10 +12,6 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
     public class UMGOP : MonoBehaviour
     {
         private static FieldInfo Field_UMGOPObject_BornPool;
-
-        public UnityAction<GameObject> OnGet { get; set; }
-        public UnityAction<GameObject> OnBack { get; set; }
-
         private GameObject m_prototype = null;
         private const string PrototypeTag = "prototype";
 
@@ -25,6 +21,9 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 
         private string m_objectName = string.Empty;
 
+        public UnityAction<GameObject> OnGet { get; set; }
+        public UnityAction<GameObject> OnBack { get; set; }
+        
         private void InitPool(GameObject prototype, int initObjectCount)
         {
             if (Field_UMGOPObject_BornPool == null)
