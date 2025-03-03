@@ -62,7 +62,7 @@ namespace UMiniFramework.Editor.UMEModules.GOPools.Inspector
                         GUILayout.Width(90));
                     // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
-                    EditorGUILayout.ObjectField(kv.Value.gameObject, typeof(UMGOP));
+                    EditorGUILayout.ObjectField(kv.Value, typeof(UMGOP));
                     // 结束禁用组
                     EditorGUI.EndDisabledGroup();
                     EditorGUILayout.EndHorizontal();
