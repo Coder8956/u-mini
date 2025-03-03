@@ -52,8 +52,8 @@ namespace UMiniFramework.Editor.UMEModules.Event.Inspector
                     EditorGUILayout.BeginHorizontal();
 
                     string tagIndexFormat = string.Format("{0:D4}", tagIndex);
-                    EditorGUILayout.LabelField($"Event Tag {tagIndexFormat}", EditorStyles.boldLabel,
-                        GUILayout.Width(110));
+                    EditorGUILayout.LabelField($"Index[{tagIndexFormat}] Event Tag:", EditorStyles.boldLabel,
+                        GUILayout.Width(155));
 
                     // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
@@ -78,10 +78,19 @@ namespace UMiniFramework.Editor.UMEModules.Event.Inspector
                             UMEventListener listener = kv.Value[i];
 
                             // 获取事件处理器 EventHandler 是哪个类中方法
+                            string ehInfo = string.Empty;
                             UnityAction<UMBaseEventContent> eh =
                                 (UnityAction<UMBaseEventContent>) Field_UMEL_EventHandler.GetValue(listener);
-                            Type declaringType = eh.Method.DeclaringType;
-                            string ehInfo = string.Concat(declaringType.FullName, ".", eh.Method.Name);
+
+                            if (eh == null)
+                            {
+                                ehInfo = "null";
+                            }
+                            else
+                            {
+                                Type declaringType = eh.Method.DeclaringType;
+                                ehInfo = string.Concat(declaringType.FullName, ".", eh.Method.Name);
+                            }
 
                             EditorGUILayout.TextArea($"Index: {i}\n" + // 绘制 listener 索引
                                                      $"HashCode: {listener.GetHashCode()}\n" + // 绘制 listener HashCode
