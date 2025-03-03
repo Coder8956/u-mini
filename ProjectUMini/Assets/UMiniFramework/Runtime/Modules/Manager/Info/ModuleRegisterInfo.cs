@@ -1,6 +1,6 @@
 ﻿using UMiniFramework.Runtime.Modules.Base;
 
-namespace UMiniFramework.Runtime.Modules.Manager
+namespace UMiniFramework.Runtime.Modules.Manager.Info
 {
     /// <summary>
     /// 用于记录功能模块的注册信息

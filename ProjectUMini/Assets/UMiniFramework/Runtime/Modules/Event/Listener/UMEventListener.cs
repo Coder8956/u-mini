@@ -17,7 +17,7 @@ namespace UMiniFramework.Runtime.Modules.Event.Listener
         Persistent
     }
 
-    public class UMEventListener
+    public sealed class UMEventListener
     {
         public readonly string EventTag;
         public readonly UMListenType ListenType;
