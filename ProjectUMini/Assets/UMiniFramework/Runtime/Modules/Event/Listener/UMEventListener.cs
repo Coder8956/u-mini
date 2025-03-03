@@ -34,7 +34,7 @@ namespace UMiniFramework.Runtime.Modules.Event.Listener
             }
         }
 
-        public void HandleEvent(UMBaseEventContent content)
+        private void HandleEvent(UMBaseEventContent content)
         {
             if (EventHandler != null)
             {

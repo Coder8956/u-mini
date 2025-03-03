@@ -27,8 +27,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
         private static FieldInfo Field_IPI_InitState;
         private static FieldInfo Field_IPI_InitModule;
         private static FieldInfo Field_IPI_InitProgress;
-
-
+        
         private IEnumerator InitModulesCoro(Action<InitProgressInfo> initCallback)
         {
             Type IPIType = typeof(InitProgressInfo);

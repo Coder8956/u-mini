@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
@@ -15,6 +16,7 @@ namespace UMiniFramework.Runtime.Modules.Event
         private Dictionary<string, List<UMEventListener>> m_eventDic;
         private UMEventInitArgs m_initArgs = null;
         private List<string> m_registerEventTags = null;
+        private MethodInfo m_listenerHandleEventMethod = null;
 
         public override UMModuleType ModuleType
         {
@@ -34,6 +36,7 @@ namespace UMiniFramework.Runtime.Modules.Event
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)
         {
+            m_listenerHandleEventMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMEventListener), "HandleEvent");
             m_eventDic = new Dictionary<string, List<UMEventListener>>();
             m_initArgs = UMUtilCommon.ConvertObjectClass<UMEventInitArgs>(initArgs);
 
@@ -91,7 +94,7 @@ namespace UMiniFramework.Runtime.Modules.Event
 
             for (var i = 0; i < eventTagListeners.Count; i++)
             {
-                eventTagListeners[i].HandleEvent(content);
+                m_listenerHandleEventMethod.Invoke(eventTagListeners[i], new object[] {content});
             }
 
             eventTagListeners.RemoveAll((listener) =>
