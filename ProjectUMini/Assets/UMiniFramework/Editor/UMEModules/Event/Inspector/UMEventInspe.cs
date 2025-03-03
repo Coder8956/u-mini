@@ -37,7 +37,7 @@ namespace UMiniFramework.Editor.UMEModules.Event.Inspector
         {
             base.OnInspectorGUI();
             // EditorGUILayout.LabelField("Register Event Tags", EditorStyles.boldLabel);
-            m_foEventTags = EditorGUILayout.Foldout(m_foEventTags, "Register Event Tags");
+            m_foEventTags = EditorGUILayout.Foldout(m_foEventTags, $"Register Event Tags ({m_eventDic.Keys.Count})");
             if (m_foEventTags)
             {
                 // 绘制 事件Tag

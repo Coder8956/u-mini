@@ -29,7 +29,7 @@ namespace UMiniFramework.Editor.UMEModules.GOPools.Inspector
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
-            m_foPools = EditorGUILayout.Foldout(m_foPools, "Pools");
+            m_foPools = EditorGUILayout.Foldout(m_foPools, $"Pools ({m_poolDic.Keys.Count})");
             if (m_foPools)
             {
                 // 绘制 事件Tag
@@ -40,20 +40,37 @@ namespace UMiniFramework.Editor.UMEModules.GOPools.Inspector
                     string ptag = kv.Key;
                     UMGOP pool = kv.Value;
 
-                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.BeginVertical("helpbox");
 
+                    // 绘制池索引
                     string tagIndexFormat = string.Format("{0:D4}", poolIndex);
-                    EditorGUILayout.LabelField($"Pool Tag {tagIndexFormat}", EditorStyles.boldLabel,
+                    EditorGUILayout.LabelField($"Index[{tagIndexFormat}]", EditorStyles.boldLabel,
                         GUILayout.Width(110));
 
+                    // 绘制池Tag
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField($"Pool Tag: ", EditorStyles.boldLabel,
+                        GUILayout.Width(70));
+                    // 禁用编辑
+                    EditorGUI.BeginDisabledGroup(true);
+                    EditorGUILayout.TextField(kv.Key);
+                    // 结束禁用组
+                    EditorGUI.EndDisabledGroup();
+
+                    // 绘制池对象
+                    EditorGUILayout.EndHorizontal();
+                    EditorGUILayout.BeginHorizontal();
+                    EditorGUILayout.LabelField($"Pool Object: ", EditorStyles.boldLabel,
+                        GUILayout.Width(90));
                     // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.ObjectField(kv.Value.gameObject, typeof(UMGOP));
                     // 结束禁用组
                     EditorGUI.EndDisabledGroup();
-
                     EditorGUILayout.EndHorizontal();
 
+                    EditorGUILayout.EndVertical();
+                    GUILayout.Space(5);
                     poolIndex++;
                 }
 
