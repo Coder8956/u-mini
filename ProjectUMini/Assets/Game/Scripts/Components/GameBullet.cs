@@ -14,6 +14,8 @@ namespace Game.Scripts.Components
         public UnityAction<GameObject> OnDestroyBlock { get; set; }
         public UnityAction<GameObject> OnHitGo { get; set; }
 
+        private GameObject HitGO = null;
+
         private void Awake()
         {
             // Rigidbody 组件
@@ -27,6 +29,7 @@ namespace Game.Scripts.Components
 
         public void Shoot(Vector3 direction, float speed)
         {
+            HitGO = null;
             if (m_rb != null)
             {
                 // 沿射线方向发射
@@ -36,13 +39,16 @@ namespace Game.Scripts.Components
 
         private void OnCollisionEnter(Collision other)
         {
+            if (HitGO != null) return;
+
             UMGR.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
             // m_rb.AddExplosionForce(10, transform.position, 10);
 
             if (other.gameObject.CompareTag("Monster"))
             {
-                OnDestroyBlock?.Invoke(other.gameObject);
-                Destroy(other.gameObject);
+                HitGO = other.gameObject;
+                OnDestroyBlock?.Invoke(HitGO);
+                Destroy(HitGO);
             }
 
             OnHitGo?.Invoke(gameObject);
