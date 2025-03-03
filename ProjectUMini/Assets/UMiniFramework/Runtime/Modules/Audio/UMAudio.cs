@@ -29,13 +29,13 @@ namespace UMiniFramework.Runtime.Modules.Audio
         {
             m_bgmInitMethod.Invoke(BGM, new object[] {UMAudioDIArgs.BGMAudioClipInfoList()});
             m_effectInitMethod.Invoke(Effect,
-                new object[] {UMAudioDIArgs.EffectAudioClipInfoList(), UMAudioDIArgs.EffectAudioDefaultAsCount()});
+                new object[] {UMAudioDIArgs.EffectAudioClipInfoList(), UMAudioDIArgs.EffectAudioDefaultEASCount()});
         }
 
         private void ReadInitArgs()
         {
             m_bgmInitMethod.Invoke(BGM, new object[] {m_initArgs.BGMClips});
-            m_effectInitMethod.Invoke(Effect, new object[] {m_initArgs.EffectClips, m_initArgs.DefaultAsCount});
+            m_effectInitMethod.Invoke(Effect, new object[] {m_initArgs.EffectClips, m_initArgs.DefaultEASCount});
         }
 
         protected override IEnumerator Init(UMModuleInitArgs initArgs)

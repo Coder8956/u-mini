@@ -14,7 +14,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.InitArgs
             BGMClips = UMAudioDIArgs.BGMAudioClipInfoList();
 
             EffectClips = UMAudioDIArgs.EffectAudioClipInfoList();
-            m_defaultASCount = UMAudioDIArgs.EffectAudioDefaultAsCount();
+            m_defaultEASCount = UMAudioDIArgs.EffectAudioDefaultEASCount();
         }
 
         #region BGM-Config
@@ -27,15 +27,15 @@ namespace UMiniFramework.Runtime.Modules.Audio.InitArgs
 
         #region Effect-Config
 
-        private int m_defaultASCount = 0;
+        private int m_defaultEASCount = 0;
 
         /// <summary>
         /// 默认AudioSource数量.有效值 >=3;
         /// </summary>
-        public int DefaultAsCount
+        public int DefaultEASCount
         {
-            get => m_defaultASCount;
-            set => m_defaultASCount = value;
+            get => m_defaultEASCount;
+            set => m_defaultEASCount = value;
         }
 
         public List<UMAudioClipInfo> EffectClips;

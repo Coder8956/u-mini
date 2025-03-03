@@ -16,7 +16,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private int m_createdASCount = 0;
         private List<UMAudioClipInfo> m_effectClips;
 
-        public const int MIN_AS_COUNT = 3;
+        public const int MIN_EAS_COUNT = 3;
 
         /// <summary>
         /// 初始化 Effect Clip 字典
@@ -150,7 +150,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private void InitAudioEffect(List<UMAudioClipInfo> effectClips, int initASCount)
         {
             m_effectClips = effectClips;
-            m_initASCount = Mathf.Clamp(initASCount, MIN_AS_COUNT, int.MaxValue);
+            m_initASCount = Mathf.Clamp(initASCount, MIN_EAS_COUNT, int.MaxValue);
             InitEffectClipDic();
             InitASQue();
         }

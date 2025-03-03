@@ -19,9 +19,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.InitArgs
             return new();
         }
 
-        public static int EffectAudioDefaultAsCount()
+        public static int EffectAudioDefaultEASCount()
         {
-            return UMAudioEffect.MIN_AS_COUNT;
+            return UMAudioEffect.MIN_EAS_COUNT;
         }
     }
 }
