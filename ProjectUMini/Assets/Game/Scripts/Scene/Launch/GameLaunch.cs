@@ -131,7 +131,9 @@ namespace Game.Scripts.Scene.Launch
             string audioEffectVolume = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioEffectVolume, "1");
             UMGR.Get<UMAudio>().Effect.Volume = float.Parse(audioEffectVolume);
 
-            // UMGR.Get<UMUI>().Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
+            UMGR.Get<UMUI>().CanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            UMGR.Get<UMUI>().CanvasScaler.referenceResolution = new Vector2(3840, 2160);
+            UMGR.Get<UMUI>().CanvasScaler.matchWidthOrHeight = 1; // 按高适配=1
 
             GameUI.OpenDebug();
             // 进入主界面

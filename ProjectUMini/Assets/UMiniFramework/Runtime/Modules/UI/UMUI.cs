@@ -30,6 +30,8 @@ namespace UMiniFramework.Runtime.Modules.UI
         public Canvas Canvas => m_canvas;
 
         private CanvasScaler m_canvasScaler = null;
+        public CanvasScaler CanvasScaler => m_canvasScaler;
+
         private GraphicRaycaster m_graphicRaycaster = null;
         private GameObject m_goEventSystem;
         private List<RectTransform> m_uiLayers = null;
@@ -206,6 +208,7 @@ namespace UMiniFramework.Runtime.Modules.UI
 
                 string panelName = panel.gameObject.name.Replace("(Clone)", $"[{panelHashCode}]");
                 panel.gameObject.name = panelName;
+                panel.transform.localScale = Vector3.one;
 
                 UMUtilUI.FillParent(panel.GetComponent<RectTransform>());
             }
