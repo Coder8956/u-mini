@@ -27,6 +27,8 @@ namespace UMiniFramework.Runtime.Modules.UI
         private UMUIInitArgs m_initArgs = null;
         private RectTransform m_rectTransform = null;
         private Canvas m_canvas = null;
+        public Canvas Canvas => m_canvas;
+
         private CanvasScaler m_canvasScaler = null;
         private GraphicRaycaster m_graphicRaycaster = null;
         private GameObject m_goEventSystem;

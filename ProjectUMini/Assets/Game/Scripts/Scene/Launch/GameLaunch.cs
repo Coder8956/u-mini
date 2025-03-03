@@ -1,14 +1,26 @@
-﻿using Game.Scripts.Common;
+﻿using System.Collections.Generic;
+using Game.Scripts.Common;
+using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
+using UMiniFramework.Runtime.Modules.Audio.InitArgs;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Config;
+using UMiniFramework.Runtime.Modules.Config.Base;
+using UMiniFramework.Runtime.Modules.Config.InitArgs;
+using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers;
+using UMiniFramework.Runtime.Modules.DataPer.InitArgs;
+using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers;
 using UMiniFramework.Runtime.Modules.Event;
+using UMiniFramework.Runtime.Modules.Event.InitArgs;
 using UMiniFramework.Runtime.Modules.GOPools;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Resource;
+using UMiniFramework.Runtime.Modules.Resource.InitArgs;
+using UMiniFramework.Runtime.Modules.Resource.UMResHandlers;
 using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI;
+using UMiniFramework.Runtime.Modules.UI.InitArgs;
 using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,55 +37,55 @@ namespace Game.Scripts.Scene.Launch
             m_txtProgressTip.text = string.Empty;
 
             // UI 配置
-            // UMUIInitArgs umUIInitArgs = new UMUIInitArgs();
-            // umUIInitArgs.IsCreateEventSystem = true;
-            // umUIInitArgs.UILayerCount = 5;
-            //
-            // // 音频配置
-            // UMAudioInitArgs umAudioInitArgs = new UMAudioInitArgs();
-            //
-            // // 数据持久化配置
-            // UMDataPerInitArgs umDataPerInitArgs = new UMDataPerInitArgs();
-            // umDataPerInitArgs.DataPerHandler = new UMDataJsonFileHandler();
-            //
-            // UMConfigInitArgs umConfigInitArgs = new UMConfigInitArgs();
-            // umConfigInitArgs.LoadConfigHandler = new UMResLoadConfigHandler();
-            // umConfigInitArgs.ConfigTables = new List<UMConfigTable>();
-            //
-            // umConfigInitArgs.ConfigTables.Add(new BulletTable());
-            // umConfigInitArgs.ConfigTables.Add(new LevelTable());
-            // umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
-            // umConfigInitArgs.ConfigTables.Add(new BlockTable());
-            //
-            // // 资源加载配置
-            // UMResInitArgs umResourceInitArgs = new UMResInitArgs();
-            // umResourceInitArgs.ResHandler = new UMResDefaultHandler();
-            //
-            // UMEventInitArgs umEventInitArgs = new UMEventInitArgs();
-            // umEventInitArgs.RegisterEventTags = new List<string>();
-            // umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddScore);
-            // umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddShootCount);
-            // umEventInitArgs.RegisterEventTags.Add(GameEventTags.GameAgain);
+            UMUIInitArgs umUIInitArgs = new UMUIInitArgs();
+            umUIInitArgs.IsCreateEventSystem = true;
+            umUIInitArgs.UILayerCount = 5;
+
+            // 音频配置
+            UMAudioInitArgs umAudioInitArgs = new UMAudioInitArgs();
+
+            // 数据持久化配置
+            UMDataPerInitArgs umDataPerInitArgs = new UMDataPerInitArgs();
+            umDataPerInitArgs.DataPerHandler = new UMDataJsonFileHandler();
+
+            UMConfigInitArgs umConfigInitArgs = new UMConfigInitArgs();
+            umConfigInitArgs.LoadConfigHandler = new UMResLoadConfigHandler();
+
+            umConfigInitArgs.ConfigTables.Add(new BulletTable());
+            umConfigInitArgs.ConfigTables.Add(new LevelTable());
+            umConfigInitArgs.ConfigTables.Add(new GameAudioTable());
+            umConfigInitArgs.ConfigTables.Add(new BlockTable());
+
+            // 资源加载配置
+            UMResInitArgs umResourceInitArgs = new UMResInitArgs();
+            umResourceInitArgs.ResHandler = new UMResDefaultHandler();
+
+            UMEventInitArgs umEventInitArgs = new UMEventInitArgs();
+            umEventInitArgs.RegisterEventTags = new List<string>();
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddScore);
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.AddShootCount);
+            umEventInitArgs.RegisterEventTags.Add(GameEventTags.GameAgain);
 
             UMGR.Launch();
-            // UMGR.Register<UMUI>(umUIInitArgs);
-            // UMGR.Register<UMAudio>(umAudioInitArgs);
-            // UMGR.Register<UMScene>();
-            // UMGR.Register<UMDataPer>(umDataPerInitArgs);
-            // UMGR.Register<UMConfig>(umConfigInitArgs);
-            // UMGR.Register<UMRes>(umResourceInitArgs);
-            // UMGR.Register<UMEvent>(umEventInitArgs);
-            // UMGR.Register<UMGOPools>();
-            
-            // 测试不传参数
-            UMGR.Register<UMUI>();
-            UMGR.Register<UMAudio>();
+            UMGR.Register<UMUI>(umUIInitArgs);
+            UMGR.Register<UMAudio>(umAudioInitArgs);
             UMGR.Register<UMScene>();
-            UMGR.Register<UMDataPer>();
-            UMGR.Register<UMConfig>();
-            UMGR.Register<UMRes>();
-            UMGR.Register<UMEvent>();
+            UMGR.Register<UMDataPer>(umDataPerInitArgs);
+            UMGR.Register<UMConfig>(umConfigInitArgs);
+            UMGR.Register<UMRes>(umResourceInitArgs);
+            UMGR.Register<UMEvent>(umEventInitArgs);
             UMGR.Register<UMGOPools>();
+
+            // 测试不传参数
+            // UMGR.Register<UMUI>();
+            // UMGR.Register<UMAudio>();
+            // UMGR.Register<UMScene>();
+            // UMGR.Register<UMDataPer>();
+            // UMGR.Register<UMConfig>();
+            // UMGR.Register<UMRes>();
+            // UMGR.Register<UMEvent>();
+            // UMGR.Register<UMGOPools>();
+
             UMGR.InitModules((val) =>
             {
                 UMBaseModule module = val.InitModule;
@@ -86,7 +98,7 @@ namespace Game.Scripts.Scene.Launch
                 m_slidLaunchProgress.value = val.InitProgress;
                 if (val.InitState)
                 {
-                    // OnUMGRInitModulesFinished();
+                    OnUMGRInitModulesFinished();
                 }
             });
         }
@@ -118,6 +130,8 @@ namespace Game.Scripts.Scene.Launch
             UMGR.Get<UMAudio>().Effect.Mute = bool.Parse(audioEffectMute);
             string audioEffectVolume = UMGR.Get<UMDataPer>().Read(GameDataPerKey.AudioEffectVolume, "1");
             UMGR.Get<UMAudio>().Effect.Volume = float.Parse(audioEffectVolume);
+
+            // UMGR.Get<UMUI>().Canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 
             GameUI.OpenDebug();
             // 进入主界面
