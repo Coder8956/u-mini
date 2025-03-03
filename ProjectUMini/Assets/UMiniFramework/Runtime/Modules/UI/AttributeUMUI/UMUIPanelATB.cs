@@ -1,7 +1,7 @@
 ﻿using System;
 using UMiniFramework.Runtime.Common;
 
-namespace UMiniFramework.Runtime.Modules.UI.UMUIAttribute
+namespace UMiniFramework.Runtime.Modules.UI.AttributeUMUI
 {
     [AttributeUsage(AttributeTargets.Class)]
     public class UMUIPanelATB : Attribute

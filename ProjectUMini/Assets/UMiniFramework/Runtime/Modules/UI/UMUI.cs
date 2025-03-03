@@ -6,7 +6,7 @@ using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Modules.UI.InitArgs;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UMiniFramework.Runtime.Utils;
 using Unity.VisualScripting;
 using UnityEngine;

@@ -3,7 +3,7 @@ using Game.Scripts.GameEvent;
 using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;

@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.Scene;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEngine;
 using UnityEngine.UI;
 

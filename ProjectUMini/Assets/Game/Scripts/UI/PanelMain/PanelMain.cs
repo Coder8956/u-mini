@@ -1,6 +1,6 @@
 ﻿using Game.Scripts.Common;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEngine;
 using UnityEngine.UI;
 

@@ -6,7 +6,7 @@ using System.Reflection;
 using UMiniFramework.Editor.EUtils;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;

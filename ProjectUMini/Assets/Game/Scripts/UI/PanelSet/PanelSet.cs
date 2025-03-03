@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.UMUIAttribute;
+using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
