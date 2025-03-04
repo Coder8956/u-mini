@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using Game.Scripts.Common;
 using Game.Scripts.GameEvent;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Audio;
 using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Modules.Audio.InitArgs;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Config;
-using UMiniFramework.Runtime.Modules.Config.Base;
 using UMiniFramework.Runtime.Modules.Config.InitArgs;
 using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers;
 using UMiniFramework.Runtime.Modules.DataPer.InitArgs;
@@ -15,6 +15,7 @@ using UMiniFramework.Runtime.Modules.Event;
 using UMiniFramework.Runtime.Modules.Event.InitArgs;
 using UMiniFramework.Runtime.Modules.GOPools;
 using UMiniFramework.Runtime.Modules.Manager;
+using UMiniFramework.Runtime.Modules.Manager.Info;
 using UMiniFramework.Runtime.Modules.Resource;
 using UMiniFramework.Runtime.Modules.Resource.InitArgs;
 using UMiniFramework.Runtime.Modules.Resource.UMResHandlers;
@@ -86,24 +87,31 @@ namespace Game.Scripts.Scene.Launch
             // UMGR.Register<UMEvent>();
             // UMGR.Register<UMGOPools>();
 
-            UMGR.InitModules((val) =>
-            {
-                UMBaseModule module = val.InitModule;
-
-                string moduleTypeStr = module == null ? "Finished" : module.ModuleType.ToString();
-
-                m_txtProgressTip.text = $"Loading {moduleTypeStr}. {val.InitProgress * 100}%";
-
-                Debug.Log($"Init modules progress: {val.InitProgress}. module: {moduleTypeStr}");
-                m_slidLaunchProgress.value = val.InitProgress;
-                if (val.InitState)
-                {
-                    OnUMGRInitModulesFinished();
-                }
-            });
+            UMGR.InitModules(UMGRMIPHandler);
         }
 
-        private void OnUMGRInitModulesFinished()
+        private void UMGRMIPHandler(InitProgressInfo info)
+        {
+            UMBaseModule module = info.InitModule;
+            float initProgress = info.InitProgress;
+
+            if (!info.InitState)
+            {
+                UMModuleType moduleType = module.ModuleType;
+                string moduleTypeStr = moduleType.ToString();
+                Debug.Log($"Init modules progress: {info.InitProgress}. module: {moduleTypeStr}");
+                UpdateInitProgressUI(moduleTypeStr, initProgress);
+            }
+            else
+            {
+                // 处理初始化完成的状态
+                Debug.Log($"Init modules progress: {info.InitProgress}. modules init finished.");
+                UpdateInitProgressUI("Finished", initProgress);
+                GameLaunchFunc();
+            }
+        }
+
+        private void GameLaunchFunc()
         {
             GameAudioTable gameAudioTable = UMGR.Get<UMConfig>().GetTable<GameAudioTable>();
             for (var i = 0; i < gameAudioTable.TableData.Count; i++)
@@ -138,6 +146,12 @@ namespace Game.Scripts.Scene.Launch
             GameUI.OpenDebug();
             // 进入主界面
             UMGR.Get<UMScene>().Load(GameScene.Main);
+        }
+
+        private void UpdateInitProgressUI(string tip, float progressVal)
+        {
+            m_txtProgressTip.text = $"Loading {tip}. {progressVal * 100}%";
+            m_slidLaunchProgress.value = progressVal;
         }
     }
 }

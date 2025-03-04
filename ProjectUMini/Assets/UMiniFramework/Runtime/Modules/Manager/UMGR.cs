@@ -27,8 +27,8 @@ namespace UMiniFramework.Runtime.Modules.Manager
         private static FieldInfo Field_IPI_InitState;
         private static FieldInfo Field_IPI_InitModule;
         private static FieldInfo Field_IPI_InitProgress;
-        
-        private IEnumerator InitModulesCoro(Action<InitProgressInfo> initCallback)
+
+        private IEnumerator InitModulesCoro(Action<InitProgressInfo> MIPHandler)
         {
             Type IPIType = typeof(InitProgressInfo);
             Field_IPI_InitState = UMUtilCommon.GetObjectNoPublicField(IPIType, "m_initState");
@@ -46,7 +46,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 ModuleRegisterInfo registerInfo = ele.Value;
                 Field_IPI_InitModule.SetValue(initInfo, registerInfo.Module);
                 Field_IPI_InitProgress.SetValue(initInfo, (initedNum / moduleCount));
-                initCallback?.Invoke(initInfo);
+                MIPHandler?.Invoke(initInfo);
                 Type moduleType = registerInfo.Module.GetType();
                 ModuleInitMethod = UMUtilCommon.GetObjectNoPublicMethod(moduleType, "Init");
                 yield return ModuleInitMethod.Invoke(registerInfo.Module, new object[] {registerInfo.InitArgs});
@@ -56,7 +56,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
             Field_IPI_InitModule.SetValue(initInfo, null);
             Field_IPI_InitProgress.SetValue(initInfo, (initedNum / moduleCount));
             Field_IPI_InitState.SetValue(initInfo, true);
-            initCallback?.Invoke(initInfo);
+            MIPHandler?.Invoke(initInfo);
         }
 
         private static string GetModuleKey<T>() where T : UMBaseModule
@@ -91,9 +91,13 @@ namespace UMiniFramework.Runtime.Modules.Manager
             }
         }
 
-        public static void InitModules(Action<InitProgressInfo> initCallback)
+        /// <summary>
+        /// 初始化注册的模块
+        /// </summary>
+        /// <param name="moduleInitInfoHandler">模块初始化进度处理器</param>
+        public static void InitModules(Action<InitProgressInfo> moduleInitInfoHandler)
         {
-            UMGR_Instance.StartCoroutine(UMGR_Instance.InitModulesCoro(initCallback));
+            UMGR_Instance.StartCoroutine(UMGR_Instance.InitModulesCoro(moduleInitInfoHandler));
         }
 
         public static T Get<T>() where T : UMBaseModule
