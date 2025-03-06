@@ -99,13 +99,13 @@ namespace Game.Scripts.Scene.Launch
             {
                 UMModuleType moduleType = module.ModuleType;
                 string moduleTypeStr = moduleType.ToString();
-                Debug.Log($"Init modules progress: {info.InitProgress}. module: {moduleTypeStr}");
+                // Debug.Log($"Init modules progress: {info.InitProgress}. module: {moduleTypeStr}");
                 UpdateInitProgressUI(moduleTypeStr, initProgress);
             }
             else
             {
                 // 处理初始化完成的状态
-                Debug.Log($"Init modules progress: {info.InitProgress}. modules init finished.");
+                // Debug.Log($"Init modules progress: {info.InitProgress}. modules init finished.");
                 UpdateInitProgressUI("Finished", initProgress);
                 GameLaunchFunc();
             }

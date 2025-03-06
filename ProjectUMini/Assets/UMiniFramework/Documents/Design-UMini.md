@@ -27,13 +27,13 @@ private void UMGRMIPHandler(InitProgressInfo info)
     if (!info.InitState)
     {
         UMModuleType moduleType = module.ModuleType;
-        string moduleTypeStr = moduleType.ToStri();
-        Debug.Log($"Init modules progress: {infInitProgress}. module: {moduleTypeStr}");
+        string moduleTypeStr = moduleType.ToString();
+        Debug.Log($"Init modules progress: {initProgress}. module: {moduleTypeStr}");
     }
     else
     {
         // 处理初始化完成的状态
-        Debug.Log($"Init modules progress: {infInitProgress}. modules init finished.");
+        Debug.Log($"Init modules progress: {initProgress}. modules init finished.");
         GameLaunchFunc();
     }
 }

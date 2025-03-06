@@ -53,6 +53,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 initedNum++;
             }
 
+            UMUtilDebug.Log($"UMGR InitModules Finished.");
             Field_IPI_InitModule.SetValue(initInfo, null);
             Field_IPI_InitProgress.SetValue(initInfo, (initedNum / moduleCount));
             Field_IPI_InitState.SetValue(initInfo, true);
@@ -87,7 +88,7 @@ namespace UMiniFramework.Runtime.Modules.Manager
                 T module = UMUtilCommon.CreateGameObject<T>(key, UMGR_GameObject);
                 ModuleRegisterInfo registerInfo = new ModuleRegisterInfo(module, initArgs);
                 ModuleDic.Add(key, registerInfo);
-                UMUtilDebug.Log($"UMGR register module: {key}.");
+                // UMUtilDebug.Log($"UMGR register module: {key}.");
             }
         }
 

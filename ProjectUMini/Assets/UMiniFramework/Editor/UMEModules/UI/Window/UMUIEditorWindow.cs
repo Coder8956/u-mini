@@ -377,6 +377,14 @@ namespace UMiniFramework.Editor.UMEModules.UI
         {
             // EditorGUILayout.HelpBox("This is the content of Tab 1.", MessageType.Info);
             DrawPopupUIPanel();
+
+            if (m_createPanelAttribute == null
+                && CurtUIClassOption() != INVALID_UMUI)
+            {
+                GUILayout.Label($"{CurtUIClassOption()} does not have a [UMUIPanelATB] attribute.", m_redLabelStyle);
+                return;
+            }
+
             DrawUIPanelInfo();
             DrawSelectUIPanelPrefabRootFolder();
 
