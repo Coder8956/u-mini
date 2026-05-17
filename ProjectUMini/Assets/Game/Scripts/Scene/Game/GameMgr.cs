@@ -186,16 +186,18 @@ namespace Game.Scripts.Scene.Game
                 mouseScreenPosition.z = 10f; // 假设你希望鼠标在离摄像机10个单位的位置
 
                 // 获取世界坐标
-                Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mouseScreenPosition);
+                Vector3 mouseWorldPosition = m_gameCamera.ScreenToWorldPoint(mouseScreenPosition);
 
                 // 打印鼠标在3D空间中的位置
                 // Debug.Log(mouseWorldPosition);
 
                 // 计算发射方向
                 Vector3 shootDirec = mouseWorldPosition - m_gameCamera.transform.position;
+                // Debug.DrawRay(m_gameCamera.transform.position, shootDirec * 100);
 
                 // 在射线碰撞点实例化一个球体
                 GameObject shootBullet = m_bulletPool.Get();
+                shootBullet.transform.position = m_gameCamera.transform.position;
                 GameBullet bulletComponent = shootBullet.GetComponent<GameBullet>();
                 bulletComponent.SetData(m_bulletData);
                 bulletComponent.OnHitGo = OnHitGo;
