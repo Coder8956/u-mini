@@ -2,13 +2,10 @@
 using System.Collections;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Resource.UMResHandlers;
-using UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
 using Object = UnityEngine.Object;
 
-namespace UMiniFramework.Runtime.Modules.Resource
+namespace UMiniFramework.Runtime.Modules
 {
     /// <summary>
     /// UI模块, 同时也是UI的根Canvas

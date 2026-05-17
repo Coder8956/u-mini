@@ -1,7 +1,6 @@
-﻿using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMResLoadConfigHandler : IUMLoadConfigHandler
     {

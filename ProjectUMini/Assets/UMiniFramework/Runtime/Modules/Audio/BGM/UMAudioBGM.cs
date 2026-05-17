@@ -1,10 +1,8 @@
 ﻿using System.Collections.Generic;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Audio.Base;
-using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Audio.BGM
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMAudioBGM : UMAudioFunc
     {

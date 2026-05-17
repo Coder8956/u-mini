@@ -1,6 +1,5 @@
 ﻿using Game.Scripts.UI;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI;
 
 namespace Game.Scripts.Common
 {
@@ -15,11 +14,11 @@ namespace Game.Scripts.Common
         {
             if (PanelDebug == null)
             {
-                PanelDebug = UMF.Get<UMUI>().Create<PanelDebug>();
+                PanelDebug = UMF.UI.Create<PanelDebug>();
             }
 
-            int topLayer = UMF.Get<UMUI>().TopLayerIndex;
-            UMF.Get<UMUI>().Open(PanelDebug, topLayer);
+            int topLayer = UMF.UI.TopLayerIndex;
+            UMF.UI.Open(PanelDebug, topLayer);
         }
 
         /// <summary>
@@ -28,7 +27,7 @@ namespace Game.Scripts.Common
         public static void CloseDebug()
         {
             if (PanelDebug == null) return;
-            UMF.Get<UMUI>().Close(PanelDebug);
+            UMF.UI.Close(PanelDebug);
         }
     }
 }

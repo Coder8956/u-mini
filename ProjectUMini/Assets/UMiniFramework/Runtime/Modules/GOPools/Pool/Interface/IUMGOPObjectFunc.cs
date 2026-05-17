@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.GOPools.Pool
+﻿namespace UMiniFramework.Runtime.Modules
 {
     public interface IUMGOPObjectFunc
     {

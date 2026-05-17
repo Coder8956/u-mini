@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface
+namespace UMiniFramework.Runtime.Modules
 {
     public interface IUMResHandler
     {

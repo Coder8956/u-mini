@@ -1,8 +1,9 @@
 ﻿// UMiniFramework config automatically generated, please do not modify it
-using UMiniFramework.Runtime.Utils;
-using UMiniFramework.Runtime.Modules.Config.Base;
+
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using UMiniFramework.Runtime.Modules;
+using UMiniFramework.Runtime.Utils;
 
 public class LevelTable : UMConfigTable
 {
@@ -10,9 +11,18 @@ public class LevelTable : UMConfigTable
     /// 配置文件路径
     /// </summary>
     private const string ConfigAssetPath = "Assets/Game/Resources/ConfigData/level";
-    public override string AssetPath { get { return ConfigAssetPath; } }
+
+    public override string AssetPath
+    {
+        get { return ConfigAssetPath; }
+    }
+
     private const string ConfigLoadPath = "ConfigData/level";
-    public override string LoadPath { get { return ConfigLoadPath; } }
+
+    public override string LoadPath
+    {
+        get { return ConfigLoadPath; }
+    }
 
     /// <summary>
     /// 包含在配置表中的数据

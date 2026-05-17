@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UMiniFramework.Runtime.Modules.UI.Base
+namespace UMiniFramework.Runtime.Modules
 {
     public abstract class UMUIPanel : MonoBehaviour
     {

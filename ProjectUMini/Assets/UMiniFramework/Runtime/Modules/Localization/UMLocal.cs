@@ -2,12 +2,9 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base;
 using UMiniFramework.Runtime.Utils;
-using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Localization
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMLocal : UMBaseModule
     {

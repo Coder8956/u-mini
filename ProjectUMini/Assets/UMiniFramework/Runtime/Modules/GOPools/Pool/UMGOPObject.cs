@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.GOPools.Pool
+namespace UMiniFramework.Runtime.Modules
 {
     /// <summary>
     /// 游戏对象池生成的物体

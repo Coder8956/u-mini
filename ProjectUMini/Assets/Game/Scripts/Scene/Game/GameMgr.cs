@@ -2,14 +2,8 @@
 using Game.Scripts.Common;
 using Game.Scripts.Components;
 using Game.Scripts.GameEvent;
-using UMiniFramework.Runtime.Modules.Audio;
-using UMiniFramework.Runtime.Modules.Config;
-using UMiniFramework.Runtime.Modules.Event;
-using UMiniFramework.Runtime.Modules.GOPools;
-using UMiniFramework.Runtime.Modules.GOPools.Pool;
+using UMiniFramework.Runtime.Modules;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.Resource;
-using UMiniFramework.Runtime.Modules.UI;
 using UnityEngine;
 
 namespace Game.Scripts.Scene.Game
@@ -35,19 +29,19 @@ namespace Game.Scripts.Scene.Game
         private void Start()
         {
             m_blocks = new List<GameObject>();
-            m_levelData = UMF.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
-            m_bulletData = UMF.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
-            m_blockData = UMF.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
+            m_levelData = UMF.Config.GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
+            m_bulletData = UMF.Config.GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
+            m_blockData = UMF.Config.GetTable<BlockTable>().GetDataById(m_levelData.blockId);
 
-            m_bulletPrefab = UMF.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
-            m_bulletPool = UMF.Get<UMGOPools>().CreatePool(GOPoolTags.BulletPoolTag, m_bulletPrefab);
+            m_bulletPrefab = UMF.Res.Load<GameObject>(m_bulletData.bulletPath);
+            m_bulletPool = UMF.Pools.CreatePool(GOPoolTags.BulletPoolTag, m_bulletPrefab);
             // m_bulletPool.OnGet = OnGetBullet;
-            m_blockPrefab = UMF.Get<UMRes>().Load<GameObject>(m_blockData.blockPath);
+            m_blockPrefab = UMF.Res.Load<GameObject>(m_blockData.blockPath);
 
-            GameObject explosionVFXPrefab = UMF.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
-            m_explosionVFXPool = UMF.Get<UMGOPools>().CreatePool(GOPoolTags.ExplosionVFXPoolTag, explosionVFXPrefab);
+            GameObject explosionVFXPrefab = UMF.Res.Load<GameObject>("VFX/VFX_Explosion");
+            m_explosionVFXPool = UMF.Pools.CreatePool(GOPoolTags.ExplosionVFXPoolTag, explosionVFXPrefab);
 
-            UMF.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
+            UMF.Audio.BGM.Play(m_levelData.bgmId);
             GameUI.OpenGame(OnExitGame);
 
             InitGame();
@@ -135,7 +129,7 @@ namespace Game.Scripts.Scene.Game
 
         private void OnDestroyBlock(GameObject block)
         {
-            UMF.Get<UMEvent>().Dispatch(GameEventTags.AddScore, new ECAddScore(1));
+            UMF.Event.Dispatch(GameEventTags.AddScore, new ECAddScore(1));
             m_blocks.Remove(block);
             if (m_blocks.Count < 1)
             {
@@ -146,8 +140,8 @@ namespace Game.Scripts.Scene.Game
 
         private void OnExitGame()
         {
-            UMF.Get<UMGOPools>().DestroyPool(GOPoolTags.BulletPoolTag);
-            UMF.Get<UMGOPools>().DestroyPool(GOPoolTags.ExplosionVFXPoolTag);
+            UMF.Pools.DestroyPool(GOPoolTags.BulletPoolTag);
+            UMF.Pools.DestroyPool(GOPoolTags.ExplosionVFXPoolTag);
         }
 
         private void OnHitGo(GameObject bullet)
@@ -173,7 +167,7 @@ namespace Game.Scripts.Scene.Game
         private bool IsCanShoot()
         {
             return Input.GetMouseButtonDown(0)
-                   && !UMF.Get<UMUI>().IsClickUI();
+                   && !UMF.UI.IsClickUI();
         }
 
         private void Update()
@@ -181,7 +175,7 @@ namespace Game.Scripts.Scene.Game
             if (IsCanShoot())
             {
                 // Debug.Log("shoot");
-                UMF.Get<UMEvent>().Dispatch(GameEventTags.AddShootCount, new ECAddShootCount(1));
+                UMF.Event.Dispatch(GameEventTags.AddShootCount, new ECAddShootCount(1));
 
                 // 获取鼠标在屏幕上的位置
                 Vector3 mouseScreenPosition = Input.mousePosition;

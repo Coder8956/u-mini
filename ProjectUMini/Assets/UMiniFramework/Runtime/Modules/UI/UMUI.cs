@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
-using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -13,7 +10,7 @@ using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-namespace UMiniFramework.Runtime.Modules.UI
+namespace UMiniFramework.Runtime.Modules
 {
     /// <summary>
     /// UI模块, 同时也是UI的根Canvas
@@ -104,7 +101,7 @@ namespace UMiniFramework.Runtime.Modules.UI
             // 添加 CanvasScaler 组件
             m_canvasScaler = gameObject.AddComponent<CanvasScaler>();
             m_canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            m_canvasScaler.referenceResolution = new Vector2(3840,2160);
+            m_canvasScaler.referenceResolution = new Vector2(3840, 2160);
         }
 
         /// <summary>

@@ -3,12 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
-using UMiniFramework.Runtime.Modules.Event.Listener;
 using UMiniFramework.Runtime.Utils;
 
-namespace UMiniFramework.Runtime.Modules.Event
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMEvent : UMBaseModule
     {

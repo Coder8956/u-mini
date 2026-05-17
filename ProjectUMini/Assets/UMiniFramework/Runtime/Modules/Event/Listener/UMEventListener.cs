@@ -1,8 +1,7 @@
 ﻿using System;
-using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
 using UnityEngine.Events;
 
-namespace UMiniFramework.Runtime.Modules.Event.Listener
+namespace UMiniFramework.Runtime.Modules
 {
     public enum UMListenType
     {

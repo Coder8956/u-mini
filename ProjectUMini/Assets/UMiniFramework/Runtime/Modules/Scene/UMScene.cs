@@ -1,12 +1,11 @@
 ﻿using System.Collections;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace UMiniFramework.Runtime.Modules.Scene
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMScene : UMBaseModule
     {

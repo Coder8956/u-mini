@@ -1,12 +1,6 @@
 ﻿using Game.Scripts.Common;
-using UMiniFramework.Runtime.Modules.Audio;
-using UMiniFramework.Runtime.Modules.Config;
+using UMiniFramework.Runtime.Modules;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.Resource;
-using UMiniFramework.Runtime.Modules.UI;
-using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
-using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -67,53 +61,53 @@ namespace Game.Scripts.UI
             m_btnDumpCreatedUI?.onClick.AddListener(() =>
             {
                 // 输出创建的 UI
-                UMF.Get<UMUI>().DumpCreatedUI();
+                UMF.UI.DumpCreatedUI();
             });
 
             m_btnPlayBGM_1?.onClick.AddListener(() =>
             {
                 // 播放 BGM_Main
-                UMF.Get<UMAudio>().BGM.Play(GameAudio.BGM_Main);
+                UMF.Audio.BGM.Play(GameAudio.BGM_Main);
             });
 
             m_btnPlayBGM_2?.onClick.AddListener(() =>
             {
                 // 播放 BGM_0
-                UMF.Get<UMAudio>().BGM.Play(GameAudio.BGM_0);
+                UMF.Audio.BGM.Play(GameAudio.BGM_0);
             });
 
             m_btnPlayEffect_1?.onClick.AddListener(() =>
             {
                 // 播放 effect-1
-                UMF.Get<UMAudio>().Effect.Play(GameAudio.Effect_1);
+                UMF.Audio.Effect.Play(GameAudio.Effect_1);
             });
             m_btnPlayEffect_2?.onClick.AddListener(() =>
             {
                 // 播放 effect-2
-                UMF.Get<UMAudio>().Effect.Play(GameAudio.Effect_2);
+                UMF.Audio.Effect.Play(GameAudio.Effect_2);
             });
             m_btnPlayEffect_3?.onClick.AddListener(() =>
             {
                 // 播放 effect-3
-                UMF.Get<UMAudio>().Effect.Play(GameAudio.Effect_3);
+                UMF.Audio.Effect.Play(GameAudio.Effect_3);
             });
 
             m_togAudioEffect.onValueChanged.AddListener((val) =>
             {
                 // 控制音效是否静音
-                UMF.Get<UMAudio>().Effect.Mute = val;
+                UMF.Audio.Effect.Mute = val;
             });
 
             m_sldAudioEffect.onValueChanged.AddListener((val) =>
             {
                 // 控制音效音量
-                UMF.Get<UMAudio>().Effect.Volume = val;
+                UMF.Audio.Effect.Volume = val;
             });
 
             m_btnPrintASInfo?.onClick.AddListener(() =>
             {
                 // 打印音效数量
-                UMF.Get<UMAudio>().Effect.PrintASInfo();
+                UMF.Audio.Effect.PrintASInfo();
             });
 
             InitDataPerDebug();
@@ -141,7 +135,7 @@ namespace Game.Scripts.UI
             string id = "bullet_89001";
             m_btnReadConfig?.onClick.AddListener(() =>
             {
-                BulletData data = UMF.Get<UMConfig>().GetTable<BulletTable>().GetDataById(id);
+                BulletData data = UMF.Config.GetTable<BulletTable>().GetDataById(id);
                 Debug.Log($"configData: id: {data.id};  {data.bulletPath}");
             });
         }
@@ -151,7 +145,7 @@ namespace Game.Scripts.UI
             string path = "Bullet/Bullet_0";
             m_btnLoadRes?.onClick.AddListener(() =>
             {
-                GameObject go = UMF.Get<UMRes>().Load<GameObject>(path);
+                GameObject go = UMF.Res.Load<GameObject>(path);
                 Instantiate(go);
             });
         }
@@ -162,8 +156,8 @@ namespace Game.Scripts.UI
 
         protected override void OnOpenPanel()
         {
-            m_togAudioEffect.isOn = UMF.Get<UMAudio>().Effect.Mute;
-            m_sldAudioEffect.value = UMF.Get<UMAudio>().Effect.Volume;
+            m_togAudioEffect.isOn = UMF.Audio.Effect.Mute;
+            m_sldAudioEffect.value = UMF.Audio.Effect.Volume;
         }
 
         protected override void OnClosePanel()

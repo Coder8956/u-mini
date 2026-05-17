@@ -3,14 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Config.Base;
-using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers;
-using UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
-using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Config
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMConfig : UMBaseModule
     {

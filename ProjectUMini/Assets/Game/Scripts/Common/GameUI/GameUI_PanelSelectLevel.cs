@@ -1,6 +1,5 @@
 ﻿using Game.Scripts.UI;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI;
 
 namespace Game.Scripts.Common
 {
@@ -12,16 +11,16 @@ namespace Game.Scripts.Common
         {
             if (PanelSelectLevel == null)
             {
-                PanelSelectLevel = UMF.Get<UMUI>().Create<PanelSelectLevel>();
+                PanelSelectLevel = UMF.UI.Create<PanelSelectLevel>();
             }
 
-            UMF.Get<UMUI>().Open(PanelSelectLevel);
+            UMF.UI.Open(PanelSelectLevel);
         }
-        
+
         public static void CloseSelectLevel()
         {
             if (PanelSelectLevel == null) return;
-            UMF.Get<UMUI>().Close(PanelSelectLevel);
+            UMF.UI.Close(PanelSelectLevel);
         }
     }
 }

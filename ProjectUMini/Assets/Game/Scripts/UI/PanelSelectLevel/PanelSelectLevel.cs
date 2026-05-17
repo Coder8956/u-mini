@@ -1,8 +1,6 @@
 ﻿using Game.Scripts.Common;
+using UMiniFramework.Runtime.Modules;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.Scene;
-using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,7 +17,7 @@ namespace Game.Scripts.UI
         private void EnterGame(string levelId)
         {
             GameGlobalVar.SelectLevelId = levelId;
-            UMF.Get<UMScene>().Load(GameScene.Game);
+            UMF.Scene.Load(GameScene.Game);
             GameUI.CloseMain();
             GameUI.CloseSelectLevel();
         }

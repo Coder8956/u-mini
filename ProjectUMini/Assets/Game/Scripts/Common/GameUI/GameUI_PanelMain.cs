@@ -1,6 +1,5 @@
 ﻿using Game.Scripts.UI;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI;
 
 namespace Game.Scripts.Common
 {
@@ -15,10 +14,10 @@ namespace Game.Scripts.Common
         {
             if (PanelMain == null)
             {
-                PanelMain = UMF.Get<UMUI>().Create<PanelMain>();
+                PanelMain = UMF.UI.Create<PanelMain>();
             }
 
-            UMF.Get<UMUI>().Open(PanelMain);
+            UMF.UI.Open(PanelMain);
         }
 
         /// <summary>
@@ -27,7 +26,7 @@ namespace Game.Scripts.Common
         public static void CloseMain()
         {
             if (PanelMain == null) return;
-            UMF.Get<UMUI>().Close(PanelMain);
+            UMF.UI.Close(PanelMain);
         }
     }
 }

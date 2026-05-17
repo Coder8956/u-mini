@@ -1,7 +1,4 @@
-﻿using System;
-using Game.Scripts.Common;
-using UMiniFramework.Runtime.Modules.Audio;
-using UMiniFramework.Runtime.Modules.Manager;
+﻿using UMiniFramework.Runtime.Modules.Manager;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -41,7 +38,7 @@ namespace Game.Scripts.Components
         {
             if (HitGO != null) return;
 
-            UMF.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
+            UMF.Audio.Effect.Play(m_data.exploAudioId);
             // m_rb.AddExplosionForce(10, transform.position, 10);
 
             if (other.gameObject.CompareTag("Monster"))

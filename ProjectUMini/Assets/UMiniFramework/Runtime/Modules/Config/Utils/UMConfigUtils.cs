@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace UMiniFramework.Runtime.Modules.Config
+namespace UMiniFramework.Runtime.Modules
 {
     public static class UMConfigUtils
     {

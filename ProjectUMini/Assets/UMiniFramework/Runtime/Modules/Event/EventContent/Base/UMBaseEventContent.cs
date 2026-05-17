@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.Event.EventContent.Base
+﻿namespace UMiniFramework.Runtime.Modules
 {
     public abstract class UMBaseEventContent
     {

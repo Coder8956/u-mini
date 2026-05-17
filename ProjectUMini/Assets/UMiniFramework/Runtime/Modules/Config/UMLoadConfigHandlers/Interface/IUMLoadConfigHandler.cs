@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.Config.UMLoadConfigHandlers.Interface
+﻿namespace UMiniFramework.Runtime.Modules
 {
     public interface IUMLoadConfigHandler
     {

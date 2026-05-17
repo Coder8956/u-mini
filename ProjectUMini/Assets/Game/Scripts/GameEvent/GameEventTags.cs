@@ -1,4 +1,4 @@
-﻿namespace Game.Scripts.GameEvent
+﻿namespace Game.Scripts
 {
     public class GameEventTags
     {

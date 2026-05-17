@@ -1,9 +1,6 @@
 ﻿using Game.Scripts.Common;
-using UMiniFramework.Runtime.Modules.Audio;
+using UMiniFramework.Runtime.Modules;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
-using UMiniFramework.Runtime.Modules.UMDataPer;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,11 +21,11 @@ namespace Game.Scripts.UI
         {
             m_btnClose.onClick.AddListener(() => { GameUI.CloseSet(); });
 
-            m_togAudioBGM.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().BGM.Mute = val; });
-            m_sldAudioBGM.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().BGM.Volume = val; });
+            m_togAudioBGM.onValueChanged.AddListener((val) => { UMF.Audio.BGM.Mute = val; });
+            m_sldAudioBGM.onValueChanged.AddListener((val) => { UMF.Audio.BGM.Volume = val; });
 
-            m_togAudioEffect.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().Effect.Mute = val; });
-            m_sldAudioEffect.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().Effect.Volume = val; });
+            m_togAudioEffect.onValueChanged.AddListener((val) => { UMF.Audio.Effect.Mute = val; });
+            m_sldAudioEffect.onValueChanged.AddListener((val) => { UMF.Audio.Effect.Volume = val; });
         }
 
         protected override void OnDestroyPanel()
@@ -38,11 +35,11 @@ namespace Game.Scripts.UI
         protected override void OnOpenPanel()
         {
             GameUI.SetMaskColor(gameObject);
-            m_togAudioBGM.isOn = UMF.Get<UMAudio>().BGM.Mute;
-            m_sldAudioBGM.value = UMF.Get<UMAudio>().BGM.Volume;
+            m_togAudioBGM.isOn = UMF.Audio.BGM.Mute;
+            m_sldAudioBGM.value = UMF.Audio.BGM.Volume;
 
-            m_togAudioEffect.isOn = UMF.Get<UMAudio>().Effect.Mute;
-            m_sldAudioEffect.value = UMF.Get<UMAudio>().Effect.Volume;
+            m_togAudioEffect.isOn = UMF.Audio.Effect.Mute;
+            m_sldAudioEffect.value = UMF.Audio.Effect.Volume;
         }
 
         protected override void OnClosePanel()

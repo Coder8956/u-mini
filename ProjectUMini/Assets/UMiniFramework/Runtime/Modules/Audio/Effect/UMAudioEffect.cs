@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Audio.Base;
-using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Audio.Effect
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMAudioEffect : UMAudioFunc
     {

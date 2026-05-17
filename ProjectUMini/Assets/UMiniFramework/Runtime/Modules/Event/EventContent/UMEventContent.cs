@@ -1,6 +1,6 @@
-﻿using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
+﻿using UMiniFramework.Runtime.Modules;
 
-namespace UMiniFramework.Runtime.Modules.Event.EventContent
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMEventContent : UMBaseEventContent
     {

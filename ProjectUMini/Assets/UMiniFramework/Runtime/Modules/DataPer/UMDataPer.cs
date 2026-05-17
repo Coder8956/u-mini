@@ -4,13 +4,11 @@ using System.IO;
 using System.Reflection;
 using Newtonsoft.Json;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.UMDataPer.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.UMDataPer
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMDataPer : UMBaseModule
     {

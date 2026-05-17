@@ -2,7 +2,7 @@
 using UMiniFramework.Runtime.Common;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Base
+namespace UMiniFramework.Runtime.Modules
 {
     /// <summary>
     /// UM功能模块基类

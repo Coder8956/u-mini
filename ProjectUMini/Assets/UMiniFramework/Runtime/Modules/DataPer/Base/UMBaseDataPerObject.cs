@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace UMiniFramework.Runtime.Modules.UMDataPer.Base
+namespace UMiniFramework.Runtime.Modules
 {
     public abstract class UMBaseDataPerObject
     {

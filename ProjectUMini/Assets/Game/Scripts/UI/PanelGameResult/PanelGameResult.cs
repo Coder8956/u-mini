@@ -1,9 +1,7 @@
 ﻿using Game.Scripts.Common;
 using Game.Scripts.GameEvent;
-using UMiniFramework.Runtime.Modules.Event;
+using UMiniFramework.Runtime.Modules;
 using UMiniFramework.Runtime.Modules.Manager;
-using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
@@ -23,7 +21,7 @@ namespace Game.Scripts.UI
         {
             m_btnAgain.onClick.AddListener(() =>
             {
-                UMF.Get<UMEvent>().Dispatch(GameEventTags.GameAgain);
+                UMF.Event.Dispatch(GameEventTags.GameAgain);
                 OnAgain?.Invoke();
                 GameUI.CloseGameResult();
             });

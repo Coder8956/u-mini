@@ -1,7 +1,6 @@
-﻿using UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface;
-using UnityEngine;
+﻿using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Resource.UMResHandlers
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMResDefaultHandler : IUMResHandler
     {

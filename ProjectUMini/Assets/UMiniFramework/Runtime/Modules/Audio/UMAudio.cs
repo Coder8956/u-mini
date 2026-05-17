@@ -1,12 +1,9 @@
 ﻿using System.Collections;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.Audio.BGM;
-using UMiniFramework.Runtime.Modules.Audio.Effect;
-using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 
-namespace UMiniFramework.Runtime.Modules.Audio
+namespace UMiniFramework.Runtime.Modules
 {
     public class UMAudio : UMBaseModule
     {

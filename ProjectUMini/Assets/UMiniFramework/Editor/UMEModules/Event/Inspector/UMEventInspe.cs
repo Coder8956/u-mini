@@ -2,9 +2,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Editor.EUtils;
-using UMiniFramework.Runtime.Modules.Event;
-using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
-using UMiniFramework.Runtime.Modules.Event.Listener;
+using UMiniFramework.Runtime.Modules;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Events;

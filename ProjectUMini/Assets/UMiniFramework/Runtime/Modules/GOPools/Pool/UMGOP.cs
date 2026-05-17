@@ -3,7 +3,7 @@ using System.Reflection;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.GOPools.Pool
+namespace UMiniFramework.Runtime.Modules
 {
     /// <summary>
     /// GameObject 对象池

@@ -1,4 +1,4 @@
-﻿namespace UMiniFramework.Runtime.Modules.Config.Base
+﻿namespace UMiniFramework.Runtime.Modules
 {
     public abstract class UMConfigTable
     {

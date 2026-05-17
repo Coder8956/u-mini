@@ -1,10 +1,9 @@
 ﻿using System;
-using UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace UMiniFramework.Runtime.Modules.Localization.LocalizationComponents
+namespace UMiniFramework.Runtime.Modules
 {
     [RequireComponent(typeof(Text))]
     public class UMLocalText : UMLocalComponent

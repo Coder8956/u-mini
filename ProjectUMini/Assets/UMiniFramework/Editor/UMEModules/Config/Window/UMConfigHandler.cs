@@ -286,7 +286,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             TableClassList.Add(tableClassName);
             scriptTableString.AppendLine($"{SCRIPT_TIP}");
             scriptTableString.AppendLine($"using UMiniFramework.Runtime.Utils;");
-            scriptTableString.AppendLine($"using UMiniFramework.Runtime.Modules.Config.Base;");
+            scriptTableString.AppendLine($"using UMiniFramework.Runtime.Modules;");
             scriptTableString.AppendLine($"using System.Collections.Generic;");
             scriptTableString.AppendLine($"using Newtonsoft.Json;");
             scriptTableString.AppendLine($"");

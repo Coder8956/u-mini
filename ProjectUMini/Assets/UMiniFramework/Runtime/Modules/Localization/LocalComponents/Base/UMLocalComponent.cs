@@ -3,7 +3,7 @@ using UMiniFramework.Runtime.Modules.Manager;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
 
-namespace UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base
+namespace UMiniFramework.Runtime.Modules
 {
     public abstract class UMLocalComponent : MonoBehaviour
     {
@@ -39,7 +39,7 @@ namespace UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base
                     UMUtilCommon.GetObjectNoPublicMethod(typeof(UMLocal), "RemoveLocalComponent");
             }
 
-            AddLocalComponentMethod?.Invoke(UMF.Get<UMLocal>(), new[] {this});
+            AddLocalComponentMethod?.Invoke(UMF.Local, new[] {this});
             OnAwake();
             bool legalID = !string.IsNullOrEmpty(m_localID);
             if (legalID)
@@ -50,7 +50,7 @@ namespace UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base
 
         private void OnDestroy()
         {
-            RemoveLocalComponentMethod?.Invoke(UMF.Get<UMLocal>(), new[] {this});
+            RemoveLocalComponentMethod?.Invoke(UMF.Local, new[] {this});
         }
 
         protected abstract void OnAwake();
@@ -59,7 +59,7 @@ namespace UMiniFramework.Runtime.Modules.Localization.LocalComponents.Base
 
         protected string LocalValue()
         {
-            return UMF.Get<UMLocal>().GetLocalValue(m_localID);
+            return UMF.Local.GetLocalValue(m_localID);
         }
     }
 }
