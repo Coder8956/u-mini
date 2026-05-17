@@ -15,10 +15,10 @@ namespace Game.Scripts.Common
         {
             if (PanelSet == null)
             {
-                PanelSet = UMGR.Get<UMUI>().Create<PanelSet>();
+                PanelSet = UMF.Get<UMUI>().Create<PanelSet>();
             }
 
-            UMGR.Get<UMUI>().Open(PanelSet);
+            UMF.Get<UMUI>().Open(PanelSet);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Game.Scripts.Common
         public static void CloseSet()
         {
             if (PanelSet == null) return;
-            UMGR.Get<UMUI>().Close(PanelSet);
+            UMF.Get<UMUI>().Close(PanelSet);
         }
     }
 }

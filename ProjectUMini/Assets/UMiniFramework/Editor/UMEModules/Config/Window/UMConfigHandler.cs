@@ -137,7 +137,9 @@ namespace UMiniFramework.Editor.UMEModules.Config
                     {
                         ConfigFieldInfo cfi = fieldInfos[j];
                         string currentKey = cfi.Field;
-                        string currentValue = table.Rows[i][cfi.ColumnIndex].ToString();
+
+                        // 获取值的时候为所有的"加上转义字符\
+                        string currentValue = table.Rows[i][cfi.ColumnIndex].ToString().Replace("\"", "\\\"");
 
                         switch (cfi.Type.ToLower())
                         {
@@ -385,7 +387,11 @@ namespace UMiniFramework.Editor.UMEModules.Config
             {
                 if (f.Extension == ".xlsx" || f.Extension == ".xls")
                 {
-                    configFiles.Add(f.FullName); //添加文件名到列表中  
+                    // 排除表格临时文件
+                    if (f.FullName.Contains("~$")) continue;
+
+                    //添加文件名到列表中
+                    configFiles.Add(f.FullName);
                 }
             }
 

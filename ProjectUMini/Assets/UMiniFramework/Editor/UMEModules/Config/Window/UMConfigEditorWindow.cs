@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using UMiniFramework.Runtime.Utils;
 using UnityEditor;
 using UnityEngine;
@@ -8,14 +9,20 @@ namespace UMiniFramework.Editor.UMEModules.Config
 {
     public class UMConfigEditorWindow : EditorWindow
     {
+        private const string KEY_CONFIG_PATH = "UMCFG_CONFIG_PATH";
+        private const string KEY_SCRIPTS_PATH = "UMCFG_SCRIPTS_PATH";
+        private const string KEY_DATA_PATH = "UMCFG_DATA_PATH";
+
         private const string READ_FILSE_TIP_1 = "Please click read button";
         private const string READ_FILSE_TIP_2 = "The configuration file was not read";
         private const string READ_FILSE_TIP_3 = "{0} configuration files were read";
         private const string GUI_STYLE_HELPBOX = "HelpBox";
+
         private string m_configInputDir = string.Empty;
         private string m_configScriptOutputDir = string.Empty;
-        private string m_readFilseTip = string.Empty;
         private string m_configJsonOutputDir = string.Empty;
+
+        private string m_readFilseTip = string.Empty;
         private GUIStyle m_redLabelStyle;
 
         // 滚动视图位置
@@ -43,12 +50,12 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath =
+                m_configInputDir =
                     EditorUtility.OpenFolderPanel("Select Config Input Folder", Application.dataPath, "");
 
-                if (!string.IsNullOrEmpty(selectedPath))
+                if (!string.IsNullOrEmpty(m_configInputDir))
                 {
-                    m_configInputDir = selectedPath;
+                    EditorPrefs.SetString(KEY_CONFIG_PATH, m_configInputDir);
                     m_readFilseTip = READ_FILSE_TIP_1;
                     m_configFiles.Clear();
                 }
@@ -58,7 +65,21 @@ namespace UMiniFramework.Editor.UMEModules.Config
             {
                 // 清除路径
                 m_configInputDir = string.Empty;
+                EditorPrefs.SetString(KEY_CONFIG_PATH, m_configInputDir);
                 m_configFiles.Clear();
+            }
+
+            if (GUILayout.Button("Open", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
+            {
+                // 清除路径
+                if (Directory.Exists(m_configInputDir))
+                {
+                    EditorUtility.RevealInFinder(m_configInputDir);
+                }
+                else
+                {
+                    EditorUtility.DisplayDialog("Invalid Config Directory", "Please select a valid directory.", "OK");
+                }
             }
 
             GUILayout.Label(m_configInputDir, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
@@ -77,12 +98,12 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath =
+                m_configScriptOutputDir =
                     EditorUtility.OpenFolderPanel("Select Script Output Folder", Application.dataPath, "");
 
-                if (!string.IsNullOrEmpty(selectedPath))
+                if (!string.IsNullOrEmpty(m_configScriptOutputDir))
                 {
-                    m_configScriptOutputDir = selectedPath;
+                    EditorPrefs.SetString(KEY_SCRIPTS_PATH, m_configScriptOutputDir);
                 }
             }
 
@@ -90,6 +111,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             {
                 // 清除路径
                 m_configScriptOutputDir = string.Empty;
+                EditorPrefs.SetString(KEY_SCRIPTS_PATH, m_configScriptOutputDir);
             }
 
             GUILayout.Label(m_configScriptOutputDir, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
@@ -108,12 +130,12 @@ namespace UMiniFramework.Editor.UMEModules.Config
             if (GUILayout.Button("Select", GUILayout.Width(50), GUILayout.Height(layoutHeight)))
             {
                 // 打开文件夹选择框
-                string selectedPath =
+                m_configJsonOutputDir =
                     EditorUtility.OpenFolderPanel("Select Json Output Folder", Application.dataPath, "");
 
-                if (!string.IsNullOrEmpty(selectedPath))
+                if (!string.IsNullOrEmpty(m_configJsonOutputDir))
                 {
-                    m_configJsonOutputDir = selectedPath;
+                    EditorPrefs.SetString(KEY_DATA_PATH, m_configJsonOutputDir);
                 }
             }
 
@@ -121,6 +143,7 @@ namespace UMiniFramework.Editor.UMEModules.Config
             {
                 // 清除路径
                 m_configJsonOutputDir = string.Empty;
+                EditorPrefs.SetString(KEY_DATA_PATH, m_configJsonOutputDir);
             }
 
             GUILayout.Label(m_configJsonOutputDir, GUI_STYLE_HELPBOX, GUILayout.Height(layoutHeight));
@@ -197,6 +220,15 @@ namespace UMiniFramework.Editor.UMEModules.Config
             {
                 m_configFiles = new List<string>();
             }
+
+            ReadPaths();
+        }
+
+        private void ReadPaths()
+        {
+            m_configInputDir = EditorPrefs.GetString(KEY_CONFIG_PATH, "");
+            m_configScriptOutputDir = EditorPrefs.GetString(KEY_SCRIPTS_PATH, "");
+            m_configJsonOutputDir = EditorPrefs.GetString(KEY_DATA_PATH, "");
         }
 
         private void OnGUI()

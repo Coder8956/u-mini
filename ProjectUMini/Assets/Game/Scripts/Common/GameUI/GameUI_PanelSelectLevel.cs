@@ -12,16 +12,16 @@ namespace Game.Scripts.Common
         {
             if (PanelSelectLevel == null)
             {
-                PanelSelectLevel = UMGR.Get<UMUI>().Create<PanelSelectLevel>();
+                PanelSelectLevel = UMF.Get<UMUI>().Create<PanelSelectLevel>();
             }
 
-            UMGR.Get<UMUI>().Open(PanelSelectLevel);
+            UMF.Get<UMUI>().Open(PanelSelectLevel);
         }
         
         public static void CloseSelectLevel()
         {
             if (PanelSelectLevel == null) return;
-            UMGR.Get<UMUI>().Close(PanelSelectLevel);
+            UMF.Get<UMUI>().Close(PanelSelectLevel);
         }
     }
 }

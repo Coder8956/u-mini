@@ -5,7 +5,6 @@ using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Modules.Event.EventContent.Base;
-using UMiniFramework.Runtime.Modules.Event.InitArgs;
 using UMiniFramework.Runtime.Modules.Event.Listener;
 using UMiniFramework.Runtime.Utils;
 
@@ -14,8 +13,6 @@ namespace UMiniFramework.Runtime.Modules.Event
     public class UMEvent : UMBaseModule
     {
         private Dictionary<string, List<UMEventListener>> m_eventDic;
-        private UMEventInitArgs m_initArgs = null;
-        private List<string> m_registerEventTags = null;
         private MethodInfo m_listenerHandleEventMethod = null;
 
         public override UMModuleType ModuleType
@@ -23,39 +20,19 @@ namespace UMiniFramework.Runtime.Modules.Event
             get => UMModuleType.Event;
         }
 
-        private void UseDefaultInitArgs()
-        {
-            m_registerEventTags = UMEventDIArgs.RegisterEventTagList();
-        }
-
-        private void ReadInitArgs()
-        {
-            m_registerEventTags = m_initArgs.RegisterEventTags;
-        }
-
-
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        protected override IEnumerator Init()
         {
             m_listenerHandleEventMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMEventListener), "HandleEvent");
             m_eventDic = new Dictionary<string, List<UMEventListener>>();
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMEventInitArgs>(initArgs);
-
-            if (m_initArgs == null)
-            {
-                UseDefaultInitArgs();
-            }
-            else
-            {
-                ReadInitArgs();
-            }
-
-            for (var i = 0; i < m_registerEventTags.Count; i++)
-            {
-                string eventTag = m_registerEventTags[i];
-                m_eventDic.Add(eventTag, new List<UMEventListener>());
-            }
+            UMUtilDebug.Log($"{GetType().Name} Inited");
 
             yield return null;
+        }
+
+        public void AddEvent(string eventTag)
+        {
+            if (m_eventDic.ContainsKey(eventTag)) return;
+            m_eventDic.Add(eventTag, new List<UMEventListener>());
         }
 
         public void AddListener(UMEventListener listener)
@@ -92,25 +69,20 @@ namespace UMiniFramework.Runtime.Modules.Event
 
             List<UMEventListener> eventTagListeners = m_eventDic[eventTag];
 
-            for (var i = 0; i < eventTagListeners.Count; i++)
+            for (var i = eventTagListeners.Count - 1; i >= 0; i--)
             {
-                m_listenerHandleEventMethod.Invoke(eventTagListeners[i], new object[] {content});
+                UMEventListener listener = eventTagListeners[i];
+                m_listenerHandleEventMethod.Invoke(listener, new object[] {content});
+                if (listener.ListenType == UMListenType.Once)
+                {
+                    eventTagListeners.Remove(listener);
+                }
             }
-
-            eventTagListeners.RemoveAll((listener) =>
-            {
-                // 移除只侦听一次的 listener
-                return listener.ListenType == UMListenType.Once;
-            });
         }
 
         public void RemoveListener(UMEventListener listener)
         {
-            if (listener == null)
-            {
-                throw new ArgumentNullException(nameof(listener), "The parameter cannot be null");
-            }
-
+            if (listener == null) return;
             if (m_eventDic.ContainsKey(listener.EventTag))
             {
                 m_eventDic[listener.EventTag].Remove(listener);

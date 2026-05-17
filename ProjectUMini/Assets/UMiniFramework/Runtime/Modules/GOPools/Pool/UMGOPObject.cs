@@ -9,6 +9,8 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
     {
         private UMGOP m_bornPool;
 
+        public UMGOP BornPool => m_bornPool;
+
         // public void BackBornPool()
         // {
         //     m_bornPool.Back(gameObject);

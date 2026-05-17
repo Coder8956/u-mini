@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Audio.Base;
 using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UMiniFramework.Runtime.Utils;
@@ -12,26 +13,20 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
         private Dictionary<string, UMAudioClipInfo> m_effectClipDic;
         private Queue<AudioSource> m_asQue;
         private List<AudioSource> m_asPlayingList;
-        private int m_initASCount = 0;
-        private int m_createdASCount = 0;
-        private List<UMAudioClipInfo> m_effectClips;
+        private const int DefaultASCount = 3;
+        private int m_keepASCount = DefaultASCount;
 
-        public const int MIN_EAS_COUNT = 3;
-
-        /// <summary>
-        /// 初始化 Effect Clip 字典
-        /// </summary>
-        private void InitEffectClipDic()
+        public int KeepAsCount
         {
-            m_effectClipDic = new Dictionary<string, UMAudioClipInfo>();
-            UMAudioClipInfo aci = null;
-            for (var i = 0; i < m_effectClips.Count; i++)
+            get { return m_keepASCount; }
+            set
             {
-                aci = m_effectClips[i];
-                AddAudioClip(aci);
+                value = Mathf.Clamp(value, DefaultASCount, int.MaxValue);
+                m_keepASCount = value;
             }
         }
 
+        private int m_createdASCount = 0;
         private bool m_mute = false;
         private float m_volume = 1;
 
@@ -75,7 +70,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             m_asQue = new Queue<AudioSource>();
             m_asPlayingList = new List<AudioSource>();
 
-            for (int i = 0; i < m_initASCount; i++)
+            for (int i = 0; i < KeepAsCount; i++)
             {
                 BackAS(CreateAS());
             }
@@ -112,7 +107,7 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             backAS.clip = null;
             backAS.enabled = false;
 
-            if (m_asQue.Count >= m_initASCount)
+            if (m_asQue.Count >= KeepAsCount)
             {
                 Destroy(backAS);
             }
@@ -147,11 +142,9 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             BackAS(audioSource);
         }
 
-        private void InitAudioEffect(List<UMAudioClipInfo> effectClips, int initASCount)
+        private void InitAudioEffect()
         {
-            m_effectClips = effectClips;
-            m_initASCount = Mathf.Clamp(initASCount, MIN_EAS_COUNT, int.MaxValue);
-            InitEffectClipDic();
+            m_effectClipDic = new Dictionary<string, UMAudioClipInfo>();
             InitASQue();
         }
 
@@ -178,6 +171,12 @@ namespace UMiniFramework.Runtime.Modules.Audio.Effect
             curtAS.Play();
 
             StartCoroutine(WaitEffectPlayOver(curtAS));
+        }
+
+        public void AddAudioClip(string id, string path, bool isPreLoad = false,
+            UMResLoadType pathType = UMResLoadType.Resources)
+        {
+            AddAudioClip(new UMAudioClipInfo(id, path, isPreLoad, pathType));
         }
 
         public void AddAudioClip(UMAudioClipInfo aci)

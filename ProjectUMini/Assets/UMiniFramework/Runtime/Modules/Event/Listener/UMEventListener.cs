@@ -23,7 +23,8 @@ namespace UMiniFramework.Runtime.Modules.Event.Listener
         public readonly UMListenType ListenType;
         private readonly UnityAction<UMBaseEventContent> EventHandler;
 
-        public UMEventListener(string eventTag, UMListenType listenType, UnityAction<UMBaseEventContent> eventHandler)
+        public UMEventListener(string eventTag, UnityAction<UMBaseEventContent> eventHandler,
+            UMListenType listenType = UMListenType.Persistent)
         {
             EventTag = eventTag;
             ListenType = listenType;

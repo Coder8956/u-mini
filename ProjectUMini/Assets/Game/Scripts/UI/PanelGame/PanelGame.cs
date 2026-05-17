@@ -41,15 +41,15 @@ namespace Game.Scripts.UI
 
         private void ListenGameEvents()
         {
-            m_addShootCountListener =
-                new UMEventListener(GameEventTags.AddShootCount, UMListenType.Persistent, OnAddShootCount);
-            UMGR.Get<UMEvent>().AddListener(m_addShootCountListener);
-
-            m_addScoreListener = new UMEventListener(GameEventTags.AddScore, UMListenType.Persistent, OnAddScore);
-            UMGR.Get<UMEvent>().AddListener(m_addScoreListener);
-
-            m_gameAgainListener = new UMEventListener(GameEventTags.GameAgain, UMListenType.Persistent, OnGameAgin);
-            UMGR.Get<UMEvent>().AddListener(m_gameAgainListener);
+            // m_addShootCountListener =
+            //     new UMEventListener(GameEventTags.AddShootCount, UMListenType.Persistent, OnAddShootCount);
+            // UMGR.Get<UMEvent>().AddListener(m_addShootCountListener);
+            //
+            // m_addScoreListener = new UMEventListener(GameEventTags.AddScore, UMListenType.Persistent, OnAddScore);
+            // UMGR.Get<UMEvent>().AddListener(m_addScoreListener);
+            //
+            // m_gameAgainListener = new UMEventListener(GameEventTags.GameAgain, UMListenType.Persistent, OnGameAgin);
+            // UMGR.Get<UMEvent>().AddListener(m_gameAgainListener);
         }
 
         private void OnAddScore(UMBaseEventContent content)

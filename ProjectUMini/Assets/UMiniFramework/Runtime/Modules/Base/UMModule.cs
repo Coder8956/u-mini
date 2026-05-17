@@ -5,11 +5,11 @@ using UnityEngine;
 namespace UMiniFramework.Runtime.Modules.Base
 {
     /// <summary>
-    /// UM模块基类
+    /// UM功能模块基类
     /// </summary>
     public abstract class UMBaseModule : MonoBehaviour
     {
         public abstract UMModuleType ModuleType { get; }
-        protected abstract IEnumerator Init(UMModuleInitArgs initArgs);
+        protected abstract IEnumerator Init();
     }
 }

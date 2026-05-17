@@ -23,7 +23,7 @@ namespace Game.Scripts.UI
         {
             m_btnAgain.onClick.AddListener(() =>
             {
-                UMGR.Get<UMEvent>().Dispatch(GameEventTags.GameAgain);
+                UMF.Get<UMEvent>().Dispatch(GameEventTags.GameAgain);
                 OnAgain?.Invoke();
                 GameUI.CloseGameResult();
             });

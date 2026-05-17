@@ -15,11 +15,11 @@ namespace Game.Scripts.Common
         {
             if (PanelDebug == null)
             {
-                PanelDebug = UMGR.Get<UMUI>().Create<PanelDebug>();
+                PanelDebug = UMF.Get<UMUI>().Create<PanelDebug>();
             }
 
-            int topLayer = UMGR.Get<UMUI>().TopLayerIndex;
-            UMGR.Get<UMUI>().Open(PanelDebug, topLayer);
+            int topLayer = UMF.Get<UMUI>().TopLayerIndex;
+            UMF.Get<UMUI>().Open(PanelDebug, topLayer);
         }
 
         /// <summary>
@@ -28,7 +28,7 @@ namespace Game.Scripts.Common
         public static void CloseDebug()
         {
             if (PanelDebug == null) return;
-            UMGR.Get<UMUI>().Close(PanelDebug);
+            UMF.Get<UMUI>().Close(PanelDebug);
         }
     }
 }

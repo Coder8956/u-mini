@@ -4,14 +4,14 @@ namespace UMiniFramework.Runtime.Modules.Event.EventContent
 {
     public class UMEventContent : UMBaseEventContent
     {
-        private string m_content = string.Empty;
+        private object m_content = string.Empty;
 
-        public UMEventContent(string content)
+        public UMEventContent(object content)
         {
             m_content = content;
         }
 
-        public string Content
+        public object Content
         {
             get => m_content;
         }

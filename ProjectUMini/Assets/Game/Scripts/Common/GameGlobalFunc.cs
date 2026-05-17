@@ -8,7 +8,7 @@ namespace Game.Scripts.Common
         public static void BackMain()
         {
             GameUI.CloseGame();
-            UMGR.Get<UMScene>().Load(GameScene.Main);
+            UMF.Get<UMScene>().Load(GameScene.Main);
         }
     }
 }

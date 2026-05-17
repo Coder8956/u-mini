@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.UI.Base;
-using UMiniFramework.Runtime.Modules.UI.InitArgs;
 using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
+using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Utils;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
@@ -24,7 +24,14 @@ namespace UMiniFramework.Runtime.Modules.UI
         private const string UI_LAYER_PREFIX = "UM_UI_Layer_";
         private const string UI_CACHE = "UM_UI_CACHE";
 
-        private UMUIInitArgs m_initArgs = null;
+        private Color m_panelMaskColor = new(0, 0, 0, 0.8f);
+
+        public Color PanelMaskColor
+        {
+            get => m_panelMaskColor;
+            set => m_panelMaskColor = value;
+        }
+
         private RectTransform m_rectTransform = null;
         private Canvas m_canvas = null;
         public Canvas Canvas => m_canvas;
@@ -39,13 +46,21 @@ namespace UMiniFramework.Runtime.Modules.UI
 
         private RectTransform m_uiCache = null;
 
-        private int m_createUILayerCount;
-        private bool m_createEventSystem;
+        private int m_createUILayerCount = 7;
+        private Camera m_uiCamera;
+        public Camera UICamera => m_uiCamera;
+
+        private static FieldInfo Field_Panel_ISOPEN;
 
         public override UMModuleType ModuleType
         {
             get => UMModuleType.UI;
         }
+
+        public UnityAction<UMUIPanel> OnCreateUI { get; set; }
+        public UnityAction<UMUIPanel> OnOpenUI { get; set; }
+        public UnityAction<UMUIPanel> OnCloseUI { get; set; }
+        public UnityAction<UMUIPanel> OnDestroyUI { get; set; }
 
         /// <summary>
         /// 顶层 LayerIndex
@@ -66,7 +81,6 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// </summary>
         private void CreateEventSystem()
         {
-            if (!m_createEventSystem) return;
             EventSystem es = UMUtilCommon.CreateGameObject<EventSystem>(EVENT_SYSTEM_NAME, gameObject);
             es.AddComponent<StandaloneInputModule>();
             m_goEventSystem = es.gameObject;
@@ -89,6 +103,8 @@ namespace UMiniFramework.Runtime.Modules.UI
         {
             // 添加 CanvasScaler 组件
             m_canvasScaler = gameObject.AddComponent<CanvasScaler>();
+            m_canvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
+            m_canvasScaler.referenceResolution = new Vector2(3840,2160);
         }
 
         /// <summary>
@@ -132,46 +148,41 @@ namespace UMiniFramework.Runtime.Modules.UI
             return Instantiate(uiGo);
         }
 
-        private void UseDefaultInitArgs()
+
+        protected override IEnumerator Init()
         {
-            m_createUILayerCount = UMUIDIArgs.UILayerCount();
-            m_createEventSystem = UMUIDIArgs.IsCreateEventSystem();
-        }
-
-        private void ReadInitArgs()
-        {
-            m_createUILayerCount = m_initArgs.UILayerCount;
-            m_createEventSystem = m_initArgs.IsCreateEventSystem;
-        }
-
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
-        {
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMUIInitArgs>(initArgs);
-
-            if (m_initArgs == null)
-            {
-                UseDefaultInitArgs();
-            }
-            else
-            {
-                ReadInitArgs();
-            }
-
             SetUILayer(gameObject);
 
             // 添加 RectTransform 组件
             m_rectTransform = gameObject.AddComponent<RectTransform>();
 
             m_panelDic = new Dictionary<int, UMUIPanel>();
-
+            Field_Panel_ISOPEN = UMUtilCommon.GetObjectNoPublicField(typeof(UMUIPanel), "m_isOpen");
             CreateCanvas();
             CreateCanvasScaler();
             CreateGraphicRaycaster();
             CreateUILayer();
             CreateUICache();
             CreateEventSystem();
+            CreateUICamera();
+            UMUtilDebug.Log($"{GetType().Name} Inited");
 
             yield return null;
+        }
+
+        private void CreateUICamera()
+        {
+            GameObject uiCamera = new GameObject("UM_UICamera", typeof(Camera));
+            uiCamera.transform.SetParent(transform);
+            m_uiCamera = uiCamera.GetComponent<Camera>();
+            m_uiCamera.clearFlags = CameraClearFlags.Depth;
+            m_uiCamera.depth = 100;
+            m_uiCamera.orthographic = true;
+            m_uiCamera.nearClipPlane = 0;
+            m_uiCamera.farClipPlane = 50;
+            m_canvas.renderMode = RenderMode.ScreenSpaceCamera;
+            m_canvas.worldCamera = m_uiCamera;
+            m_uiCamera.transform.localPosition = new Vector3(0, 0, transform.position.z - 1000);
         }
 
         /// <summary>
@@ -217,6 +228,7 @@ namespace UMiniFramework.Runtime.Modules.UI
                 UMUtilDebug.Warning($"Invalid parameter: {uiConfig.LoadType}");
             }
 
+            OnCreateUI?.Invoke(panel);
             return panel;
         }
 
@@ -237,8 +249,19 @@ namespace UMiniFramework.Runtime.Modules.UI
             panel.gameObject.SetActive(true);
             panel.transform.SetAsLastSibling();
 
-            MethodInfo OnOpenPanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
-            OnOpenPanel.Invoke(panel, null);
+            RectTransform panelRT = panel.GetComponent<RectTransform>();
+            Vector3 currentPosition = panelRT.localPosition;
+            panelRT.localPosition = new Vector3(currentPosition.x, currentPosition.y, 0);
+
+            MethodInfo OnOpenPanelMethod = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnOpenPanel");
+            Field_Panel_ISOPEN.SetValue(panel, true);
+            if (panel.PanelMask != null && panel.IsUseCommonMask)
+            {
+                panel.PanelMask.color = PanelMaskColor;
+            }
+
+            OnOpenPanelMethod.Invoke(panel, null);
+            OnOpenUI?.Invoke(panel);
         }
 
         /// <summary>
@@ -247,11 +270,13 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// <param name="panel">界面对象</param>
         public void Close(UMUIPanel panel)
         {
+            MethodInfo OnClosePanelMethod = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
+            OnClosePanelMethod.Invoke(panel, null);
             panel.gameObject.SetActive(false);
             panel.transform.SetParent(m_uiCache);
 
-            MethodInfo OnClosePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
-            OnClosePanel.Invoke(panel, null);
+            Field_Panel_ISOPEN.SetValue(panel, false);
+            OnCloseUI?.Invoke(panel);
         }
 
         /// <summary>
@@ -260,8 +285,8 @@ namespace UMiniFramework.Runtime.Modules.UI
         /// <param name="panel">界面对象</param>
         public void Destroy(UMUIPanel panel)
         {
-            MethodInfo OnClosePanel = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnClosePanel");
-            OnClosePanel.Invoke(panel, null);
+            MethodInfo OnDestroyPanelMethod = UMUtilCommon.GetObjectNoPublicMethod(panel.GetType(), "OnDestroyPanel");
+            OnDestroyPanelMethod.Invoke(panel, null);
 
             // 获取界面游戏物体的HashCode
             int panelHashCode = panel.gameObject.GetHashCode();
@@ -269,6 +294,7 @@ namespace UMiniFramework.Runtime.Modules.UI
             // 将界面移出字典
             m_panelDic.Remove(panelHashCode);
 
+            OnDestroyUI?.Invoke(panel);
             Destroy(panel.gameObject);
         }
 

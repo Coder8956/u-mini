@@ -2,7 +2,6 @@
 using System.Reflection;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
-using UnityEngine.Events;
 
 namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 {
@@ -21,10 +20,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
 
         private string m_objectName = string.Empty;
 
-        public UnityAction<GameObject> OnGet { get; set; }
-        public UnityAction<GameObject> OnBack { get; set; }
-
-        private void InitPool(string poolTag,GameObject prototype, int initObjectCount)
+        private void InitPool(string poolTag, GameObject prototype, int initObjectCount)
         {
             if (Field_UMGOPObject_BornPool == null)
             {
@@ -54,6 +50,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
         private GameObject CreateObject()
         {
             GameObject cgo = Instantiate(m_prototype, transform);
+
             UMGOPObject umgopObject = cgo.GetComponent<UMGOPObject>();
             Field_UMGOPObject_BornPool.SetValue(umgopObject, this);
             cgo.name = string.Concat(m_objectName, $"-HashCode[{cgo.GetHashCode()}]");
@@ -73,8 +70,8 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
             }
 
             m_outPoolGos.Add(getGo);
-            getGo.transform.parent = null;
-            OnGet?.Invoke(getGo);
+            getGo.transform.SetParent(null);
+            getGo.GetComponent<IUMGOPObjectFunc>()?.OnGet();
             getGo.SetActive(true);
             return getGo;
         }
@@ -96,7 +93,7 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
                 return;
             }
 
-            OnBack?.Invoke(backGO);
+            backGO.GetComponent<IUMGOPObjectFunc>()?.OnBack();
             backGO.SetActive(false);
             backGO.transform.SetParent(transform);
             backGO.transform.localPosition = Vector3.zero;
@@ -111,7 +108,10 @@ namespace UMiniFramework.Runtime.Modules.GOPools.Pool
                 Destroy(m_outPoolGos[i]);
             }
 
-            Destroy(gameObject);
+            if (gameObject != null)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

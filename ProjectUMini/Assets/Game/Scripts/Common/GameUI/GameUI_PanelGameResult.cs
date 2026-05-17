@@ -13,10 +13,10 @@ namespace Game.Scripts.Common
         {
             if (PanelGameResult == null)
             {
-                PanelGameResult = UMGR.Get<UMUI>().Create<PanelGameResult>();
+                PanelGameResult = UMF.Get<UMUI>().Create<PanelGameResult>();
             }
 
-            UMGR.Get<UMUI>().Open(PanelGameResult);
+            UMF.Get<UMUI>().Open(PanelGameResult);
             PanelGameResult.OnAgain = onAgain;
             PanelGameResult.OnBackMain = onBackMain;
         }
@@ -24,7 +24,7 @@ namespace Game.Scripts.Common
         public static void CloseGameResult()
         {
             if (PanelGameResult == null) return;
-            UMGR.Get<UMUI>().Close(PanelGameResult);
+            UMF.Get<UMUI>().Close(PanelGameResult);
             PanelGameResult.OnAgain = null;
         }
     }

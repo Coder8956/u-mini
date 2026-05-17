@@ -5,8 +5,8 @@ using System.Linq;
 using System.Reflection;
 using UMiniFramework.Editor.EUtils;
 using UMiniFramework.Runtime.Common;
-using UMiniFramework.Runtime.Modules.UI.Base;
 using UMiniFramework.Runtime.Modules.UI.AttributeUMUI;
+using UMiniFramework.Runtime.Modules.UI.Base;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
@@ -28,7 +28,9 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
         #region CreatePanel Field
 
-        private bool m_isAddImageComponent = true;
+        private bool m_isAddComponent_Image = true;
+        private bool m_isAddItem_Container = true;
+        private bool m_isAddItem_CloseBtn = true;
 
         /// <summary>
         /// 存放所有继承 UMUIPanel 的子类
@@ -231,7 +233,11 @@ namespace UMiniFramework.Editor.UMEModules.UI
         private void DrawUIPanelCreateOptions()
         {
             // 绘制一个 bool 选项，控制是否添加 Image 组件
-            m_isAddImageComponent = EditorGUILayout.Toggle("Add Image Component", m_isAddImageComponent);
+            m_isAddComponent_Image = EditorGUILayout.Toggle("Add Component Image", m_isAddComponent_Image);
+
+            m_isAddItem_Container = EditorGUILayout.Toggle("Add Item Container", m_isAddItem_Container);
+
+            m_isAddItem_CloseBtn = EditorGUILayout.Toggle("Add Item Close Button", m_isAddItem_CloseBtn);
         }
 
         /// <summary>
@@ -263,14 +269,7 @@ namespace UMiniFramework.Editor.UMEModules.UI
 
                 components.Add(typeof(RectTransform));
                 components.Add(typeof(CanvasRenderer));
-
-                if (m_isAddImageComponent)
-                {
-                    components.Add(typeof(Image));
-                }
-
                 components.Add(m_allUITypesDic[CurtUIClassOption()]);
-
 
                 GameObject createPanel =
                     new GameObject(m_allUITypesDic[CurtUIClassOption()].Name, components.ToArray());
@@ -284,6 +283,70 @@ namespace UMiniFramework.Editor.UMEModules.UI
                 // 修改边界偏移量
                 crt.offsetMin = Vector2.zero;
                 crt.offsetMax = Vector2.zero;
+
+                if (m_isAddComponent_Image)
+                {
+                    Image panelImg = createPanel.AddComponent<Image>();
+                    panelImg.color = Color.gray;
+                }
+
+                GameObject itemContainer = null;
+                if (m_isAddItem_Container)
+                {
+                    // 创建Item容器
+                    itemContainer = new GameObject("ItemContainer", typeof(RectTransform));
+                    itemContainer.transform.SetParent(createPanel.transform);
+                }
+
+                if (m_isAddItem_CloseBtn)
+                {
+                    // 创建关闭按钮
+                    List<Type> btnComponents = new List<Type>();
+
+                    btnComponents.Add(typeof(RectTransform));
+                    btnComponents.Add(typeof(CanvasRenderer));
+                    btnComponents.Add(typeof(Image));
+                    btnComponents.Add(typeof(Button));
+
+                    GameObject btnClose = new GameObject("BtnClose", btnComponents.ToArray());
+
+                    if (itemContainer != null)
+                    {
+                        btnClose.transform.SetParent(itemContainer.transform);
+                    }
+                    else
+                    {
+                        btnClose.transform.SetParent(createPanel.transform);
+                    }
+
+                    // 创建关闭按钮文本框
+                    List<Type> btnTxtComponents = new List<Type>();
+
+                    btnTxtComponents.Add(typeof(RectTransform));
+                    btnTxtComponents.Add(typeof(CanvasRenderer));
+                    btnTxtComponents.Add(typeof(Text));
+
+                    GameObject btnCloseTxt = new GameObject("Text", btnTxtComponents.ToArray());
+                    btnCloseTxt.transform.SetParent(btnClose.transform);
+
+                    RectTransform btnTxtRect = btnCloseTxt.GetComponent<RectTransform>();
+
+                    // 修改按钮Text锚点
+                    btnTxtRect.anchorMin = Vector2.zero;
+                    btnTxtRect.anchorMax = Vector2.one;
+
+                    // 修改按钮Text边界偏移量
+                    btnTxtRect.offsetMin = Vector2.zero;
+                    btnTxtRect.offsetMax = Vector2.zero;
+
+                    // 修改按钮Text属性
+                    Text btnText = btnCloseTxt.GetComponent<Text>();
+                    float rgbVal = 50f / 255f;
+                    btnText.color = new Color(rgbVal, rgbVal, rgbVal);
+                    btnText.text = "X";
+                    btnText.fontSize = 90;
+                    btnText.alignment = TextAnchor.MiddleCenter;
+                }
 
                 // 判断存放预制体的文件夹是否存在
                 string panelFolder = Path.GetDirectoryName(m_panelPrefabFullPath);

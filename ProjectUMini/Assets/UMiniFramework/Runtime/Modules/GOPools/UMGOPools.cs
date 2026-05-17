@@ -25,12 +25,12 @@ namespace UMiniFramework.Runtime.Modules.GOPools
             get => UMModuleType.Pools;
         }
 
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        protected override IEnumerator Init()
         {
             m_poolDic = new Dictionary<string, UMGOP>();
             m_poolInitMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "InitPool");
             m_poolDestroyMethod = UMUtilCommon.GetObjectNoPublicMethod(typeof(UMGOP), "DestroyPool");
-            // m_initArgs = UMUtilCommon.ConvertObjectClass<UMGOPoolsInitArgs>(initArgs);
+            UMUtilDebug.Log($"{GetType().Name} Inited");
             yield return null;
         }
 

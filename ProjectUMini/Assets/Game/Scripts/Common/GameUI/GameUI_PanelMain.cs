@@ -15,10 +15,10 @@ namespace Game.Scripts.Common
         {
             if (PanelMain == null)
             {
-                PanelMain = UMGR.Get<UMUI>().Create<PanelMain>();
+                PanelMain = UMF.Get<UMUI>().Create<PanelMain>();
             }
 
-            UMGR.Get<UMUI>().Open(PanelMain);
+            UMF.Get<UMUI>().Open(PanelMain);
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Game.Scripts.Common
         public static void CloseMain()
         {
             if (PanelMain == null) return;
-            UMGR.Get<UMUI>().Close(PanelMain);
+            UMF.Get<UMUI>().Close(PanelMain);
         }
     }
 }

@@ -1,101 +1,157 @@
 ﻿using System;
 using System.Collections;
+using System.IO;
 using System.Reflection;
+using Newtonsoft.Json;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.DataPer.InitArgs;
-using UMiniFramework.Runtime.Modules.DataPer.UMDataPerHandlers.Interface;
+using UMiniFramework.Runtime.Modules.UMDataPer.Base;
 using UMiniFramework.Runtime.Utils;
+using UnityEditor;
+using UnityEngine;
 
 namespace UMiniFramework.Runtime.Modules.UMDataPer
 {
     public class UMDataPer : UMBaseModule
     {
-        private IUMDataPerHandler m_dataPerHandler;
-        private UMDataPerInitArgs m_initArgs = null;
+        public string SaveRootDir { get; set; }
+        private FieldInfo m_dataCreateTimeField;
+        private FieldInfo m_dataSaveTimeField;
 
-        private MethodInfo m_initMethod = null;
-        private MethodInfo m_saveMethod = null;
-        private MethodInfo m_readMethod = null;
-        private MethodInfo m_deleteMethod = null;
-        private MethodInfo m_deleteAllMethod = null;
+        /// <summary>
+        /// 加密处理
+        /// </summary>
+        public Func<string, string> EncryptionHandler { get; set; }
+
+        /// <summary>
+        /// 解密处理
+        /// </summary>
+        public Func<string, string> DecryptionHandler { get; set; }
 
         public override UMModuleType ModuleType
         {
             get => UMModuleType.DataPer;
         }
 
-        private void UseDefaultInitArgs()
+        protected override IEnumerator Init()
         {
-            m_dataPerHandler = UMDataPerDIArgs.DataPerHandler();
-        }
+            SaveRootDir = Application.streamingAssetsPath;
 
-        private void ReadInitArgs()
-        {
-            m_dataPerHandler = m_initArgs.DataPerHandler;
-        }
-
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
-        {
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMDataPerInitArgs>(initArgs);
-
-            if (m_initArgs == null)
+            if (!Directory.Exists(SaveRootDir))
             {
-                UseDefaultInitArgs();
-            }
-            else
-            {
-                ReadInitArgs();
+                Directory.CreateDirectory(SaveRootDir);
             }
 
-            Type dataPerHandlerType = typeof(IUMDataPerHandler);
-            // UMUtilDebug.Log($"dataPerHandler name: {dataPerHandlerType.Name}");
-            m_initMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Init");
-            m_saveMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Save");
-            m_readMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Read");
-            m_deleteMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "Delete");
-            m_deleteAllMethod = UMUtilCommon.GetObjectNoPublicMethod(dataPerHandlerType, "DeleteAll");
+            m_dataCreateTimeField = UMUtilCommon.GetObjectNoPublicField(typeof(UMBaseDataPerObject), "CreateTime");
+            m_dataSaveTimeField = UMUtilCommon.GetObjectNoPublicField(typeof(UMBaseDataPerObject), "LastSaveTime");
 
-            m_initMethod.Invoke(m_dataPerHandler, null);
-
+            UMUtilDebug.Log($"{GetType().Name} Inited");
             yield return null;
         }
 
-        /// <summary>
-        /// 存数据
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="val"></param>
-        public void Save(string key, string val)
+        private string GetDataFileFullPath(string fileName)
         {
-            m_saveMethod.Invoke(m_dataPerHandler, new object[] {key, val});
+            return Path.Combine(SaveRootDir, fileName).Replace('\\', '/');
         }
 
-        /// <summary>
-        /// 读数据
-        /// </summary>
-        /// <param name="key"></param>
-        /// <param name="defaultVal"></param>
-        public string Read(string key, string defaultVal)
+        private string GetTime()
         {
-            return (string) m_readMethod.Invoke(m_dataPerHandler, new object[] {key, defaultVal});
+            return DateTime.Now.ToString("yyyy-M-d HH:mm:ss");
         }
 
-        /// <summary>
-        /// 删除数据
-        /// </summary>
-        /// <param name="key"></param>
-        public void Delete(string key)
+        public T Create<T>(T defaultVal = null) where T : UMBaseDataPerObject
         {
-            m_deleteMethod.Invoke(m_dataPerHandler, new object[] {key});
+            T data = defaultVal;
+            if (data == null)
+            {
+                // 创建带参数的实例
+                // Type type = typeof(MyClassWithParameters);
+                // object instance = Activator.CreateInstance(type, "参数1", 123);
+
+                // 创建无参构造函数的实例
+                data = (T) Activator.CreateInstance(typeof(T));
+            }
+
+            m_dataCreateTimeField.SetValue(data, GetTime());
+            return data;
         }
 
-        /// <summary>
-        /// 删除所有数据
-        /// </summary>
+        public void Delete(string name)
+        {
+            string fileFullPath = GetDataFileFullPath(name);
+            if (File.Exists(fileFullPath))
+            {
+                File.Delete(fileFullPath);
+#if UNITY_EDITOR
+                File.Delete($"{fileFullPath}.meta");
+                AssetDatabase.Refresh();
+#endif
+            }
+        }
+
         public void DeleteAll()
         {
-            m_deleteAllMethod.Invoke(m_dataPerHandler, null);
+            Directory.Delete(SaveRootDir, true);
+            Directory.CreateDirectory(SaveRootDir);
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
+        }
+
+        public void Save<T>(string name, T data) where T : UMBaseDataPerObject
+        {
+            string fileFullPath = GetDataFileFullPath(name);
+            string fileDir = Path.GetDirectoryName(fileFullPath);
+            if (!Directory.Exists(fileDir))
+            {
+                Directory.CreateDirectory(fileDir);
+            }
+
+            m_dataSaveTimeField.SetValue(data, GetTime());
+            string jsonStr = JsonConvert.SerializeObject(data, Formatting.Indented);
+
+            if (IsValidEncrypDecryp())
+            {
+                jsonStr = EncryptionHandler.Invoke(jsonStr);
+            }
+
+            File.WriteAllText(fileFullPath, jsonStr);
+#if UNITY_EDITOR
+            AssetDatabase.Refresh();
+#endif
+        }
+
+        public T Read<T>(string name) where T : UMBaseDataPerObject
+        {
+            T data = null;
+            string fileFullPath = GetDataFileFullPath(name);
+            if (File.Exists(fileFullPath))
+            {
+                string jsonContent = File.ReadAllText(fileFullPath);
+                if (IsValidEncrypDecryp())
+                {
+                    jsonContent = DecryptionHandler.Invoke(jsonContent);
+                    // Debug.Log(jsonContent);
+                }
+
+                data = JsonConvert.DeserializeObject<T>(jsonContent);
+            }
+            else
+            {
+                // UMUtilDebug.Warning($"Read data <{name}> failed!");
+            }
+
+            return data;
+        }
+
+        private bool IsValidEncrypDecryp()
+        {
+            return (EncryptionHandler != null && DecryptionHandler != null);
+        }
+
+        public void PrintSaveRootDir()
+        {
+            Debug.Log($"UMDataPer SaveRootDir: {GetDataFileFullPath("")}");
         }
     }
 }

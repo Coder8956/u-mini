@@ -10,5 +10,6 @@
         Resource,
         Event,
         Pools,
+        Localization,
     }
 }

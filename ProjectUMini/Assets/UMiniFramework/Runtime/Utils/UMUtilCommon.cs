@@ -8,15 +8,21 @@ namespace UMiniFramework.Runtime.Utils
     {
         public static T CreateGameObject<T>(string name, GameObject parent) where T : Component
         {
-            GameObject moduleGo = new GameObject(name, typeof(T));
+            GameObject GO = new GameObject(name, typeof(T));
             if (parent)
             {
-                moduleGo.transform.SetParent(parent.transform);
+                GO.transform.SetParent(parent.transform);
             }
 
-            moduleGo.transform.localPosition = Vector3.zero;
+            GO.transform.localPosition = Vector3.zero;
             // Debug.Log($"The {name} is created");
-            return moduleGo.GetComponent<T>();
+            return GO.GetComponent<T>();
+        }
+        
+        public static T CreateGameObject<T>(GameObject parent) where T : Component
+        {
+            string GOName = typeof(T).Name;
+            return CreateGameObject<T>(GOName,parent);
         }
 
         /// <summary>

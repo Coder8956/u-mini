@@ -13,17 +13,17 @@ namespace Game.Scripts.Common
         {
             if (PanelGame == null)
             {
-                PanelGame = UMGR.Get<UMUI>().Create<PanelGame>();
+                PanelGame = UMF.Get<UMUI>().Create<PanelGame>();
             }
 
-            UMGR.Get<UMUI>().Open(PanelGame);
+            UMF.Get<UMUI>().Open(PanelGame);
             PanelGame.OnBackMain = onBackMain;
         }
 
         public static void CloseGame()
         {
             if (PanelGame == null) return;
-            UMGR.Get<UMUI>().Close(PanelGame);
+            UMF.Get<UMUI>().Close(PanelGame);
         }
     }
 }

@@ -35,19 +35,19 @@ namespace Game.Scripts.Scene.Game
         private void Start()
         {
             m_blocks = new List<GameObject>();
-            m_levelData = UMGR.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
-            m_bulletData = UMGR.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
-            m_blockData = UMGR.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
+            m_levelData = UMF.Get<UMConfig>().GetTable<LevelTable>().GetDataById(GameGlobalVar.SelectLevelId);
+            m_bulletData = UMF.Get<UMConfig>().GetTable<BulletTable>().GetDataById(m_levelData.bulletId);
+            m_blockData = UMF.Get<UMConfig>().GetTable<BlockTable>().GetDataById(m_levelData.blockId);
 
-            m_bulletPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
-            m_bulletPool = UMGR.Get<UMGOPools>().CreatePool(GOPoolTags.BulletPoolTag, m_bulletPrefab);
-            m_bulletPool.OnGet = OnGetBullet;
-            m_blockPrefab = UMGR.Get<UMRes>().Load<GameObject>(m_blockData.blockPath);
+            m_bulletPrefab = UMF.Get<UMRes>().Load<GameObject>(m_bulletData.bulletPath);
+            m_bulletPool = UMF.Get<UMGOPools>().CreatePool(GOPoolTags.BulletPoolTag, m_bulletPrefab);
+            // m_bulletPool.OnGet = OnGetBullet;
+            m_blockPrefab = UMF.Get<UMRes>().Load<GameObject>(m_blockData.blockPath);
 
-            GameObject explosionVFXPrefab = UMGR.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
-            m_explosionVFXPool = UMGR.Get<UMGOPools>().CreatePool(GOPoolTags.ExplosionVFXPoolTag, explosionVFXPrefab);
+            GameObject explosionVFXPrefab = UMF.Get<UMRes>().Load<GameObject>("VFX/VFX_Explosion");
+            m_explosionVFXPool = UMF.Get<UMGOPools>().CreatePool(GOPoolTags.ExplosionVFXPoolTag, explosionVFXPrefab);
 
-            UMGR.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
+            UMF.Get<UMAudio>().BGM.Play(m_levelData.bgmId);
             GameUI.OpenGame(OnExitGame);
 
             InitGame();
@@ -135,7 +135,7 @@ namespace Game.Scripts.Scene.Game
 
         private void OnDestroyBlock(GameObject block)
         {
-            UMGR.Get<UMEvent>().Dispatch(GameEventTags.AddScore, new ECAddScore(1));
+            UMF.Get<UMEvent>().Dispatch(GameEventTags.AddScore, new ECAddScore(1));
             m_blocks.Remove(block);
             if (m_blocks.Count < 1)
             {
@@ -146,8 +146,8 @@ namespace Game.Scripts.Scene.Game
 
         private void OnExitGame()
         {
-            UMGR.Get<UMGOPools>().DestroyPool(GOPoolTags.BulletPoolTag);
-            UMGR.Get<UMGOPools>().DestroyPool(GOPoolTags.ExplosionVFXPoolTag);
+            UMF.Get<UMGOPools>().DestroyPool(GOPoolTags.BulletPoolTag);
+            UMF.Get<UMGOPools>().DestroyPool(GOPoolTags.ExplosionVFXPoolTag);
         }
 
         private void OnHitGo(GameObject bullet)
@@ -173,7 +173,7 @@ namespace Game.Scripts.Scene.Game
         private bool IsCanShoot()
         {
             return Input.GetMouseButtonDown(0)
-                   && !UMGR.Get<UMUI>().IsClickUI();
+                   && !UMF.Get<UMUI>().IsClickUI();
         }
 
         private void Update()
@@ -181,7 +181,7 @@ namespace Game.Scripts.Scene.Game
             if (IsCanShoot())
             {
                 // Debug.Log("shoot");
-                UMGR.Get<UMEvent>().Dispatch(GameEventTags.AddShootCount, new ECAddShootCount(1));
+                UMF.Get<UMEvent>().Dispatch(GameEventTags.AddShootCount, new ECAddShootCount(1));
 
                 // 获取鼠标在屏幕上的位置
                 Vector3 mouseScreenPosition = Input.mousePosition;

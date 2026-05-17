@@ -24,11 +24,11 @@ namespace Game.Scripts.UI
         {
             m_btnClose.onClick.AddListener(() => { GameUI.CloseSet(); });
 
-            m_togAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Mute = val; });
-            m_sldAudioBGM.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().BGM.Volume = val; });
+            m_togAudioBGM.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().BGM.Mute = val; });
+            m_sldAudioBGM.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().BGM.Volume = val; });
 
-            m_togAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Mute = val; });
-            m_sldAudioEffect.onValueChanged.AddListener((val) => { UMGR.Get<UMAudio>().Effect.Volume = val; });
+            m_togAudioEffect.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().Effect.Mute = val; });
+            m_sldAudioEffect.onValueChanged.AddListener((val) => { UMF.Get<UMAudio>().Effect.Volume = val; });
         }
 
         protected override void OnDestroyPanel()
@@ -38,24 +38,24 @@ namespace Game.Scripts.UI
         protected override void OnOpenPanel()
         {
             GameUI.SetMaskColor(gameObject);
-            m_togAudioBGM.isOn = UMGR.Get<UMAudio>().BGM.Mute;
-            m_sldAudioBGM.value = UMGR.Get<UMAudio>().BGM.Volume;
+            m_togAudioBGM.isOn = UMF.Get<UMAudio>().BGM.Mute;
+            m_sldAudioBGM.value = UMF.Get<UMAudio>().BGM.Volume;
 
-            m_togAudioEffect.isOn = UMGR.Get<UMAudio>().Effect.Mute;
-            m_sldAudioEffect.value = UMGR.Get<UMAudio>().Effect.Volume;
+            m_togAudioEffect.isOn = UMF.Get<UMAudio>().Effect.Mute;
+            m_sldAudioEffect.value = UMF.Get<UMAudio>().Effect.Volume;
         }
 
         protected override void OnClosePanel()
         {
-            bool audioBGMMute = UMGR.Get<UMAudio>().BGM.Mute;
-            float audioBGMVolume = UMGR.Get<UMAudio>().BGM.Volume;
-            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMMute, audioBGMMute.ToString());
-            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMVolume, audioBGMVolume.ToString());
-
-            bool audioEffectMute = UMGR.Get<UMAudio>().Effect.Mute;
-            float audioEffectVolume = UMGR.Get<UMAudio>().Effect.Volume;
-            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectMute, audioEffectMute.ToString());
-            UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectVolume, audioEffectVolume.ToString());
+            // bool audioBGMMute = UMGR.Get<UMAudio>().BGM.Mute;
+            // float audioBGMVolume = UMGR.Get<UMAudio>().BGM.Volume;
+            // UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMMute, audioBGMMute.ToString());
+            // UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioBGMVolume, audioBGMVolume.ToString());
+            //
+            // bool audioEffectMute = UMGR.Get<UMAudio>().Effect.Mute;
+            // float audioEffectVolume = UMGR.Get<UMAudio>().Effect.Volume;
+            // UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectMute, audioEffectMute.ToString());
+            // UMGR.Get<UMDataPer>().Save(GameDataPerKey.AudioEffectVolume, audioEffectVolume.ToString());
         }
     }
 }

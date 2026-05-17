@@ -19,7 +19,7 @@ namespace Game.Scripts.UI
         private void EnterGame(string levelId)
         {
             GameGlobalVar.SelectLevelId = levelId;
-            UMGR.Get<UMScene>().Load(GameScene.Game);
+            UMF.Get<UMScene>().Load(GameScene.Game);
             GameUI.CloseMain();
             GameUI.CloseSelectLevel();
         }

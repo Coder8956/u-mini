@@ -3,6 +3,7 @@ using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
 using UMiniFramework.Runtime.Utils;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Runtime.Modules.Scene
@@ -14,20 +15,57 @@ namespace UMiniFramework.Runtime.Modules.Scene
             get => UMModuleType.Scene;
         }
 
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        /// <summary>
+        /// 开始加载场景
+        /// </summary>
+        public UnityAction OnLoadStart;
+
+        /// <summary>
+        /// 场景正在加载
+        /// </summary>
+        public UnityAction<float> OnLoading;
+
+        /// <summary>
+        /// 完成场景加载
+        /// </summary>
+        public UnityAction OnLoadCompleted;
+
+        protected override IEnumerator Init()
         {
+            UMUtilDebug.Log($"{GetType().Name} Inited");
             yield return null;
         }
 
-        public void Load(string sceneName)
+        public void Load(string sceneName, bool isAsy = true, float switchDelay = 0.3f)
         {
-            SceneManager.LoadScene(sceneName);
+            StartCoroutine(LoadSceneAsync(sceneName, isAsy, switchDelay));
         }
 
-        public AsyncOperation LoadSceneAsync(string sceneName)
+        private IEnumerator LoadSceneAsync(string sceneName, bool isAsy, float switchDelay)
         {
-            AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
-            return ao;
+            OnLoadStart?.Invoke();
+
+            if (isAsy)
+            {
+                AsyncOperation ao = SceneManager.LoadSceneAsync(sceneName);
+                ao.allowSceneActivation = true;
+                while (ao.isDone)
+                {
+                    OnLoading?.Invoke(ao.progress);
+                    // UMUtilDebug.Log($"scene load progress: {ao.progress}");
+                    yield return null;
+                }
+            }
+            else
+            {
+                OnLoadStart?.Invoke();
+                SceneManager.LoadScene(sceneName);
+                OnLoadCompleted?.Invoke();
+            }
+
+            yield return new WaitForSeconds(switchDelay);
+
+            OnLoadCompleted?.Invoke();
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Audio.Base;
 using UMiniFramework.Runtime.Modules.Audio.ClipInfo;
 using UnityEngine;
@@ -10,7 +11,6 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
         private const string INVALID_BGM_ID = "UM_INVALID_BGM_ID";
         private AudioSource m_audioSource = null;
         private Dictionary<string, UMAudioClipInfo> m_BGMClipDic;
-        private List<UMAudioClipInfo> m_bgmClips;
 
         /// <summary>
         /// 静音属性
@@ -32,30 +32,19 @@ namespace UMiniFramework.Runtime.Modules.Audio.BGM
 
         public string CurtBGMID { get; private set; }
 
-        /// <summary>
-        /// 初始化 BGM Clip 字典
-        /// </summary>
-        private void InitBGMClipDic()
-        {
-            m_BGMClipDic = new Dictionary<string, UMAudioClipInfo>();
-            UMAudioClipInfo aci = null;
-            for (var i = 0; i < m_bgmClips.Count; i++)
-            {
-                aci = m_bgmClips[i];
-                AddAudioClip(aci);
-            }
-        }
-
-        private void InitAudioBGM(List<UMAudioClipInfo> bgmClips)
+        private void InitAudioBGM()
         {
             CurtBGMID = INVALID_BGM_ID;
-            m_bgmClips = bgmClips;
-
-            InitBGMClipDic();
-
+            m_BGMClipDic = new Dictionary<string, UMAudioClipInfo>();
             m_audioSource = gameObject.AddComponent<AudioSource>();
             m_audioSource.playOnAwake = false;
             m_audioSource.loop = true;
+        }
+
+        public void AddAudioClip(string id, string path, bool isPreLoad = false,
+            UMResLoadType pathType = UMResLoadType.Resources)
+        {
+            AddAudioClip(new UMAudioClipInfo(id, path, isPreLoad, pathType));
         }
 
         public void AddAudioClip(UMAudioClipInfo aci)

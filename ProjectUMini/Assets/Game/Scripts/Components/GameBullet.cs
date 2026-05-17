@@ -41,7 +41,7 @@ namespace Game.Scripts.Components
         {
             if (HitGO != null) return;
 
-            UMGR.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
+            UMF.Get<UMAudio>().Effect.Play(m_data.exploAudioId);
             // m_rb.AddExplosionForce(10, transform.position, 10);
 
             if (other.gameObject.CompareTag("Monster"))

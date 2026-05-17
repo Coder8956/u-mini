@@ -3,7 +3,7 @@ using System.Collections;
 using System.Reflection;
 using UMiniFramework.Runtime.Common;
 using UMiniFramework.Runtime.Modules.Base;
-using UMiniFramework.Runtime.Modules.Resource.InitArgs;
+using UMiniFramework.Runtime.Modules.Resource.UMResHandlers;
 using UMiniFramework.Runtime.Modules.Resource.UMResHandlers.Interface;
 using UMiniFramework.Runtime.Utils;
 using Object = UnityEngine.Object;
@@ -16,7 +16,6 @@ namespace UMiniFramework.Runtime.Modules.Resource
     public class UMRes : UMBaseModule
     {
         private IUMResHandler m_resourceHandler;
-        private UMResInitArgs m_initArgs = null;
         private MethodInfo m_handlerLoadMethod = null;
 
         public override UMModuleType ModuleType
@@ -24,30 +23,12 @@ namespace UMiniFramework.Runtime.Modules.Resource
             get => UMModuleType.Resource;
         }
 
-        private void UseDefaultInitArgs()
-        {
-            m_resourceHandler = UMResDIArgs.ResHandler();
-        }
-
-        private void ReadInitArgs()
-        {
-            m_resourceHandler = m_initArgs.ResHandler;
-        }
-
-        protected override IEnumerator Init(UMModuleInitArgs initArgs)
+        protected override IEnumerator Init()
         {
             Type handlerType = typeof(IUMResHandler);
+            m_resourceHandler = new UMResDefaultHandler();
             m_handlerLoadMethod = UMUtilCommon.GetObjectNoPublicMethod(handlerType, "Load");
-
-            m_initArgs = UMUtilCommon.ConvertObjectClass<UMResInitArgs>(initArgs);
-            if (m_initArgs == null)
-            {
-                UseDefaultInitArgs();
-            }
-            else
-            {
-                ReadInitArgs();
-            }
+            UMUtilDebug.Log($"{GetType().Name} Inited");
 
             yield return null;
         }

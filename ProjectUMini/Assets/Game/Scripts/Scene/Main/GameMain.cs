@@ -11,7 +11,7 @@ namespace Game.Scripts.Scene.Main
         private void Start()
         {
             GameUI.OpenMain();
-            UMGR.Get<UMAudio>().BGM.Play(GameAudio.BGM_Main);
+            UMF.Get<UMAudio>().BGM.Play(GameAudio.BGM_Main);
             GameObject GO = GameObject.CreatePrimitive(PrimitiveType.Cube);
         }
     }
