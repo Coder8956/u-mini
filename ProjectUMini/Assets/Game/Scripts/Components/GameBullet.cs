@@ -33,7 +33,7 @@ namespace Game.Scripts.Components
             if (m_rb != null)
             {
                 // 沿射线方向发射
-                m_rb.velocity = direction * speed; // 赋予一个初速度
+                m_rb.linearVelocity = direction * speed; // 赋予一个初速度
             }
         }
 
