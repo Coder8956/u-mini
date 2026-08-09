@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class LanguageCfg : UMBaseConfigTable
+public class LanguageCfg : UMBaseConfigTable, IUMLangTable
 {
     /// <summary>
     /// 配置文件路径
@@ -18,6 +18,17 @@ public class LanguageCfg : UMBaseConfigTable
     /// 语言类型列表
     /// </summary>
     private List<string> m_langTypes;
+
+    private class LangTypeEntry
+    {
+        [JsonProperty("name")] public string name;
+        [JsonProperty("file")] public string file;
+    }
+
+    /// <summary>
+    /// 语言文件名列表
+    /// </summary>
+    private List<string> m_langFiles;
 
     /// <summary>
     /// 语言内容字典，key 为语言名称，value 为该语言的 id→内容映射
@@ -101,25 +112,43 @@ public class LanguageCfg : UMBaseConfigTable
         return m_langTypes.IndexOf(langName);
     }
 
+    /// <summary>
+    /// 通过索引获取语言对应的配置文件名
+    /// </summary>
+    public string GetLanguageFile(int index)
+    {
+        if (index < 0 || index >= m_langFiles.Count)
+            return null;
+        return m_langFiles[index];
+    }
+
     protected override void OnInit(string tableContent)
     {
-        // 3.4.1: 读取语言类型数组
-        m_langTypes = JsonConvert.DeserializeObject<List<string>>(tableContent);
+        var langEntries = JsonConvert.DeserializeObject<List<LangTypeEntry>>(tableContent);
 
-        // 3.4.2: 读取所有语言内容
+        m_langTypes = new List<string>(langEntries.Count);
+        m_langFiles = new List<string>(langEntries.Count);
         m_langContent = new Dictionary<string, Dictionary<string, string>>();
+
         string basePath = ConfigLoadPath.Substring(0, ConfigLoadPath.LastIndexOf('/'));
-        for (int i = 0; i < m_langTypes.Count; i++)
+        for (int i = 0; i < langEntries.Count; i++)
         {
-            var asset = Resources.Load<TextAsset>($"{basePath}/lang_{i}");
+            var entry = langEntries[i];
+            m_langTypes.Add(entry.name);
+            m_langFiles.Add(entry.file);
+
+            string fileName = entry.file.EndsWith(".json")
+                ? entry.file.Substring(0, entry.file.Length - 5)
+                : entry.file;
+            var asset = Resources.Load<TextAsset>($"{basePath}/{fileName}");
             if (asset != null)
             {
-                m_langContent[m_langTypes[i]] =
+                m_langContent[entry.name] =
                     JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text);
             }
             else
             {
-                Debug.LogWarning($"Language file not found: {basePath}/lang_{i}");
+                Debug.LogWarning($"Language file not found: {basePath}/{entry.file}");
             }
         }
     }

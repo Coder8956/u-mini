@@ -141,7 +141,23 @@ namespace UMiniFramework.Runtime
         {
             GameObject go = new GameObject(EventSystemName);
             go.AddComponent<EventSystem>();
+
+#if ENABLE_INPUT_SYSTEM
+            // 新输入系统已激活（Input System Package 或 Both 模式）
+            Type moduleType = Type.GetType("UnityEngine.InputSystem.UI.InputSystemUIInputModule, Unity.InputSystem");
+            if (moduleType != null)
+            {
+                go.AddComponent(moduleType);
+            }
+            else
+            {
+                Debug.LogError("[UMUI] ENABLE_INPUT_SYSTEM 已定义但无法加载 InputSystemUIInputModule，回退到 StandaloneInputModule");
+                go.AddComponent<StandaloneInputModule>();
+            }
+#else
             go.AddComponent<StandaloneInputModule>();
+#endif
+
             go.transform.SetParent(Instance.transform);
             return go.GetComponent<EventSystem>();
         }

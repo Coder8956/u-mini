@@ -4,7 +4,10 @@ using UnityEngine;
 
 namespace UMiniFramework.Runtime
 {
-    public class UMLocal : UMMonoSingleton<UMLocal>
+    /// <summary>
+    /// 多语言功能对象，作为 UMConfig 的子 GameObject 运行
+    /// </summary>
+    public class LocalCfg : MonoBehaviour
     {
         /// <summary>
         /// 本地化字典 [localization,[local_id,value]]
@@ -17,43 +20,49 @@ namespace UMiniFramework.Runtime
         private List<string> m_localOptions;
 
         private List<UMLocalComponent> m_localComponents;
-        public static string CurtLocal { get; private set; }
 
-        protected override void OnInit()
+        public string CurtLocal { get; private set; }
+
+        // ── 静态访问（通过 UMConfig.Local 委托） ──
+
+        private static LocalCfg Instance => UMConfig.IsCreated ? UMConfig.Local : null;
+
+        private static bool IsCreated => Instance != null;
+
+        private void Awake()
         {
             m_localComponents = new List<UMLocalComponent>();
         }
 
-        public static void SetLocalDic(Dictionary<string, Dictionary<string, string>> dic)
+        internal void SetLocalDic(Dictionary<string, Dictionary<string, string>> dic)
         {
             if (dic == null)
                 throw new ArgumentNullException(nameof(dic));
 
-            Instance.m_localDic = dic;
-            Instance.m_localOptions = new List<string>(dic.Keys);
+            m_localDic = dic;
+            m_localOptions = new List<string>(dic.Keys);
         }
 
-        public static List<string> GetLocalOptions()
+        public List<string> GetLocalOptions()
         {
-            return Instance.m_localOptions;
+            return m_localOptions;
         }
 
-        public static void SwitchLocal(string local)
+        public void SwitchLocal(string local)
         {
             if (string.IsNullOrEmpty(local) || CurtLocal == local)
                 return;
 
-            var inst = Instance;
-            if (inst.m_localDic == null || !inst.m_localDic.ContainsKey(local))
+            if (m_localDic == null || !m_localDic.ContainsKey(local))
             {
-                Debug.LogWarning($"[UMLocal] SwitchLocal 失败：未找到语言 '{local}'。");
+                Debug.LogWarning($"[LocalCfg] SwitchLocal 失败：未找到语言 '{local}'。");
                 return;
             }
 
             CurtLocal = local;
 
             // 快照迭代，防止 OnUpdateLocal 回调中组件注销导致跳过元素
-            var snapshot = new List<UMLocalComponent>(inst.m_localComponents);
+            var snapshot = new List<UMLocalComponent>(m_localComponents);
             for (var i = 0; i < snapshot.Count; i++)
             {
                 snapshot[i].OnUpdateLocal();

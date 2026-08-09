@@ -179,7 +179,7 @@ namespace UMiniFramework.Editor
             sb.AppendLine("using Newtonsoft.Json;");
             sb.AppendLine("using UnityEngine;");
             sb.AppendLine();
-            sb.AppendLine($"public class {LANG_SCRIPT_CLASS_NAME} : UMBaseConfigTable");
+            sb.AppendLine($"public class {LANG_SCRIPT_CLASS_NAME} : UMBaseConfigTable, IUMLangTable");
             sb.AppendLine("{");
 
             sb.AppendLine("    /// <summary>");
@@ -196,6 +196,21 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    /// 语言类型列表");
             sb.AppendLine("    /// </summary>");
             sb.AppendLine("    private List<string> m_langTypes;");
+            sb.AppendLine();
+
+            // LangTypeEntry for deserialization
+            sb.AppendLine("    private class LangTypeEntry");
+            sb.AppendLine("    {");
+            sb.AppendLine("        [JsonProperty(\"name\")] public string name;");
+            sb.AppendLine("        [JsonProperty(\"file\")] public string file;");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // 3.4.2: Language file list (private)
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 语言文件名列表");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    private List<string> m_langFiles;");
             sb.AppendLine();
 
             // 3.4.2: Language content dictionary (private)
@@ -298,26 +313,46 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    }");
             sb.AppendLine();
 
+            // Get language file by index
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过索引获取语言对应的配置文件名");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public string GetLanguageFile(int index)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (index < 0 || index >= m_langFiles.Count)");
+            sb.AppendLine("            return null;");
+            sb.AppendLine("        return m_langFiles[index];");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
             // OnInit: load types then load each language file
             sb.AppendLine("    protected override void OnInit(string tableContent)");
             sb.AppendLine("    {");
-            sb.AppendLine("        // 3.4.1: 读取语言类型数组");
-            sb.AppendLine("        m_langTypes = JsonConvert.DeserializeObject<List<string>>(tableContent);");
+            sb.AppendLine("        var langEntries = JsonConvert.DeserializeObject<List<LangTypeEntry>>(tableContent);");
             sb.AppendLine();
-            sb.AppendLine("        // 3.4.2: 读取所有语言内容");
+            sb.AppendLine("        m_langTypes = new List<string>(langEntries.Count);");
+            sb.AppendLine("        m_langFiles = new List<string>(langEntries.Count);");
             sb.AppendLine("        m_langContent = new Dictionary<string, Dictionary<string, string>>();");
+            sb.AppendLine();
             sb.AppendLine("        string basePath = ConfigLoadPath.Substring(0, ConfigLoadPath.LastIndexOf('/'));");
-            sb.AppendLine("        for (int i = 0; i < m_langTypes.Count; i++)");
+            sb.AppendLine("        for (int i = 0; i < langEntries.Count; i++)");
             sb.AppendLine("        {");
-            sb.AppendLine("            var asset = Resources.Load<TextAsset>($\"{basePath}/lang_{i}\");");
+            sb.AppendLine("            var entry = langEntries[i];");
+            sb.AppendLine("            m_langTypes.Add(entry.name);");
+            sb.AppendLine("            m_langFiles.Add(entry.file);");
+            sb.AppendLine();
+            sb.AppendLine("            string fileName = entry.file.EndsWith(\".json\")");
+            sb.AppendLine("                ? entry.file.Substring(0, entry.file.Length - 5)");
+            sb.AppendLine("                : entry.file;");
+            sb.AppendLine("            var asset = Resources.Load<TextAsset>($\"{basePath}/{fileName}\");");
             sb.AppendLine("            if (asset != null)");
             sb.AppendLine("            {");
-            sb.AppendLine("                m_langContent[m_langTypes[i]] =");
+            sb.AppendLine("                m_langContent[entry.name] =");
             sb.AppendLine("                    JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text);");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");
-            sb.AppendLine("                Debug.LogWarning($\"Language file not found: {basePath}/lang_{i}\");");
+            sb.AppendLine("                Debug.LogWarning($\"Language file not found: {basePath}/{entry.file}\");");
             sb.AppendLine("            }");
             sb.AppendLine("        }");
             sb.AppendLine("    }");

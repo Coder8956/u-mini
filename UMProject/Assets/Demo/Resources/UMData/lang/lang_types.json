@@ -1,6 +1,150 @@
 ﻿[
-  "简体中文",
-  "English",
-  "日本語",
-  "한국인"
+  {
+    "name": "简体中文",
+    "file": "lang_0.json"
+  },
+  {
+    "name": "English",
+    "file": "lang_1.json"
+  },
+  {
+    "name": "日本語",
+    "file": "lang_2.json"
+  },
+  {
+    "name": "한국인001",
+    "file": "lang_3.json"
+  },
+  {
+    "name": "한국인002",
+    "file": "lang_4.json"
+  },
+  {
+    "name": "한국인003",
+    "file": "lang_5.json"
+  },
+  {
+    "name": "한국인004",
+    "file": "lang_6.json"
+  },
+  {
+    "name": "한국인005",
+    "file": "lang_7.json"
+  },
+  {
+    "name": "한국인006",
+    "file": "lang_8.json"
+  },
+  {
+    "name": "한국인007",
+    "file": "lang_9.json"
+  },
+  {
+    "name": "한국인008",
+    "file": "lang_10.json"
+  },
+  {
+    "name": "한국인009",
+    "file": "lang_11.json"
+  },
+  {
+    "name": "한국인010",
+    "file": "lang_12.json"
+  },
+  {
+    "name": "한국인011",
+    "file": "lang_13.json"
+  },
+  {
+    "name": "한국인012",
+    "file": "lang_14.json"
+  },
+  {
+    "name": "한국인013",
+    "file": "lang_15.json"
+  },
+  {
+    "name": "한국인014",
+    "file": "lang_16.json"
+  },
+  {
+    "name": "한국인015",
+    "file": "lang_17.json"
+  },
+  {
+    "name": "한국인016",
+    "file": "lang_18.json"
+  },
+  {
+    "name": "한국인017",
+    "file": "lang_19.json"
+  },
+  {
+    "name": "한국인018",
+    "file": "lang_20.json"
+  },
+  {
+    "name": "한국인019",
+    "file": "lang_21.json"
+  },
+  {
+    "name": "한국인020",
+    "file": "lang_22.json"
+  },
+  {
+    "name": "한국인021",
+    "file": "lang_23.json"
+  },
+  {
+    "name": "한국인022",
+    "file": "lang_24.json"
+  },
+  {
+    "name": "한국인023",
+    "file": "lang_25.json"
+  },
+  {
+    "name": "한국인024",
+    "file": "lang_26.json"
+  },
+  {
+    "name": "한국인025",
+    "file": "lang_27.json"
+  },
+  {
+    "name": "한국인026",
+    "file": "lang_28.json"
+  },
+  {
+    "name": "한국인027",
+    "file": "lang_29.json"
+  },
+  {
+    "name": "한국인028",
+    "file": "lang_30.json"
+  },
+  {
+    "name": "한국인029",
+    "file": "lang_31.json"
+  },
+  {
+    "name": "한국인030",
+    "file": "lang_32.json"
+  },
+  {
+    "name": "한국인031",
+    "file": "lang_33.json"
+  },
+  {
+    "name": "한국인032",
+    "file": "lang_34.json"
+  },
+  {
+    "name": "한국인033",
+    "file": "lang_35.json"
+  },
+  {
+    "name": "한국인034",
+    "file": "lang_36.json"
+  }
 ]

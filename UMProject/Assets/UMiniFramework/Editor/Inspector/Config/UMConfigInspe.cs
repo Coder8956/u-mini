@@ -32,7 +32,15 @@ namespace UMiniFramework.Editor
                 return;
             }
 
-            m_foConfigTables = EditorGUILayout.Foldout(m_foConfigTables, $"Config Tables ({m_tableDic.Keys.Count})");
+            // 统计非语言配置表数量
+            int tableCount = 0;
+            foreach (var v in m_tableDic.Values)
+            {
+                if (!(v is IUMLangTable))
+                    tableCount++;
+            }
+
+            m_foConfigTables = EditorGUILayout.Foldout(m_foConfigTables, $"Config Tables ({tableCount})");
             if (m_foConfigTables)
             {
                 // 绘制 Config Table
@@ -40,6 +48,10 @@ namespace UMiniFramework.Editor
                 int tableIndex = 0;
                 foreach (var kv in m_tableDic)
                 {
+                    // 跳过多语言配置表，由 LocalCfg Inspector 绘制
+                    if (kv.Value is IUMLangTable)
+                        continue;
+
                     EditorGUILayout.BeginVertical("helpbox");
 
                     // 绘制索引

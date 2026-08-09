@@ -6,6 +6,13 @@ namespace UMiniFramework.Runtime
 {
     public class UMConfig : UMMonoSingleton<UMConfig>
     {
+        private LocalCfg m_local;
+
+        /// <summary>
+        /// 多语言功能对象（添加语言配置表时自动创建）
+        /// </summary>
+        public static LocalCfg Local => IsCreated ? Instance.m_local : null;
+
         private readonly Dictionary<Type, UMBaseConfigTable> m_tableDic = new();
 
         private static Dictionary<Type, UMBaseConfigTable> TableDic = null;
@@ -65,6 +72,25 @@ namespace UMiniFramework.Runtime
             table.Init(asset.text);
 
             TableDic.Add(tableType, table);
+
+            // 多语言配置表自动创建并初始化 LocalCfg
+            if (table is IUMLangTable langTable)
+            {
+                if (Instance.m_local == null)
+                {
+                    var go = new GameObject("LocalCfg");
+                    go.transform.SetParent(Instance.transform);
+                    Instance.m_local = go.AddComponent<LocalCfg>();
+                }
+
+                var localDic = new Dictionary<string, Dictionary<string, string>>();
+                var languages = langTable.GetAllLanguages();
+                for (int i = 0; i < languages.Count; i++)
+                {
+                    localDic[languages[i]] = langTable.GetContent(languages[i]);
+                }
+                Instance.m_local.SetLocalDic(localDic);
+            }
 
             return true;
         }

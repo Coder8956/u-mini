@@ -112,7 +112,11 @@ namespace UMiniFramework.Editor
                 string langName = commentsRow[col].ToString();
                 if (string.IsNullOrEmpty(langName))
                     break;
-                langTypes.Add(langName);
+
+                var entry = new JObject();
+                entry["name"] = langName;
+                entry["file"] = $"lang_{col - 1}.json";
+                langTypes.Add(entry);
             }
 
             int langCount = langTypes.Count;

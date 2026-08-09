@@ -26,7 +26,7 @@ namespace UMiniFramework.Runtime
 
         protected virtual void OnEnable()
         {
-            UMLocal.RegisterComponent(this);
+            LocalCfg.RegisterComponent(this);
 
             if (!string.IsNullOrEmpty(m_localID))
             {
@@ -36,7 +36,7 @@ namespace UMiniFramework.Runtime
 
         protected virtual void OnDisable()
         {
-            UMLocal.UnregisterComponent(this);
+            LocalCfg.UnregisterComponent(this);
         }
 
         protected abstract void OnAwake();
@@ -45,7 +45,7 @@ namespace UMiniFramework.Runtime
 
         protected string LocalValue()
         {
-            return UMLocal.GetValue(m_localID);
+            return LocalCfg.GetValue(m_localID);
         }
     }
 }

@@ -28,7 +28,6 @@ namespace UMiniFramework.Runtime
             // 创建框架模块
             UMConfig.Create(m_root);
             UMEvent.Create(m_root);
-            UMLocal.Create(m_root);
             UMPersist.Create(m_root);
             UMRes.Create(m_root);
             UMScene.Create(m_root);
