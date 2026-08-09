@@ -7,3 +7,10 @@ ProjectUMini/UserSettings/
 ProjectUMini/.idea/
 ProjectUMini/obj/
 *.csproj
+UMProject/.vsconfig
+UMProject/Library/
+UMProject/Logs/
+UMProject/Temp/
+UMProject/UserSettings/
+UMProject/.idea/
+UMProject/obj/
