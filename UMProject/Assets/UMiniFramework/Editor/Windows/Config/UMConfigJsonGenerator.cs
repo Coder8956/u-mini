@@ -94,5 +94,52 @@ namespace UMiniFramework.Editor
 
             return jArray;
         }
+
+        public static void CreateLangJson(
+            DataTable table,
+            string dataFolder)
+        {
+            string langDir = $"{dataFolder}/lang";
+            Directory.CreateDirectory(langDir);
+
+            // Row 0: comments row — Column 0 is "语言id", Column 1+ are language display names
+            DataRow commentsRow = table.Rows[0];
+            int totalCols = table.Columns.Count;
+
+            var langTypes = new JArray();
+            for (int col = 1; col < totalCols; col++)
+            {
+                string langName = commentsRow[col].ToString();
+                if (string.IsNullOrEmpty(langName))
+                    break;
+                langTypes.Add(langName);
+            }
+
+            int langCount = langTypes.Count;
+
+            // Write lang_types.json
+            string typesJson = JsonConvert.SerializeObject(langTypes, Formatting.Indented);
+            File.WriteAllText($"{langDir}/lang_types.json", typesJson, Encoding.UTF8);
+
+            // Row 3+: data rows — Column 0 = id, Column (colIndex + 1) = content for language at colIndex
+            for (int colIndex = 0; colIndex < langCount; colIndex++)
+            {
+                int col = colIndex + 1;
+                var langContent = new JObject();
+
+                for (int row = 3; row < table.Rows.Count; row++)
+                {
+                    string id = table.Rows[row][0].ToString();
+                    if (string.IsNullOrEmpty(id))
+                        continue;
+
+                    string content = table.Rows[row][col].ToString();
+                    langContent[id] = content;
+                }
+
+                string json = JsonConvert.SerializeObject(langContent, Formatting.Indented);
+                File.WriteAllText($"{langDir}/lang_{colIndex}.json", json, Encoding.UTF8);
+            }
+        }
     }
 }

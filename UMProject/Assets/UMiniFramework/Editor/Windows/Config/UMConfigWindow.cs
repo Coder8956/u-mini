@@ -10,6 +10,7 @@ namespace UMiniFramework.Editor
         private const string KEY_CONFIG_PATH = "UMCFG_CONFIG_PATH";
         private const string KEY_SCRIPTS_PATH = "UMCFG_SCRIPTS_PATH";
         private const string KEY_DATA_PATH = "UMCFG_DATA_PATH";
+        private const string KEY_LANG_TABLE_NAME = "UMCFG_LANG_TABLE_NAME";
 
         private const string READ_FILES_TIP_1 = "Please click read button";
         private const string READ_FILES_TIP_2 = "The configuration file was not read";
@@ -24,10 +25,12 @@ namespace UMiniFramework.Editor
         private string m_configInputDir;
         private string m_scriptOutputDir;
         private string m_jsonOutputDir;
+        private string m_langTableName;
 
         private string m_readFilesTip;
 
         private GUIStyle m_redLabelStyle;
+        private GUIStyle m_yellowLabelStyle;
 
         private Vector2 m_scrollPosition;
         private float m_scrollViewHeight;
@@ -157,7 +160,22 @@ namespace UMiniFramework.Editor
         {
             if (string.IsNullOrEmpty(m_configInputDir))
                 return;
-            
+
+            EditorGUILayout.BeginHorizontal();
+            GUILayout.Label(
+                "Language Table Name",
+                GUILayout.Width(180),
+                GUILayout.Height(LINE_HEIGHT));
+            var newLangName = EditorGUILayout.TextField(
+                m_langTableName,
+                GUILayout.Height(LINE_HEIGHT));
+            if (newLangName != m_langTableName)
+            {
+                m_langTableName = newLangName;
+                EditorPrefs.SetString(KEY_LANG_TABLE_NAME, m_langTableName);
+            }
+            EditorGUILayout.EndHorizontal();
+
             if (GUILayout.Button("Read Config Files"))
             {
                 m_configFiles.Clear();
@@ -206,6 +224,18 @@ namespace UMiniFramework.Editor
                     $"Config-{i:D5}",
                     GUILayout.Width(100));
 
+                string fileName = Path.GetFileNameWithoutExtension(m_configFiles[i]);
+                bool isLangFile = !string.IsNullOrEmpty(m_langTableName) &&
+                                  fileName.Equals(m_langTableName, System.StringComparison.OrdinalIgnoreCase);
+
+                if (isLangFile)
+                {
+                    GUILayout.Label("[lang]", m_yellowLabelStyle, GUILayout.Width(50));
+                }
+                else
+                {
+                    GUILayout.Label("", GUILayout.Width(50));
+                }
 
                 GUILayout.Label(m_configFiles[i]);
 
@@ -236,7 +266,8 @@ namespace UMiniFramework.Editor
                     m_configFiles,
                     m_scriptOutputDir,
                     m_jsonOutputDir,
-                    UMConfigUpdateMode.Data);
+                    UMConfigUpdateMode.Data,
+                    m_langTableName);
             }
 
             if (GUILayout.Button("Update Scripts"))
@@ -245,7 +276,8 @@ namespace UMiniFramework.Editor
                     m_configFiles,
                     m_scriptOutputDir,
                     m_jsonOutputDir,
-                    UMConfigUpdateMode.Scripts);
+                    UMConfigUpdateMode.Scripts,
+                    m_langTableName);
             }
 
             if (GUILayout.Button("Update Data&Scripts"))
@@ -254,7 +286,8 @@ namespace UMiniFramework.Editor
                     m_configFiles,
                     m_scriptOutputDir,
                     m_jsonOutputDir,
-                    UMConfigUpdateMode.DataAndScripts);
+                    UMConfigUpdateMode.DataAndScripts,
+                    m_langTableName);
             }
 
             EditorGUILayout.EndHorizontal();
@@ -272,6 +305,15 @@ namespace UMiniFramework.Editor
                     normal =
                     {
                         textColor = Color.red
+                    }
+                };
+
+            m_yellowLabelStyle =
+                new GUIStyle(GUI.skin.label)
+                {
+                    normal =
+                    {
+                        textColor = Color.yellow
                     }
                 };
         }
@@ -303,6 +345,10 @@ namespace UMiniFramework.Editor
 
             m_jsonOutputDir =
                 EditorPrefs.GetString(KEY_DATA_PATH, "");
+
+
+            m_langTableName =
+                EditorPrefs.GetString(KEY_LANG_TABLE_NAME, "");
         }
     }
 }

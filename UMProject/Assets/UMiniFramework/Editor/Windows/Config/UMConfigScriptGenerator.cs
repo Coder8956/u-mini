@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Text;
 using UnityEditor;
@@ -149,6 +150,180 @@ namespace UMiniFramework.Editor
             sb.AppendLine("}");
 
             string savePath = $"{scriptFolder}/{tableClassName}.cs";
+            File.WriteAllText(savePath, sb.ToString(), Encoding.UTF8);
+        }
+
+        public static void CreateLangScript(
+            DataTable table,
+            string excelPath,
+            string scriptFolder,
+            string dataFolder,
+            List<string> tableClassList)
+        {
+            const string LANG_SCRIPT_CLASS_NAME = "LanguageCfg";
+            tableClassList.Add(LANG_SCRIPT_CLASS_NAME);
+
+            string langScriptFolder = $"{scriptFolder}/lang";
+            Directory.CreateDirectory(langScriptFolder);
+
+            // Compute AssetPath and LoadPath for lang/lang_types
+            string configPath = dataFolder.Replace($"{Application.dataPath}/", "");
+            string configAssetPath = $"Assets/{configPath}/lang/lang_types";
+            string[] splitStrs = configAssetPath.Split(new[] {"Resources/"}, System.StringSplitOptions.None);
+            string configLoadPath = splitStrs[splitStrs.Length - 1];
+
+            var sb = new StringBuilder();
+            sb.AppendLine(SCRIPT_TIP);
+            sb.AppendLine("using UMiniFramework.Runtime;");
+            sb.AppendLine("using System.Collections.Generic;");
+            sb.AppendLine("using Newtonsoft.Json;");
+            sb.AppendLine("using UnityEngine;");
+            sb.AppendLine();
+            sb.AppendLine($"public class {LANG_SCRIPT_CLASS_NAME} : UMBaseConfigTable");
+            sb.AppendLine("{");
+
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 配置文件路径");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine($"    private const string ConfigAssetPath = \"{configAssetPath}\";");
+            sb.AppendLine("    public override string AssetPath { get { return ConfigAssetPath; } }");
+            sb.AppendLine($"    private const string ConfigLoadPath = \"{configLoadPath}\";");
+            sb.AppendLine("    public override string LoadPath { get { return ConfigLoadPath; } }");
+            sb.AppendLine();
+
+            // 3.4.1: Language types list (private)
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 语言类型列表");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    private List<string> m_langTypes;");
+            sb.AppendLine();
+
+            // 3.4.2: Language content dictionary (private)
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 语言内容字典，key 为语言名称，value 为该语言的 id→内容映射");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    private Dictionary<string, Dictionary<string, string>> m_langContent;");
+            sb.AppendLine();
+
+            // 3.4.3: Get content by index
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过索引获取语言配置");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public Dictionary<string, string> GetContent(int index)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (index < 0 || index >= m_langTypes.Count)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            Debug.LogWarning($\"Language index out of range: {index}\");");
+            sb.AppendLine("            return null;");
+            sb.AppendLine("        }");
+            sb.AppendLine("        return m_langContent[m_langTypes[index]];");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // 3.4.3: Get content by name
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过语言名称获取语言配置");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public Dictionary<string, string> GetContent(string langName)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (m_langContent.TryGetValue(langName, out var content))");
+            sb.AppendLine("            return content;");
+            sb.AppendLine("        Debug.LogWarning($\"Language not found: {langName}\");");
+            sb.AppendLine("        return null;");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // Convenience: GetText by index + id
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过索引和 id 获取单条语言文本");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public string GetText(int langIndex, string id)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        var content = GetContent(langIndex);");
+            sb.AppendLine("        if (content != null && content.TryGetValue(id, out var text))");
+            sb.AppendLine("            return text;");
+            sb.AppendLine("        return null;");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // Convenience: GetText by name + id
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过语言名称和 id 获取单条语言文本");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public string GetText(string langName, string id)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        var content = GetContent(langName);");
+            sb.AppendLine("        if (content != null && content.TryGetValue(id, out var text))");
+            sb.AppendLine("            return text;");
+            sb.AppendLine("        return null;");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // 3.4.4: Get all languages
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 获取所有语言种类");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public List<string> GetAllLanguages()");
+            sb.AppendLine("    {");
+            sb.AppendLine("        return new List<string>(m_langTypes);");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // 3.4.4: Language count
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 语言数量");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public int LanguageCount { get { return m_langTypes.Count; } }");
+            sb.AppendLine();
+
+            // 3.4.4: Get language name by index
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过索引获取语言名称");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public string GetLanguageName(int index)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (index < 0 || index >= m_langTypes.Count)");
+            sb.AppendLine("            return null;");
+            sb.AppendLine("        return m_langTypes[index];");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // 3.4.4: Get index by language name
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过语言名称获取索引");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public int GetLanguageIndex(string langName)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        return m_langTypes.IndexOf(langName);");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // OnInit: load types then load each language file
+            sb.AppendLine("    protected override void OnInit(string tableContent)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        // 3.4.1: 读取语言类型数组");
+            sb.AppendLine("        m_langTypes = JsonConvert.DeserializeObject<List<string>>(tableContent);");
+            sb.AppendLine();
+            sb.AppendLine("        // 3.4.2: 读取所有语言内容");
+            sb.AppendLine("        m_langContent = new Dictionary<string, Dictionary<string, string>>();");
+            sb.AppendLine("        string basePath = ConfigLoadPath.Substring(0, ConfigLoadPath.LastIndexOf('/'));");
+            sb.AppendLine("        for (int i = 0; i < m_langTypes.Count; i++)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            var asset = Resources.Load<TextAsset>($\"{basePath}/lang_{i}\");");
+            sb.AppendLine("            if (asset != null)");
+            sb.AppendLine("            {");
+            sb.AppendLine("                m_langContent[m_langTypes[i]] =");
+            sb.AppendLine("                    JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text);");
+            sb.AppendLine("            }");
+            sb.AppendLine("            else");
+            sb.AppendLine("            {");
+            sb.AppendLine("                Debug.LogWarning($\"Language file not found: {basePath}/lang_{i}\");");
+            sb.AppendLine("            }");
+            sb.AppendLine("        }");
+            sb.AppendLine("    }");
+            sb.AppendLine("}");
+
+            string savePath = $"{langScriptFolder}/{LANG_SCRIPT_CLASS_NAME}.cs";
             File.WriteAllText(savePath, sb.ToString(), Encoding.UTF8);
         }
     }

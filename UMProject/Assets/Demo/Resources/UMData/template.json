@@ -1,0 +1,602 @@
+﻿[
+  {
+    "id": "ma_00001",
+    "name": "神器001",
+    "ranking": 1,
+    "combatPower": 9999
+  },
+  {
+    "id": "ma_00002",
+    "name": "神器002",
+    "ranking": 2,
+    "combatPower": 9699
+  },
+  {
+    "id": "ma_00003",
+    "name": "神器003",
+    "ranking": 3,
+    "combatPower": 9408
+  },
+  {
+    "id": "ma_00004",
+    "name": "神器004",
+    "ranking": 4,
+    "combatPower": 9126
+  },
+  {
+    "id": "ma_00005",
+    "name": "神器005",
+    "ranking": 5,
+    "combatPower": 8852
+  },
+  {
+    "id": "ma_00006",
+    "name": "神器006",
+    "ranking": 6,
+    "combatPower": 8586
+  },
+  {
+    "id": "ma_00007",
+    "name": "神器007",
+    "ranking": 7,
+    "combatPower": 8329
+  },
+  {
+    "id": "ma_00008",
+    "name": "神器008",
+    "ranking": 8,
+    "combatPower": 8079
+  },
+  {
+    "id": "ma_00009",
+    "name": "神器009",
+    "ranking": 9,
+    "combatPower": 7837
+  },
+  {
+    "id": "ma_00010",
+    "name": "神器010",
+    "ranking": 10,
+    "combatPower": 7602
+  },
+  {
+    "id": "ma_00011",
+    "name": "神器011",
+    "ranking": 11,
+    "combatPower": 7374
+  },
+  {
+    "id": "ma_00012",
+    "name": "神器012",
+    "ranking": 12,
+    "combatPower": 7152
+  },
+  {
+    "id": "ma_00013",
+    "name": "神器013",
+    "ranking": 13,
+    "combatPower": 6938
+  },
+  {
+    "id": "ma_00014",
+    "name": "神器014",
+    "ranking": 14,
+    "combatPower": 6730
+  },
+  {
+    "id": "ma_00015",
+    "name": "神器015",
+    "ranking": 15,
+    "combatPower": 6528
+  },
+  {
+    "id": "ma_00016",
+    "name": "神器016",
+    "ranking": 16,
+    "combatPower": 6332
+  },
+  {
+    "id": "ma_00017",
+    "name": "神器017",
+    "ranking": 17,
+    "combatPower": 6142
+  },
+  {
+    "id": "ma_00018",
+    "name": "神器018",
+    "ranking": 18,
+    "combatPower": 5958
+  },
+  {
+    "id": "ma_00019",
+    "name": "神器019",
+    "ranking": 19,
+    "combatPower": 5779
+  },
+  {
+    "id": "ma_00020",
+    "name": "神器020",
+    "ranking": 20,
+    "combatPower": 5606
+  },
+  {
+    "id": "ma_00021",
+    "name": "神器021",
+    "ranking": 21,
+    "combatPower": 5437
+  },
+  {
+    "id": "ma_00022",
+    "name": "神器022",
+    "ranking": 22,
+    "combatPower": 5274
+  },
+  {
+    "id": "ma_00023",
+    "name": "神器023",
+    "ranking": 23,
+    "combatPower": 5116
+  },
+  {
+    "id": "ma_00024",
+    "name": "神器024",
+    "ranking": 24,
+    "combatPower": 4963
+  },
+  {
+    "id": "ma_00025",
+    "name": "神器025",
+    "ranking": 25,
+    "combatPower": 4814
+  },
+  {
+    "id": "ma_00026",
+    "name": "神器026",
+    "ranking": 26,
+    "combatPower": 4669
+  },
+  {
+    "id": "ma_00027",
+    "name": "神器027",
+    "ranking": 27,
+    "combatPower": 4529
+  },
+  {
+    "id": "ma_00028",
+    "name": "神器028",
+    "ranking": 28,
+    "combatPower": 4393
+  },
+  {
+    "id": "ma_00029",
+    "name": "神器029",
+    "ranking": 29,
+    "combatPower": 4262
+  },
+  {
+    "id": "ma_00030",
+    "name": "神器030",
+    "ranking": 30,
+    "combatPower": 4134
+  },
+  {
+    "id": "ma_00031",
+    "name": "神器031",
+    "ranking": 31,
+    "combatPower": 4010
+  },
+  {
+    "id": "ma_00032",
+    "name": "神器032",
+    "ranking": 32,
+    "combatPower": 3889
+  },
+  {
+    "id": "ma_00033",
+    "name": "神器033",
+    "ranking": 33,
+    "combatPower": 3773
+  },
+  {
+    "id": "ma_00034",
+    "name": "神器034",
+    "ranking": 34,
+    "combatPower": 3660
+  },
+  {
+    "id": "ma_00035",
+    "name": "神器035",
+    "ranking": 35,
+    "combatPower": 3550
+  },
+  {
+    "id": "ma_00036",
+    "name": "神器036",
+    "ranking": 36,
+    "combatPower": 3443
+  },
+  {
+    "id": "ma_00037",
+    "name": "神器037",
+    "ranking": 37,
+    "combatPower": 3340
+  },
+  {
+    "id": "ma_00038",
+    "name": "神器038",
+    "ranking": 38,
+    "combatPower": 3240
+  },
+  {
+    "id": "ma_00039",
+    "name": "神器039",
+    "ranking": 39,
+    "combatPower": 3143
+  },
+  {
+    "id": "ma_00040",
+    "name": "神器040",
+    "ranking": 40,
+    "combatPower": 3048
+  },
+  {
+    "id": "ma_00041",
+    "name": "神器041",
+    "ranking": 41,
+    "combatPower": 2957
+  },
+  {
+    "id": "ma_00042",
+    "name": "神器042",
+    "ranking": 42,
+    "combatPower": 2868
+  },
+  {
+    "id": "ma_00043",
+    "name": "神器043",
+    "ranking": 43,
+    "combatPower": 2782
+  },
+  {
+    "id": "ma_00044",
+    "name": "神器044",
+    "ranking": 44,
+    "combatPower": 2699
+  },
+  {
+    "id": "ma_00045",
+    "name": "神器045",
+    "ranking": 45,
+    "combatPower": 2618
+  },
+  {
+    "id": "ma_00046",
+    "name": "神器046",
+    "ranking": 46,
+    "combatPower": 2539
+  },
+  {
+    "id": "ma_00047",
+    "name": "神器047",
+    "ranking": 47,
+    "combatPower": 2463
+  },
+  {
+    "id": "ma_00048",
+    "name": "神器048",
+    "ranking": 48,
+    "combatPower": 2389
+  },
+  {
+    "id": "ma_00049",
+    "name": "神器049",
+    "ranking": 49,
+    "combatPower": 2317
+  },
+  {
+    "id": "ma_00050",
+    "name": "神器050",
+    "ranking": 50,
+    "combatPower": 2248
+  },
+  {
+    "id": "ma_00051",
+    "name": "神器051",
+    "ranking": 51,
+    "combatPower": 2180
+  },
+  {
+    "id": "ma_00052",
+    "name": "神器052",
+    "ranking": 52,
+    "combatPower": 2115
+  },
+  {
+    "id": "ma_00053",
+    "name": "神器053",
+    "ranking": 53,
+    "combatPower": 2052
+  },
+  {
+    "id": "ma_00054",
+    "name": "神器054",
+    "ranking": 54,
+    "combatPower": 1990
+  },
+  {
+    "id": "ma_00055",
+    "name": "神器055",
+    "ranking": 55,
+    "combatPower": 1930
+  },
+  {
+    "id": "ma_00056",
+    "name": "神器056",
+    "ranking": 56,
+    "combatPower": 1872
+  },
+  {
+    "id": "ma_00057",
+    "name": "神器057",
+    "ranking": 57,
+    "combatPower": 1816
+  },
+  {
+    "id": "ma_00058",
+    "name": "神器058",
+    "ranking": 58,
+    "combatPower": 1762
+  },
+  {
+    "id": "ma_00059",
+    "name": "神器059",
+    "ranking": 59,
+    "combatPower": 1709
+  },
+  {
+    "id": "ma_00060",
+    "name": "神器060",
+    "ranking": 60,
+    "combatPower": 1658
+  },
+  {
+    "id": "ma_00061",
+    "name": "神器061",
+    "ranking": 61,
+    "combatPower": 1608
+  },
+  {
+    "id": "ma_00062",
+    "name": "神器062",
+    "ranking": 62,
+    "combatPower": 1560
+  },
+  {
+    "id": "ma_00063",
+    "name": "神器063",
+    "ranking": 63,
+    "combatPower": 1513
+  },
+  {
+    "id": "ma_00064",
+    "name": "神器064",
+    "ranking": 64,
+    "combatPower": 1467
+  },
+  {
+    "id": "ma_00065",
+    "name": "神器065",
+    "ranking": 65,
+    "combatPower": 1423
+  },
+  {
+    "id": "ma_00066",
+    "name": "神器066",
+    "ranking": 66,
+    "combatPower": 1381
+  },
+  {
+    "id": "ma_00067",
+    "name": "神器067",
+    "ranking": 67,
+    "combatPower": 1339
+  },
+  {
+    "id": "ma_00068",
+    "name": "神器068",
+    "ranking": 68,
+    "combatPower": 1299
+  },
+  {
+    "id": "ma_00069",
+    "name": "神器069",
+    "ranking": 69,
+    "combatPower": 1260
+  },
+  {
+    "id": "ma_00070",
+    "name": "神器070",
+    "ranking": 70,
+    "combatPower": 1222
+  },
+  {
+    "id": "ma_00071",
+    "name": "神器071",
+    "ranking": 71,
+    "combatPower": 1186
+  },
+  {
+    "id": "ma_00072",
+    "name": "神器072",
+    "ranking": 72,
+    "combatPower": 1150
+  },
+  {
+    "id": "ma_00073",
+    "name": "神器073",
+    "ranking": 73,
+    "combatPower": 1116
+  },
+  {
+    "id": "ma_00074",
+    "name": "神器074",
+    "ranking": 74,
+    "combatPower": 1082
+  },
+  {
+    "id": "ma_00075",
+    "name": "神器075",
+    "ranking": 75,
+    "combatPower": 1050
+  },
+  {
+    "id": "ma_00076",
+    "name": "神器076",
+    "ranking": 76,
+    "combatPower": 1018
+  },
+  {
+    "id": "ma_00077",
+    "name": "神器077",
+    "ranking": 77,
+    "combatPower": 988
+  },
+  {
+    "id": "ma_00078",
+    "name": "神器078",
+    "ranking": 78,
+    "combatPower": 958
+  },
+  {
+    "id": "ma_00079",
+    "name": "神器079",
+    "ranking": 79,
+    "combatPower": 929
+  },
+  {
+    "id": "ma_00080",
+    "name": "神器080",
+    "ranking": 80,
+    "combatPower": 901
+  },
+  {
+    "id": "ma_00081",
+    "name": "神器081",
+    "ranking": 81,
+    "combatPower": 874
+  },
+  {
+    "id": "ma_00082",
+    "name": "神器082",
+    "ranking": 82,
+    "combatPower": 848
+  },
+  {
+    "id": "ma_00083",
+    "name": "神器083",
+    "ranking": 83,
+    "combatPower": 823
+  },
+  {
+    "id": "ma_00084",
+    "name": "神器084",
+    "ranking": 84,
+    "combatPower": 798
+  },
+  {
+    "id": "ma_00085",
+    "name": "神器085",
+    "ranking": 85,
+    "combatPower": 774
+  },
+  {
+    "id": "ma_00086",
+    "name": "神器086",
+    "ranking": 86,
+    "combatPower": 751
+  },
+  {
+    "id": "ma_00087",
+    "name": "神器087",
+    "ranking": 87,
+    "combatPower": 728
+  },
+  {
+    "id": "ma_00088",
+    "name": "神器088",
+    "ranking": 88,
+    "combatPower": 706
+  },
+  {
+    "id": "ma_00089",
+    "name": "神器089",
+    "ranking": 89,
+    "combatPower": 685
+  },
+  {
+    "id": "ma_00090",
+    "name": "神器090",
+    "ranking": 90,
+    "combatPower": 665
+  },
+  {
+    "id": "ma_00091",
+    "name": "神器091",
+    "ranking": 91,
+    "combatPower": 645
+  },
+  {
+    "id": "ma_00092",
+    "name": "神器092",
+    "ranking": 92,
+    "combatPower": 625
+  },
+  {
+    "id": "ma_00093",
+    "name": "神器093",
+    "ranking": 93,
+    "combatPower": 607
+  },
+  {
+    "id": "ma_00094",
+    "name": "神器094",
+    "ranking": 94,
+    "combatPower": 588
+  },
+  {
+    "id": "ma_00095",
+    "name": "神器095",
+    "ranking": 95,
+    "combatPower": 571
+  },
+  {
+    "id": "ma_00096",
+    "name": "神器096",
+    "ranking": 96,
+    "combatPower": 554
+  },
+  {
+    "id": "ma_00097",
+    "name": "神器097",
+    "ranking": 97,
+    "combatPower": 537
+  },
+  {
+    "id": "ma_00098",
+    "name": "神器098",
+    "ranking": 98,
+    "combatPower": 521
+  },
+  {
+    "id": "ma_00099",
+    "name": "神器099",
+    "ranking": 99,
+    "combatPower": 505
+  },
+  {
+    "id": "ma_00100",
+    "name": "神器100",
+    "ranking": 100,
+    "combatPower": 490
+  }
+]

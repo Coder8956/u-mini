@@ -21,7 +21,8 @@ namespace UMiniFramework.Editor
             List<string> configFiles,
             string scriptFolder,
             string dataFolder,
-            UMConfigUpdateMode mode)
+            UMConfigUpdateMode mode,
+            string langTableName = null)
         {
             bool updateData = mode == UMConfigUpdateMode.Data ||
                               mode == UMConfigUpdateMode.DataAndScripts;
@@ -88,11 +89,26 @@ namespace UMiniFramework.Editor
                         $"Current Excel: {currentExcel}",
                         (float) i / configFiles.Count);
 
-                    CreateConfigByExcel(
-                        currentExcel,
-                        normalizedScriptFolder,
-                        normalizedDataFolder,
-                        mode);
+                    string excelName = Path.GetFileNameWithoutExtension(currentExcel);
+                    bool isLangTable = !string.IsNullOrEmpty(langTableName) &&
+                                       excelName.Equals(langTableName, System.StringComparison.OrdinalIgnoreCase);
+
+                    if (isLangTable)
+                    {
+                        CreateLangConfigByExcel(
+                            currentExcel,
+                            normalizedScriptFolder,
+                            normalizedDataFolder,
+                            mode);
+                    }
+                    else
+                    {
+                        CreateConfigByExcel(
+                            currentExcel,
+                            normalizedScriptFolder,
+                            normalizedDataFolder,
+                            mode);
+                    }
                 }
             }
             finally
@@ -194,6 +210,43 @@ namespace UMiniFramework.Editor
             }
 
             return count;
+        }
+
+        private static void CreateLangConfigByExcel(
+            string excel,
+            string scriptFolder,
+            string dataFolder,
+            UMConfigUpdateMode mode)
+        {
+            if (excel.Contains("~$")) return;
+
+            using (var stream = File.Open(excel, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            using (var reader = ExcelReaderFactory.CreateReader(stream))
+            {
+                var result = reader.AsDataSet();
+                if (result.Tables.Count == 0) return;
+
+                DataTable table = result.Tables[0];
+
+                if (mode == UMConfigUpdateMode.Data ||
+                    mode == UMConfigUpdateMode.DataAndScripts)
+                {
+                    UMConfigJsonGenerator.CreateLangJson(
+                        table,
+                        dataFolder);
+                }
+
+                if (mode == UMConfigUpdateMode.Scripts ||
+                    mode == UMConfigUpdateMode.DataAndScripts)
+                {
+                    UMConfigScriptGenerator.CreateLangScript(
+                        table,
+                        excel,
+                        scriptFolder,
+                        dataFolder,
+                        TableClassList);
+                }
+            }
         }
     }
 }
