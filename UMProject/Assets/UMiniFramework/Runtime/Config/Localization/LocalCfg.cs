@@ -15,13 +15,20 @@ namespace UMiniFramework.Runtime
         private Dictionary<string, Dictionary<string, string>> m_localDic;
 
         /// <summary>
-        /// 本地化选项
+        /// 语言选项列表
         /// </summary>
-        private List<string> m_localOptions;
+        private List<LangOption> m_localOptions;
+
+        /// <summary>
+        /// code → type 映射
+        /// </summary>
+        private Dictionary<string, string> m_codeToType;
 
         private List<UMLocalComponent> m_localComponents;
 
-        public string CurtLocal { get; private set; }
+        public string CurtType { get; private set; }
+
+        public string CurtCode { get; private set; }
 
         // ── 静态访问（通过 UMConfig.Local 委托） ──
 
@@ -34,34 +41,80 @@ namespace UMiniFramework.Runtime
             m_localComponents = new List<UMLocalComponent>();
         }
 
-        internal void SetLocalDic(Dictionary<string, Dictionary<string, string>> dic)
+        internal void SetLocalData(
+            List<LangOption> options,
+            Dictionary<string, Dictionary<string, string>> content)
         {
-            if (dic == null)
-                throw new ArgumentNullException(nameof(dic));
+            if (options == null || content == null)
+                throw new ArgumentNullException();
 
-            m_localDic = dic;
-            m_localOptions = new List<string>(dic.Keys);
+            m_localDic = content;
+            m_localOptions = options;
+            m_codeToType = new Dictionary<string, string>(options.Count);
+            foreach (var opt in options)
+            {
+                if (!string.IsNullOrEmpty(opt.code))
+                    m_codeToType[opt.code] = opt.type;
+            }
         }
 
-        public List<string> GetLocalOptions()
+        public List<LangOption> GetOptions()
         {
             return m_localOptions;
         }
 
-        public void SwitchLocal(string local)
+        public void SwitchByType(string type)
         {
-            if (string.IsNullOrEmpty(local) || CurtLocal == local)
+            if (string.IsNullOrEmpty(type) || CurtType == type)
                 return;
 
-            if (m_localDic == null || !m_localDic.ContainsKey(local))
+            if (m_localDic == null || !m_localDic.ContainsKey(type))
             {
-                Debug.LogWarning($"[LocalCfg] SwitchLocal 失败：未找到语言 '{local}'。");
+                Debug.LogWarning($"[LocalCfg] SwitchByType 失败：未找到语言 '{type}'。");
                 return;
             }
 
-            CurtLocal = local;
+            CurtType = type;
+            CurtCode = FindCodeByType(type);
 
-            // 快照迭代，防止 OnUpdateLocal 回调中组件注销导致跳过元素
+            NotifyComponents();
+        }
+
+        public void SwitchByCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+                return;
+
+            if (m_codeToType == null || !m_codeToType.TryGetValue(code, out string type))
+            {
+                Debug.LogWarning($"[LocalCfg] SwitchByCode 失败：未找到语言代码 '{code}'。");
+                return;
+            }
+
+            if (CurtType == type)
+                return;
+
+            CurtType = type;
+            CurtCode = code;
+
+            NotifyComponents();
+        }
+
+        private string FindCodeByType(string type)
+        {
+            if (m_localOptions == null)
+                return null;
+
+            for (int i = 0; i < m_localOptions.Count; i++)
+            {
+                if (m_localOptions[i].type == type)
+                    return m_localOptions[i].code;
+            }
+            return null;
+        }
+
+        private void NotifyComponents()
+        {
             var snapshot = new List<UMLocalComponent>(m_localComponents);
             for (var i = 0; i < snapshot.Count; i++)
             {
@@ -82,10 +135,10 @@ namespace UMiniFramework.Runtime
 
         private string GetLocalValue(string id)
         {
-            if (string.IsNullOrEmpty(id) || m_localDic == null || string.IsNullOrEmpty(CurtLocal))
+            if (string.IsNullOrEmpty(id) || m_localDic == null || string.IsNullOrEmpty(CurtType))
                 return string.Empty;
 
-            if (m_localDic.TryGetValue(CurtLocal, out var localSubDic) &&
+            if (m_localDic.TryGetValue(CurtType, out var localSubDic) &&
                 localSubDic.TryGetValue(id, out var value))
             {
                 return value;

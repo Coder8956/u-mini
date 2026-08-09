@@ -102,8 +102,10 @@ namespace UMiniFramework.Editor
             string langDir = $"{dataFolder}/lang";
             Directory.CreateDirectory(langDir);
 
-            // Row 0: comments row — Column 0 is "语言id", Column 1+ are language display names
+            // Row 0: first row — Column 0 is "语言id", Column 1+ are language display names
             DataRow commentsRow = table.Rows[0];
+            // Row 1: second row — Column 0 is "id", Column 1+ are language codes
+            DataRow fieldRow = table.Rows[1];
             int totalCols = table.Columns.Count;
 
             var langTypes = new JArray();
@@ -113,36 +115,45 @@ namespace UMiniFramework.Editor
                 if (string.IsNullOrEmpty(langName))
                     break;
 
+                string langCode = fieldRow[col].ToString();
+
                 var entry = new JObject();
-                entry["name"] = langName;
+                entry["type"] = langName;
+                entry["code"] = langCode;
                 entry["file"] = $"lang_{col - 1}.json";
                 langTypes.Add(entry);
             }
 
             int langCount = langTypes.Count;
 
-            // Write lang_types.json
+            // Write lang_types.json (unchanged format)
             string typesJson = JsonConvert.SerializeObject(langTypes, Formatting.Indented);
             File.WriteAllText($"{langDir}/lang_types.json", typesJson, Encoding.UTF8);
 
-            // Row 3+: data rows — Column 0 = id, Column (colIndex + 1) = content for language at colIndex
-            for (int colIndex = 0; colIndex < langCount; colIndex++)
+            // lang_{i}.json → {name, code, content: {id: value}}
+            for (int i = 0; i < langCount; i++)
             {
-                int col = colIndex + 1;
-                var langContent = new JObject();
+                int col = i + 1;
+                string name = commentsRow[col].ToString();
+                string code = fieldRow[col].ToString();
 
+                var langContent = new JObject();
                 for (int row = 3; row < table.Rows.Count; row++)
                 {
                     string id = table.Rows[row][0].ToString();
                     if (string.IsNullOrEmpty(id))
                         continue;
 
-                    string content = table.Rows[row][col].ToString();
-                    langContent[id] = content;
+                    langContent[id] = table.Rows[row][col].ToString();
                 }
 
-                string json = JsonConvert.SerializeObject(langContent, Formatting.Indented);
-                File.WriteAllText($"{langDir}/lang_{colIndex}.json", json, Encoding.UTF8);
+                var langFile = new JObject();
+                langFile["type"] = name;
+                langFile["code"] = code;
+                langFile["content"] = langContent;
+
+                string json = JsonConvert.SerializeObject(langFile, Formatting.Indented);
+                File.WriteAllText($"{langDir}/lang_{i}.json", json, Encoding.UTF8);
             }
         }
     }

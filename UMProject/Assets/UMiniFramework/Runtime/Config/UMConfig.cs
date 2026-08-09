@@ -83,13 +83,13 @@ namespace UMiniFramework.Runtime
                     Instance.m_local = go.AddComponent<LocalCfg>();
                 }
 
-                var localDic = new Dictionary<string, Dictionary<string, string>>();
-                var languages = langTable.GetAllLanguages();
-                for (int i = 0; i < languages.Count; i++)
+                var options = langTable.GetOptions();
+                var localDic = new Dictionary<string, Dictionary<string, string>>(options.Count);
+                for (int i = 0; i < options.Count; i++)
                 {
-                    localDic[languages[i]] = langTable.GetContent(languages[i]);
+                    localDic[options[i].type] = langTable.GetContent(options[i].type);
                 }
-                Instance.m_local.SetLocalDic(localDic);
+                Instance.m_local.SetLocalData(options, localDic);
             }
 
             return true;

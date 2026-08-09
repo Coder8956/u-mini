@@ -198,11 +198,21 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    private List<string> m_langTypes;");
             sb.AppendLine();
 
-            // LangTypeEntry for deserialization
+            // LangTypeEntry for deserialization of lang_types.json
             sb.AppendLine("    private class LangTypeEntry");
             sb.AppendLine("    {");
-            sb.AppendLine("        [JsonProperty(\"name\")] public string name;");
+            sb.AppendLine("        [JsonProperty(\"type\")] public string type;");
+            sb.AppendLine("        [JsonProperty(\"code\")] public string code;");
             sb.AppendLine("        [JsonProperty(\"file\")] public string file;");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
+            // LangEntry for deserialization of lang_{i}.json
+            sb.AppendLine("    private class LangEntry");
+            sb.AppendLine("    {");
+            sb.AppendLine("        [JsonProperty(\"type\")] public string type;");
+            sb.AppendLine("        [JsonProperty(\"code\")] public string code;");
+            sb.AppendLine("        [JsonProperty(\"content\")] public Dictionary<string, string> content;");
             sb.AppendLine("    }");
             sb.AppendLine();
 
@@ -211,6 +221,13 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    /// 语言文件名列表");
             sb.AppendLine("    /// </summary>");
             sb.AppendLine("    private List<string> m_langFiles;");
+            sb.AppendLine();
+
+            // Language codes list (private)
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 语言代码列表");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    private List<string> m_langCodes;");
             sb.AppendLine();
 
             // 3.4.2: Language content dictionary (private)
@@ -276,11 +293,16 @@ namespace UMiniFramework.Editor
 
             // 3.4.4: Get all languages
             sb.AppendLine("    /// <summary>");
-            sb.AppendLine("    /// 获取所有语言种类");
+            sb.AppendLine("    /// 获取所有语言选项（类型 + 代码）");
             sb.AppendLine("    /// </summary>");
-            sb.AppendLine("    public List<string> GetAllLanguages()");
+            sb.AppendLine("    public List<LangOption> GetOptions()");
             sb.AppendLine("    {");
-            sb.AppendLine("        return new List<string>(m_langTypes);");
+            sb.AppendLine("        var options = new List<LangOption>(m_langTypes.Count);");
+            sb.AppendLine("        for (int i = 0; i < m_langTypes.Count; i++)");
+            sb.AppendLine("        {");
+            sb.AppendLine("            options.Add(new LangOption(m_langTypes[i], m_langCodes[i]));");
+            sb.AppendLine("        }");
+            sb.AppendLine("        return options;");
             sb.AppendLine("    }");
             sb.AppendLine();
 
@@ -313,6 +335,18 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    }");
             sb.AppendLine();
 
+            // Get language code by index
+            sb.AppendLine("    /// <summary>");
+            sb.AppendLine("    /// 通过索引获取语言代码");
+            sb.AppendLine("    /// </summary>");
+            sb.AppendLine("    public string GetLanguageCode(int index)");
+            sb.AppendLine("    {");
+            sb.AppendLine("        if (index < 0 || index >= m_langCodes.Count)");
+            sb.AppendLine("            return null;");
+            sb.AppendLine("        return m_langCodes[index];");
+            sb.AppendLine("    }");
+            sb.AppendLine();
+
             // Get language file by index
             sb.AppendLine("    /// <summary>");
             sb.AppendLine("    /// 通过索引获取语言对应的配置文件名");
@@ -332,13 +366,14 @@ namespace UMiniFramework.Editor
             sb.AppendLine();
             sb.AppendLine("        m_langTypes = new List<string>(langEntries.Count);");
             sb.AppendLine("        m_langFiles = new List<string>(langEntries.Count);");
+            sb.AppendLine("        m_langCodes = new List<string>(langEntries.Count);");
             sb.AppendLine("        m_langContent = new Dictionary<string, Dictionary<string, string>>();");
             sb.AppendLine();
             sb.AppendLine("        string basePath = ConfigLoadPath.Substring(0, ConfigLoadPath.LastIndexOf('/'));");
             sb.AppendLine("        for (int i = 0; i < langEntries.Count; i++)");
             sb.AppendLine("        {");
             sb.AppendLine("            var entry = langEntries[i];");
-            sb.AppendLine("            m_langTypes.Add(entry.name);");
+            sb.AppendLine("            m_langTypes.Add(entry.type);");
             sb.AppendLine("            m_langFiles.Add(entry.file);");
             sb.AppendLine();
             sb.AppendLine("            string fileName = entry.file.EndsWith(\".json\")");
@@ -347,8 +382,9 @@ namespace UMiniFramework.Editor
             sb.AppendLine("            var asset = Resources.Load<TextAsset>($\"{basePath}/{fileName}\");");
             sb.AppendLine("            if (asset != null)");
             sb.AppendLine("            {");
-            sb.AppendLine("                m_langContent[entry.name] =");
-            sb.AppendLine("                    JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text);");
+            sb.AppendLine("                var langData = JsonConvert.DeserializeObject<LangEntry>(asset.text);");
+            sb.AppendLine("                m_langCodes.Add(langData.code);");
+            sb.AppendLine("                m_langContent[entry.type] = langData.content;");
             sb.AppendLine("            }");
             sb.AppendLine("            else");
             sb.AppendLine("            {");

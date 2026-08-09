@@ -21,14 +21,27 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
 
     private class LangTypeEntry
     {
-        [JsonProperty("name")] public string name;
+        [JsonProperty("type")] public string type;
+        [JsonProperty("code")] public string code;
         [JsonProperty("file")] public string file;
+    }
+
+    private class LangEntry
+    {
+        [JsonProperty("type")] public string type;
+        [JsonProperty("code")] public string code;
+        [JsonProperty("content")] public Dictionary<string, string> content;
     }
 
     /// <summary>
     /// 语言文件名列表
     /// </summary>
     private List<string> m_langFiles;
+
+    /// <summary>
+    /// 语言代码列表
+    /// </summary>
+    private List<string> m_langCodes;
 
     /// <summary>
     /// 语言内容字典，key 为语言名称，value 为该语言的 id→内容映射
@@ -82,11 +95,16 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
     }
 
     /// <summary>
-    /// 获取所有语言种类
+    /// 获取所有语言选项（类型 + 代码）
     /// </summary>
-    public List<string> GetAllLanguages()
+    public List<LangOption> GetOptions()
     {
-        return new List<string>(m_langTypes);
+        var options = new List<LangOption>(m_langTypes.Count);
+        for (int i = 0; i < m_langTypes.Count; i++)
+        {
+            options.Add(new LangOption(m_langTypes[i], m_langCodes[i]));
+        }
+        return options;
     }
 
     /// <summary>
@@ -113,6 +131,16 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
     }
 
     /// <summary>
+    /// 通过索引获取语言代码
+    /// </summary>
+    public string GetLanguageCode(int index)
+    {
+        if (index < 0 || index >= m_langCodes.Count)
+            return null;
+        return m_langCodes[index];
+    }
+
+    /// <summary>
     /// 通过索引获取语言对应的配置文件名
     /// </summary>
     public string GetLanguageFile(int index)
@@ -128,13 +156,14 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
 
         m_langTypes = new List<string>(langEntries.Count);
         m_langFiles = new List<string>(langEntries.Count);
+        m_langCodes = new List<string>(langEntries.Count);
         m_langContent = new Dictionary<string, Dictionary<string, string>>();
 
         string basePath = ConfigLoadPath.Substring(0, ConfigLoadPath.LastIndexOf('/'));
         for (int i = 0; i < langEntries.Count; i++)
         {
             var entry = langEntries[i];
-            m_langTypes.Add(entry.name);
+            m_langTypes.Add(entry.type);
             m_langFiles.Add(entry.file);
 
             string fileName = entry.file.EndsWith(".json")
@@ -143,8 +172,9 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
             var asset = Resources.Load<TextAsset>($"{basePath}/{fileName}");
             if (asset != null)
             {
-                m_langContent[entry.name] =
-                    JsonConvert.DeserializeObject<Dictionary<string, string>>(asset.text);
+                var langData = JsonConvert.DeserializeObject<LangEntry>(asset.text);
+                m_langCodes.Add(langData.code);
+                m_langContent[entry.type] = langData.content;
             }
             else
             {

@@ -11,8 +11,9 @@ public class LaunchDemo : MonoBehaviour
         UMConfig.AddTable(new LanguageCfg());
         if (UMConfig.Local != null)
         {
-            UMConfig.Local.SwitchLocal(UMConfig.Local.GetLocalOptions()[0]);
+            UMConfig.Local.SwitchByType(UMConfig.Local.GetOptions()[2].type);
         }
+        UMScene.Load("Game");
     }
 
     // Update is called once per frame

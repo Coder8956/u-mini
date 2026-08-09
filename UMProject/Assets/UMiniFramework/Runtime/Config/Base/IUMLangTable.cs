@@ -8,18 +8,23 @@ namespace UMiniFramework.Runtime
     public interface IUMLangTable
     {
         /// <summary>
-        /// 获取所有语言种类
+        /// 获取所有语言选项（类型 + 代码）
         /// </summary>
-        List<string> GetAllLanguages();
+        List<LangOption> GetOptions();
 
-            /// <summary>
-            /// 通过语言名称获取语言内容 (id → text)
-            /// </summary>
-            Dictionary<string, string> GetContent(string langName);
+        /// <summary>
+        /// 通过语言类型获取语言内容 (id → text)
+        /// </summary>
+        Dictionary<string, string> GetContent(string langType);
 
-            /// <summary>
-            /// 通过索引获取语言对应的配置文件名
-            /// </summary>
-            string GetLanguageFile(int index);
-        }
+        /// <summary>
+        /// 通过索引获取语言对应的配置文件名
+        /// </summary>
+        string GetLanguageFile(int index);
+
+        /// <summary>
+        /// 通过索引获取语言代码
+        /// </summary>
+        string GetLanguageCode(int index);
+    }
 }

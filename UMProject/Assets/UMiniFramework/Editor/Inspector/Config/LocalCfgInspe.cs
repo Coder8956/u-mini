@@ -35,16 +35,24 @@ namespace UMiniFramework.Editor
 
             EditorGUI.indentLevel++;
 
-            // Current Language
+            // Current Type
             EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Current Language:", EditorStyles.boldLabel, GUILayout.Width(130));
+            EditorGUILayout.LabelField("Current Type:", EditorStyles.boldLabel, GUILayout.Width(130));
             EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField(localCfg.CurtLocal ?? "(none)");
+            EditorGUILayout.TextField(localCfg.CurtType ?? "(none)");
+            EditorGUI.EndDisabledGroup();
+            EditorGUILayout.EndHorizontal();
+
+            // Current Code
+            EditorGUILayout.BeginHorizontal();
+            EditorGUILayout.LabelField("Current Code:", EditorStyles.boldLabel, GUILayout.Width(130));
+            EditorGUI.BeginDisabledGroup(true);
+            EditorGUILayout.TextField(localCfg.CurtCode ?? "(none)");
             EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndHorizontal();
 
             // Language Options
-            var options = localCfg.GetLocalOptions();
+            var options = localCfg.GetOptions();
             int optionCount = options != null ? options.Count : 0;
 
             m_foOptions = EditorGUILayout.Foldout(m_foOptions, $"Language Options ({optionCount})");
@@ -63,11 +71,13 @@ namespace UMiniFramework.Editor
 
                 for (int i = 0; i < optionCount; i++)
                 {
+                    var opt = options[i];
                     string fileName = langTable?.GetLanguageFile(i);
 
                     EditorGUILayout.BeginHorizontal();
                     EditorGUI.BeginDisabledGroup(true);
-                    EditorGUILayout.TextField(options[i]);
+                    EditorGUILayout.TextField(opt.type);
+                    EditorGUILayout.LabelField(opt.code ?? "?", GUILayout.Width(60));
                     EditorGUILayout.LabelField(fileName ?? "?", GUILayout.Width(100));
                     EditorGUI.EndDisabledGroup();
                     if (GUILayout.Button("Ping", GUILayout.Width(50)))
