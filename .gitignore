@@ -14,3 +14,7 @@ UMProject/Temp/
 UMProject/UserSettings/
 UMProject/.idea/
 UMProject/obj/
+UMProject/.codely.packages/
+UMProject/.codely-cli/
+UMProject/.codelyignore
+UMProject/.com-unity-codely.json
