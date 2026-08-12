@@ -25,7 +25,7 @@ public class GunAimController : MonoBehaviour
     private Transform m_shootPoint;
 
     [Header("相机射线参数")] [Tooltip("相机射线最大长度（单位）")] [SerializeField]
-    private float m_cameraRayDistance = 200f;
+    private float m_cameraRayDistance = 1500;
 
     [Tooltip("瞄准射线碰撞层级")] [SerializeField]
     private LayerMask m_aimLayerMask = ~0;
