@@ -51,6 +51,9 @@ public class GunAimController : MonoBehaviour
     [Tooltip("炮管射击射线颜色")] [SerializeField]
     private Color m_gunRayColor = Color.red;
 
+    [Header("运行时调试")] [Tooltip("是否在Console打印炮口发射点的世界旋转信息")] [SerializeField]
+    private bool m_debugShootPointRotation;
+
     // ==================== 私有字段（运行时状态） ====================
 
     /// <summary>当前炮塔偏航角（度）</summary>
@@ -120,6 +123,15 @@ public class GunAimController : MonoBehaviour
 
         // Step 4: 从炮管正方向发射射线，获取射击目标点
         m_shootTargetPoint = GetShootTargetPoint();
+
+        if (m_debugShootPointRotation)
+            Debug.Log($"[GunAimController] ShootPoint World Rotation: {GetShootForwardRotation().eulerAngles}", this);
+    }
+
+    /// <summary>获取炮口发射点的世界旋转</summary>
+    private Quaternion GetShootForwardRotation()
+    {
+        return m_shootPoint != null ? m_shootPoint.rotation : m_gunBarrel.rotation;
     }
 
     // ==================== 逻辑方法 ====================
