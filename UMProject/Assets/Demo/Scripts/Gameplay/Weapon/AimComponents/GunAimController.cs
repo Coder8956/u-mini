@@ -293,4 +293,7 @@ public class GunAimController : MonoBehaviour
 
     /// <summary>炮管射击射线是否命中目标（已锁定目标）</summary>
     public bool IsShootTargetHit() => m_shootTargetHit;
+
+    /// <summary>获取炮口发射点Transform（留空则返回炮管Transform）</summary>
+    public Transform GetShootPoint() => m_shootPoint != null ? m_shootPoint : m_gunBarrel;
 }

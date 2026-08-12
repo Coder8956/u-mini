@@ -12,6 +12,9 @@ public class TPCameraCtrl : MonoBehaviour
     [Header("输入控制")] [Tooltip("是否接受用户输入（false时鼠标和滚轮操作无效）")] [SerializeField]
     private bool m_enableInput = true;
 
+    [Header("编辑器同步")] [Tooltip("开启时将初始化数值直接同步到Transform")] [SerializeField]
+    private bool m_syncInitToTransform;
+
     [Header("目标")] [Tooltip("相机跟随的目标物体（例如坦克车体）")] [SerializeField]
     private Transform m_target;
 
@@ -89,6 +92,9 @@ public class TPCameraCtrl : MonoBehaviour
 
     /// <summary>位置平滑速度（SmoothDamp 内部使用）</summary>
     private Vector3 m_positionVelocity;
+
+    // --- 编辑器同步 ---
+    // （无需额外字段）
 
     // ==================== 生命周期 ====================
 
@@ -213,6 +219,36 @@ public class TPCameraCtrl : MonoBehaviour
         return to;
     }
 
+    // ==================== 编辑器同步 ====================
+
+#if UNITY_EDITOR
+    private void OnValidate()
+    {
+        if (m_syncInitToTransform)
+            ApplyInitToTransform();
+    }
+
+    /// <summary>
+    /// 将初始化数值（距离、高度等参数）直接同步到Transform（无平滑）
+    /// 角度取自当前Transform朝向
+    /// </summary>
+    private void ApplyInitToTransform()
+    {
+        if (m_target == null) return;
+
+        Vector3 angles = transform.eulerAngles;
+        m_yaw = angles.y;
+        m_pitch = angles.x;
+
+        Quaternion rotation = Quaternion.Euler(m_pitch, m_yaw, 0);
+        Vector3 targetPosition = m_target.position + Vector3.up * m_height;
+        Vector3 desiredPosition = targetPosition - rotation * Vector3.forward * m_distance;
+        transform.position = desiredPosition;
+        transform.rotation = Quaternion.LookRotation(targetPosition - desiredPosition);
+        UnityEditor.EditorUtility.SetDirty(transform);
+    }
+#endif
+
     // ==================== 公开接口 ====================
 
     /// <summary>获取是否接受用户输入</summary>
@@ -220,4 +256,10 @@ public class TPCameraCtrl : MonoBehaviour
 
     /// <summary>设置是否接受用户输入</summary>
     public void SetEnableInput(bool enable) => m_enableInput = enable;
+
+    // /// <summary>获取是否开启编辑器同步</summary>
+    // public bool IsSyncInitToTransform() => m_syncInitToTransform;
+    //
+    // /// <summary>设置是否开启编辑器同步</summary>
+    // public void SetSyncInitToTransform(bool sync) => m_syncInitToTransform = sync;
 }
