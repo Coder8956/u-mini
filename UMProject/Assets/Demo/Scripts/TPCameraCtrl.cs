@@ -9,56 +9,48 @@ public class TPCameraCtrl : MonoBehaviour
 {
     // ==================== 可序列化字段（Inspector 可编辑） ====================
 
-    [Header("目标")]
-    [Tooltip("相机跟随的目标物体（例如坦克车体）")]
-    public Transform target;
+    [Header("目标")] [Tooltip("相机跟随的目标物体（例如坦克车体）")] [SerializeField]
+    private Transform m_target;
 
-    [Header("距离")]
-    [Tooltip("相机与目标的初始距离")]
-    public float distance = 8f;
+    [Header("距离")] [Tooltip("相机与目标的初始距离")] [SerializeField]
+    private float m_distance = 8f;
 
-    [Tooltip("相机与目标的最小距离")]
-    public float minDistance = 4f;
+    [Tooltip("相机与目标的最小距离")] [SerializeField]
+    private float m_minDistance = 4f;
 
-    [Tooltip("相机与目标的最大距离")]
-    public float maxDistance = 15f;
+    [Tooltip("相机与目标的最大距离")] [SerializeField]
+    private float m_maxDistance = 15f;
 
-    [Tooltip("滚轮缩放灵敏度（值越大，每格滚轮的距离变化越明显）")]
-    public float scrollSensitivity = 0.5f;
+    [Tooltip("滚轮缩放灵敏度（值越大，每格滚轮的距离变化越明显）")] [SerializeField]
+    private float m_scrollSensitivity = 0.5f;
 
-    [Tooltip("是否启用滚轮调节距离")]
-    public bool enableScrollZoom = false;
+    [Tooltip("是否启用滚轮调节距离")] [SerializeField]
+    private bool m_enableScrollZoom = false;
 
-    [Header("高度")]
-    [Tooltip("相机在目标上方的高度偏移")]
-    public float height = 3f;
+    [Header("高度")] [Tooltip("相机在目标上方的高度偏移")] [SerializeField]
+    private float m_height = 3f;
 
-    [Header("旋转")]
-    [Tooltip("鼠标移动灵敏度")]
-    public float mouseSensitivity = 5f;
+    [Header("旋转")] [Tooltip("鼠标移动灵敏度")] [SerializeField]
+    private float m_mouseSensitivity = 5f;
 
-    [Tooltip("俯仰角最小值（向下看的极限，负数表示可以略微向下看）")]
-    public float minPitch = -20f;
+    [Tooltip("俯仰角最小值（向下看的极限，负数表示可以略微向下看）")] [SerializeField]
+    private float m_minPitch = -20f;
 
-    [Tooltip("俯仰角最大值（向上看的极限）")]
-    public float maxPitch = 60f;
+    [Tooltip("俯仰角最大值（向上看的极限）")] [SerializeField]
+    private float m_maxPitch = 60f;
 
-    [Header("平滑")]
-    [Tooltip("位置平滑时间（秒）—— 值越小跟得越紧，值越大越柔和")]
-    public float positionSmoothTime = 0.12f;
+    [Header("平滑")] [Tooltip("位置平滑时间（秒）—— 值越小跟得越紧，值越大越柔和")] [SerializeField]
+    private float m_positionSmoothTime = 0.12f;
 
-    [Tooltip("旋转平滑时间（秒）—— 值越小转向越快，值越大越迟钝")]
-    public float rotationSmoothTime = 0.12f;
+    [Tooltip("旋转平滑时间（秒）—— 值越小转向越快，值越大越迟钝")] [SerializeField]
+    private float m_rotationSmoothTime = 0.12f;
 
-    [Tooltip("距离平滑时间（秒）—— 滚轮缩放时的缓动速度")]
-    public float distanceSmoothTime = 0.1f;
+    [Tooltip("距离平滑时间（秒）—— 滚轮缩放时的缓动速度")] public float m_distanceSmoothTime = 0.1f;
 
-    [Header("碰撞检测")]
-    [Tooltip("碰撞检测层级（哪些层的物体会阻挡相机）")]
-    public LayerMask collisionMask;
+    [Header("碰撞检测")] [Tooltip("碰撞检测层级（哪些层的物体会阻挡相机）")] [SerializeField]
+    private LayerMask m_collisionMask;
 
-    [Tooltip("碰撞检测球体半径（防止相机镜头贴墙太近）")]
-    public float collisionRadius = 2f;
+    [Tooltip("碰撞检测球体半径（防止相机镜头贴墙太近）")] public float m_collisionRadius = 2f;
 
     // ==================== 私有字段（运行时状态） ====================
 
@@ -105,12 +97,12 @@ public class TPCameraCtrl : MonoBehaviour
         m_pitch = angles.x;
         m_smoothYaw = m_yaw;
         m_smoothPitch = m_pitch;
-        m_smoothDistance = distance;
+        m_smoothDistance = m_distance;
     }
 
     void LateUpdate()
     {
-        if (target == null)
+        if (m_target == null)
             return;
 
         HandleInput();
@@ -134,21 +126,21 @@ public class TPCameraCtrl : MonoBehaviour
 
         // 水平移动 → 偏航角（左右看）
         // 0.1f 是像素到角度的缩放系数，使默认灵敏度手感合理
-        m_yaw += delta.x * mouseSensitivity * 0.1f;
+        m_yaw += delta.x * m_mouseSensitivity * 0.1f;
 
         // 垂直移动 → 俯仰角（上下看），Y 取反使鼠标上推时相机向上看
-        m_pitch -= delta.y * mouseSensitivity * 0.1f;
-        m_pitch = Mathf.Clamp(m_pitch, minPitch, maxPitch);
+        m_pitch -= delta.y * m_mouseSensitivity * 0.1f;
+        m_pitch = Mathf.Clamp(m_pitch, m_minPitch, m_maxPitch);
 
         // ---- 滚轮 → 距离 ----
-        if (enableScrollZoom)
+        if (m_enableScrollZoom)
         {
             // scroll.y 在 Windows 上每格约 120，向下滚为正
             float scroll = mouse.scroll.ReadValue().y;
             if (!Mathf.Approximately(scroll, 0f))
             {
-                distance -= scroll * scrollSensitivity;
-                distance = Mathf.Clamp(distance, minDistance, maxDistance);
+                m_distance -= scroll * m_scrollSensitivity;
+                m_distance = Mathf.Clamp(m_distance, m_minDistance, m_maxDistance);
             }
         }
     }
@@ -159,15 +151,15 @@ public class TPCameraCtrl : MonoBehaviour
     void UpdateCamera()
     {
         // 第一步：对角度和距离做帧率无关的平滑处理
-        m_smoothYaw = Mathf.SmoothDamp(m_smoothYaw, m_yaw, ref m_yawVelocity, rotationSmoothTime);
-        m_smoothPitch = Mathf.SmoothDamp(m_smoothPitch, m_pitch, ref m_pitchVelocity, rotationSmoothTime);
-        m_smoothDistance = Mathf.SmoothDamp(m_smoothDistance, distance, ref m_distanceVelocity, distanceSmoothTime);
+        m_smoothYaw = Mathf.SmoothDamp(m_smoothYaw, m_yaw, ref m_yawVelocity, m_rotationSmoothTime);
+        m_smoothPitch = Mathf.SmoothDamp(m_smoothPitch, m_pitch, ref m_pitchVelocity, m_rotationSmoothTime);
+        m_smoothDistance = Mathf.SmoothDamp(m_smoothDistance, m_distance, ref m_distanceVelocity, m_distanceSmoothTime);
 
         // 第二步：根据平滑后的角度计算相机旋转
         Quaternion rotation = Quaternion.Euler(m_smoothPitch, m_smoothYaw, 0);
 
         // 第三步：计算目标位置（目标点 + 高度偏移）
-        Vector3 targetPosition = target.position + Vector3.up * height;
+        Vector3 targetPosition = m_target.position + Vector3.up * m_height;
 
         // 第四步：用相机旋转和距离推算理想位置
         Vector3 desiredPosition = targetPosition - rotation * Vector3.forward * m_smoothDistance;
@@ -180,7 +172,7 @@ public class TPCameraCtrl : MonoBehaviour
             transform.position,
             desiredPosition,
             ref m_positionVelocity,
-            positionSmoothTime
+            m_positionSmoothTime
         );
 
         // 第七步：直接朝向目标，旋转不再单独平滑（位置已平滑，朝向自然柔和）
@@ -200,16 +192,16 @@ public class TPCameraCtrl : MonoBehaviour
 
         // 从目标点向相机方向发射球体射线
         if (Physics.SphereCast(
-            from,                        // 射线起点
-            collisionRadius,             // 球体半径
-            direction.normalized,        // 射线方向
-            out RaycastHit hit,           // 碰撞信息
-            length,                      // 射线长度
-            collisionMask                // 检测层级
+            from, // 射线起点
+            m_collisionRadius, // 球体半径
+            direction.normalized, // 射线方向
+            out RaycastHit hit, // 碰撞信息
+            length, // 射线长度
+            m_collisionMask // 检测层级
         ))
         {
             // 命中障碍物：将相机放到碰撞点前方（沿法线推开一个半径的距离）
-            return hit.point + hit.normal * collisionRadius;
+            return hit.point + hit.normal * m_collisionRadius;
         }
 
         // 无遮挡：直接使用期望位置
