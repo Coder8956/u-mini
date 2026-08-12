@@ -128,6 +128,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2131563}
+  - component: {fileID: 2131564}
   m_Layer: 0
   m_Name: Weapon001
   m_TagString: Untagged
@@ -151,6 +152,33 @@ Transform:
   - {fileID: 1130815021}
   m_Father: {fileID: 268289042}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2131564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2131562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e3f53ccadaf814449a5e6a60757d584f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TankAimController
+  m_aimCamera: {fileID: 122882119}
+  m_turret: {fileID: 1218811654}
+  m_gunBarrel: {fileID: 2067786323}
+  m_shootPoint: {fileID: 868344298}
+  m_cameraRayDistance: 500
+  m_aimLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_maxPitch: 80
+  m_minPitch: -10
+  m_turretSmoothTime: 0.1
+  m_gunSmoothTime: 0.1
+  m_drawDebugRays: 1
+  m_cameraRayColor: {r: 0, g: 1, b: 1, a: 1}
+  m_gunRayColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &2906787
 GameObject:
   m_ObjectHideFlags: 0
@@ -162,7 +190,6 @@ GameObject:
   - component: {fileID: 2906788}
   - component: {fileID: 2906790}
   - component: {fileID: 2906789}
-  - component: {fileID: 2906791}
   m_Layer: 0
   m_Name: hills02 (1)
   m_TagString: Untagged
@@ -242,27 +269,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2906787}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &2906791
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2906787}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000006, y: 0.91171736, z: 10.000006}
-  m_Center: {x: -0.000005722046, y: 0.45585868, z: -0.0000014305115}
 --- !u!1 &93938192 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4697017240656324050, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
@@ -425,12 +431,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::TankCameraController
   m_target: {fileID: 2131563}
   m_distance: 8
-  m_minDistance: 4
+  m_minDistance: 2
   m_maxDistance: 15
   m_scrollSensitivity: 0.5
-  m_enableScrollZoom: 0
+  m_enableScrollZoom: 1
   m_height: 8
-  m_mouseSensitivity: 5
+  m_mouseSensitivity: 2
   m_minPitch: -20
   m_maxPitch: 60
   m_positionSmoothTime: 0.12
@@ -451,7 +457,6 @@ GameObject:
   - component: {fileID: 150919847}
   - component: {fileID: 150919849}
   - component: {fileID: 150919848}
-  - component: {fileID: 150919850}
   m_Layer: 0
   m_Name: hills01 (2)
   m_TagString: Untagged
@@ -531,27 +536,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 150919846}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &150919850
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 150919846}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000003, y: 1.5517672, z: 10.000004}
-  m_Center: {x: -0.000000834465, y: 0.7758836, z: 0.0000023841856}
 --- !u!1 &156183194
 GameObject:
   m_ObjectHideFlags: 0
@@ -563,7 +547,6 @@ GameObject:
   - component: {fileID: 156183195}
   - component: {fileID: 156183197}
   - component: {fileID: 156183196}
-  - component: {fileID: 156183198}
   m_Layer: 0
   m_Name: hills01 (3)
   m_TagString: Untagged
@@ -643,27 +626,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 156183194}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &156183198
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 156183194}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000004, y: 1.551767, z: 10.000005}
-  m_Center: {x: 0.000002861023, y: 0.7758835, z: 0.0000002384183}
 --- !u!1 &262013405
 GameObject:
   m_ObjectHideFlags: 0
@@ -839,7 +801,6 @@ GameObject:
   - component: {fileID: 469298964}
   - component: {fileID: 469298966}
   - component: {fileID: 469298965}
-  - component: {fileID: 469298967}
   m_Layer: 0
   m_Name: hills02 (3)
   m_TagString: Untagged
@@ -919,27 +880,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 469298963}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &469298967
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 469298963}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000004, y: 0.91171736, z: 10.000004}
-  m_Center: {x: -0.0000023841858, y: 0.45585868, z: 0.0000009536743}
 --- !u!1 &510112376
 GameObject:
   m_ObjectHideFlags: 0
@@ -951,7 +891,6 @@ GameObject:
   - component: {fileID: 510112377}
   - component: {fileID: 510112379}
   - component: {fileID: 510112378}
-  - component: {fileID: 510112380}
   m_Layer: 0
   m_Name: hills01 (1)
   m_TagString: Untagged
@@ -1031,27 +970,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 510112376}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &510112380
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 510112376}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000004, y: 1.5517669, z: 10.000005}
-  m_Center: {x: -0.0000019073486, y: 0.77588344, z: -0.0000061988835}
 --- !u!1 &514808017
 GameObject:
   m_ObjectHideFlags: 0
@@ -1269,7 +1187,6 @@ GameObject:
   - component: {fileID: 556444642}
   - component: {fileID: 556444644}
   - component: {fileID: 556444643}
-  - component: {fileID: 556444645}
   m_Layer: 0
   m_Name: hills02 (4)
   m_TagString: Untagged
@@ -1349,27 +1266,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 556444641}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &556444645
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 556444641}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000004, y: 0.91171736, z: 10.000004}
-  m_Center: {x: 0.00000011920929, y: 0.45585868, z: -0.0000038146973}
 --- !u!1001 &657701227
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1569,6 +1465,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1184629551}
+  - {fileID: 878742378}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -1576,6 +1473,86 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!4 &868344298 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4411725851834284, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
+  m_PrefabInstance: {fileID: 1130815020}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &878742377
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 878742378}
+  - component: {fileID: 878742380}
+  - component: {fileID: 878742379}
+  m_Layer: 5
+  m_Name: ImgAimPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &878742378
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878742377}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 850704369}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 130, y: 130}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &878742379
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878742377}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -713821359, guid: 2732f0473606b6943ad7ded1b4486b10, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &878742380
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 878742377}
+  m_CullTransparentMesh: 1
 --- !u!1 &973240849 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4697017240656324050, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
@@ -1592,7 +1569,6 @@ GameObject:
   - component: {fileID: 988310473}
   - component: {fileID: 988310475}
   - component: {fileID: 988310474}
-  - component: {fileID: 988310476}
   m_Layer: 0
   m_Name: hills01 (5)
   m_TagString: Untagged
@@ -1672,27 +1648,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 988310472}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &988310476
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 988310472}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000005, y: 1.5517672, z: 10.000006}
-  m_Center: {x: -0.00000667572, y: 0.7758836, z: -0.0000033378606}
 --- !u!1 &1001100809
 GameObject:
   m_ObjectHideFlags: 0
@@ -1704,7 +1659,6 @@ GameObject:
   - component: {fileID: 1001100810}
   - component: {fileID: 1001100812}
   - component: {fileID: 1001100811}
-  - component: {fileID: 1001100813}
   m_Layer: 0
   m_Name: mountain01 (1)
   m_TagString: Untagged
@@ -1784,27 +1738,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1001100809}
   m_Mesh: {fileID: 1303645781841759563, guid: 218d5a7672a5d204e8a70b215c6488ad, type: 3}
---- !u!65 &1001100813
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1001100809}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 100.00009, y: 31.571026, z: 100.000084}
-  m_Center: {x: -0.00006484986, y: 15.7852955, z: 0.00005149842}
 --- !u!1 &1048939370 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4697017240656324050, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
@@ -1925,7 +1858,6 @@ GameObject:
   - component: {fileID: 1125789908}
   - component: {fileID: 1125789910}
   - component: {fileID: 1125789909}
-  - component: {fileID: 1125789911}
   m_Layer: 0
   m_Name: hills02 (2)
   m_TagString: Untagged
@@ -2005,27 +1937,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125789907}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &1125789911
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1125789907}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000006, y: 0.9117173, z: 10.000006}
-  m_Center: {x: 0.00000017881393, y: 0.45585865, z: -0.0000014305115}
 --- !u!1001 &1130815020
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2267,6 +2178,11 @@ CapsuleCollider:
   m_Height: 2.12
   m_Direction: 1
   m_Center: {x: 0, y: 0.99, z: 0}
+--- !u!4 &1218811654 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4940591295711036, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
+  m_PrefabInstance: {fileID: 1130815020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1239028274 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4697017240656324050, guid: 0331b169005eb1d469455efaa6b9024a, type: 3}
@@ -2434,7 +2350,6 @@ GameObject:
   - component: {fileID: 1467226616}
   - component: {fileID: 1467226618}
   - component: {fileID: 1467226617}
-  - component: {fileID: 1467226619}
   m_Layer: 0
   m_Name: hills01 (4)
   m_TagString: Untagged
@@ -2514,27 +2429,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1467226615}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &1467226619
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1467226615}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000002, y: 1.551767, z: 10.000003}
-  m_Center: {x: -0.0000038146973, y: 0.7758835, z: -0.0000052452087}
 --- !u!1 &1564650478
 GameObject:
   m_ObjectHideFlags: 0
@@ -3052,6 +2946,11 @@ CapsuleCollider:
   m_Height: 2.12
   m_Direction: 1
   m_Center: {x: 0, y: 0.99, z: 0}
+--- !u!4 &2067786323 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4459613001278838, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
+  m_PrefabInstance: {fileID: 1130815020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2088896038
 GameObject:
   m_ObjectHideFlags: 0
@@ -3063,7 +2962,6 @@ GameObject:
   - component: {fileID: 2088896039}
   - component: {fileID: 2088896041}
   - component: {fileID: 2088896040}
-  - component: {fileID: 2088896042}
   m_Layer: 0
   m_Name: hills02 (5)
   m_TagString: Untagged
@@ -3143,27 +3041,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2088896038}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &2088896042
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2088896038}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000007, y: 0.91171736, z: 10.000007}
-  m_Center: {x: 0.00000023841858, y: 0.45585868, z: 0.0000038146973}
 --- !u!1001 &2114882237
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3278,8 +3155,8 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 10.25, y: 0, z: -6.75}
-  m_LocalScale: {x: 8.4423, y: 8.4423, z: 8.4423}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 100, y: 100, z: 100}
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 1564650479}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -3358,7 +3235,6 @@ GameObject:
   - component: {fileID: 543450652971172050}
   - component: {fileID: 3469287836887420791}
   - component: {fileID: 1711813856383400893}
-  - component: {fileID: 3469287836887420792}
   m_Layer: 0
   m_Name: hills02
   m_TagString: Untagged
@@ -3377,7 +3253,6 @@ GameObject:
   - component: {fileID: 543450652903798627}
   - component: {fileID: 3469287836686481606}
   - component: {fileID: 1711813855913905164}
-  - component: {fileID: 3469287836686481607}
   m_Layer: 0
   m_Name: mountain01
   m_TagString: Untagged
@@ -3396,7 +3271,6 @@ GameObject:
   - component: {fileID: 543450653317864223}
   - component: {fileID: 3469287837100676282}
   - component: {fileID: 1711813855520809072}
-  - component: {fileID: 3469287837100676283}
   m_Layer: 0
   m_Name: hills01
   m_TagString: Untagged
@@ -3608,27 +3482,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148919217625}
   m_Mesh: {fileID: 1303645781841759563, guid: 218d5a7672a5d204e8a70b215c6488ad, type: 3}
---- !u!65 &3469287836686481607
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148919217625}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 100.0001, y: 31.571028, z: 100.00009}
-  m_Center: {x: -0.00003433229, y: 15.785296, z: -0.000009536732}
 --- !u!33 &3469287836887420791
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3637,27 +3490,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132148718197352}
   m_Mesh: {fileID: 914352327774201126, guid: 56b135fc7eddf6741b41fcf79a1dc858, type: 3}
---- !u!65 &3469287836887420792
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132148718197352}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000004, y: 0.91171736, z: 10.000004}
-  m_Center: {x: 0, y: 0.45585868, z: -0.0000038146973}
 --- !u!33 &3469287837100676282
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -3666,27 +3498,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 919132149578678693}
   m_Mesh: {fileID: 1044328042288335648, guid: c03ea5379419595469ea31e60d60fae1, type: 3}
---- !u!65 &3469287837100676283
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 919132149578678693}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 10.000003, y: 1.5517669, z: 10.000004}
-  m_Center: {x: -0.0000019073486, y: 0.77588344, z: -0.0000042915344}
 --- !u!33 &3469287838255457057
 MeshFilter:
   m_ObjectHideFlags: 0

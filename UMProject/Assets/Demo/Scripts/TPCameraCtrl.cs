@@ -16,7 +16,7 @@ public class TPCameraCtrl : MonoBehaviour
     private float m_distance = 8f;
 
     [Tooltip("相机与目标的最小距离")] [SerializeField]
-    private float m_minDistance = 4f;
+    private float m_minDistance = 2f;
 
     [Tooltip("相机与目标的最大距离")] [SerializeField]
     private float m_maxDistance = 15f;
@@ -28,10 +28,10 @@ public class TPCameraCtrl : MonoBehaviour
     private bool m_enableScrollZoom = false;
 
     [Header("高度")] [Tooltip("相机在目标上方的高度偏移")] [SerializeField]
-    private float m_height = 3f;
+    private float m_height = 8f;
 
     [Header("旋转")] [Tooltip("鼠标移动灵敏度")] [SerializeField]
-    private float m_mouseSensitivity = 5f;
+    private float m_mouseSensitivity = 2f;
 
     [Tooltip("俯仰角最小值（向下看的极限，负数表示可以略微向下看）")] [SerializeField]
     private float m_minPitch = -20f;
