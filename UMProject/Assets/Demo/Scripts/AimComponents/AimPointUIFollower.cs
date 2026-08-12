@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 /// <summary>
 /// 瞄准点UI跟随控制器
@@ -22,6 +23,13 @@ public class AimPointUIFollower : MonoBehaviour
     [Tooltip("平滑时间（秒）—— 值越小跟随越紧")]
     [SerializeField] private float m_smoothTime = 0.06f;
 
+    [Header("颜色设置")]
+    [Tooltip("射击目标点等于世界瞄准点时的颜色（瞄准一致）")]
+    [SerializeField] private Color m_colorOnTargetMatch = Color.red;
+
+    [Tooltip("其他情况的颜色（瞄准不一致）")]
+    [SerializeField] private Color m_colorOnTargetMismatch = Color.yellow;
+
     [Header("行为设置")]
     [Tooltip("目标点在相机后方时是否隐藏准星")]
     [SerializeField] private bool m_hideWhenBehindCamera = true;
@@ -31,6 +39,7 @@ public class AimPointUIFollower : MonoBehaviour
     private RectTransform m_rectTransform;
     private RectTransform m_parentRectTransform;
     private Canvas m_rootCanvas;
+    private Graphic m_graphic;
     private Vector2 m_currentPos;
     private Vector2 m_smoothVelocity;
     private bool m_firstFrame = true;
@@ -41,6 +50,7 @@ public class AimPointUIFollower : MonoBehaviour
     {
         m_rectTransform = GetComponent<RectTransform>();
         m_parentRectTransform = transform.parent as RectTransform;
+        m_graphic = GetComponent<Graphic>();
 
         var canvas = GetComponentInParent<Canvas>();
         m_rootCanvas = canvas != null ? canvas.rootCanvas : null;
@@ -90,6 +100,20 @@ public class AimPointUIFollower : MonoBehaviour
         }
 
         m_rectTransform.anchoredPosition = m_currentPos;
+
+        UpdateColor(worldTarget);
+    }
+
+    /// <summary>
+    /// 根据射击目标点是否等于世界瞄准点来更新准星颜色
+    /// </summary>
+    private void UpdateColor(Vector3 shootTarget)
+    {
+        if (m_graphic == null) return;
+
+        Vector3 worldAim = m_gunAimController.GetWorldAimPointValue();
+        bool isOnTarget = Vector3.Distance(shootTarget, worldAim) < 0.01f;
+        m_graphic.color = isOnTarget ? m_colorOnTargetMatch : m_colorOnTargetMismatch;
     }
 
     // ==================== 坐标转换 ====================
