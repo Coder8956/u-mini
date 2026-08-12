@@ -9,6 +9,9 @@ public class TPCameraCtrl : MonoBehaviour
 {
     // ==================== 可序列化字段（Inspector 可编辑） ====================
 
+    [Header("输入控制")] [Tooltip("是否接受用户输入（false时鼠标和滚轮操作无效）")] [SerializeField]
+    private bool m_enableInput = true;
+
     [Header("目标")] [Tooltip("相机跟随的目标物体（例如坦克车体）")] [SerializeField]
     private Transform m_target;
 
@@ -116,6 +119,8 @@ public class TPCameraCtrl : MonoBehaviour
     /// </summary>
     void HandleInput()
     {
+        if (!m_enableInput) return;
+
         var mouse = Mouse.current;
         if (mouse == null)
             return;
@@ -207,4 +212,12 @@ public class TPCameraCtrl : MonoBehaviour
         // 无遮挡：直接使用期望位置
         return to;
     }
+
+    // ==================== 公开接口 ====================
+
+    /// <summary>获取是否接受用户输入</summary>
+    public bool IsInputEnabled() => m_enableInput;
+
+    /// <summary>设置是否接受用户输入</summary>
+    public void SetEnableInput(bool enable) => m_enableInput = enable;
 }
