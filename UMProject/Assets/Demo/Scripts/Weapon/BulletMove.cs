@@ -14,7 +14,7 @@ public class BulletMove : MonoBehaviour
     private float m_initialSpeed = 50f;
 
     [Tooltip("子弹质量（千克）—— 质量越大，空气阻力影响越小")] [SerializeField]
-    private float m_mass = 0.1f;
+    private float m_mass = 0.2f;
 
     [Tooltip("是否受重力影响")] [SerializeField]
     private bool m_useGravity = true;
@@ -26,19 +26,22 @@ public class BulletMove : MonoBehaviour
     private bool m_isMoving;
 
     [Tooltip("沿抛物线运动的速度倍率（支持运行时实时更新）")] [SerializeField]
-    private float m_moveSpeed = 1f;
+    private float m_moveSpeed = 0.3f;
 
     [Header("轨迹调试")] [Tooltip("是否在Scene窗口绘制预测运动轨迹")] [SerializeField]
     private bool m_drawTrajectory = true;
 
-    [Tooltip("轨迹预测时长（秒）")] [SerializeField]
-    private float m_trajectoryTime = 3f;
+    [Tooltip("轨迹绘制步数（例如500步、1000步）—— 步数越多轨迹越长")] [SerializeField]
+    private int m_trajectorySteps = 150;
 
     [Tooltip("轨迹采样时间步长（秒）—— 值越小轨迹越精确")] [SerializeField]
     private float m_trajectoryStep = 0.02f;
 
-    [Tooltip("轨迹颜色")] [SerializeField]
-    private Color m_trajectoryColor = Color.green;
+    [Tooltip("预测轨迹颜色")] [SerializeField]
+    private Color m_trajectoryColor = Color.magenta;
+
+    [Tooltip("已走过轨迹颜色")] [SerializeField]
+    private Color m_traveledColor = Color.blue;
 
     [Tooltip("抛物线起点标记颜色")] [SerializeField]
     private Color m_startPointColor = Color.yellow;
@@ -54,6 +57,9 @@ public class BulletMove : MonoBehaviour
     /// <summary>是否已初始化起点</summary>
     private bool m_startPointInitialized;
 
+    /// <summary>已走过的轨迹采样点（从起点到当前位置）</summary>
+    private System.Collections.Generic.List<Vector3> m_traveledPoints = new System.Collections.Generic.List<Vector3>();
+
     // ==================== 生命周期 ====================
 
     void Start()
@@ -61,6 +67,7 @@ public class BulletMove : MonoBehaviour
         m_startPosition = transform.position;
         m_velocity = transform.forward * m_initialSpeed;
         m_startPointInitialized = true;
+        m_traveledPoints.Add(m_startPosition);
     }
 
     void FixedUpdate()
@@ -83,6 +90,9 @@ public class BulletMove : MonoBehaviour
 
         m_velocity += acceleration * scaledDt;
         transform.position += m_velocity * scaledDt;
+
+        // 记录已走过的轨迹点
+        m_traveledPoints.Add(transform.position);
 
         // 子弹正方向始终对齐当前速度方向
         if (m_velocity.sqrMagnitude > 0.0001f)
@@ -112,17 +122,17 @@ public class BulletMove : MonoBehaviour
     // ==================== 轨迹预测 ====================
 
     /// <summary>
-    /// 从初始状态预计算运动轨迹采样点
-    /// 使用与实际运动相同的物理模型，保证预测与实际一致
+    /// 从指定起点和速度预计算运动轨迹采样点
+    /// 使用固定步长（不受 m_moveSpeed 影响），保证 debug 轨迹长度仅由 m_trajectorySteps 控制
     /// </summary>
-    private Vector3[] CalculateTrajectoryPoints()
+    private Vector3[] CalculateTrajectoryPoints(Vector3 startPos, Vector3 startVel)
     {
-        int pointCount = Mathf.Max(1, Mathf.CeilToInt(m_trajectoryTime / m_trajectoryStep));
+        int pointCount = Mathf.Max(1, m_trajectorySteps);
         Vector3[] points = new Vector3[pointCount + 1];
 
-        Vector3 pos = transform.position;
-        Vector3 vel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
-        float dt = m_trajectoryStep * m_moveSpeed;
+        Vector3 pos = startPos;
+        Vector3 vel = startVel;
+        float dt = m_trajectoryStep;
 
         points[0] = pos;
 
@@ -142,16 +152,30 @@ public class BulletMove : MonoBehaviour
     {
         if (!m_drawTrajectory) return;
 
-        Vector3[] points = CalculateTrajectoryPoints();
-        Gizmos.color = m_trajectoryColor;
+        // 编辑模式下（未Start）使用当前transform作为起点预测
+        Vector3 startPos = m_startPointInitialized ? m_startPosition : transform.position;
+        Vector3 startVel = m_startPointInitialized ? transform.forward * m_initialSpeed : transform.forward * m_initialSpeed;
 
-        for (int i = 0; i < points.Length - 1; i++)
-            Gizmos.DrawLine(points[i], points[i + 1]);
+        // ---- 已走过轨迹（起点→当前位置）----
+        if (m_startPointInitialized && m_traveledPoints.Count > 1)
+        {
+            Gizmos.color = m_traveledColor;
+            for (int i = 0; i < m_traveledPoints.Count - 1; i++)
+                Gizmos.DrawLine(m_traveledPoints[i], m_traveledPoints[i + 1]);
+        }
+
+        // ---- 预测未来轨迹（当前位置→未来）----
+        Vector3 predictPos = transform.position;
+        Vector3 predictVel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
+        Vector3[] futurePoints = CalculateTrajectoryPoints(predictPos, predictVel);
+        Gizmos.color = m_trajectoryColor;
+        for (int i = 0; i < futurePoints.Length - 1; i++)
+            Gizmos.DrawLine(futurePoints[i], futurePoints[i + 1]);
 
         // 当前位置标记
-        Gizmos.DrawWireSphere(points[0], 0.2f);
+        Gizmos.DrawWireSphere(futurePoints[0], 0.2f);
 
-        // debug开启时保留并绘制抛物线起点
+        // 抛物线起点标记
         if (m_startPointInitialized)
         {
             Gizmos.color = m_startPointColor;
@@ -185,6 +209,11 @@ public class BulletMove : MonoBehaviour
     /// <summary>设置运动速度倍率</summary>
     public void SetMoveSpeed(float speed) => m_moveSpeed = speed;
 
-    /// <summary>获取预测的轨迹采样点</summary>
-    public Vector3[] GetTrajectoryPoints() => CalculateTrajectoryPoints();
+    /// <summary>获取预测的轨迹采样点（从当前位置开始）</summary>
+    public Vector3[] GetTrajectoryPoints()
+    {
+        Vector3 startPos = transform.position;
+        Vector3 startVel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
+        return CalculateTrajectoryPoints(startPos, startVel);
+    }
 }
