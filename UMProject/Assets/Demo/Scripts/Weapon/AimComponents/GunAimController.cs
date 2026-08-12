@@ -279,6 +279,9 @@ public class GunAimController : MonoBehaviour
 
     // ==================== 公开接口 ====================
 
+    /// <summary>获取当前炮管俯仰角（度，正值表示仰角）</summary>
+    public float GetCurrentPitch() => m_currentPitch;
+
     /// <summary>获取当前射击目标点（供开火逻辑调用）</summary>
     public Vector3 GetShootTarget() => m_shootTargetPoint;
 

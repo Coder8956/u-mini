@@ -1,3 +1,4 @@
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,14 +26,18 @@ public class AimPointUIFollower : MonoBehaviour
 
     [Header("颜色设置")]
     [Tooltip("射击目标点等于世界瞄准点时的颜色（瞄准一致）")]
-    [SerializeField] private Color m_colorOnTargetMatch = Color.red;
+    [SerializeField] private Color m_colorOnTargetMatch = Color.yellow;
 
     [Tooltip("其他情况的颜色（瞄准不一致）")]
-    [SerializeField] private Color m_colorOnTargetMismatch = Color.yellow;
+    [SerializeField] private Color m_colorOnTargetMismatch = Color.magenta;
 
     [Header("行为设置")]
     [Tooltip("目标点在相机后方时是否隐藏准星")]
     [SerializeField] private bool m_hideWhenBehindCamera = true;
+
+    [Header("俯仰显示")]
+    [Tooltip("用于显示俯仰角的TMP文本（留空则不显示）")]
+    [SerializeField] private TMP_Text m_pitchText;
 
     // ==================== 运行时私有字段 ====================
 
@@ -102,6 +107,7 @@ public class AimPointUIFollower : MonoBehaviour
         m_rectTransform.anchoredPosition = m_currentPos;
 
         UpdateColor(worldTarget);
+        UpdatePitchText(worldTarget);
     }
 
     /// <summary>
@@ -113,7 +119,23 @@ public class AimPointUIFollower : MonoBehaviour
 
         Vector3 worldAim = m_gunAimController.GetWorldAimPointValue();
         bool isOnTarget = Vector3.Distance(shootTarget, worldAim) < 0.01f;
-        m_graphic.color = isOnTarget ? m_colorOnTargetMatch : m_colorOnTargetMismatch;
+        Color currentColor = isOnTarget ? m_colorOnTargetMatch : m_colorOnTargetMismatch;
+        m_graphic.color = currentColor;
+
+        if (m_pitchText != null)
+            m_pitchText.color = currentColor;
+    }
+
+    /// <summary>
+    /// 更新TMP文本显示当前炮管俯仰角
+    /// </summary>
+    private void UpdatePitchText(Vector3 shootTarget)
+    {
+        if (m_pitchText == null) return;
+
+        int pitch = Mathf.RoundToInt(m_gunAimController.GetCurrentPitch());
+        string sign = pitch >= 0 ? "+" : "-";
+        m_pitchText.SetText($"Pitch: {sign}{Mathf.Abs(pitch):00}");
     }
 
     // ==================== 坐标转换 ====================
