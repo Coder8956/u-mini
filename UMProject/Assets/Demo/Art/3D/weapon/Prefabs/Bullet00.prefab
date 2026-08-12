@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4485476488557288}
+  - component: {fileID: 3754575983022598839}
+  - component: {fileID: 6108109969192794758}
   m_Layer: 0
   m_Name: Bullet00
   m_TagString: Untagged
@@ -26,12 +28,59 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 1.59, y: 1.59, z: 1.59}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4331596528086218}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3754575983022598839
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627521441993660}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10e3ad9fe63f62541b415710e2cc203e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BulletMove
+  m_initialSpeed: 50
+  m_mass: 0.2
+  m_useGravity: 1
+  m_dragCoefficient: 0.01
+  m_isMoving: 0
+  m_moveSpeed: 0.3
+  m_drawTrajectory: 1
+  m_trajectorySteps: 150
+  m_trajectoryStep: 0.02
+  m_trajectoryColor: {r: 1, g: 0, b: 1, a: 1}
+  m_traveledColor: {r: 0, g: 0, b: 1, a: 1}
+  m_startPointColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+--- !u!136 &6108109969192794758
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1627521441993660}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.2
+  m_Height: 0.8
+  m_Direction: 2
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &1819444565037150
 GameObject:
   m_ObjectHideFlags: 0
