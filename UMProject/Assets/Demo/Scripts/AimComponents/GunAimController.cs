@@ -71,6 +71,12 @@ public class GunAimController : MonoBehaviour
     /// <summary>最终射击目标点（由炮管射线计算得出）</summary>
     private Vector3 m_shootTargetPoint;
 
+    /// <summary>相机瞄准射线是否命中目标</summary>
+    private bool m_worldAimHit;
+
+    /// <summary>炮管射击射线是否命中目标</summary>
+    private bool m_shootTargetHit;
+
     // ==================== 生命周期 ====================
 
     void Start()
@@ -125,14 +131,19 @@ public class GunAimController : MonoBehaviour
     private Vector3 GetWorldAimPoint()
     {
         if (m_aimCamera == null)
+        {
+            m_worldAimHit = false;
             return transform.position;
+        }
 
         Ray ray = new Ray(m_aimCamera.transform.position, m_aimCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, m_cameraRayDistance, m_aimLayerMask))
         {
+            m_worldAimHit = true;
             return hit.point;
         }
 
+        m_worldAimHit = false;
         return ray.GetPoint(m_cameraRayDistance);
     }
 
@@ -155,14 +166,15 @@ public class GunAimController : MonoBehaviour
     }
 
     /// <summary>
-    /// 控制炮管垂直俯仰（Pitch），使其朝向世界瞄准点
+    /// 控制炮管垂直俯仰（Pitch），使炮管开火点朝向世界瞄准点
     /// 俯仰角度受 m_minPitch / m_maxPitch 限制
     /// </summary>
     private void UpdateGunPitch(Vector3 aimPoint)
     {
         if (m_gunBarrel == null) return;
 
-        Vector3 direction = aimPoint - m_gunBarrel.position;
+        // 以炮管开火点为基准计算俯仰角，确保开火点对准目标
+        Vector3 direction = aimPoint - GetShootOrigin();
 
         // 计算水平距离和高度差
         Vector3 flat = direction;
@@ -182,21 +194,43 @@ public class GunAimController : MonoBehaviour
     }
 
     /// <summary>
-    /// 从炮管正方向发射射线，获取射击目标点
+    /// 获取炮管开火点位置，留空则使用炮管位置
+    /// </summary>
+    private Vector3 GetShootOrigin()
+    {
+        return m_shootPoint != null ? m_shootPoint.position : m_gunBarrel.position;
+    }
+
+    /// <summary>
+    /// 获取炮管开火点正方向，留空则使用炮管正方向
+    /// </summary>
+    private Vector3 GetShootForward()
+    {
+        return m_shootPoint != null ? m_shootPoint.forward : m_gunBarrel.forward;
+    }
+
+    /// <summary>
+    /// 从炮管开火点正方向发射射线，获取射击目标点
     /// 如果射线命中碰撞体，使用碰撞点；否则使用世界瞄准点
     /// </summary>
     private Vector3 GetShootTargetPoint()
     {
-        if (m_gunBarrel == null) return m_worldAimPoint;
+        if (m_gunBarrel == null)
+        {
+            m_shootTargetHit = false;
+            return m_worldAimPoint;
+        }
 
-        Vector3 origin = m_shootPoint != null ? m_shootPoint.position : m_gunBarrel.position;
-        Vector3 direction = m_gunBarrel.forward;
+        Vector3 origin = GetShootOrigin();
+        Vector3 direction = GetShootForward();
 
         if (Physics.Raycast(new Ray(origin, direction), out RaycastHit hit, m_cameraRayDistance, m_aimLayerMask))
         {
+            m_shootTargetHit = true;
             return hit.point;
         }
 
+        m_shootTargetHit = false;
         return m_worldAimPoint;
     }
 
@@ -218,11 +252,11 @@ public class GunAimController : MonoBehaviour
             Gizmos.DrawSphere(m_worldAimPoint, 0.3f);
         }
 
-        // 炮管射击射线：从炮口沿炮管正前方绘制
+        // 炮管射击射线：从炮口沿炮管开火点正前方绘制
         if (m_gunBarrel != null)
         {
-            Vector3 origin = m_shootPoint != null ? m_shootPoint.position : m_gunBarrel.position;
-            Vector3 dir = m_gunBarrel.forward;
+            Vector3 origin = GetShootOrigin();
+            Vector3 dir = GetShootForward();
             Vector3 end = origin + dir * m_cameraRayDistance;
 
             Gizmos.color = m_gunRayColor;
@@ -238,4 +272,10 @@ public class GunAimController : MonoBehaviour
 
     /// <summary>获取当前世界瞄准点</summary>
     public Vector3 GetWorldAimPointValue() => m_worldAimPoint;
+
+    /// <summary>相机瞄准射线是否命中目标（指向目标）</summary>
+    public bool IsWorldAimHit() => m_worldAimHit;
+
+    /// <summary>炮管射击射线是否命中目标（已锁定目标）</summary>
+    public bool IsShootTargetHit() => m_shootTargetHit;
 }
