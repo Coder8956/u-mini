@@ -1,0 +1,190 @@
+using UnityEngine;
+
+/// <summary>
+/// 子弹运动轨迹计算器
+/// 基于物理模型（重力 + 空气阻力）计算并预测子弹飞行轨迹，
+/// 子弹正方向（transform.forward）即为运动方向。
+/// 支持在Scene窗口绘制预测轨迹用于调试。
+/// </summary>
+public class BulletMove : MonoBehaviour
+{
+    // ==================== 可序列化字段（Inspector 可编辑） ====================
+
+    [Header("运动参数")] [Tooltip("子弹初速度（单位/秒）")] [SerializeField]
+    private float m_initialSpeed = 50f;
+
+    [Tooltip("子弹质量（千克）—— 质量越大，空气阻力影响越小")] [SerializeField]
+    private float m_mass = 0.1f;
+
+    [Tooltip("是否受重力影响")] [SerializeField]
+    private bool m_useGravity = true;
+
+    [Tooltip("空气阻力系数（0表示无空气阻力）")] [SerializeField]
+    private float m_dragCoefficient = 0.01f;
+
+    [Header("运动控制")] [Tooltip("是否沿抛物线运动（true=运动，false=停止，再次true=继续运动）")] [SerializeField]
+    private bool m_isMoving;
+
+    [Tooltip("沿抛物线运动的速度倍率（支持运行时实时更新）")] [SerializeField]
+    private float m_moveSpeed = 1f;
+
+    [Header("轨迹调试")] [Tooltip("是否在Scene窗口绘制预测运动轨迹")] [SerializeField]
+    private bool m_drawTrajectory = true;
+
+    [Tooltip("轨迹预测时长（秒）")] [SerializeField]
+    private float m_trajectoryTime = 3f;
+
+    [Tooltip("轨迹采样时间步长（秒）—— 值越小轨迹越精确")] [SerializeField]
+    private float m_trajectoryStep = 0.02f;
+
+    [Tooltip("轨迹颜色")] [SerializeField]
+    private Color m_trajectoryColor = Color.green;
+
+    [Tooltip("抛物线起点标记颜色")] [SerializeField]
+    private Color m_startPointColor = Color.yellow;
+
+    // ==================== 私有字段（运行时状态） ====================
+
+    /// <summary>子弹当前速度向量</summary>
+    private Vector3 m_velocity;
+
+    /// <summary>抛物线起点位置（debug开启时保留）</summary>
+    private Vector3 m_startPosition;
+
+    /// <summary>是否已初始化起点</summary>
+    private bool m_startPointInitialized;
+
+    // ==================== 生命周期 ====================
+
+    void Start()
+    {
+        m_startPosition = transform.position;
+        m_velocity = transform.forward * m_initialSpeed;
+        m_startPointInitialized = true;
+    }
+
+    void FixedUpdate()
+    {
+        if (!m_isMoving) return;
+
+        UpdateMovement(Time.fixedDeltaTime);
+    }
+
+    // ==================== 物理计算 ====================
+
+    /// <summary>
+    /// 每物理帧更新子弹位置与速度
+    /// 加速度 = 重力 + 空气阻力 / 质量
+    /// </summary>
+    private void UpdateMovement(float deltaTime)
+    {
+        float scaledDt = deltaTime * m_moveSpeed;
+        Vector3 acceleration = ComputeAcceleration(m_velocity);
+
+        m_velocity += acceleration * scaledDt;
+        transform.position += m_velocity * scaledDt;
+
+        // 子弹正方向始终对齐当前速度方向
+        if (m_velocity.sqrMagnitude > 0.0001f)
+            transform.rotation = Quaternion.LookRotation(m_velocity);
+    }
+
+    /// <summary>
+    /// 根据当前速度计算加速度
+    /// a = g + F_drag / m，其中 F_drag = -k * v̂ * |v|²
+    /// </summary>
+    private Vector3 ComputeAcceleration(Vector3 velocity)
+    {
+        Vector3 acceleration = Vector3.zero;
+
+        if (m_useGravity)
+            acceleration += Physics.gravity;
+
+        if (m_dragCoefficient > 0f && velocity.sqrMagnitude > 0f)
+        {
+            Vector3 dragForce = -m_dragCoefficient * velocity.normalized * velocity.sqrMagnitude;
+            acceleration += dragForce / m_mass;
+        }
+
+        return acceleration;
+    }
+
+    // ==================== 轨迹预测 ====================
+
+    /// <summary>
+    /// 从初始状态预计算运动轨迹采样点
+    /// 使用与实际运动相同的物理模型，保证预测与实际一致
+    /// </summary>
+    private Vector3[] CalculateTrajectoryPoints()
+    {
+        int pointCount = Mathf.Max(1, Mathf.CeilToInt(m_trajectoryTime / m_trajectoryStep));
+        Vector3[] points = new Vector3[pointCount + 1];
+
+        Vector3 pos = transform.position;
+        Vector3 vel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
+        float dt = m_trajectoryStep * m_moveSpeed;
+
+        points[0] = pos;
+
+        for (int i = 1; i <= pointCount; i++)
+        {
+            vel += ComputeAcceleration(vel) * dt;
+            pos += vel * dt;
+            points[i] = pos;
+        }
+
+        return points;
+    }
+
+    // ==================== Scene调试绘制 ====================
+
+    private void OnDrawGizmos()
+    {
+        if (!m_drawTrajectory) return;
+
+        Vector3[] points = CalculateTrajectoryPoints();
+        Gizmos.color = m_trajectoryColor;
+
+        for (int i = 0; i < points.Length - 1; i++)
+            Gizmos.DrawLine(points[i], points[i + 1]);
+
+        // 当前位置标记
+        Gizmos.DrawWireSphere(points[0], 0.2f);
+
+        // debug开启时保留并绘制抛物线起点
+        if (m_startPointInitialized)
+        {
+            Gizmos.color = m_startPointColor;
+            Gizmos.DrawWireSphere(m_startPosition, 0.3f);
+        }
+    }
+
+    // ==================== 公开接口 ====================
+
+    /// <summary>获取初速度</summary>
+    public float GetInitialSpeed() => m_initialSpeed;
+
+    /// <summary>设置初速度</summary>
+    public void SetInitialSpeed(float speed) => m_initialSpeed = speed;
+
+    /// <summary>获取子弹质量</summary>
+    public float GetMass() => m_mass;
+
+    /// <summary>设置子弹质量</summary>
+    public void SetMass(float mass) => m_mass = mass;
+
+    /// <summary>获取是否正在移动</summary>
+    public bool IsMoving() => m_isMoving;
+
+    /// <summary>设置是否移动</summary>
+    public void SetMoving(bool moving) => m_isMoving = moving;
+
+    /// <summary>获取运动速度倍率</summary>
+    public float GetMoveSpeed() => m_moveSpeed;
+
+    /// <summary>设置运动速度倍率</summary>
+    public void SetMoveSpeed(float speed) => m_moveSpeed = speed;
+
+    /// <summary>获取预测的轨迹采样点</summary>
+    public Vector3[] GetTrajectoryPoints() => CalculateTrajectoryPoints();
+}
