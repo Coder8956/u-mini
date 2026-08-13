@@ -82,13 +82,13 @@ public class GunFireController : MonoBehaviour
         }
 
         // 在开火点实例化子弹，世界位置和旋转等于开火点
-        GameObject bullet = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+        GameObject bulletGo = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
 
         // 启动子弹运动
-        BulletMove bulletMove = bullet.GetComponent<BulletMove>();
-        if (bulletMove != null)
+        Bullet bullet = bulletGo.GetComponent<Bullet>();
+        if (bullet != null)
         {
-            bulletMove.SetMoving(true);
+            bullet.SetMoving(true);
         }
 
         // 重置装弹计时器

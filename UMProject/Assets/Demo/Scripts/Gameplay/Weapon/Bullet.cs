@@ -6,7 +6,7 @@ using UnityEngine;
 /// 子弹正方向（transform.forward）即为运动方向。
 /// 支持在Scene窗口绘制预测轨迹用于调试。
 /// </summary>
-public class BulletMove : MonoBehaviour
+public class Bullet : MonoBehaviour
 {
     // ==================== 可序列化字段（Inspector 可编辑） ====================
 
