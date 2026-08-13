@@ -10,7 +10,7 @@ namespace UMiniFramework.Runtime
         /// <summary>
         /// 获取所有语言选项（类型 + 代码）
         /// </summary>
-        List<LangOption> GetOptions();
+        List<UMLangOption> GetOptions();
 
         /// <summary>
         /// 通过语言类型获取语言内容 (id → text)

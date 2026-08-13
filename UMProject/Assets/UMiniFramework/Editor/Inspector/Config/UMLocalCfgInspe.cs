@@ -8,28 +8,32 @@ using UnityEngine;
 
 namespace UMiniFramework.Editor
 {
-    [CustomEditor(typeof(LocalCfg))]
-    public class LocalCfgInspe : UnityEditor.Editor
+    [CustomEditor(typeof(UMLocalCfg))]
+    public class UMLocalCfgInspe : UnityEditor.Editor
     {
+        // ==================== 私有字段（运行时状态） ====================
+
         private bool m_foLocal = true; // 多语言对象折叠状态
         private bool m_foOptions = true; // 语言选项折叠状态
         private Vector2 m_scrollPos;
 
         private static readonly FieldInfo Field_UMConfig_TableDic =
-            typeof(UMConfig).GetField("m_tableDic", BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(UMOConfig).GetField("m_tableDic", BindingFlags.NonPublic | BindingFlags.Instance);
 
-        private static readonly FieldInfo Field_LocalCfg_LocalComponents =
-            typeof(LocalCfg).GetField("m_localComponents", BindingFlags.NonPublic | BindingFlags.Instance);
+        private static readonly FieldInfo Field_UMLocalCfg_LocalComponents =
+            typeof(UMLocalCfg).GetField("m_localComponents", BindingFlags.NonPublic | BindingFlags.Instance);
 
         private const int ScrollThreshold = 10;
+
+        // ==================== 公开接口 ====================
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            LocalCfg localCfg = (LocalCfg)target;
+            UMLocalCfg localCfg = (UMLocalCfg)target;
 
-            m_foLocal = EditorGUILayout.Foldout(m_foLocal, "Localization (LocalCfg)");
+            m_foLocal = EditorGUILayout.Foldout(m_foLocal, "Localization (UMLocalCfg)");
             if (!m_foLocal)
                 return;
 
@@ -65,7 +69,7 @@ namespace UMiniFramework.Editor
                     m_scrollPos = EditorGUILayout.BeginScrollView(m_scrollPos, GUILayout.MaxHeight(160));
                 }
 
-                UMBaseConfigTable baseTable = GetLangTable();
+                UMConfigTableBase baseTable = GetLangTable();
                 IUMLangTable langTable = baseTable as IUMLangTable;
                 string langDir = GetLangAssetDir(baseTable);
 
@@ -97,9 +101,9 @@ namespace UMiniFramework.Editor
 
             // Registered Components
             int componentCount = 0;
-            if (Field_LocalCfg_LocalComponents != null)
+            if (Field_UMLocalCfg_LocalComponents != null)
             {
-                var list = Field_LocalCfg_LocalComponents.GetValue(localCfg) as IList;
+                var list = Field_UMLocalCfg_LocalComponents.GetValue(localCfg) as IList;
                 if (list != null)
                     componentCount = list.Count;
             }
@@ -114,11 +118,13 @@ namespace UMiniFramework.Editor
             EditorGUI.indentLevel--;
         }
 
+        // ==================== 逻辑 ====================
+
         private void PingLangAsset(string langDir, string fileName)
         {
             if (string.IsNullOrEmpty(langDir) || string.IsNullOrEmpty(fileName))
             {
-                Debug.LogWarning("[LocalCfgInspe] Failed to resolve language asset path.");
+                Debug.LogWarning("[UMLocalCfgInspe] Failed to resolve language asset path.");
                 return;
             }
 
@@ -130,18 +136,18 @@ namespace UMiniFramework.Editor
             }
             else
             {
-                Debug.LogWarning($"[LocalCfgInspe] Language asset not found: {filePath}");
+                Debug.LogWarning($"[UMLocalCfgInspe] Language asset not found: {filePath}");
             }
         }
 
-        private UMBaseConfigTable GetLangTable()
+        private UMConfigTableBase GetLangTable()
         {
-            var localCfg = (LocalCfg)target;
-            var umConfig = localCfg.GetComponentInParent<UMConfig>();
+            var localCfg = (UMLocalCfg)target;
+            var umConfig = localCfg.GetComponentInParent<UMOConfig>();
             if (umConfig == null)
                 return null;
 
-            var tableDic = Field_UMConfig_TableDic?.GetValue(umConfig) as Dictionary<Type, UMBaseConfigTable>;
+            var tableDic = Field_UMConfig_TableDic?.GetValue(umConfig) as Dictionary<Type, UMConfigTableBase>;
             if (tableDic == null)
                 return null;
 
@@ -153,7 +159,7 @@ namespace UMiniFramework.Editor
             return null;
         }
 
-        private string GetLangAssetDir(UMBaseConfigTable table)
+        private string GetLangAssetDir(UMConfigTableBase table)
         {
             if (table == null)
                 return null;

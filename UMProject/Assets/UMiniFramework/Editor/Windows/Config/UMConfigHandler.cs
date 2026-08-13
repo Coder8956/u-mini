@@ -8,8 +8,19 @@ namespace UMiniFramework.Editor
 {
     public enum UMConfigUpdateMode
     {
+        /// <summary>
+        /// 仅更新数据
+        /// </summary>
         Data,
+
+        /// <summary>
+        /// 仅更新脚本
+        /// </summary>
         Scripts,
+
+        /// <summary>
+        /// 同时更新数据和脚本
+        /// </summary>
         DataAndScripts
     }
 
@@ -166,10 +177,10 @@ namespace UMiniFramework.Editor
 
                 int validColumnCount = GetValidColumnCount(fieldRow, table.Columns.Count);
 
-                var fieldInfos = new List<ConfigFieldInfo>(validColumnCount);
+                var fieldInfos = new List<UMConfigFieldInfo>(validColumnCount);
                 for (int i = 0; i < validColumnCount; i++)
                 {
-                    fieldInfos.Add(new ConfigFieldInfo(
+                    fieldInfos.Add(new UMConfigFieldInfo(
                         commentsRow[i].ToString(),
                         fieldRow[i].ToString(),
                         typeRow[i].ToString(), i));

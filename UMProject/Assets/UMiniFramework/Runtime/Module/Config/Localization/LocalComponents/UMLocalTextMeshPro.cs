@@ -5,19 +5,19 @@ using UnityEngine;
 namespace UMiniFramework.Runtime
 {
     [RequireComponent(typeof(TMP_Text))]
-    public class UMLocalTextMeshPro : UMLocalComponent
+    public class UMLocalTextMeshPro : UMLocalComponentBase
     {
         private TMP_Text m_text;
         private Func<string, string> m_localTextHandler;
 
-        public string text => m_text != null ? m_text.text : string.Empty;
+        public string Text => m_text != null ? m_text.text : string.Empty;
 
         protected override void OnAwake()
         {
             m_text = GetComponent<TMP_Text>();
             if (m_text == null)
             {
-                Debug.LogWarning($"UMLocalTextMeshPro m_text is null. localID:{m_localID}");
+                Debug.LogWarning($"[UMLocalTextMeshPro] m_text is null. localID:{m_localID}");
             }
         }
 

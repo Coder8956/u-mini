@@ -5,10 +5,12 @@ using UnityEngine;
 namespace UMiniFramework.Runtime
 {
     /// <summary>
-    /// 多语言功能对象，作为 UMConfig 的子 GameObject 运行
+    /// 多语言功能对象，作为 UMOConfig 的子 GameObject 运行
     /// </summary>
-    public class LocalCfg : MonoBehaviour
+    public class UMLocalCfg : MonoBehaviour
     {
+        // ==================== 私有字段（运行时状态） ====================
+
         /// <summary>
         /// 本地化字典 [localization,[local_id,value]]
         /// </summary>
@@ -17,32 +19,38 @@ namespace UMiniFramework.Runtime
         /// <summary>
         /// 语言选项列表
         /// </summary>
-        private List<LangOption> m_localOptions;
+        private List<UMLangOption> m_localOptions;
 
         /// <summary>
         /// code → type 映射
         /// </summary>
         private Dictionary<string, string> m_codeToType;
 
-        private List<UMLocalComponent> m_localComponents;
+        private List<UMLocalComponentBase> m_localComponents;
+
+        // ==================== 属性 ====================
 
         public string CurtType { get; private set; }
 
         public string CurtCode { get; private set; }
 
-        // ── 静态访问（通过 UMConfig.Local 委托） ──
+        // ── 静态访问（通过 UMOConfig.Local 委托） ──────────────
 
-        private static LocalCfg Instance => UMConfig.IsCreated ? UMConfig.Local : null;
+        private static UMLocalCfg Instance => UMOConfig.IsCreated ? UMOConfig.Local : null;
 
         private static bool IsCreated => Instance != null;
 
+        // ==================== 生命周期 ====================
+
         private void Awake()
         {
-            m_localComponents = new List<UMLocalComponent>();
+            m_localComponents = new List<UMLocalComponentBase>();
         }
 
+        // ==================== 逻辑 ====================
+
         internal void SetLocalData(
-            List<LangOption> options,
+            List<UMLangOption> options,
             Dictionary<string, Dictionary<string, string>> content)
         {
             if (options == null || content == null)
@@ -56,48 +64,6 @@ namespace UMiniFramework.Runtime
                 if (!string.IsNullOrEmpty(opt.code))
                     m_codeToType[opt.code] = opt.type;
             }
-        }
-
-        public List<LangOption> GetOptions()
-        {
-            return m_localOptions;
-        }
-
-        public void SwitchByType(string type)
-        {
-            if (string.IsNullOrEmpty(type) || CurtType == type)
-                return;
-
-            if (m_localDic == null || !m_localDic.ContainsKey(type))
-            {
-                Debug.LogWarning($"[LocalCfg] SwitchByType 失败：未找到语言 '{type}'。");
-                return;
-            }
-
-            CurtType = type;
-            CurtCode = FindCodeByType(type);
-
-            NotifyComponents();
-        }
-
-        public void SwitchByCode(string code)
-        {
-            if (string.IsNullOrEmpty(code))
-                return;
-
-            if (m_codeToType == null || !m_codeToType.TryGetValue(code, out string type))
-            {
-                Debug.LogWarning($"[LocalCfg] SwitchByCode 失败：未找到语言代码 '{code}'。");
-                return;
-            }
-
-            if (CurtType == type)
-                return;
-
-            CurtType = type;
-            CurtCode = code;
-
-            NotifyComponents();
         }
 
         private string FindCodeByType(string type)
@@ -115,20 +81,20 @@ namespace UMiniFramework.Runtime
 
         private void NotifyComponents()
         {
-            var snapshot = new List<UMLocalComponent>(m_localComponents);
+            var snapshot = new List<UMLocalComponentBase>(m_localComponents);
             for (var i = 0; i < snapshot.Count; i++)
             {
                 snapshot[i].OnUpdateLocal();
             }
         }
 
-        internal void RegisterLocalComponent(UMLocalComponent component)
+        internal void RegisterLocalComponent(UMLocalComponentBase component)
         {
             if (!m_localComponents.Contains(component))
                 m_localComponents.Add(component);
         }
 
-        internal void UnregisterLocalComponent(UMLocalComponent component)
+        internal void UnregisterLocalComponent(UMLocalComponentBase component)
         {
             m_localComponents.Remove(component);
         }
@@ -147,15 +113,59 @@ namespace UMiniFramework.Runtime
             return string.Empty;
         }
 
-        // ── 静态便捷方法（供 UMLocalComponent 使用，无需直接访问 Instance） ──
+        // ==================== 公开接口 ====================
 
-        internal static void RegisterComponent(UMLocalComponent component)
+        public List<UMLangOption> GetOptions()
+        {
+            return m_localOptions;
+        }
+
+        public void SwitchByType(string type)
+        {
+            if (string.IsNullOrEmpty(type) || CurtType == type)
+                return;
+
+            if (m_localDic == null || !m_localDic.ContainsKey(type))
+            {
+                Debug.LogWarning($"[UMLocalCfg] SwitchByType 失败：未找到语言 '{type}'。");
+                return;
+            }
+
+            CurtType = type;
+            CurtCode = FindCodeByType(type);
+
+            NotifyComponents();
+        }
+
+        public void SwitchByCode(string code)
+        {
+            if (string.IsNullOrEmpty(code))
+                return;
+
+            if (m_codeToType == null || !m_codeToType.TryGetValue(code, out string type))
+            {
+                Debug.LogWarning($"[UMLocalCfg] SwitchByCode 失败：未找到语言代码 '{code}'。");
+                return;
+            }
+
+            if (CurtType == type)
+                return;
+
+            CurtType = type;
+            CurtCode = code;
+
+            NotifyComponents();
+        }
+
+        // ── 静态便捷方法（供 UMLocalComponentBase 使用） ──────────
+
+        internal static void RegisterComponent(UMLocalComponentBase component)
         {
             if (IsCreated)
                 Instance.RegisterLocalComponent(component);
         }
 
-        internal static void UnregisterComponent(UMLocalComponent component)
+        internal static void UnregisterComponent(UMLocalComponentBase component)
         {
             if (IsCreated)
                 Instance.UnregisterLocalComponent(component);

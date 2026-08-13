@@ -9,10 +9,10 @@ namespace UMiniFramework.Editor
 {
     internal static class UMConfigScriptGenerator
     {
-        private const string SCRIPT_TIP = "// UMiniFramework config automatically generated, please do not modify it";
+        private const string ScriptTip = "// UMiniFramework config automatically generated, please do not modify it";
 
         public static void CreateConfigScript(
-            List<ConfigFieldInfo> fieldInfos,
+            List<UMConfigFieldInfo> fieldInfos,
             string excelPath,
             string scriptFolder,
             string dataFolder,
@@ -23,7 +23,7 @@ namespace UMiniFramework.Editor
             string excelName = Path.GetFileNameWithoutExtension(excelPath);
             string dataClassName = $"{UMConfigUtility.CapitalizeFirstWord(excelName)}Data";
 
-            ConfigFieldInfo idConfigField = fieldInfos.Find(ele => ele.Field.ToLower() == "id");
+            UMConfigFieldInfo idConfigField = fieldInfos.Find(ele => ele.Field.ToLower() == "id");
             if (idConfigField == null)
             {
                 EditorUtility.DisplayDialog("Tip",
@@ -37,12 +37,12 @@ namespace UMiniFramework.Editor
         }
 
         private static void GenerateDataScript(
-            List<ConfigFieldInfo> fieldInfos,
+            List<UMConfigFieldInfo> fieldInfos,
             string dataClassName,
             string scriptFolder)
         {
             var sb = new StringBuilder();
-            sb.AppendLine(SCRIPT_TIP);
+            sb.AppendLine(ScriptTip);
             sb.AppendLine("using Newtonsoft.Json;");
             sb.AppendLine();
             sb.AppendLine($"public class {dataClassName}");
@@ -71,7 +71,7 @@ namespace UMiniFramework.Editor
         }
 
         private static void GenerateTableScript(
-            List<ConfigFieldInfo> fieldInfos,
+            List<UMConfigFieldInfo> fieldInfos,
             string excelName,
             string dataClassName,
             string scriptFolder,
@@ -87,13 +87,13 @@ namespace UMiniFramework.Editor
             string configLoadPath = splitStrs[splitStrs.Length - 1];
 
             var sb = new StringBuilder();
-            sb.AppendLine(SCRIPT_TIP);
+            sb.AppendLine(ScriptTip);
             sb.AppendLine("using UMiniFramework.Runtime;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using Newtonsoft.Json;");
             sb.AppendLine("using UnityEngine;");
             sb.AppendLine();
-            sb.AppendLine($"public class {tableClassName} : UMBaseConfigTable");
+            sb.AppendLine($"public class {tableClassName} : UMConfigTableBase");
             sb.AppendLine("{");
 
             sb.AppendLine("    /// <summary>");
@@ -112,7 +112,7 @@ namespace UMiniFramework.Editor
             sb.AppendLine();
 
             // Find the id field (not necessarily the first column)
-            ConfigFieldInfo idField = fieldInfos.Find(ele => ele.Field.ToLower() == "id");
+            UMConfigFieldInfo idField = fieldInfos.Find(ele => ele.Field.ToLower() == "id");
             string idType = idField != null ? idField.Type.ToLower() : string.Empty;
 
             if (idField != null)
@@ -160,8 +160,8 @@ namespace UMiniFramework.Editor
             string dataFolder,
             List<string> tableClassList)
         {
-            const string LANG_SCRIPT_CLASS_NAME = "LanguageCfg";
-            tableClassList.Add(LANG_SCRIPT_CLASS_NAME);
+            const string LangScriptClassName = "LanguageCfg";
+            tableClassList.Add(LangScriptClassName);
 
             string langScriptFolder = $"{scriptFolder}/lang";
             Directory.CreateDirectory(langScriptFolder);
@@ -173,13 +173,13 @@ namespace UMiniFramework.Editor
             string configLoadPath = splitStrs[splitStrs.Length - 1];
 
             var sb = new StringBuilder();
-            sb.AppendLine(SCRIPT_TIP);
+            sb.AppendLine(ScriptTip);
             sb.AppendLine("using UMiniFramework.Runtime;");
             sb.AppendLine("using System.Collections.Generic;");
             sb.AppendLine("using Newtonsoft.Json;");
             sb.AppendLine("using UnityEngine;");
             sb.AppendLine();
-            sb.AppendLine($"public class {LANG_SCRIPT_CLASS_NAME} : UMBaseConfigTable, IUMLangTable");
+            sb.AppendLine($"public class {LangScriptClassName} : UMConfigTableBase, IUMLangTable");
             sb.AppendLine("{");
 
             sb.AppendLine("    /// <summary>");
@@ -295,12 +295,12 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    /// <summary>");
             sb.AppendLine("    /// 获取所有语言选项（类型 + 代码）");
             sb.AppendLine("    /// </summary>");
-            sb.AppendLine("    public List<LangOption> GetOptions()");
+            sb.AppendLine("    public List<UMLangOption> GetOptions()");
             sb.AppendLine("    {");
-            sb.AppendLine("        var options = new List<LangOption>(m_langTypes.Count);");
+            sb.AppendLine("        var options = new List<UMLangOption>(m_langTypes.Count);");
             sb.AppendLine("        for (int i = 0; i < m_langTypes.Count; i++)");
             sb.AppendLine("        {");
-            sb.AppendLine("            options.Add(new LangOption(m_langTypes[i], m_langCodes[i]));");
+            sb.AppendLine("            options.Add(new UMLangOption(m_langTypes[i], m_langCodes[i]));");
             sb.AppendLine("        }");
             sb.AppendLine("        return options;");
             sb.AppendLine("    }");
@@ -394,7 +394,7 @@ namespace UMiniFramework.Editor
             sb.AppendLine("    }");
             sb.AppendLine("}");
 
-            string savePath = $"{langScriptFolder}/{LANG_SCRIPT_CLASS_NAME}.cs";
+            string savePath = $"{langScriptFolder}/{LangScriptClassName}.cs";
             File.WriteAllText(savePath, sb.ToString(), Encoding.UTF8);
         }
     }

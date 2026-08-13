@@ -1,6 +1,6 @@
-﻿namespace UMiniFramework.Runtime
+namespace UMiniFramework.Runtime
 {
-    public class UMEventContent : UMBaseEventContent
+    public class UMEventContent : UMEventContentBase
     {
         public UMEventContent(object content)
         {

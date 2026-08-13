@@ -5,19 +5,19 @@ using UnityEngine.UI;
 namespace UMiniFramework.Runtime
 {
     [RequireComponent(typeof(Text))]
-    public class UMLocalText : UMLocalComponent
+    public class UMLocalText : UMLocalComponentBase
     {
         private Text m_text;
         private Func<string, string> m_localTextHandler;
 
-        public string text => m_text != null ? m_text.text : string.Empty;
+        public string Text => m_text != null ? m_text.text : string.Empty;
 
         protected override void OnAwake()
         {
             m_text = GetComponent<Text>();
             if (m_text == null)
             {
-                Debug.LogWarning($"UMLocalText m_text is null. localID:{m_localID}");
+                Debug.LogWarning($"[UMLocalText] m_text is null. localID:{m_localID}");
             }
         }
 

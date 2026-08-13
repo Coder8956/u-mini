@@ -3,14 +3,14 @@ namespace UMiniFramework.Editor
     /// <summary>
     /// 配置表每个字段的信息
     /// </summary>
-    public class ConfigFieldInfo
+    public class UMConfigFieldInfo
     {
         public readonly string Comments;
         public readonly string Field;
         public readonly string Type;
         public readonly int ColumnIndex;
 
-        public ConfigFieldInfo(string comments, string field, string type, int columnIndex)
+        public UMConfigFieldInfo(string comments, string field, string type, int columnIndex)
         {
             Comments = comments;
             Field = field;

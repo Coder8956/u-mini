@@ -1,6 +1,6 @@
-﻿namespace UMiniFramework.Runtime
+namespace UMiniFramework.Runtime
 {
-    public abstract class UMBaseConfigTable
+    public abstract class UMConfigTableBase
     {
         public abstract string AssetPath { get; }
         public abstract string LoadPath { get; }

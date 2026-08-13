@@ -11,10 +11,10 @@ namespace UMiniFramework.Editor
 {
     internal static class UMConfigJsonGenerator
     {
-        private const string ARR_SPLIT = ";";
+        private const string ArrSplit = ";";
 
         public static void CreateConfigJson(
-            List<ConfigFieldInfo> fieldInfos,
+            List<UMConfigFieldInfo> fieldInfos,
             DataTable table,
             string excelPath,
             string dataFolder)
@@ -85,7 +85,7 @@ namespace UMiniFramework.Editor
         private static JArray ParseArray<T>(string value, Func<string, T> parser)
         {
             var jArray = new JArray();
-            string[] parts = value.Split(ARR_SPLIT);
+            string[] parts = value.Split(ArrSplit);
             foreach (var s in parts)
             {
                 if (!string.IsNullOrEmpty(s))

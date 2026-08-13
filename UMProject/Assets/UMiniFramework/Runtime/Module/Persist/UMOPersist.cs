@@ -12,8 +12,26 @@ namespace UMiniFramework.Runtime
     /// <summary>
     /// 数据持久化
     /// </summary>
-    public class UMPersist : UMMonoSingleton<UMPersist>
+    public class UMOPersist : UMMonoSingletonBase<UMOPersist>
     {
+        // ==================== 私有字段（运行时状态） ====================
+
+        /// <summary>
+        /// 文件名 -> 内容快照（排除时间戳字段），用于检测数据是否发生变化。
+        /// 仅当快照发生变化时才更新 LastUpdateTime 并写盘。
+        /// </summary>
+        private readonly Dictionary<string, string> m_contentSnapshots = new Dictionary<string, string>();
+
+        // ==================== 静态只读 ====================
+
+        private static readonly JsonSerializerSettings SnapshotSettings = new JsonSerializerSettings
+        {
+            Formatting = Formatting.None,
+            ContractResolver = new ExcludeTimestampsResolver()
+        };
+
+        // ==================== 属性 ====================
+
         public string SaveRootDir { get; set; }
 
         /// <summary>
@@ -26,17 +44,7 @@ namespace UMiniFramework.Runtime
         /// </summary>
         public Func<string, string> DecryptionHandler { get; set; }
 
-        /// <summary>
-        /// 文件名 -> 内容快照（排除时间戳字段），用于检测数据是否发生变化。
-        /// 仅当快照发生变化时才更新 LastUpdateTime 并写盘。
-        /// </summary>
-        private readonly Dictionary<string, string> m_contentSnapshots = new Dictionary<string, string>();
-
-        private static readonly JsonSerializerSettings s_snapshotSettings = new JsonSerializerSettings
-        {
-            Formatting = Formatting.None,
-            ContractResolver = new ExcludeTimestampsResolver()
-        };
+        // ==================== 生命周期 ====================
 
         protected override void OnInit()
         {
@@ -48,6 +56,8 @@ namespace UMiniFramework.Runtime
                 Directory.CreateDirectory(SaveRootDir);
             }
         }
+
+        // ==================== 逻辑 / 公开接口 ====================
 
         private string GetDataFileFullPath(string filePath)
         {
@@ -86,11 +96,11 @@ namespace UMiniFramework.Runtime
 #endif
         }
 
-        public static void Save<T>(string path, T data) where T : UMBasePersistData
+        public static void Save<T>(string path, T data) where T : UMPersistDataBase
         {
             if (data == null)
             {
-                Debug.LogWarning($"[UMPersist] Save<{typeof(T).Name}>({path}) data is null, skipped.");
+                Debug.LogWarning($"[UMOPersist] Save<{typeof(T).Name}>({path}) data is null, skipped.");
                 return;
             }
 
@@ -131,7 +141,7 @@ namespace UMiniFramework.Runtime
 #endif
         }
 
-        public static T Read<T>(string path, T defaultVal = null) where T : UMBasePersistData
+        public static T Read<T>(string path, T defaultVal = null) where T : UMPersistDataBase
         {
             T data = null;
             string fileFullPath = Instance.GetDataFileFullPath(path);
@@ -155,7 +165,7 @@ namespace UMiniFramework.Runtime
                 }
                 catch (Exception e)
                 {
-                    Debug.LogError($"[UMPersist] Read<{typeof(T).Name}>({path}) failed: {e}");
+                    Debug.LogError($"[UMOPersist] Read<{typeof(T).Name}>({path}) failed: {e}");
                 }
             }
 
@@ -174,7 +184,7 @@ namespace UMiniFramework.Runtime
             bool valid = (EncryptionHandler != null && DecryptionHandler != null);
             if (!valid && (EncryptionHandler != null || DecryptionHandler != null))
             {
-                Debug.LogWarning("[UMPersist] EncryptionHandler/DecryptionHandler 未成对设置，加解密将被跳过。");
+                Debug.LogWarning("[UMOPersist] EncryptionHandler/DecryptionHandler 未成对设置，加解密将被跳过。");
             }
             return valid;
         }
@@ -183,11 +193,11 @@ namespace UMiniFramework.Runtime
         /// 计算排除时间戳字段后的内容快照，用于变更检测。
         /// 计算异常时返回 null，调用方据此回退为“始终写入”。
         /// </summary>
-        private static string GetContentSnapshot<T>(T data) where T : UMBasePersistData
+        private static string GetContentSnapshot<T>(T data) where T : UMPersistDataBase
         {
             try
             {
-                return JsonConvert.SerializeObject(data, s_snapshotSettings);
+                return JsonConvert.SerializeObject(data, SnapshotSettings);
             }
             catch
             {
@@ -197,7 +207,7 @@ namespace UMiniFramework.Runtime
 
         public static void PrintSaveRootDir()
         {
-            Debug.Log($"UMPersist SaveRootDir: {Instance.SaveRootDir}");
+            Debug.Log($"[UMOPersist] SaveRootDir: {Instance.SaveRootDir}");
         }
 
         /// <summary>

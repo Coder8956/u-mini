@@ -7,20 +7,26 @@ using UnityEngine;
 
 namespace UMiniFramework.Editor
 {
-    [CustomEditor(typeof(UMConfig))]
-    public class UMConfigInspe : UnityEditor.Editor
+    [CustomEditor(typeof(UMOConfig))]
+    public class UMOConfigInspe : UnityEditor.Editor
     {
+        // ==================== 私有字段（运行时状态） ====================
+
         private bool m_foConfigTables = true; // 控制折叠状态
         private static readonly FieldInfo Field_UMConfig_TableDic =
-            typeof(UMConfig).GetField("m_tableDic", BindingFlags.NonPublic | BindingFlags.Instance);
-        private Dictionary<Type, UMBaseConfigTable> m_tableDic;
+            typeof(UMOConfig).GetField("m_tableDic", BindingFlags.NonPublic | BindingFlags.Instance);
+        private Dictionary<Type, UMConfigTableBase> m_tableDic;
+
+        // ==================== 生命周期 ====================
 
         private void OnEnable()
         {
             m_tableDic = Field_UMConfig_TableDic != null
-                ? (Dictionary<Type, UMBaseConfigTable>)Field_UMConfig_TableDic.GetValue(target)
+                ? (Dictionary<Type, UMConfigTableBase>)Field_UMConfig_TableDic.GetValue(target)
                 : null;
         }
+
+        // ==================== 公开接口 ====================
 
         public override void OnInspectorGUI()
         {
@@ -48,7 +54,7 @@ namespace UMiniFramework.Editor
                 int tableIndex = 0;
                 foreach (var kv in m_tableDic)
                 {
-                    // 跳过多语言配置表，由 LocalCfg Inspector 绘制
+                    // 跳过多语言配置表，由 UMLocalCfg Inspector 绘制
                     if (kv.Value is IUMLangTable)
                         continue;
 

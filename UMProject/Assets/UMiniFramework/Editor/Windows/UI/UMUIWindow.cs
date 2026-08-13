@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UMiniFramework.Runtime;
@@ -10,7 +10,11 @@ namespace UMiniFramework.Editor
 {
     public class UMUIWindow : EditorWindow
     {
+        // ==================== 常量 ====================
+
         private const string SavePathKey = "UMUI_Save_Path";
+
+        // ==================== 私有字段（运行时状态） ====================
 
         private List<Type> m_panelTypes = new();
         private string[] m_panelNames;
@@ -35,13 +39,15 @@ namespace UMiniFramework.Editor
             var window = GetWindow<UMUIWindow>();
 
             window.titleContent =
-                new GUIContent("Create UMUI Panel");
+                new GUIContent("Create UMOUI Panel");
 
             window.minSize =
                 new Vector2(650, 200);
 
             window.Show();
         }
+
+        // ==================== 生命周期 ====================
 
         private void OnEnable()
         {
@@ -78,6 +84,8 @@ namespace UMiniFramework.Editor
 
             DrawCreateButton();
         }
+
+        // ==================== 逻辑 ====================
 
         private void DrawPanelSelect()
         {
@@ -194,7 +202,7 @@ namespace UMiniFramework.Editor
                 m_addSafeArea =
                     EditorGUILayout.Toggle(
                         "Add Safe Area",
-                        m_addCloseButton);
+                        m_addSafeArea);
             }
 
             GUI.enabled =

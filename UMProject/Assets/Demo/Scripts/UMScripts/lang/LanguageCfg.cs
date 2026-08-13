@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class LanguageCfg : UMBaseConfigTable, IUMLangTable
+public class LanguageCfg : UMConfigTableBase, IUMLangTable
 {
     /// <summary>
     /// 配置文件路径
@@ -97,12 +97,12 @@ public class LanguageCfg : UMBaseConfigTable, IUMLangTable
     /// <summary>
     /// 获取所有语言选项（类型 + 代码）
     /// </summary>
-    public List<LangOption> GetOptions()
+    public List<UMLangOption> GetOptions()
     {
-        var options = new List<LangOption>(m_langTypes.Count);
+        var options = new List<UMLangOption>(m_langTypes.Count);
         for (int i = 0; i < m_langTypes.Count; i++)
         {
-            options.Add(new LangOption(m_langTypes[i], m_langCodes[i]));
+            options.Add(new UMLangOption(m_langTypes[i], m_langCodes[i]));
         }
         return options;
     }

@@ -2,9 +2,13 @@ using UnityEngine;
 
 namespace UMiniFramework.Runtime
 {
-    public abstract class UMLocalComponent : MonoBehaviour
+    public abstract class UMLocalComponentBase : MonoBehaviour
     {
+        // ==================== 可序列化字段（Inspector 可编辑） ====================
+
         [SerializeField] protected string m_localID;
+
+        // ==================== 属性 ====================
 
         public string LocalID
         {
@@ -19,6 +23,8 @@ namespace UMiniFramework.Runtime
             }
         }
 
+        // ==================== 生命周期 ====================
+
         private void Awake()
         {
             OnAwake();
@@ -26,7 +32,7 @@ namespace UMiniFramework.Runtime
 
         protected virtual void OnEnable()
         {
-            LocalCfg.RegisterComponent(this);
+            UMLocalCfg.RegisterComponent(this);
 
             if (!string.IsNullOrEmpty(m_localID))
             {
@@ -36,16 +42,20 @@ namespace UMiniFramework.Runtime
 
         protected virtual void OnDisable()
         {
-            LocalCfg.UnregisterComponent(this);
+            UMLocalCfg.UnregisterComponent(this);
         }
+
+        // ── 子类回调 ──────────────────────────────────────────
 
         protected abstract void OnAwake();
 
         internal abstract void OnUpdateLocal();
 
+        // ==================== 逻辑 ====================
+
         protected string LocalValue()
         {
-            return LocalCfg.GetValue(m_localID);
+            return UMLocalCfg.GetValue(m_localID);
         }
     }
 }

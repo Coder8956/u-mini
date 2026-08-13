@@ -4,15 +4,6 @@ namespace UMiniFramework.Runtime
 {
     public static class UMConfigUtils
     {
-        /// <summary>
-        /// 切分配置字符串的键值对
-        /// </summary>
-        /// <param name="content"></param>
-        /// <returns></returns>
-        // public static UMCfgKV<K, V> SplitKV<K, V>(string content)
-        // {
-        //     return new(content);
-        // }
     }
 
     /// <summary>
@@ -37,20 +28,11 @@ namespace UMiniFramework.Runtime
         {
             Type type = typeof(T);
 
-            // 处理 string
             if (type == typeof(string))
             {
                 return (T) (object) value;
             }
 
-            // 处理 enum
-            // if (type.IsEnum)
-            // {
-            //     return (T)Enum.Parse(type, value);
-            // }
-
-
-            // 常见数值类型（更安全 & 性能更好）
             if (type == typeof(int))
                 return (T) (object) int.Parse(value);
 
@@ -60,19 +42,9 @@ namespace UMiniFramework.Runtime
             if (type == typeof(float))
                 return (T) (object) float.Parse(value);
 
-            // if (type == typeof(double))
-            //     return (T)(object)double.Parse(value);
-
             if (type == typeof(bool))
                 return (T) (object) bool.Parse(value);
 
-            // if (type == typeof(long))
-            //     return (T)(object)long.Parse(value);
-            //
-            // if (type == typeof(ulong))
-            //     return (T)(object)ulong.Parse(value);
-
-            // 兜底方案
             return (T) Convert.ChangeType(value, type);
         }
     }

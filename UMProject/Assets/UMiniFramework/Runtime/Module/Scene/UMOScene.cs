@@ -1,11 +1,13 @@
-﻿using System;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace UMiniFramework.Runtime
 {
-    public class UMScene : UMMonoSingleton<UMScene>
+    public class UMOScene : UMMonoSingletonBase<UMOScene>
     {
+        // ==================== 属性 ====================
+
         /// <summary>
         /// 场景开始切换
         /// </summary>
@@ -15,6 +17,20 @@ namespace UMiniFramework.Runtime
         /// 场景切换完成
         /// </summary>
         public static event Action<string> OnSceneLoadCompleted;
+
+        /// <summary>
+        /// 当前场景名称
+        /// </summary>
+        public static string ActiveSceneName =>
+            SceneManager.GetActiveScene().name;
+
+        /// <summary>
+        /// 当前场景索引
+        /// </summary>
+        public static int ActiveSceneIndex =>
+            SceneManager.GetActiveScene().buildIndex;
+
+        // ==================== 生命周期 ====================
 
         protected override void OnInit()
         {
@@ -32,17 +48,7 @@ namespace UMiniFramework.Runtime
             OnSceneLoadCompleted?.Invoke(scene.name);
         }
 
-        /// <summary>
-        /// 当前场景名称
-        /// </summary>
-        public static string ActiveSceneName =>
-            SceneManager.GetActiveScene().name;
-
-        /// <summary>
-        /// 当前场景索引
-        /// </summary>
-        public static int ActiveSceneIndex =>
-            SceneManager.GetActiveScene().buildIndex;
+        // ==================== 公开接口 ====================
 
         /// <summary>
         /// 同步切换场景

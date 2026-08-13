@@ -1,15 +1,19 @@
-﻿using System;
+using System;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime
 {
-    public class UMRes : UMMonoSingleton<UMRes>
+    public class UMORes : UMMonoSingletonBase<UMORes>
     {
+        // ==================== 生命周期 ====================
+
         protected override void OnInit()
         {
         }
 
-        #region Load
+        // ==================== 公开接口 ====================
+
+        // ── Load ──────────────────────────────────────────────
 
         /// <summary>
         /// 加载任意资源
@@ -43,9 +47,7 @@ namespace UMiniFramework.Runtime
             return Resources.LoadAll<T>(path);
         }
 
-        #endregion
-
-        #region Instantiate
+        // ── Instantiate ──────────────────────────────────────
 
         /// <summary>
         /// 加载并实例化
@@ -56,7 +58,7 @@ namespace UMiniFramework.Runtime
 
             if (prefab == null)
             {
-                Debug.LogError($"Resource Not Found : {path}");
+                Debug.LogError($"[UMORes] Resource Not Found : {path}");
                 return null;
             }
 
@@ -72,7 +74,7 @@ namespace UMiniFramework.Runtime
 
             if (prefab == null)
             {
-                Debug.LogError($"Resource Not Found : {path}");
+                Debug.LogError($"[UMORes] Resource Not Found : {path}");
                 return null;
             }
 
@@ -92,9 +94,7 @@ namespace UMiniFramework.Runtime
             return go.GetComponent<T>();
         }
 
-        #endregion
-
-        #region Unload
+        // ── Unload ───────────────────────────────────────────
 
         /// <summary>
         /// 卸载资源
@@ -112,7 +112,5 @@ namespace UMiniFramework.Runtime
         {
             return Resources.UnloadUnusedAssets();
         }
-
-        #endregion
     }
 }

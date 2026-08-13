@@ -1,23 +1,33 @@
-﻿using UnityEngine;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UMiniFramework.Runtime
 {
     public abstract class UMUIPanelBase : MonoBehaviour
     {
+        // ==================== 可序列化字段（Inspector 可编辑） ====================
+
         [SerializeField] private bool m_useCommonMask = true;
         [SerializeField] private RectTransform[] m_layoutRebuilderOnOpen;
         [SerializeField] private Button m_btnClose;
 
-        public bool UseCommonMask
-        {
-            get { return m_useCommonMask; }
-            // set { m_useCommonMask = value; }
-        }
+        // ==================== 私有字段（运行时状态） ====================
 
         protected Image m_imgMask;
 
         private int m_layer;
+
+        // ==================== 属性 ====================
+
+        /// <summary>
+        /// 是否使用通用遮罩
+        /// </summary>
+        public bool UseCommonMask
+        {
+            get { return m_useCommonMask; }
+        }
+
+        // ==================== 逻辑 ====================
 
         internal void Initialize()
         {
@@ -31,17 +41,24 @@ namespace UMiniFramework.Runtime
         }
 
         /// <summary>
+        /// 子类初始化回调
+        /// </summary>
+        protected abstract void OnInitialize();
+
+        // ==================== 公开接口 ====================
+
+        /// <summary>
         /// 打开面板：挂到对应层级 → 拉伸 → 激活 → 回调。
         /// </summary>
         public virtual void Open(int layer = 0)
         {
             m_layer = layer;
-            transform.SetParent(UMUI.GetLayer(m_layer), false);
+            transform.SetParent(UMOUI.GetLayer(m_layer), false);
             UMUIUtils.StretchFull(GetComponent<RectTransform>());
 
             if (UseCommonMask && m_imgMask != null)
             {
-                m_imgMask.color = UMUI.PanelMaskColor;
+                m_imgMask.color = UMOUI.PanelMaskColor;
             }
 
             gameObject.SetActive(true);
@@ -63,7 +80,7 @@ namespace UMiniFramework.Runtime
         {
             if (this == null) return;
             gameObject.SetActive(false);
-            transform.SetParent(UMUI.UICache, false);
+            transform.SetParent(UMOUI.UICache, false);
         }
 
         /// <summary>
@@ -76,10 +93,8 @@ namespace UMiniFramework.Runtime
                 Close();
             }
 
-            UMUI.RemoveFromCache(this);
+            UMOUI.RemoveFromCache(this);
             Destroy(gameObject);
         }
-
-        protected abstract void OnInitialize();
     }
 }

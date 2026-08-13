@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using UnityEngine;
 
-public class TemplateTable : UMBaseConfigTable
+public class TemplateTable : UMConfigTableBase
 {
     /// <summary>
     /// 配置文件路径

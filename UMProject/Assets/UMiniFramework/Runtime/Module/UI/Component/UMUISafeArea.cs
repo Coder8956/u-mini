@@ -8,7 +8,11 @@ namespace UMiniFramework.Runtime
     [RequireComponent(typeof(RectTransform))]
     public class UMUISafeArea : MonoBehaviour
     {
+        // ==================== 私有字段（运行时状态） ====================
+
         private RectTransform m_rectTransform;
+
+        // ==================== 生命周期 ====================
 
         private void Awake()
         {
@@ -28,6 +32,8 @@ namespace UMiniFramework.Runtime
             ApplySafeArea();
         }
 
+        // ==================== 逻辑 ====================
+
         /// <summary>
         /// 根据Screen.safeArea将像素坐标转换为归一化锚点，应用到RectTransform。
         /// </summary>
@@ -38,16 +44,13 @@ namespace UMiniFramework.Runtime
 
             Rect safeArea = Screen.safeArea;
 
-            // 屏幕宽高用于将安全区域从像素坐标转换为归一化比例
             float screenWidth = Screen.width;
             float screenHeight = Screen.height;
 
-            // 左下角归一化坐标
             Vector2 anchorMin = safeArea.position;
             anchorMin.x /= screenWidth;
             anchorMin.y /= screenHeight;
 
-            // 右上角归一化坐标
             Vector2 anchorMax = safeArea.position + safeArea.size;
             anchorMax.x /= screenWidth;
             anchorMax.y /= screenHeight;
@@ -55,7 +58,6 @@ namespace UMiniFramework.Runtime
             m_rectTransform.anchorMin = anchorMin;
             m_rectTransform.anchorMax = anchorMax;
 
-            // 重置偏移，使RectTransform完全贴合安全区域边界
             m_rectTransform.offsetMin = Vector2.zero;
             m_rectTransform.offsetMax = Vector2.zero;
         }

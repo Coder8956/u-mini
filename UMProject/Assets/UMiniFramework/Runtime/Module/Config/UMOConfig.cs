@@ -1,40 +1,50 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace UMiniFramework.Runtime
 {
-    public class UMConfig : UMMonoSingleton<UMConfig>
+    public class UMOConfig : UMMonoSingletonBase<UMOConfig>
     {
-        private LocalCfg m_local;
+        // ==================== 私有字段（运行时状态） ====================
+
+        private UMLocalCfg m_local;
+
+        private readonly Dictionary<Type, UMConfigTableBase> m_tableDic = new();
+
+        // ==================== 静态字段 ====================
+
+        private static Dictionary<Type, UMConfigTableBase> TableDic = null;
+
+        // ==================== 属性 ====================
 
         /// <summary>
         /// 多语言功能对象（添加语言配置表时自动创建）
         /// </summary>
-        public static LocalCfg Local => IsCreated ? Instance.m_local : null;
+        public static UMLocalCfg Local => IsCreated ? Instance.m_local : null;
 
-        private readonly Dictionary<Type, UMBaseConfigTable> m_tableDic = new();
-
-        private static Dictionary<Type, UMBaseConfigTable> TableDic = null;
+        // ==================== 生命周期 ====================
 
         protected override void OnInit()
         {
             TableDic = Instance.m_tableDic;
         }
 
+        // ==================== 公开接口 ====================
+
         /// <summary>
         /// 获取配置表
         /// </summary>
-        public static T GetTable<T>() where T : UMBaseConfigTable
+        public static T GetTable<T>() where T : UMConfigTableBase
         {
             Type key = typeof(T);
 
-            if (TableDic.TryGetValue(key, out UMBaseConfigTable table))
+            if (TableDic.TryGetValue(key, out UMConfigTableBase table))
             {
                 return table as T;
             }
 
-            Debug.LogWarning($"Config table not found : {key.Name}");
+            Debug.LogWarning($"[UMOConfig] Config table not found : {key.Name}");
             return null;
         }
 
@@ -42,11 +52,11 @@ namespace UMiniFramework.Runtime
         /// <summary>
         /// 添加配置表
         /// </summary>
-        public static bool AddTable<T>(T table) where T : UMBaseConfigTable
+        public static bool AddTable<T>(T table) where T : UMConfigTableBase
         {
             if (table == null)
             {
-                Debug.LogError("Add Config Table Failed : table is null");
+                Debug.LogError("[UMOConfig] Add Config Table Failed : table is null");
                 return false;
             }
 
@@ -54,7 +64,7 @@ namespace UMiniFramework.Runtime
 
             if (TableDic.ContainsKey(tableType))
             {
-                Debug.LogWarning($"Config table already exists : {tableType.Name}");
+                Debug.LogWarning($"[UMOConfig] Config table already exists : {tableType.Name}");
                 return false;
             }
 
@@ -63,7 +73,7 @@ namespace UMiniFramework.Runtime
             if (asset == null)
             {
                 Debug.LogError(
-                    $"Config file not found : {table.LoadPath}"
+                    $"[UMOConfig] Config file not found : {table.LoadPath}"
                 );
 
                 return false;
@@ -73,14 +83,14 @@ namespace UMiniFramework.Runtime
 
             TableDic.Add(tableType, table);
 
-            // 多语言配置表自动创建并初始化 LocalCfg
+            // 多语言配置表自动创建并初始化 UMLocalCfg
             if (table is IUMLangTable langTable)
             {
                 if (Instance.m_local == null)
                 {
-                    var go = new GameObject("LocalCfg");
+                    var go = new GameObject("UMLocalCfg");
                     go.transform.SetParent(Instance.transform);
-                    Instance.m_local = go.AddComponent<LocalCfg>();
+                    Instance.m_local = go.AddComponent<UMLocalCfg>();
                 }
 
                 var options = langTable.GetOptions();
@@ -98,7 +108,7 @@ namespace UMiniFramework.Runtime
         /// <summary>
         /// 移除配置表
         /// </summary>
-        public static bool RemoveTable<T>() where T : UMBaseConfigTable
+        public static bool RemoveTable<T>() where T : UMConfigTableBase
         {
             return TableDic.Remove(typeof(T));
         }

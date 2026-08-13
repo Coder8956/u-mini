@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using UnityEditor;
 using UnityEngine;
@@ -7,19 +7,19 @@ namespace UMiniFramework.Editor
 {
     public class UMConfigWindow : EditorWindow
     {
-        private const string KEY_CONFIG_PATH = "UMCFG_CONFIG_PATH";
-        private const string KEY_SCRIPTS_PATH = "UMCFG_SCRIPTS_PATH";
-        private const string KEY_DATA_PATH = "UMCFG_DATA_PATH";
-        private const string KEY_LANG_TABLE_NAME = "UMCFG_LANG_TABLE_NAME";
+        private const string KeyConfigPath = "UMCFG_CONFIG_PATH";
+        private const string KeyScriptsPath = "UMCFG_SCRIPTS_PATH";
+        private const string KeyDataPath = "UMCFG_DATA_PATH";
+        private const string KeyLangTableName = "UMCFG_LANG_TABLE_NAME";
 
-        private const string READ_FILES_TIP_1 = "Please click read button";
-        private const string READ_FILES_TIP_2 = "The configuration file was not read";
-        private const string READ_FILES_TIP_3 = "{0} configuration files were read";
+        private const string ReadFilesTip1 = "Please click read button";
+        private const string ReadFilesTip2 = "The configuration file was not read";
+        private const string ReadFilesTip3 = "{0} configuration files were read";
 
-        private const string GUI_STYLE_HELPBOX = "HelpBox";
+        private const string GuiStyleHelpBox = "HelpBox";
 
-        private const int LINE_HEIGHT = 20;
-        private const int MAX_SCROLL_HEIGHT = 400;
+        private const int LineHeight = 20;
+        private const int MaxScrollHeight = 400;
 
 
         private string m_configInputDir;
@@ -41,14 +41,14 @@ namespace UMiniFramework.Editor
         private static void ShowWindow()
         {
             UMConfigWindow window = GetWindow<UMConfigWindow>();
-            window.titleContent = new GUIContent("UMConfig Editor");
+            window.titleContent = new GUIContent("UMOConfig Editor");
             window.Show();
         }
         
         private void OnEnable()
         {
             ReadPaths();
-            m_readFilesTip = READ_FILES_TIP_1;
+            m_readFilesTip = ReadFilesTip1;
         }
 
         private void OnGUI()
@@ -58,7 +58,7 @@ namespace UMiniFramework.Editor
             DrawFolderPath(
                 "Config Input Directory",
                 ref m_configInputDir,
-                KEY_CONFIG_PATH,
+                KeyConfigPath,
                 "Select Config Input Folder",
                 true);
             
@@ -71,14 +71,14 @@ namespace UMiniFramework.Editor
                 DrawFolderPath(
                     "Config Script Output Directory",
                     ref m_scriptOutputDir,
-                    KEY_SCRIPTS_PATH,
+                    KeyScriptsPath,
                     "Select Script Output Folder");
 
 
                 DrawFolderPath(
                     "Config Json Output Directory",
                     ref m_jsonOutputDir,
-                    KEY_DATA_PATH,
+                    KeyDataPath,
                     "Select Json Output Folder");
 
 
@@ -101,11 +101,11 @@ namespace UMiniFramework.Editor
         {
             EditorGUILayout.BeginHorizontal();
 
-            GUILayout.Label(title, GUILayout.Width(180), GUILayout.Height(LINE_HEIGHT));
+            GUILayout.Label(title, GUILayout.Width(180), GUILayout.Height(LineHeight));
 
             if (GUILayout.Button("Select",
                     GUILayout.Width(50),
-                    GUILayout.Height(LINE_HEIGHT)))
+                    GUILayout.Height(LineHeight)))
             {
                 string result =
                     EditorUtility.OpenFolderPanel(
@@ -119,9 +119,9 @@ namespace UMiniFramework.Editor
                     path = result;
                     EditorPrefs.SetString(prefsKey, path);
 
-                    if (prefsKey == KEY_CONFIG_PATH)
+                    if (prefsKey == KeyConfigPath)
                     {
-                        m_readFilesTip = READ_FILES_TIP_1;
+                        m_readFilesTip = ReadFilesTip1;
                         m_configFiles.Clear();
                     }
                 }
@@ -129,12 +129,12 @@ namespace UMiniFramework.Editor
 
             if (GUILayout.Button("Clear",
                     GUILayout.Width(50),
-                    GUILayout.Height(LINE_HEIGHT)))
+                    GUILayout.Height(LineHeight)))
             {
                 path = string.Empty;
                 EditorPrefs.SetString(prefsKey, path);
 
-                if (prefsKey == KEY_CONFIG_PATH)
+                if (prefsKey == KeyConfigPath)
                 {
                     m_configFiles.Clear();
                 }
@@ -143,15 +143,15 @@ namespace UMiniFramework.Editor
             if (showOpen &&
                 GUILayout.Button("Open",
                     GUILayout.Width(50),
-                    GUILayout.Height(LINE_HEIGHT)))
+                    GUILayout.Height(LineHeight)))
             {
                 OpenFolder(path);
             }
 
             GUILayout.Label(
                 path,
-                GUI_STYLE_HELPBOX,
-                GUILayout.Height(LINE_HEIGHT));
+                GuiStyleHelpBox,
+                GUILayout.Height(LineHeight));
 
             EditorGUILayout.EndHorizontal();
         }
@@ -165,14 +165,14 @@ namespace UMiniFramework.Editor
             GUILayout.Label(
                 "Language Table Name",
                 GUILayout.Width(180),
-                GUILayout.Height(LINE_HEIGHT));
+                GUILayout.Height(LineHeight));
             var newLangName = EditorGUILayout.TextField(
                 m_langTableName,
-                GUILayout.Height(LINE_HEIGHT));
+                GUILayout.Height(LineHeight));
             if (newLangName != m_langTableName)
             {
                 m_langTableName = newLangName;
-                EditorPrefs.SetString(KEY_LANG_TABLE_NAME, m_langTableName);
+                EditorPrefs.SetString(KeyLangTableName, m_langTableName);
             }
             EditorGUILayout.EndHorizontal();
 
@@ -186,27 +186,27 @@ namespace UMiniFramework.Editor
                 
                 if (m_configFiles.Count == 0)
                 {
-                    m_readFilesTip = READ_FILES_TIP_2;
+                    m_readFilesTip = ReadFilesTip2;
                 }
                 else
                 {
                     m_readFilesTip =
                         string.Format(
-                            READ_FILES_TIP_3,
+                            ReadFilesTip3,
                             m_configFiles.Count);
                 }
 
                 m_scrollViewHeight =
                     Mathf.Clamp(
-                        m_configFiles.Count * LINE_HEIGHT,
+                        m_configFiles.Count * LineHeight,
                         0,
-                        MAX_SCROLL_HEIGHT);
+                        MaxScrollHeight);
             }
             
             GUILayout.Label(
                 m_readFilesTip,
-                GUI_STYLE_HELPBOX,
-                GUILayout.Height(LINE_HEIGHT));
+                GuiStyleHelpBox,
+                GUILayout.Height(LineHeight));
             
             if (m_configFiles.Count == 0)
                 return;
@@ -336,19 +336,19 @@ namespace UMiniFramework.Editor
         private void ReadPaths()
         {
             m_configInputDir =
-                EditorPrefs.GetString(KEY_CONFIG_PATH, "");
+                EditorPrefs.GetString(KeyConfigPath, "");
 
 
             m_scriptOutputDir =
-                EditorPrefs.GetString(KEY_SCRIPTS_PATH, "");
+                EditorPrefs.GetString(KeyScriptsPath, "");
 
 
             m_jsonOutputDir =
-                EditorPrefs.GetString(KEY_DATA_PATH, "");
+                EditorPrefs.GetString(KeyDataPath, "");
 
 
             m_langTableName =
-                EditorPrefs.GetString(KEY_LANG_TABLE_NAME, "");
+                EditorPrefs.GetString(KeyLangTableName, "");
         }
     }
 }

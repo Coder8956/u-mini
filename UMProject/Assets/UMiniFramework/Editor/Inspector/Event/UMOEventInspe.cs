@@ -8,19 +8,23 @@ using UnityEngine.Events;
 
 namespace UMiniFramework.Editor
 {
-    [CustomEditor(typeof(UMEvent))]
-    public class UMEventInspe : UnityEditor.Editor
+    [CustomEditor(typeof(UMOEvent))]
+    public class UMOEventInspe : UnityEditor.Editor
     {
+        // ==================== 私有字段（运行时状态） ====================
+
         private bool m_foEventTags = true; // 控制折叠状态
         private Dictionary<string, bool> m_foETListeners = new Dictionary<string, bool>(); // 控制折叠状态, 按 EventTag 索引
         private Dictionary<string, List<UMEventListener>> m_eventDic;
         private static readonly FieldInfo Field_UMEL_EventHandler =
-            typeof(UMEventListener).GetField("EventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
+            typeof(UMEventListener).GetField("m_eventHandler", BindingFlags.NonPublic | BindingFlags.Instance);
         private GUIStyle m_listenerInfoGS;
+
+        // ==================== 生命周期 ====================
 
         private void OnEnable()
         {
-            FieldInfo eventDicField = typeof(UMEvent)
+            FieldInfo eventDicField = typeof(UMOEvent)
                 .GetField("m_eventDic", BindingFlags.NonPublic | BindingFlags.Instance);
             m_eventDic = eventDicField != null
                 ? (Dictionary<string, List<UMEventListener>>)eventDicField.GetValue(target)
@@ -29,6 +33,8 @@ namespace UMiniFramework.Editor
             m_listenerInfoGS = new GUIStyle("helpbox");
             m_listenerInfoGS.fontSize = 12;
         }
+
+        // ==================== 公开接口 ====================
 
         public override void OnInspectorGUI()
         {
@@ -87,9 +93,9 @@ namespace UMiniFramework.Editor
 
                             // 获取事件处理器 EventHandler 是哪个类中方法
                             string ehInfo = string.Empty;
-                            UnityAction<UMBaseEventContent> eh =
+                            UnityAction<UMEventContentBase> eh =
                                 Field_UMEL_EventHandler != null
-                                    ? (UnityAction<UMBaseEventContent>)Field_UMEL_EventHandler.GetValue(listener)
+                                    ? (UnityAction<UMEventContentBase>)Field_UMEL_EventHandler.GetValue(listener)
                                     : null;
 
                             if (eh == null)

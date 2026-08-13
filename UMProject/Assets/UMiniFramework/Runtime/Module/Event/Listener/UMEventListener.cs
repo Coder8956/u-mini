@@ -1,8 +1,11 @@
-﻿using System;
+using System;
 using UnityEngine.Events;
 
 namespace UMiniFramework.Runtime
 {
+    /// <summary>
+    /// 事件侦听类型
+    /// </summary>
     public enum UMListenType
     {
         /// <summary>
@@ -18,25 +21,34 @@ namespace UMiniFramework.Runtime
 
     public sealed class UMEventListener
     {
+        // ==================== 公开只读字段 ====================
+
         public readonly string EventTag;
         public readonly UMListenType ListenType;
-        private readonly UnityAction<UMBaseEventContent> EventHandler;
 
-        public UMEventListener(string eventTag, UnityAction<UMBaseEventContent> eventHandler,
+        // ==================== 私有字段 ====================
+
+        private readonly UnityAction<UMEventContentBase> m_eventHandler;
+
+        // ==================== 构造 ====================
+
+        public UMEventListener(string eventTag, UnityAction<UMEventContentBase> eventHandler,
             UMListenType listenType = UMListenType.Persistent)
         {
             EventTag = eventTag;
             ListenType = listenType;
-            EventHandler = eventHandler;
-            if (EventHandler == null)
+            m_eventHandler = eventHandler;
+            if (m_eventHandler == null)
             {
-                throw new ArgumentNullException(nameof(EventHandler), "The parameter cannot be null");
+                throw new ArgumentNullException(nameof(eventHandler), "The parameter cannot be null");
             }
         }
 
-        internal void HandleEvent(UMBaseEventContent content)
+        // ==================== 公开接口 ====================
+
+        internal void HandleEvent(UMEventContentBase content)
         {
-            EventHandler.Invoke(content);
+            m_eventHandler.Invoke(content);
         }
     }
 }

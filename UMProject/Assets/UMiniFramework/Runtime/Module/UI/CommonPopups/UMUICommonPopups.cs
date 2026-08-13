@@ -15,10 +15,21 @@ namespace UMiniFramework.Runtime
     [UMUIPanelCfg("UI/UMUICommonPopups")]
     public class UMUICommonPopups : UMUIPanelBase
     {
-        private enum PopupState
+        private enum UMPopupState
         {
+            /// <summary>
+            /// 双按钮弹窗
+            /// </summary>
             TwoButton,
+
+            /// <summary>
+            /// 单按钮弹窗
+            /// </summary>
             OneButton,
+
+            /// <summary>
+            /// 倒计时弹窗
+            /// </summary>
             CountDown
         }
 
@@ -39,7 +50,7 @@ namespace UMiniFramework.Runtime
         [SerializeField] private Button m_btnCountDown;
         [SerializeField] private TMP_Text m_txtCountDown;
 
-        private PopupState m_state;
+        private UMPopupState m_state;
         private string m_title;
         private string m_content;
 
@@ -66,7 +77,7 @@ namespace UMiniFramework.Runtime
             string leftBtnText, Action onLeftClick,
             string rightBtnText, Action onRightClick, int layer = 0)
         {
-            m_state = PopupState.TwoButton;
+            m_state = UMPopupState.TwoButton;
             m_title = title;
             m_content = content;
             m_leftBtnText = leftBtnText;
@@ -83,7 +94,7 @@ namespace UMiniFramework.Runtime
         public void ShowOneButton(string title, string content,
             string btnText, Action onClick, int layer = 0)
         {
-            m_state = PopupState.OneButton;
+            m_state = UMPopupState.OneButton;
             m_title = title;
             m_content = content;
             m_oneBtnText = btnText;
@@ -104,7 +115,7 @@ namespace UMiniFramework.Runtime
             Action onCountDownEnd = null,
             string countDownFormat = "关闭({0}s)", int layer = 0)
         {
-            m_state = PopupState.CountDown;
+            m_state = UMPopupState.CountDown;
             m_title = title;
             m_content = content;
             m_countDown = countDown;
@@ -136,7 +147,7 @@ namespace UMiniFramework.Runtime
 
             switch (m_state)
             {
-                case PopupState.TwoButton:
+                case UMPopupState.TwoButton:
                     SetGroupActive(true, false, false);
                     if (m_txtLeft != null)
                         m_txtLeft.text = m_leftBtnText;
@@ -145,14 +156,14 @@ namespace UMiniFramework.Runtime
                     base.Open(layer);
                     break;
 
-                case PopupState.OneButton:
+                case UMPopupState.OneButton:
                     SetGroupActive(false, true, false);
                     if (m_txtOne != null)
                         m_txtOne.text = m_oneBtnText;
                     base.Open(layer);
                     break;
 
-                case PopupState.CountDown:
+                case UMPopupState.CountDown:
                     SetGroupActive(false, false, true);
                     base.Open(layer);
                     StartCountDown();
