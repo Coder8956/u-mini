@@ -137,6 +137,10 @@ private float m_reloadTime = 1f;
 7. 逻辑方法（`private`）
 8. 公开接口（`public` 方法 + Get/Set 访问器）
 
+### #region 分组
+
+对功能密集的类使用 `#region` / `#endregion` 分组（参考 `UMRes` 的 `Load`、`Instantiate`、`Unload`）。
+
 ## 框架核心模式
 
 ### UMMonoSingleton\<T\> — 模块单例基类
