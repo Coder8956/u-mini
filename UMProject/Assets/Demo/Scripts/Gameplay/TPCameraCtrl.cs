@@ -51,12 +51,14 @@ public class TPCameraCtrl : MonoBehaviour
     [Tooltip("旋转平滑时间（秒）—— 值越小转向越快，值越大越迟钝")] [SerializeField]
     private float m_rotationSmoothTime = 0.12f;
 
-    [Tooltip("距离平滑时间（秒）—— 滚轮缩放时的缓动速度")] public float m_distanceSmoothTime = 0.1f;
+    [Tooltip("距离平滑时间（秒）—— 滚轮缩放时的缓动速度")] [SerializeField]
+    private float m_distanceSmoothTime = 0.1f;
 
     [Header("碰撞检测")] [Tooltip("碰撞检测层级（哪些层的物体会阻挡相机）")] [SerializeField]
     private LayerMask m_collisionMask;
 
-    [Tooltip("碰撞检测球体半径（防止相机镜头贴墙太近）")] public float m_collisionRadius = 2f;
+    [Tooltip("碰撞检测球体半径（防止相机镜头贴墙太近）")] [SerializeField]
+    private float m_collisionRadius = 2f;
 
     // ==================== 私有字段（运行时状态） ====================
 
@@ -256,6 +258,18 @@ public class TPCameraCtrl : MonoBehaviour
 
     /// <summary>设置是否接受用户输入</summary>
     public void SetEnableInput(bool enable) => m_enableInput = enable;
+
+    /// <summary>获取距离平滑时间（秒）</summary>
+    public float GetDistanceSmoothTime() => m_distanceSmoothTime;
+
+    /// <summary>设置距离平滑时间（秒）</summary>
+    public void SetDistanceSmoothTime(float time) => m_distanceSmoothTime = time;
+
+    /// <summary>获取碰撞检测球体半径</summary>
+    public float GetCollisionRadius() => m_collisionRadius;
+
+    /// <summary>设置碰撞检测球体半径</summary>
+    public void SetCollisionRadius(float radius) => m_collisionRadius = radius;
 
     // /// <summary>获取是否开启编辑器同步</summary>
     // public bool IsSyncInitToTransform() => m_syncInitToTransform;

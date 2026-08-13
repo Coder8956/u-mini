@@ -4050,9 +4050,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7168d7830b72946438af15d88d364d57, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameCtrl
-  hideCursor: 0
-  lockMode: 1
-  allowUnlockWithEscape: 1
+  m_hideCursor: 1
+  m_lockMode: 1
+  m_allowUnlockWithEscape: 1
 --- !u!4 &1387353762
 Transform:
   m_ObjectHideFlags: 0

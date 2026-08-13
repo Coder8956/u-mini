@@ -143,7 +143,7 @@ MonoBehaviour:
   m_dragCoefficient: 0.01
   m_isMoving: 0
   m_moveSpeed: 0.3
-  m_drawTrajectory: 1
+  m_drawTrajectory: 0
   m_trajectorySteps: 150
   m_trajectoryStep: 0.02
   m_trajectoryColor: {r: 1, g: 0, b: 1, a: 1}

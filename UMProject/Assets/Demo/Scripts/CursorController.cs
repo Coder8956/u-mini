@@ -3,43 +3,49 @@ using UnityEngine.InputSystem;
 
 public class CursorController : MonoBehaviour
 {
+    // ==================== 可序列化字段（Inspector 可编辑） ====================
+
     [Header("鼠标锁定设置")]
     [Tooltip("是否隐藏鼠标指针")]
-    [SerializeField] private bool hideCursor = true;
+    [SerializeField] private bool m_hideCursor = true;
 
     [Tooltip("锁定模式：Locked 用于第一人称/FPS（固定在屏幕中心）；Confined 用于限制在窗口内")]
-    [SerializeField] private CursorLockMode lockMode = CursorLockMode.Locked;
+    [SerializeField] private CursorLockMode m_lockMode = CursorLockMode.Locked;
 
     [Header("按键解锁设置")]
     [Tooltip("按下 Esc 键时是否允许临时解锁鼠标")]
-    [SerializeField] private bool allowUnlockWithEscape = true;
+    [SerializeField] private bool m_allowUnlockWithEscape = true;
 
-    private bool isLocked;
+    // ==================== 私有字段（运行时状态） ====================
+
+    private bool m_isLocked;
     // 延迟一帧应用锁定，规避 Win11 窗口焦点冲突
-    private bool pendingLock;
+    private bool m_pendingLock;
+
+    // ==================== 生命周期 ====================
 
     private void Start()
     {
-        pendingLock = true;
+        m_pendingLock = true;
     }
 
     private void Update()
     {
         // 延迟一帧应用，等待窗口初始化完成
-        if (pendingLock)
+        if (m_pendingLock)
         {
-            pendingLock = false;
+            m_pendingLock = false;
             ApplyCursorState(true);
         }
 
         // 鼠标左键点击：重新锁定鼠标
-        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !isLocked)
+        if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !m_isLocked)
         {
             ApplyCursorState(true);
         }
 
         // Esc 键临时释放鼠标（方便调试或打开菜单）
-        if (allowUnlockWithEscape && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        if (m_allowUnlockWithEscape && Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
         {
             ApplyCursorState(false);
         }
@@ -51,26 +57,7 @@ public class CursorController : MonoBehaviour
     private void OnApplicationFocus(bool hasFocus)
     {
         if (hasFocus)
-            pendingLock = true;
-    }
-
-    /// <summary>
-    /// 统一设置鼠标状态
-    /// </summary>
-    public void ApplyCursorState(bool shouldLock)
-    {
-        isLocked = shouldLock;
-
-        if (shouldLock)
-        {
-            Cursor.visible = !hideCursor;
-            Cursor.lockState = lockMode;
-        }
-        else
-        {
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-        }
+            m_pendingLock = true;
     }
 
     private void OnDestroy()
@@ -78,5 +65,26 @@ public class CursorController : MonoBehaviour
         // 脚本销毁或切换场景时还原鼠标
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+    }
+
+    // ==================== 公开接口 ====================
+
+    /// <summary>
+    /// 统一设置鼠标状态
+    /// </summary>
+    public void ApplyCursorState(bool shouldLock)
+    {
+        m_isLocked = shouldLock;
+
+        if (shouldLock)
+        {
+            Cursor.visible = !m_hideCursor;
+            Cursor.lockState = m_lockMode;
+        }
+        else
+        {
+            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.None;
+        }
     }
 }

@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class LaunchDemo : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
         UMLauncher.Work();
         UMConfig.AddTable(new TemplateTable());
@@ -16,8 +15,7 @@ public class LaunchDemo : MonoBehaviour
         UMScene.Load("Game");
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
     }
 }
