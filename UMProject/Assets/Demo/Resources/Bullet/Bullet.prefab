@@ -143,6 +143,11 @@ MonoBehaviour:
   m_dragCoefficient: 0.01
   m_isMoving: 0
   m_moveSpeed: 0.3
+  m_collisionLayerMask:
+    serializedVersion: 2
+    m_Bits: 384
+  m_damage: 10
+  m_lifetime: 15
   m_drawTrajectory: 0
   m_trajectorySteps: 150
   m_trajectoryStep: 0.02

@@ -28,6 +28,15 @@ public class Bullet : MonoBehaviour
     [Tooltip("沿抛物线运动的速度倍率（支持运行时实时更新）")] [SerializeField]
     private float m_moveSpeed = 0.3f;
 
+    [Header("碰撞配置")] [Tooltip("参与碰撞计算的Layer —— 只有这些Layer上的物体会被子弹检测")] [SerializeField]
+    private LayerMask m_collisionLayerMask;
+
+    [Tooltip("子弹造成的伤害值")] [SerializeField]
+    private int m_damage = 10;
+
+    [Tooltip("无碰撞时自毁时间（秒）—— 超过此时间未命中则自动销毁，0表示不自毁")] [SerializeField]
+    private float m_lifetime = 5f;
+
     [Header("轨迹调试")] [Tooltip("是否在Scene窗口绘制预测运动轨迹")] [SerializeField]
     private bool m_drawTrajectory = true;
 
@@ -68,6 +77,10 @@ public class Bullet : MonoBehaviour
         m_velocity = transform.forward * m_initialSpeed;
         m_startPointInitialized = true;
         m_traveledPoints.Add(m_startPosition);
+
+        // 无碰撞时定时自毁
+        if (m_lifetime > 0f)
+            Destroy(gameObject, m_lifetime);
     }
 
     void FixedUpdate()
@@ -75,6 +88,33 @@ public class Bullet : MonoBehaviour
         if (!m_isMoving) return;
 
         UpdateMovement(Time.fixedDeltaTime);
+    }
+
+    // ==================== 碰撞检测 ====================
+
+    /// <summary>
+    /// 触发器碰撞检测
+    /// 当子弹碰到 m_collisionLayerMask 指定Layer上的物体时：
+    /// 1. 调用对方的 IHittable.OnHit 接口
+    /// 2. 销毁子弹
+    /// 注意：子弹需要挂载 Trigger Collider（且至少一方需要 Rigidbody）
+    /// </summary>
+    private void OnTriggerEnter(Collider other)
+    {
+        // 检查碰撞对象是否在可碰撞Layer中
+        if ((m_collisionLayerMask.value & (1 << other.gameObject.layer)) == 0)
+            return;
+
+        // 调用受击接口
+        IHittable hittable = other.GetComponent<IHittable>();
+        if (hittable != null)
+        {
+            Vector3 hitDirection = m_velocity.sqrMagnitude > 0.0001f ? m_velocity.normalized : transform.forward;
+            hittable.OnHit(m_damage, transform.position, hitDirection);
+        }
+
+        // 销毁子弹
+        Destroy(gameObject);
     }
 
     // ==================== 物理计算 ====================
@@ -216,4 +256,22 @@ public class Bullet : MonoBehaviour
         Vector3 startVel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
         return CalculateTrajectoryPoints(startPos, startVel);
     }
+
+    /// <summary>获取碰撞Layer掩码</summary>
+    public LayerMask GetCollisionLayerMask() => m_collisionLayerMask;
+
+    /// <summary>设置碰撞Layer掩码</summary>
+    public void SetCollisionLayerMask(LayerMask mask) => m_collisionLayerMask = mask;
+
+    /// <summary>获取伤害值</summary>
+    public int GetDamage() => m_damage;
+
+    /// <summary>设置伤害值</summary>
+    public void SetDamage(int damage) => m_damage = damage;
+
+    /// <summary>获取自毁时间（秒）</summary>
+    public float GetLifetime() => m_lifetime;
+
+    /// <summary>设置自毁时间（秒）</summary>
+    public void SetLifetime(float time) => m_lifetime = time;
 }
