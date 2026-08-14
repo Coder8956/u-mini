@@ -1501,6 +1501,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &533782643 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 198352920909028448, guid: d4af3966dba2cd746ab019083640eb8c, type: 3}
+  m_PrefabInstance: {fileID: 1130815020}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &555400151
 GameObject:
   m_ObjectHideFlags: 0
@@ -2872,6 +2877,7 @@ MonoBehaviour:
   m_bulletResourcesPath: Bullet/Bullet
   m_reloadTime: 1
   m_inputEnabled: 1
+  m_muzzleEffect: {fileID: 533782643}
 --- !u!1 &1070611913
 GameObject:
   m_ObjectHideFlags: 0

@@ -28,6 +28,9 @@ public class GunFireController : MonoBehaviour
     [Tooltip("是否接受玩家输入")] [SerializeField]
     private bool m_inputEnabled = true;
 
+    [Header("开火特效")] [Tooltip("开火粒子特效（每次开火播放一次）")] [SerializeField]
+    private ParticleSystem m_muzzleEffect;
+
     // ==================== 私有字段（运行时状态） ====================
 
     /// <summary>当前装弹计时器（秒）—— 剩余装弹时间，为0时可开火</summary>
@@ -83,6 +86,10 @@ public class GunFireController : MonoBehaviour
 
         // 在开火点实例化子弹，世界位置和旋转等于开火点
         GameObject bulletGo = Instantiate(bulletPrefab, shootPoint.position, shootPoint.rotation);
+
+        // 播放开火特效
+        if (m_muzzleEffect != null)
+            m_muzzleEffect.Play();
 
         // 启动子弹运动
         Bullet bullet = bulletGo.GetComponent<Bullet>();
