@@ -6,10 +6,13 @@ using UnityEngine.UI;
 /// 瞄准点UI跟随控制器
 /// 将 GunAimController 的 m_shootTargetPoint（世界空间）实时转换为UI空间坐标，驱动准星位置。
 /// 使用 LateUpdate 确保读取当帧最新值，配合 SmoothDamp 平滑避免跳帧卡顿。
+/// 同时管理装弹UI：装弹时显示 TMPReloading 文本，通过 ImgProgress 的 Fill Amount 体现装弹进度。
 /// </summary>
 [RequireComponent(typeof(RectTransform))]
 public class AimPointUIFollower : MonoBehaviour
 {
+    // ==================== 可序列化字段（Inspector 可编辑） ====================
+
     [Header("引用")]
     [Tooltip("大炮瞄准控制器（留空则自动查找场景中的 GunAimController）")]
     [SerializeField] private GunAimController m_gunAimController;
@@ -39,6 +42,16 @@ public class AimPointUIFollower : MonoBehaviour
     [Tooltip("用于显示俯仰角的TMP文本（留空则不显示）")]
     [SerializeField] private TMP_Text m_pitchText;
 
+    [Header("装弹UI")]
+    [Tooltip("开火控制器（提供装弹状态，留空则自动查找）")]
+    [SerializeField] private GunFireController m_gunFireController;
+
+    [Tooltip("装弹文本（装弹时显示，完成时隐藏）")]
+    [SerializeField] private TMP_Text m_reloadingText;
+
+    [Tooltip("装弹进度条Image（通过Fill Amount体现进度）")]
+    [SerializeField] private Image m_progressImage;
+
     // ==================== 运行时私有字段 ====================
 
     private RectTransform m_rectTransform;
@@ -65,6 +78,9 @@ public class AimPointUIFollower : MonoBehaviour
     {
         if (m_gunAimController == null)
             m_gunAimController = FindAnyObjectByType<GunAimController>();
+
+        if (m_gunFireController == null)
+            m_gunFireController = FindAnyObjectByType<GunFireController>();
 
         // 首帧初始化位置，避免从 (0,0) 滑动到目标位置
         if (m_gunAimController != null && TryGetUILocalPoint(m_gunAimController.GetShootTarget(), out Vector2 initPos))
@@ -108,7 +124,10 @@ public class AimPointUIFollower : MonoBehaviour
 
         UpdateColor(worldTarget);
         UpdatePitchText(worldTarget);
+        UpdateReloadUI();
     }
+
+    // ==================== 瞄准点逻辑 ====================
 
     /// <summary>
     /// 根据射击目标点是否等于世界瞄准点来更新准星颜色
@@ -124,6 +143,9 @@ public class AimPointUIFollower : MonoBehaviour
 
         if (m_pitchText != null)
             m_pitchText.color = currentColor;
+
+        if (m_reloadingText != null)
+            m_reloadingText.color = currentColor;
     }
 
     /// <summary>
@@ -136,6 +158,39 @@ public class AimPointUIFollower : MonoBehaviour
         int pitch = Mathf.RoundToInt(m_gunAimController.GetCurrentPitch());
         string sign = pitch >= 0 ? "+" : "-";
         m_pitchText.SetText($"Pitch: {sign}{Mathf.Abs(pitch):00}");
+    }
+
+    // ==================== 装弹UI逻辑 ====================
+
+    /// <summary>
+    /// 更新装弹UI：装弹时显示文本并更新进度条Fill Amount，完成时隐藏
+    /// </summary>
+    private void UpdateReloadUI()
+    {
+        if (m_gunFireController == null)
+            return;
+
+        bool isReloading = m_gunFireController.IsReloading();
+
+        // TMPReloading 显示/隐藏
+        if (m_reloadingText != null)
+            m_reloadingText.gameObject.SetActive(isReloading);
+
+        // ImgProgress Fill Amount
+        if (m_progressImage != null)
+        {
+            if (isReloading)
+            {
+                float reloadTime = m_gunFireController.GetReloadTime();
+                float remaining = m_gunFireController.GetRemainingReloadTime();
+                float progress = reloadTime > 0f ? 1f - remaining / reloadTime : 1f;
+                m_progressImage.fillAmount = progress;
+            }
+            else
+            {
+                m_progressImage.fillAmount = 0f;
+            }
+        }
     }
 
     // ==================== 坐标转换 ====================
@@ -176,4 +231,22 @@ public class AimPointUIFollower : MonoBehaviour
 
     /// <summary>设置跟随的大炮瞄准控制器</summary>
     public void SetGunAimController(GunAimController controller) => m_gunAimController = controller;
+
+    /// <summary>获取开火控制器</summary>
+    public GunFireController GetGunFireController() => m_gunFireController;
+
+    /// <summary>设置开火控制器</summary>
+    public void SetGunFireController(GunFireController controller) => m_gunFireController = controller;
+
+    /// <summary>获取装弹文本</summary>
+    public TMP_Text GetReloadingText() => m_reloadingText;
+
+    /// <summary>设置装弹文本</summary>
+    public void SetReloadingText(TMP_Text text) => m_reloadingText = text;
+
+    /// <summary>获取进度条Image</summary>
+    public Image GetProgressImage() => m_progressImage;
+
+    /// <summary>设置进度条Image</summary>
+    public void SetProgressImage(Image image) => m_progressImage = image;
 }

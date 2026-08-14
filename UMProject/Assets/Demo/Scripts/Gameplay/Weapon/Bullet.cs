@@ -37,6 +37,9 @@ public class Bullet : MonoBehaviour
     [Tooltip("无碰撞时自毁时间（秒）—— 超过此时间未命中则自动销毁，0表示不自毁")] [SerializeField]
     private float m_lifetime = 5f;
 
+    [Tooltip("爆炸特效预制体路径（Resources文件夹下的相对路径，不含扩展名）")] [SerializeField]
+    private string m_explosionEffectPath;
+
     [Header("轨迹调试")] [Tooltip("是否在Scene窗口绘制预测运动轨迹")] [SerializeField]
     private bool m_drawTrajectory = true;
 
@@ -71,7 +74,7 @@ public class Bullet : MonoBehaviour
 
     // ==================== 生命周期 ====================
 
-    void Start()
+    private void Start()
     {
         m_startPosition = transform.position;
         m_velocity = transform.forward * m_initialSpeed;
@@ -83,7 +86,7 @@ public class Bullet : MonoBehaviour
             Destroy(gameObject, m_lifetime);
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         if (!m_isMoving) return;
 
@@ -91,6 +94,24 @@ public class Bullet : MonoBehaviour
     }
 
     // ==================== 碰撞检测 ====================
+
+    /// <summary>
+    /// 在指定位置加载并播放爆炸特效
+    /// </summary>
+    private void SpawnExplosionEffect(Vector3 position)
+    {
+        if (string.IsNullOrEmpty(m_explosionEffectPath))
+            return;
+
+        GameObject effectPrefab = Resources.Load<GameObject>(m_explosionEffectPath);
+        if (effectPrefab == null)
+        {
+            Debug.LogWarning($"[Bullet] 爆炸特效未找到: Resources/{m_explosionEffectPath}");
+            return;
+        }
+
+        Instantiate(effectPrefab, position, Quaternion.identity);
+    }
 
     /// <summary>
     /// 触发器碰撞检测
@@ -112,6 +133,9 @@ public class Bullet : MonoBehaviour
             Vector3 hitDirection = m_velocity.sqrMagnitude > 0.0001f ? m_velocity.normalized : transform.forward;
             hittable.OnHit(m_damage, transform.position, hitDirection);
         }
+
+        // 在碰撞点加载爆炸特效
+        SpawnExplosionEffect(transform.position);
 
         // 销毁子弹
         Destroy(gameObject);

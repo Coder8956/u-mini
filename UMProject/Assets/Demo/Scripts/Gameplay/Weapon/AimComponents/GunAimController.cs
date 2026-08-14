@@ -82,7 +82,7 @@ public class GunAimController : MonoBehaviour
 
     // ==================== 生命周期 ====================
 
-    void Start()
+    private void Start()
     {
         if (m_aimCamera == null)
             m_aimCamera = Camera.main;
@@ -100,7 +100,7 @@ public class GunAimController : MonoBehaviour
         }
     }
 
-    void Update()
+    private void Update()
     {
         UpdateAim();
     }

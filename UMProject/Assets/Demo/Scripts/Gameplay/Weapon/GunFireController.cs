@@ -38,7 +38,7 @@ public class GunFireController : MonoBehaviour
 
     // ==================== 生命周期 ====================
 
-    void Update()
+    private void Update()
     {
         // 装弹计时器递减
         if (m_reloadTimer > 0f)

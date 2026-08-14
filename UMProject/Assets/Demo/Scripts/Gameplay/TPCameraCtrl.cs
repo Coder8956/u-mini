@@ -100,7 +100,7 @@ public class TPCameraCtrl : MonoBehaviour
 
     // ==================== 生命周期 ====================
 
-    void Start()
+    private void Start()
     {
         // 用相机当前朝向初始化角度，避免第一帧跳转
         Vector3 angles = transform.eulerAngles;
@@ -111,7 +111,7 @@ public class TPCameraCtrl : MonoBehaviour
         m_smoothDistance = m_distance;
     }
 
-    void LateUpdate()
+    private void LateUpdate()
     {
         if (m_target == null)
             return;
@@ -125,7 +125,7 @@ public class TPCameraCtrl : MonoBehaviour
     /// <summary>
     /// 处理鼠标和滚轮输入，更新目标角度与目标距离
     /// </summary>
-    void HandleInput()
+    private void HandleInput()
     {
         if (!m_enableInput) return;
 
@@ -161,7 +161,7 @@ public class TPCameraCtrl : MonoBehaviour
     /// <summary>
     /// 根据平滑后的角度和距离，计算并更新相机位置与朝向
     /// </summary>
-    void UpdateCamera()
+    private void UpdateCamera()
     {
         // 第一步：对角度和距离做帧率无关的平滑处理
         m_smoothYaw = Mathf.SmoothDamp(m_smoothYaw, m_yaw, ref m_yawVelocity, m_rotationSmoothTime);
@@ -198,7 +198,7 @@ public class TPCameraCtrl : MonoBehaviour
     /// <param name="from">射线起点（目标点）</param>
     /// <param name="to">期望的相机位置</param>
     /// <returns>修正后的相机位置</returns>
-    Vector3 CheckCollision(Vector3 from, Vector3 to)
+    private Vector3 CheckCollision(Vector3 from, Vector3 to)
     {
         Vector3 direction = to - from;
         float length = direction.magnitude;

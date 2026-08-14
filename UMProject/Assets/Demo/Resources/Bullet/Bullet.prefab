@@ -149,6 +149,7 @@ MonoBehaviour:
     m_Bits: 384
   m_damage: 10
   m_lifetime: 15
+  m_explosionEffectPath: ExplosionEffect/VFX_BulletExplosion
   m_drawTrajectory: 0
   m_trajectorySteps: 150
   m_trajectoryStep: 0.02
@@ -174,10 +175,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.33
-  m_Height: 1.29
+  m_Radius: 0.01
+  m_Height: 0
   m_Direction: 2
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.63}
 --- !u!54 &5946801735631087067
 Rigidbody:
   m_ObjectHideFlags: 0
