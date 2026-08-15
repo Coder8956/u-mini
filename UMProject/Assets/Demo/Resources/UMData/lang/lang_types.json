@@ -15,8 +15,188 @@
     "file": "lang_2.json"
   },
   {
-    "type": "한국인",
-    "code": "KOR",
+    "type": "한국인0",
+    "code": "KOR0",
     "file": "lang_3.json"
+  },
+  {
+    "type": "한국인1",
+    "code": "KOR1",
+    "file": "lang_4.json"
+  },
+  {
+    "type": "한국인2",
+    "code": "KOR2",
+    "file": "lang_5.json"
+  },
+  {
+    "type": "한국인3",
+    "code": "KOR3",
+    "file": "lang_6.json"
+  },
+  {
+    "type": "한국인4",
+    "code": "KOR4",
+    "file": "lang_7.json"
+  },
+  {
+    "type": "한국인5",
+    "code": "KOR5",
+    "file": "lang_8.json"
+  },
+  {
+    "type": "한국인6",
+    "code": "KOR6",
+    "file": "lang_9.json"
+  },
+  {
+    "type": "한국인7",
+    "code": "KOR7",
+    "file": "lang_10.json"
+  },
+  {
+    "type": "한국인8",
+    "code": "KOR8",
+    "file": "lang_11.json"
+  },
+  {
+    "type": "한국인9",
+    "code": "KOR9",
+    "file": "lang_12.json"
+  },
+  {
+    "type": "한국인10",
+    "code": "KOR10",
+    "file": "lang_13.json"
+  },
+  {
+    "type": "한국인11",
+    "code": "KOR11",
+    "file": "lang_14.json"
+  },
+  {
+    "type": "한국인12",
+    "code": "KOR12",
+    "file": "lang_15.json"
+  },
+  {
+    "type": "한국인13",
+    "code": "KOR13",
+    "file": "lang_16.json"
+  },
+  {
+    "type": "한국인14",
+    "code": "KOR14",
+    "file": "lang_17.json"
+  },
+  {
+    "type": "한국인15",
+    "code": "KOR15",
+    "file": "lang_18.json"
+  },
+  {
+    "type": "한국인16",
+    "code": "KOR16",
+    "file": "lang_19.json"
+  },
+  {
+    "type": "한국인17",
+    "code": "KOR17",
+    "file": "lang_20.json"
+  },
+  {
+    "type": "한국인18",
+    "code": "KOR18",
+    "file": "lang_21.json"
+  },
+  {
+    "type": "한국인19",
+    "code": "KOR19",
+    "file": "lang_22.json"
+  },
+  {
+    "type": "한국인20",
+    "code": "KOR20",
+    "file": "lang_23.json"
+  },
+  {
+    "type": "한국인21",
+    "code": "KOR21",
+    "file": "lang_24.json"
+  },
+  {
+    "type": "한국인22",
+    "code": "KOR22",
+    "file": "lang_25.json"
+  },
+  {
+    "type": "한국인23",
+    "code": "KOR23",
+    "file": "lang_26.json"
+  },
+  {
+    "type": "한국인24",
+    "code": "KOR24",
+    "file": "lang_27.json"
+  },
+  {
+    "type": "한국인25",
+    "code": "KOR25",
+    "file": "lang_28.json"
+  },
+  {
+    "type": "한국인26",
+    "code": "KOR26",
+    "file": "lang_29.json"
+  },
+  {
+    "type": "한국인27",
+    "code": "KOR27",
+    "file": "lang_30.json"
+  },
+  {
+    "type": "한국인28",
+    "code": "KOR28",
+    "file": "lang_31.json"
+  },
+  {
+    "type": "한국인29",
+    "code": "KOR29",
+    "file": "lang_32.json"
+  },
+  {
+    "type": "한국인30",
+    "code": "KOR30",
+    "file": "lang_33.json"
+  },
+  {
+    "type": "한국인31",
+    "code": "KOR31",
+    "file": "lang_34.json"
+  },
+  {
+    "type": "한국인32",
+    "code": "KOR32",
+    "file": "lang_35.json"
+  },
+  {
+    "type": "한국인33",
+    "code": "KOR33",
+    "file": "lang_36.json"
+  },
+  {
+    "type": "한국인34",
+    "code": "KOR34",
+    "file": "lang_37.json"
+  },
+  {
+    "type": "한국인35",
+    "code": "KOR35",
+    "file": "lang_38.json"
+  },
+  {
+    "type": "한국인36",
+    "code": "KOR36",
+    "file": "lang_39.json"
   }
 ]

@@ -13,7 +13,6 @@ namespace UMiniFramework.Editor
     {
         // ==================== 私有字段（运行时状态） ====================
 
-        private bool m_foLocal = true; // 多语言对象折叠状态
         private bool m_foOptions = true; // 语言选项折叠状态
         private Vector2 m_scrollPos;
 
@@ -25,35 +24,24 @@ namespace UMiniFramework.Editor
 
         private const int ScrollThreshold = 10;
 
+        private GUIStyle m_markerStyle;
+
         // ==================== 公开接口 ====================
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
+            if (m_markerStyle == null)
+            {
+                m_markerStyle = new GUIStyle(GUI.skin.label)
+                {
+                    alignment = TextAnchor.MiddleRight,
+                    fontStyle = FontStyle.Bold
+                };
+            }
+
             UMLocalCfg localCfg = (UMLocalCfg)target;
-
-            m_foLocal = EditorGUILayout.Foldout(m_foLocal, "Localization (UMLocalCfg)");
-            if (!m_foLocal)
-                return;
-
-            EditorGUI.indentLevel++;
-
-            // Current Type
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Current Type:", EditorStyles.boldLabel, GUILayout.Width(130));
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField(localCfg.CurtType ?? "(none)");
-            EditorGUI.EndDisabledGroup();
-            EditorGUILayout.EndHorizontal();
-
-            // Current Code
-            EditorGUILayout.BeginHorizontal();
-            EditorGUILayout.LabelField("Current Code:", EditorStyles.boldLabel, GUILayout.Width(130));
-            EditorGUI.BeginDisabledGroup(true);
-            EditorGUILayout.TextField(localCfg.CurtCode ?? "(none)");
-            EditorGUI.EndDisabledGroup();
-            EditorGUILayout.EndHorizontal();
 
             // Language Options
             var options = localCfg.GetOptions();
@@ -72,14 +60,22 @@ namespace UMiniFramework.Editor
                 UMConfigTableBase baseTable = GetLangTable();
                 IUMLangTable langTable = baseTable as IUMLangTable;
                 string langDir = GetLangAssetDir(baseTable);
+                string currentCode = localCfg.CurtCode;
 
                 for (int i = 0; i < optionCount; i++)
                 {
                     var opt = options[i];
                     string fileName = langTable?.GetLanguageFile(i);
+                    bool isCurrent = !string.IsNullOrEmpty(currentCode) && currentCode == opt.code;
+
+                    if (isCurrent)
+                    {
+                        GUI.color = Color.yellow;
+                    }
 
                     EditorGUILayout.BeginHorizontal();
                     EditorGUI.BeginDisabledGroup(true);
+                    EditorGUILayout.Toggle(isCurrent, GUILayout.Width(20));
                     EditorGUILayout.TextField(opt.type);
                     EditorGUILayout.LabelField(opt.code ?? "?", GUILayout.Width(60));
                     EditorGUILayout.LabelField(fileName ?? "?", GUILayout.Width(100));
@@ -89,6 +85,11 @@ namespace UMiniFramework.Editor
                         PingLangAsset(langDir, fileName);
                     }
                     EditorGUILayout.EndHorizontal();
+
+                    if (isCurrent)
+                    {
+                        GUI.color = Color.white;
+                    }
                 }
 
                 if (optionCount > ScrollThreshold)
@@ -114,8 +115,6 @@ namespace UMiniFramework.Editor
             EditorGUILayout.IntField(componentCount);
             EditorGUI.EndDisabledGroup();
             EditorGUILayout.EndHorizontal();
-
-            EditorGUI.indentLevel--;
         }
 
         // ==================== 逻辑 ====================
