@@ -26,6 +26,35 @@ namespace UMiniFramework.Editor
 
         private GUIStyle m_markerStyle;
 
+        private string m_lastCode;
+
+        // ==================== 生命周期 ====================
+
+        private void OnEnable()
+        {
+            m_lastCode = ((UMLocalCfg)target)?.CurtCode;
+            EditorApplication.update += PollLanguageChanged;
+        }
+
+        private void OnDisable()
+        {
+            EditorApplication.update -= PollLanguageChanged;
+        }
+
+        private void PollLanguageChanged()
+        {
+            var localCfg = (UMLocalCfg)target;
+            if (localCfg == null)
+                return;
+
+            string code = localCfg.CurtCode;
+            if (code != m_lastCode)
+            {
+                m_lastCode = code;
+                Repaint();
+            }
+        }
+
         // ==================== 公开接口 ====================
 
         public override void OnInspectorGUI()
