@@ -7,40 +7,47 @@ using UnityEngine;
 
 namespace UMiniFramework.Editor
 {
+    /// <summary>
+    /// UMOConfig 自定义 Inspector
+    /// 1. 通过反射读取 UMOConfig 的 m_tableDic，展示已注册的非语言配置表信息
+    /// 2. 重写 RequiresConstantRepaint，仅在 Inspector 可见时由 Unity 驱动实时刷新
+    /// </summary>
     [CustomEditor(typeof(UMOConfig))]
     public class UMOConfigInspe : UnityEditor.Editor
     {
         // ==================== 私有字段（运行时状态） ====================
 
         private bool m_foConfigTables = true; // 控制折叠状态
-        private static readonly FieldInfo Field_UMConfig_TableDic =
+
+        // ==================== 静态只读字段 ====================
+
+        private static readonly FieldInfo UMConfigTableDicField =
             typeof(UMOConfig).GetField("m_tableDic", BindingFlags.NonPublic | BindingFlags.Instance);
-        private Dictionary<Type, UMConfigTableBase> m_tableDic;
-
-        // ==================== 生命周期 ====================
-
-        private void OnEnable()
-        {
-            m_tableDic = Field_UMConfig_TableDic != null
-                ? (Dictionary<Type, UMConfigTableBase>)Field_UMConfig_TableDic.GetValue(target)
-                : null;
-        }
 
         // ==================== 公开接口 ====================
+
+        /// <summary>
+        /// 仅在 Inspector 可见时由 Unity 每帧检查，返回 true 触发重绘；不可见时不调用，零开销
+        /// </summary>
+        public override bool RequiresConstantRepaint() => true;
 
         public override void OnInspectorGUI()
         {
             base.OnInspectorGUI();
 
-            if (m_tableDic == null)
+            var tableDic = UMConfigTableDicField != null
+                ? UMConfigTableDicField.GetValue(target) as Dictionary<Type, UMConfigTableBase>
+                : null;
+
+            if (tableDic == null)
             {
-                EditorGUILayout.HelpBox("Failed to retrieve m_tableDic via reflection.", MessageType.Warning);
+                EditorGUILayout.HelpBox("m_tableDic 尚未初始化（单例可能未调用 OnInit）。", MessageType.Info);
                 return;
             }
 
             // 统计非语言配置表数量
             int tableCount = 0;
-            foreach (var v in m_tableDic.Values)
+            foreach (var v in tableDic.Values)
             {
                 if (!(v is IUMLangTable))
                     tableCount++;
@@ -52,7 +59,7 @@ namespace UMiniFramework.Editor
                 // 绘制 Config Table
                 EditorGUI.indentLevel++; // 增加缩进
                 int tableIndex = 0;
-                foreach (var kv in m_tableDic)
+                foreach (var kv in tableDic)
                 {
                     // 跳过多语言配置表，由 UMLocalCfg Inspector 绘制
                     if (kv.Value is IUMLangTable)
@@ -67,30 +74,24 @@ namespace UMiniFramework.Editor
                     // 绘制 Table Name
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField($"Register Table: ", EditorStyles.boldLabel, GUILayout.Width(110));
-                    // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(kv.Key.Name);
-                    // 结束禁用组
                     EditorGUI.EndDisabledGroup();
                     EditorGUILayout.EndHorizontal();
 
                     // 绘制 Table LoadPath
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField($"Table LoadPath: ", EditorStyles.boldLabel, GUILayout.Width(120));
-                    // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(kv.Value.LoadPath);
-                    // 结束禁用组
                     EditorGUI.EndDisabledGroup();
                     EditorGUILayout.EndHorizontal();
 
                     // 绘制 Table AssetPath
                     EditorGUILayout.BeginHorizontal();
                     EditorGUILayout.LabelField($"Table AssetPath: ", EditorStyles.boldLabel, GUILayout.Width(120));
-                    // 禁用编辑
                     EditorGUI.BeginDisabledGroup(true);
                     EditorGUILayout.TextField(kv.Value.AssetPath);
-                    // 结束禁用组
                     EditorGUI.EndDisabledGroup();
                     EditorGUILayout.EndHorizontal();
 
@@ -100,13 +101,12 @@ namespace UMiniFramework.Editor
                         TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(textAssetPath);
                         if (textAsset != null)
                         {
-                            // 高亮这个资源
                             EditorGUIUtility.PingObject(textAsset);
                         }
                         else
                         {
-                            EditorUtility.DisplayDialog("Tip",
-                                $"Failed to ping table asset object. Asset object path: {textAssetPath}", "OK");
+                            EditorUtility.DisplayDialog("提示",
+                                $"无法定位配置表资源，路径：{textAssetPath}", "确定");
                         }
                     }
 
@@ -116,13 +116,12 @@ namespace UMiniFramework.Editor
                         TextAsset textAsset = AssetDatabase.LoadAssetAtPath<TextAsset>(textAssetPath);
                         if (textAsset != null)
                         {
-                            // 打开这个资源
                             AssetDatabase.OpenAsset(textAsset);
                         }
                         else
                         {
-                            EditorUtility.DisplayDialog("Tip",
-                                $"Failed to open table asset object. Asset object path: {textAssetPath}", "OK");
+                            EditorUtility.DisplayDialog("提示",
+                                $"无法打开配置表资源，路径：{textAssetPath}", "确定");
                         }
                     }
 

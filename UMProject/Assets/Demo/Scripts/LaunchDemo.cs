@@ -1,3 +1,4 @@
+using Demo.Scripts;
 using UMiniFramework.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,12 +8,12 @@ public class LaunchDemo : MonoBehaviour
     private void Start()
     {
         UMLauncher.Work();
-        
+
         UMOConfig.AddTable(new LanguageCfg());
         UMOConfig.AddTable(new GunTable());
         UMOConfig.AddTable(new BulletTable());
         UMOConfig.AddTable(new MonsterTable());
-        
+
         if (UMOConfig.Local != null)
         {
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
@@ -23,7 +24,36 @@ public class LaunchDemo : MonoBehaviour
 
     private void Update()
     {
-        // TestSwitchLang();
+        TestSwitchLang();
+        TestGlobalVal();
+    }
+
+    void TestGlobalVal()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null)
+            return;
+
+        if (keyboard.digit0Key.wasPressedThisFrame)
+        {
+            Debug.Log("TestGlobalVal");
+            UMOGlobalVal.Set(DMGlobalVal.SelectGunID, "111");
+        }
+
+        if (keyboard.digit1Key.wasPressedThisFrame)
+        {
+            UMOGlobalVal.Set(DMGlobalVal.SelectGunID, null);
+        }
+
+        if (keyboard.digit2Key.wasPressedThisFrame)
+        {
+            UMOGlobalVal.Set(DMGlobalVal.SelectGunID, 10);
+        }
+
+        if (keyboard.digit3Key.wasPressedThisFrame)
+        {
+            UMOGlobalVal.Set(DMGlobalVal.SelectGunID, 1.5f);
+        }
     }
 
     private void TestSwitchLang()
@@ -34,7 +64,7 @@ public class LaunchDemo : MonoBehaviour
 
         if (keyboard.digit0Key.wasPressedThisFrame)
         {
-            Debug.Log("1");
+            Debug.Log("TestSwitchLang");
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
         }
 

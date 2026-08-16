@@ -34,6 +34,7 @@ namespace UMiniFramework.Runtime
             // 创建框架模块
             UMOConfig.Create(Root);
             UMOEvent.Create(Root);
+            UMOGlobalVal.Create(Root);
             UMOPersist.Create(Root);
             UMORes.Create(Root);
             UMOScene.Create(Root);
