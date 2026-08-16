@@ -1,3 +1,4 @@
+using System;
 using UMiniFramework.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,28 +13,39 @@ public class LaunchDemo : MonoBehaviour
         UMOConfig.AddTable(new GunTable());
         UMOConfig.AddTable(new BulletTable());
         UMOConfig.AddTable(new MonsterTable());
-        
-        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.GunFire,"Audio/SFX/GunFire"));
-        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.TouchBtn,"Audio/SFX/TouchBtn"));
-        
+
+        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.SFX_GF, "Audio/SFX/GunFire"));
+        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.SFX_TB, "Audio/SFX/TouchBtn"));
+
+        UMOAudio.BGM.AddClip(new UMACInfo(DMAudio.BGM_Launch, "Audio/BGM/bgm01"));
+        UMOAudio.BGM.AddClip(new UMACInfo(DMAudio.BGM_Game, "Audio/BGM/bgm02"));
+
         if (UMOConfig.Local != null)
         {
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
         }
 
-        // UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
-        // UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
-        
+        UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
+        UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
+
         DemoUI.CreateUIObjects();
-        
+
         DemoUI.Launch.Open();
-        
+
+        UMOAudio.BGM.Volume = 0.1f;
+        UMOAudio.BGM.Play(DMAudio.BGM_Launch);
+
         Debug.Log("Game Launched!");
+    }
+
+    private void OnDestroy()
+    {
+        DemoUI.Launch.Close();
     }
 
     private void Update()
     {
-        EnterGame();
+        // EnterGame();
         // TestSwitchLang();
         // TestGlobalVal();
     }

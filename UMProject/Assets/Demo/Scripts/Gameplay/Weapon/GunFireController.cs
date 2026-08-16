@@ -1,3 +1,4 @@
+using UMiniFramework.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -106,6 +107,9 @@ public class GunFireController : MonoBehaviour
         // 播放开火特效
         if (m_muzzleEffect != null)
             m_muzzleEffect.Play();
+
+        // 播放开火音效
+        UMOAudio.SFX.Play(DMAudio.SFX_GF);
 
         // 应用子弹配置参数并启动子弹运动
         Bullet bullet = bulletGo.GetComponent<Bullet>();

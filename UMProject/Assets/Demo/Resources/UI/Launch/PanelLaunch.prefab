@@ -172,6 +172,8 @@ MonoBehaviour:
   m_useCommonMask: 0
   m_layoutRebuilderOnOpen: []
   m_btnClose: {fileID: 0}
+  m_enterGame: {fileID: 8128178422753357107}
+  m_set: {fileID: 1166131748115686075}
 --- !u!1 &2594253537947824527
 GameObject:
   m_ObjectHideFlags: 0

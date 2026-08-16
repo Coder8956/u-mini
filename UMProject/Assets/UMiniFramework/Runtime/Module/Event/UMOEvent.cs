@@ -23,6 +23,7 @@ namespace UMiniFramework.Runtime
         /// </summary>
         public static void AddEvent(string eventTag)
         {
+            if (Instance == null) return;
             if (Instance.m_eventDic.ContainsKey(eventTag)) return;
             Instance.m_eventDic.Add(eventTag, new List<UMEventListener>());
         }
@@ -37,6 +38,7 @@ namespace UMiniFramework.Runtime
                 throw new ArgumentNullException(nameof(listener), "The parameter cannot be null");
             }
 
+            if (Instance == null) return;
             if (!Instance.m_eventDic.TryGetValue(listener.EventTag, out var listeners))
             {
                 return;
@@ -55,6 +57,7 @@ namespace UMiniFramework.Runtime
         /// </summary>
         public static void Dispatch(string eventTag, UMEventContentBase content = null)
         {
+            if (Instance == null) return;
             if (!Instance.m_eventDic.TryGetValue(eventTag, out var listeners))
             {
                 return;
@@ -77,6 +80,7 @@ namespace UMiniFramework.Runtime
         public static void RemoveListener(UMEventListener listener)
         {
             if (listener == null) return;
+            if (Instance == null) return;
             if (Instance.m_eventDic.TryGetValue(listener.EventTag, out var listeners))
             {
                 listeners.Remove(listener);
@@ -88,6 +92,7 @@ namespace UMiniFramework.Runtime
         /// </summary>
         public static void RemoveAllListener()
         {
+            if (Instance == null) return;
             foreach (var listeners in Instance.m_eventDic.Values)
             {
                 listeners.Clear();
@@ -99,6 +104,7 @@ namespace UMiniFramework.Runtime
         /// </summary>
         public static void RemoveAllListenerByEventTag(string eventTag)
         {
+            if (Instance == null) return;
             if (Instance.m_eventDic.TryGetValue(eventTag, out var listeners))
             {
                 listeners.Clear();

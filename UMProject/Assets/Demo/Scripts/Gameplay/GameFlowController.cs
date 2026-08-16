@@ -81,6 +81,8 @@ public class GameFlowController : MonoBehaviour
         bool inputAccepted = m_gameState == GameState.Playing;
         SetCameraInput(inputAccepted);
         SetGunFireInput(inputAccepted);
+        
+        UMOAudio.BGM.Play(DMAudio.BGM_Game);
     }
 
     private void OnDestroy()
