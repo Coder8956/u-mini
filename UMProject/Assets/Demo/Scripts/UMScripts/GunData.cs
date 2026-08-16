@@ -23,4 +23,9 @@ public class GunData
     /// </summary>
     [JsonProperty] public readonly string prefabPath;
 
+    /// <summary>
+    /// 装弹时间
+    /// </summary>
+    [JsonProperty] public readonly float reloadTime;
+
 }

@@ -172,9 +172,17 @@ public class AimPointUIFollower : MonoBehaviour
 
         bool isReloading = m_gunFireController.IsReloading();
 
-        // TMPReloading 显示/隐藏
+        // TMPReloading 显示/隐藏 + 实时刷新文本
         if (m_reloadingText != null)
+        {
             m_reloadingText.gameObject.SetActive(isReloading);
+            if (isReloading)
+            {
+                float reloadTime = m_gunFireController.GetReloadTime();
+                float elapsed = reloadTime - m_gunFireController.GetRemainingReloadTime();
+                m_reloadingText.SetText($"Reloading [ {reloadTime:F2} / {elapsed:F2} ]");
+            }
+        }
 
         // ImgProgress Fill Amount
         if (m_progressImage != null)

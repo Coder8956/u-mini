@@ -20,13 +20,28 @@ public class LaunchDemo : MonoBehaviour
         }
 
         UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
-        UMOScene.Load("Game");
+        
+        Debug.Log("Game Launched!");
     }
 
     private void Update()
     {
+        EnterGame();
         // TestSwitchLang();
         // TestGlobalVal();
+    }
+
+    void EnterGame()
+    {
+        var keyboard = Keyboard.current;
+        if (keyboard == null)
+            return;
+
+        if (keyboard.spaceKey.wasPressedThisFrame)
+        {
+            Debug.Log("EnterGame");
+            UMOScene.Load("Game");
+        }
     }
 
     void TestGlobalVal()

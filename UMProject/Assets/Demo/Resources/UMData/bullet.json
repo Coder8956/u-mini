@@ -3,6 +3,7 @@
     "id": "bullet_001",
     "damage": 10,
     "initSpeed": 100,
-    "mass": 50
+    "mass": 50,
+    "prefabPath": "Bullet/Bullet"
   }
 ]

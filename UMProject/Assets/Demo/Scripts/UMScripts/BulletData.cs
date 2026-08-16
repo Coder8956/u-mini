@@ -23,4 +23,9 @@ public class BulletData
     /// </summary>
     [JsonProperty] public readonly int mass;
 
+    /// <summary>
+    /// 炮弹预制体路径
+    /// </summary>
+    [JsonProperty] public readonly string prefabPath;
+
 }

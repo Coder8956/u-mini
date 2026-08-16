@@ -155,7 +155,10 @@ public class GameFlowController : MonoBehaviour
         }
 
         if (m_gunFire != null)
+        {
+            m_gunFire.SetReloadTime(gunData.reloadTime);
             m_gunFire.SetMuzzleEffect(gun.GetMuzzleEffect());
+        }
 
         // 6. 将大炮Transform绑定到第三人称相机
         if (m_tpCamera != null)
