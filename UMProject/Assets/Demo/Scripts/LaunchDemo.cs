@@ -7,8 +7,12 @@ public class LaunchDemo : MonoBehaviour
     private void Start()
     {
         UMLauncher.Work();
-        UMOConfig.AddTable(new TemplateTable());
+        
         UMOConfig.AddTable(new LanguageCfg());
+        UMOConfig.AddTable(new GunTable());
+        UMOConfig.AddTable(new BulletTable());
+        UMOConfig.AddTable(new MonsterTable());
+        
         if (UMOConfig.Local != null)
         {
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);

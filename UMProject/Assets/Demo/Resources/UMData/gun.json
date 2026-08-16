@@ -1,0 +1,14 @@
+﻿[
+  {
+    "id": "gun_001",
+    "minPitch": -10,
+    "maxPitch": 25,
+    "prefabPath": "Gun/Gun001"
+  },
+  {
+    "id": "gun_002",
+    "minPitch": -10,
+    "maxPitch": 35,
+    "prefabPath": "Gun/Gun002"
+  }
+]
