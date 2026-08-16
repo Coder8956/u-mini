@@ -1,4 +1,3 @@
-using Demo.Scripts;
 using UMiniFramework.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;

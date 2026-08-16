@@ -26,6 +26,9 @@ public class Monster : MonoBehaviour, IHittable
     [Tooltip("HPState子物体上的TMP文本，用于显示血量状态（留空则不显示）")] [SerializeField]
     private TMP_Text m_hpText;
 
+    [Tooltip("锁定提示渲染器（被相机射线命中时变红，留空则不显示锁定状态）")] [SerializeField]
+    private Renderer m_lockedTipRenderer;
+
     [Header("死亡配置")] [Tooltip("死亡动画名称（Animator Controller中的状态名）")] [SerializeField]
     private string m_deathAnimName = "died";
 
@@ -52,6 +55,15 @@ public class Monster : MonoBehaviour, IHittable
     /// <summary>Collider组件引用</summary>
     private Collider m_collider;
 
+    /// <summary>LockedTip初始颜色</summary>
+    private Color m_lockedTipInitialColor;
+
+    /// <summary>LockedTip材质颜色属性名（URP shader使用_BaseColor）</summary>
+    private const string k_ColorProp = "_BaseColor";
+
+    /// <summary>当前是否被相机射线锁定</summary>
+    private bool m_isLocked;
+
     // ==================== 生命周期 ====================
 
     private void Start()
@@ -61,11 +73,19 @@ public class Monster : MonoBehaviour, IHittable
         m_currentHp = m_maxHp;
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
+
+        if (m_lockedTipRenderer != null)
+            m_lockedTipInitialColor = m_lockedTipRenderer.material.GetColor(k_ColorProp);
     }
 
     private void LateUpdate()
     {
         UpdateHpText();
+    }
+
+    private void OnDestroy()
+    {
+        UMOEvent.Dispatch(DMEventTag.MonsterDie, new UMEventContent(this));
     }
 
     // ==================== 配置加载 ====================
@@ -215,4 +235,18 @@ public class Monster : MonoBehaviour, IHittable
 
     /// <summary>是否已死亡</summary>
     public bool IsDead => m_currentHp <= 0;
+
+    /// <summary>
+    /// 设置锁定状态，命中时LockedTip变红，未命中恢复初始颜色
+    /// </summary>
+    public void SetLocked(bool locked)
+    {
+        if (m_isLocked == locked)
+            return;
+
+        m_isLocked = locked;
+
+        if (m_lockedTipRenderer != null)
+            m_lockedTipRenderer.material.SetColor(k_ColorProp, locked ? Color.red : m_lockedTipInitialColor);
+    }
 }

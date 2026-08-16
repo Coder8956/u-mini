@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: training_dummy
+  m_Name: M_Monster
   m_Shader: {fileID: 4800000, guid: 68697e5fb5e40de48be0c21e84bca4df, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0

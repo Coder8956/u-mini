@@ -80,6 +80,9 @@ public class GunAimController : MonoBehaviour
     /// <summary>炮管射击射线是否命中目标</summary>
     private bool m_shootTargetHit;
 
+    /// <summary>当前被相机射线锁定的怪物（null表示无锁定）</summary>
+    private Monster m_lockedMonster;
+
     // ==================== 生命周期 ====================
 
     private void Start()
@@ -145,6 +148,7 @@ public class GunAimController : MonoBehaviour
         if (m_aimCamera == null)
         {
             m_worldAimHit = false;
+            UpdateLockedMonster(null);
             return transform.position;
         }
 
@@ -152,11 +156,32 @@ public class GunAimController : MonoBehaviour
         if (Physics.Raycast(ray, out RaycastHit hit, m_cameraRayDistance, m_aimLayerMask))
         {
             m_worldAimHit = true;
+            UpdateLockedMonster(hit.collider);
             return hit.point;
         }
 
         m_worldAimHit = false;
+        UpdateLockedMonster(null);
         return ray.GetPoint(m_cameraRayDistance);
+    }
+
+    /// <summary>
+    /// 更新被锁定的怪物：新命中不同怪物时解锁旧的、锁定新的；未命中时解锁当前
+    /// </summary>
+    private void UpdateLockedMonster(Collider hitCollider)
+    {
+        Monster hitMonster = hitCollider != null ? hitCollider.GetComponentInParent<Monster>() : null;
+
+        if (hitMonster == m_lockedMonster)
+            return;
+
+        if (m_lockedMonster != null)
+            m_lockedMonster.SetLocked(false);
+
+        m_lockedMonster = hitMonster;
+
+        if (m_lockedMonster != null)
+            m_lockedMonster.SetLocked(true);
     }
 
     /// <summary>

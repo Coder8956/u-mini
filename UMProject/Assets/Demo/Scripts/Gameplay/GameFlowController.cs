@@ -1,5 +1,5 @@
 using System;
-using Demo.Scripts;
+using System.Collections.Generic;
 using UMiniFramework.Runtime;
 using UnityEngine;
 
@@ -57,6 +57,12 @@ public class GameFlowController : MonoBehaviour
     /// <summary>当前游戏状态</summary>
     private GameState m_gameState;
 
+    /// <summary>场景中所有的怪物（初始化时收集，供后续使用）</summary>
+    private List<Monster> m_monsters = new List<Monster>();
+
+    /// <summary>怪物死亡事件侦听器（用于 OnDestroy 时移除）</summary>
+    private UMEventListener m_monsterDieListener;
+
     // ==================== 生命周期 ====================
 
     private void Awake()
@@ -67,6 +73,9 @@ public class GameFlowController : MonoBehaviour
         // 初始化子弹
         InitBullet();
 
+        // 收集场景中所有怪物
+        InitMonsters();
+
         // 应用初始状态，根据初始状态配置输入
         m_gameState = m_initialState;
         bool inputAccepted = m_gameState == GameState.Playing;
@@ -76,6 +85,9 @@ public class GameFlowController : MonoBehaviour
 
     private void OnDestroy()
     {
+        if (m_monsterDieListener != null)
+            UMOEvent.RemoveListener(m_monsterDieListener);
+
         OnGameStateChanged = null;
     }
 
@@ -222,6 +234,32 @@ public class GameFlowController : MonoBehaviour
             m_gunFire.SetBulletParams(bulletData);
             m_gunFire.RefreshBulletPrototype();
         }
+    }
+
+    /// <summary>
+    /// 收集场景中所有的 Monster 组件到列表中，供后续使用。
+    /// 同时注册 DMEventTag.MonsterDie 事件，怪物销毁时从列表移除。
+    /// </summary>
+    private void InitMonsters()
+    {
+        m_monsters = new List<Monster>(FindObjectsByType<Monster>(FindObjectsSortMode.None));
+
+        // 注册怪物死亡事件标签并添加侦听器
+        UMOEvent.AddEvent(DMEventTag.MonsterDie);
+        m_monsterDieListener = new UMEventListener(DMEventTag.MonsterDie, OnMonsterDie);
+        UMOEvent.AddListener(m_monsterDieListener);
+    }
+
+    /// <summary>
+    /// 怪物死亡事件回调：从列表中移除，若列表为空则提示游戏结束
+    /// </summary>
+    private void OnMonsterDie(UMEventContentBase content)
+    {
+        if (content is UMEventContent eventContent && eventContent.Content is Monster monster)
+            m_monsters.Remove(monster);
+
+        if (m_monsters.Count == 0)
+            Debug.Log("[GameFlowController] 所有怪物已被消灭，游戏结束！");
     }
 
     /// <summary>
