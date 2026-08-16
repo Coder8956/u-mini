@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using UMiniFramework.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -32,6 +34,22 @@ namespace UMiniFramework.Editor
         private bool m_addImageComponent = true;
         private bool m_addCloseButton = true;
         private bool m_addSafeArea = true;
+
+        private bool CurrentCfgValid
+        {
+            get
+            {
+                if (m_panelTypes.Count == 0)
+                    return false;
+
+                UMUIPanelCfg cfg =
+                    m_panelTypes[m_selectIndex]
+                        .GetCustomAttribute<UMUIPanelCfg>();
+
+                return cfg != null &&
+                       !string.IsNullOrEmpty(cfg.PrefabPath);
+            }
+        }
 
         [MenuItem("UMini/Window/Create UI Prefab")]
         private static void ShowWindow()
@@ -109,6 +127,29 @@ namespace UMiniFramework.Editor
                     "Panel",
                     m_selectIndex,
                     m_panelNames);
+
+
+            if (m_panelTypes.Count > 0)
+            {
+                UMUIPanelCfg cfg =
+                    m_panelTypes[m_selectIndex]
+                        .GetCustomAttribute<UMUIPanelCfg>();
+
+
+                if (cfg != null &&
+                    !string.IsNullOrEmpty(cfg.PrefabPath))
+                {
+                    EditorGUILayout.LabelField(
+                        "PanelCfg Path",
+                        cfg.PrefabPath);
+                }
+                else
+                {
+                    EditorGUILayout.HelpBox(
+                        "该 Panel 缺少 UMUIPanelCfg 特性或 PrefabPath 为空",
+                        MessageType.Warning);
+                }
+            }
         }
 
         private void DrawFolderSelect()
@@ -149,7 +190,7 @@ namespace UMiniFramework.Editor
                 GUI.color = Color.red;
 
                 EditorGUILayout.LabelField(
-                    "目录不可用，请选择 Assets 下有效目录");
+                    "目录不可用，请选择 Resources 目录（路径需以 Resources 结尾）");
 
                 GUI.color = Color.white;
             }
@@ -205,9 +246,25 @@ namespace UMiniFramework.Editor
                         m_addSafeArea);
             }
 
+            if (m_pathValid &&
+                CurrentCfgValid)
+            {
+                UMUIPanelCfg cfg =
+                    m_panelTypes[m_selectIndex]
+                        .GetCustomAttribute<UMUIPanelCfg>();
+
+                string relativePath =
+                    m_savePath.Substring(
+                        m_savePath.LastIndexOf("Resources"));
+
+                EditorGUILayout.LabelField(
+                    "Panel Prefab Path",
+                    $"{relativePath}/{cfg.PrefabPath}.prefab");
+            }
+
             GUI.enabled =
                 m_pathValid &&
-                m_panelTypes.Count > 0 &&
+                CurrentCfgValid &&
                 !m_prefabExist;
 
             if (GUILayout.Button(
@@ -225,11 +282,22 @@ namespace UMiniFramework.Editor
             Type panelType =
                 m_panelTypes[m_selectIndex];
 
-            string panelName =
-                panelType.Name;
+            UMUIPanelCfg cfg =
+                panelType.GetCustomAttribute<UMUIPanelCfg>();
+
+            if (cfg == null ||
+                string.IsNullOrEmpty(cfg.PrefabPath))
+            {
+                EditorUtility.DisplayDialog(
+                    "Create Failed",
+                    $"{panelType.Name} 缺少 UMUIPanelCfg 特性或 PrefabPath 为空",
+                    "OK");
+
+                return;
+            }
 
             string prefabPath =
-                $"{m_savePath}/{panelName}.prefab";
+                $"{m_savePath}/{cfg.PrefabPath}.prefab";
 
             if (AssetDatabase.LoadAssetAtPath<GameObject>(
                 prefabPath))
@@ -242,8 +310,15 @@ namespace UMiniFramework.Editor
                 return;
             }
 
+            // 确保子目录存在
+            string prefabDir =
+                Path.GetDirectoryName(prefabPath)
+                    .Replace('\\', '/');
+
+            EnsureAssetFolderExists(prefabDir);
+
             GameObject go =
-                new GameObject(panelName);
+                new GameObject(panelType.Name);
 
             RectTransform rect = go.AddComponent<RectTransform>();
             rect.anchorMin = Vector2.zero;
@@ -303,6 +378,32 @@ namespace UMiniFramework.Editor
                 "Success",
                 $"创建成功:\n{prefabPath}",
                 "OK");
+        }
+
+        private void EnsureAssetFolderExists(string assetPath)
+        {
+            if (string.IsNullOrEmpty(assetPath) ||
+                !assetPath.StartsWith("Assets"))
+                return;
+
+
+            if (AssetDatabase.IsValidFolder(assetPath))
+                return;
+
+
+            string parent =
+                Path.GetDirectoryName(assetPath)
+                    .Replace('\\', '/');
+
+            EnsureAssetFolderExists(parent);
+
+
+            string folderName =
+                Path.GetFileName(assetPath);
+
+            AssetDatabase.CreateFolder(
+                parent,
+                folderName);
         }
 
         private void RefreshPanelTypes()
@@ -368,12 +469,18 @@ namespace UMiniFramework.Editor
                 return;
 
 
+            // PrefabPath 是 Resources 相对路径，保存目录必须是 Resources 目录
+            if (!m_savePath.EndsWith("Resources"))
+                return;
+
+
             m_pathValid = true;
         }
 
         private void CheckPrefabExist()
         {
             m_prefabExist = false;
+            m_prefabPath = string.Empty;
 
 
             if (!m_pathValid)
@@ -384,12 +491,18 @@ namespace UMiniFramework.Editor
                 return;
 
 
-            string panelName =
-                m_panelTypes[m_selectIndex].Name;
+            UMUIPanelCfg cfg =
+                m_panelTypes[m_selectIndex]
+                    .GetCustomAttribute<UMUIPanelCfg>();
+
+
+            if (cfg == null ||
+                string.IsNullOrEmpty(cfg.PrefabPath))
+                return;
 
 
             m_prefabPath =
-                $"{m_savePath}/{panelName}.prefab";
+                $"{m_savePath}/{cfg.PrefabPath}.prefab";
 
 
             var prefab =

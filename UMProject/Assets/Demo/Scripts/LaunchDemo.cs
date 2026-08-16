@@ -12,14 +12,21 @@ public class LaunchDemo : MonoBehaviour
         UMOConfig.AddTable(new GunTable());
         UMOConfig.AddTable(new BulletTable());
         UMOConfig.AddTable(new MonsterTable());
-
+        
+        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.GunFire,"Audio/SFX/GunFire"));
+        UMOAudio.SFX.AddClip(new UMACInfo(DMAudio.TouchBtn,"Audio/SFX/TouchBtn"));
+        
         if (UMOConfig.Local != null)
         {
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
         }
 
-        UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
-        UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
+        // UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
+        // UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
+        
+        DemoUI.CreateUIObjects();
+        
+        DemoUI.Launch.Open();
         
         Debug.Log("Game Launched!");
     }

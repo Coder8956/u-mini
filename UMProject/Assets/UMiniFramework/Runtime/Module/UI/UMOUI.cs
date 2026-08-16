@@ -67,7 +67,8 @@ namespace UMiniFramework.Runtime
 
             CanvasScaler = go.AddComponent<CanvasScaler>();
             CanvasScaler.uiScaleMode = CanvasScaler.ScaleMode.ScaleWithScreenSize;
-            CanvasScaler.referenceResolution = new Vector2(1920, 1080);
+            // CanvasScaler.referenceResolution = new Vector2(1920, 1080);
+            CanvasScaler.referenceResolution = new Vector2(3840, 2160);
             CanvasScaler.screenMatchMode = CanvasScaler.ScreenMatchMode.MatchWidthOrHeight;
             CanvasScaler.matchWidthOrHeight = 0f;
 

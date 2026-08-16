@@ -32,6 +32,7 @@ namespace UMiniFramework.Runtime
             Root.transform.position = Vector3.zero;
 
             // 创建框架模块
+            UMOAudio.Create(Root);
             UMOConfig.Create(Root);
             UMOEvent.Create(Root);
             UMOGlobalVal.Create(Root);
