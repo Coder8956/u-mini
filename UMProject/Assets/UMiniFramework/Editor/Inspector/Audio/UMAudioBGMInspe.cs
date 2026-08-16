@@ -24,6 +24,26 @@ namespace UMiniFramework.Editor
         private static readonly FieldInfo BGMClipDicField =
             typeof(UMAudioBGM).GetField("m_BGMClipDic", BindingFlags.NonPublic | BindingFlags.Instance);
 
+        // ==================== 逻辑 ====================
+
+        /// <summary>
+        /// 绘制当前正在播放的 BGM 的 Key 与加载路径
+        /// </summary>
+        private void DrawNowPlaying(UMAudioBGM bgm, Dictionary<string, UMACInfo> clipDic)
+        {
+            EditorGUILayout.Space();
+            EditorGUILayout.LabelField("Now Playing", EditorStyles.boldLabel);
+            EditorGUI.indentLevel++;
+
+            string curtID = bgm.CurtBGMID;
+            string path = clipDic.TryGetValue(curtID, out UMACInfo aci) ? aci.Path : "<无>";
+
+            DrawDisabledRow("Key:", curtID);
+            DrawDisabledRow("Path:", path);
+
+            EditorGUI.indentLevel--;
+        }
+
         // ==================== 公开接口 ====================
 
         /// <summary>
@@ -45,7 +65,8 @@ namespace UMiniFramework.Editor
                 return;
             }
 
-            DrawClips(clipDic, ref m_foClips, ref m_scrollPos);
+            DrawNowPlaying((UMAudioBGM)target, clipDic);
+            DrawClips(clipDic, ref m_foClips, ref m_scrollPos, ((UMAudioBGM)target).CurtBGMID);
         }
     }
 }

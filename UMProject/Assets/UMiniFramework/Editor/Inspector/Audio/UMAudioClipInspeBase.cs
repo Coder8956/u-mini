@@ -24,11 +24,20 @@ namespace UMiniFramework.Editor
         /// <summary>
         /// 绘制单条剪辑信息（helpbox 样式，每行 Label + 只读 TextField）
         /// </summary>
-        private void DrawClipEntry(int index, UMACInfo aci)
+        private void DrawClipEntry(int index, UMACInfo aci, bool isPlaying)
         {
             EditorGUILayout.BeginVertical("helpbox");
 
-            EditorGUILayout.LabelField($"Index[{index:D4}]", EditorStyles.boldLabel);
+            if (isPlaying)
+            {
+                var style = new GUIStyle(EditorStyles.boldLabel);
+                style.normal.textColor = Color.yellow;
+                EditorGUILayout.LabelField($"Index[{index:D4}]  ▶ Playing", style);
+            }
+            else
+            {
+                EditorGUILayout.LabelField($"Index[{index:D4}]", EditorStyles.boldLabel);
+            }
 
             DrawDisabledRow("ID:", aci.ID);
             DrawDisabledRow("Path:", aci.Path);
@@ -45,6 +54,14 @@ namespace UMiniFramework.Editor
         /// </summary>
         protected void DrawClips(Dictionary<string, UMACInfo> clipDic, ref bool foldout, ref Vector2 scrollPos)
         {
+            DrawClips(clipDic, ref foldout, ref scrollPos, null);
+        }
+
+        /// <summary>
+        /// 绘制剪辑列表，超过阈值时启用滚动视图；playingID 命中的条目以黄色高亮
+        /// </summary>
+        protected void DrawClips(Dictionary<string, UMACInfo> clipDic, ref bool foldout, ref Vector2 scrollPos, string playingID)
+        {
             int count = clipDic.Count;
             foldout = EditorGUILayout.Foldout(foldout, $"Registered Clips ({count})");
             if (!foldout) return;
@@ -60,7 +77,8 @@ namespace UMiniFramework.Editor
             int index = 0;
             foreach (var kv in clipDic)
             {
-                DrawClipEntry(index, kv.Value);
+                bool isPlaying = playingID != null && kv.Key == playingID;
+                DrawClipEntry(index, kv.Value, isPlaying);
                 index++;
             }
 
