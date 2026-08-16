@@ -4,13 +4,13 @@
     "minPitch": -10,
     "maxPitch": 25,
     "prefabPath": "Gun/Gun001",
-    "reloadTime": 4.5
+    "reloadTime": 2.5
   },
   {
     "id": "gun_002",
     "minPitch": -10,
     "maxPitch": 35,
     "prefabPath": "Gun/Gun002",
-    "reloadTime": 2.5
+    "reloadTime": 1.5
   }
 ]

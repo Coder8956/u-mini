@@ -16,6 +16,6 @@ public class MonsterData
     /// <summary>
     /// 怪物生命值
     /// </summary>
-    [JsonProperty] public readonly int ranking;
+    [JsonProperty] public readonly int HP;
 
 }

@@ -14,14 +14,19 @@ public class BulletData
     [JsonProperty] public readonly int damage;
 
     /// <summary>
-    /// 初速度
-    /// </summary>
-    [JsonProperty] public readonly int initSpeed;
-
-    /// <summary>
     /// 质量
     /// </summary>
-    [JsonProperty] public readonly int mass;
+    [JsonProperty] public readonly float mass;
+
+    /// <summary>
+    /// 初速度
+    /// </summary>
+    [JsonProperty] public readonly float initSpeed;
+
+    /// <summary>
+    /// 移动速度
+    /// </summary>
+    [JsonProperty] public readonly float moveSpeed;
 
     /// <summary>
     /// 炮弹预制体路径

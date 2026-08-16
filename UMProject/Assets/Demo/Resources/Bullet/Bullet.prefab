@@ -138,16 +138,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10e3ad9fe63f62541b415710e2cc203e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BulletMove
-  m_initialSpeed: 100
-  m_mass: 50
+  m_initialSpeed: 99
+  m_mass: 99
   m_useGravity: 1
   m_dragCoefficient: 0.01
   m_isMoving: 0
-  m_moveSpeed: 0.3
+  m_moveSpeed: 99
   m_collisionLayerMask:
     serializedVersion: 2
     m_Bits: 384
-  m_damage: 10
+  m_damage: 99
   m_lifetime: 15
   m_explosionEffectPath: ExplosionEffect/VFX_BulletExplosion
   m_drawTrajectory: 0

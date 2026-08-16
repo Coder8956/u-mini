@@ -20,6 +20,7 @@ public class LaunchDemo : MonoBehaviour
         }
 
         UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
+        UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
         
         Debug.Log("Game Launched!");
     }

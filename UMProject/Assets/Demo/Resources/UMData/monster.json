@@ -1,57 +1,57 @@
 ﻿[
   {
-    "id": "mon_00001",
-    "name": "AB001",
-    "ranking": 20
+    "id": "mon_001",
+    "name": "M01",
+    "HP": 20
   },
   {
-    "id": "mon_00002",
-    "name": "AB002",
-    "ranking": 30
+    "id": "mon_002",
+    "name": "M02",
+    "HP": 30
   },
   {
-    "id": "mon_00003",
-    "name": "AB003",
-    "ranking": 40
+    "id": "mon_003",
+    "name": "M03",
+    "HP": 40
   },
   {
-    "id": "mon_00004",
-    "name": "AB004",
-    "ranking": 50
+    "id": "mon_004",
+    "name": "M04",
+    "HP": 50
   },
   {
-    "id": "mon_00005",
-    "name": "AB005",
-    "ranking": 60
+    "id": "mon_005",
+    "name": "M05",
+    "HP": 60
   },
   {
-    "id": "mon_00006",
-    "name": "AB006",
-    "ranking": 70
+    "id": "mon_006",
+    "name": "M06",
+    "HP": 70
   },
   {
-    "id": "mon_00007",
-    "name": "AB007",
-    "ranking": 80
+    "id": "mon_007",
+    "name": "M07",
+    "HP": 80
   },
   {
-    "id": "mon_00008",
-    "name": "AB008",
-    "ranking": 90
+    "id": "mon_008",
+    "name": "M08",
+    "HP": 90
   },
   {
-    "id": "mon_00009",
-    "name": "AB009",
-    "ranking": 100
+    "id": "mon_009",
+    "name": "M09",
+    "HP": 100
   },
   {
-    "id": "mon_00010",
-    "name": "AB010",
-    "ranking": 110
+    "id": "mon_010",
+    "name": "M10",
+    "HP": 110
   },
   {
-    "id": "mon_00011",
-    "name": "AB011",
-    "ranking": 120
+    "id": "mon_011",
+    "name": "M11",
+    "HP": 120
   }
 ]

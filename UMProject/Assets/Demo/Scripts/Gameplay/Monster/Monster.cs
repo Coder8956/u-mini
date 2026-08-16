@@ -1,9 +1,12 @@
 using System.Collections;
+using TMPro;
+using UMiniFramework.Runtime;
 using UnityEngine;
 
 /// <summary>
 /// 怪物脚本
 /// 实现 IHittable 接口，可被子弹击中。
+/// 通过配置表ID读取怪物配置，初始化血量和名称。
 /// 受击后扣血，血量 <= 0 时怪物死亡：
 /// 1. 禁用碰撞体，不再参与碰撞运算
 /// 2. 播放死亡动画
@@ -14,8 +17,14 @@ public class Monster : MonoBehaviour, IHittable
 {
     // ==================== 可序列化字段（Inspector 可编辑） ====================
 
-    [Header("生命值")] [Tooltip("最大血量")] [SerializeField]
-    private int m_maxHp = 100;
+    [Header("配置")] [Tooltip("怪物配置表ID（对应MonsterTable中的id）")] [SerializeField]
+    private string m_monsterId;
+
+    [Header("显示")] [Tooltip("用于显示怪物名字的TMP文本（留空则不显示）")] [SerializeField]
+    private TMP_Text m_nameText;
+
+    [Tooltip("HPState子物体上的TMP文本，用于显示血量状态（留空则不显示）")] [SerializeField]
+    private TMP_Text m_hpText;
 
     [Header("死亡配置")] [Tooltip("死亡动画名称（Animator Controller中的状态名）")] [SerializeField]
     private string m_deathAnimName = "died";
@@ -27,6 +36,12 @@ public class Monster : MonoBehaviour, IHittable
     private float m_sinkDuration = 1f;
 
     // ==================== 私有字段（运行时状态） ====================
+
+    /// <summary>怪物配置数据</summary>
+    private MonsterData m_monsterData;
+
+    /// <summary>最大血量（从配置读取）</summary>
+    private int m_maxHp;
 
     /// <summary>当前血量</summary>
     private int m_currentHp;
@@ -41,9 +56,51 @@ public class Monster : MonoBehaviour, IHittable
 
     private void Start()
     {
+        LoadMonsterConfig();
+
         m_currentHp = m_maxHp;
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
+    }
+
+    private void LateUpdate()
+    {
+        UpdateHpText();
+    }
+
+    // ==================== 配置加载 ====================
+
+    /// <summary>
+    /// 通过怪物ID读取配置表，初始化血量和名称
+    /// </summary>
+    private void LoadMonsterConfig()
+    {
+        if (string.IsNullOrEmpty(m_monsterId))
+        {
+            Debug.LogWarning("[Monster] 未设置怪物配置ID。", this);
+            return;
+        }
+
+        MonsterTable monsterTable = UMOConfig.GetTable<MonsterTable>();
+        if (monsterTable == null)
+        {
+            Debug.LogWarning("[Monster] MonsterTable 未加载。", this);
+            return;
+        }
+
+        m_monsterData = monsterTable.GetDataById(m_monsterId);
+        if (m_monsterData == null)
+        {
+            Debug.LogWarning($"[Monster] 未找到怪物配置：{m_monsterId}", this);
+            return;
+        }
+
+        // 从配置读取最大血量
+        m_maxHp = m_monsterData.HP;
+
+        // 显示怪物名字
+        if (m_nameText != null)
+            m_nameText.SetText(m_monsterData.name);
     }
 
     // ==================== 受击接口实现 ====================
@@ -67,6 +124,15 @@ public class Monster : MonoBehaviour, IHittable
     }
 
     // ==================== 私有方法 ====================
+
+    /// <summary>
+    /// 更新HPState子物体上的血量显示，格式为 最大血量/剩余血量
+    /// </summary>
+    private void UpdateHpText()
+    {
+        if (m_hpText != null)
+            m_hpText.SetText($"{m_maxHp}/{m_currentHp}");
+    }
 
     /// <summary>
     /// 怪物死亡流程
@@ -134,6 +200,12 @@ public class Monster : MonoBehaviour, IHittable
     }
 
     // ==================== 公开接口 ====================
+
+    /// <summary>怪物配置ID</summary>
+    public string MonsterId => m_monsterId;
+
+    /// <summary>怪物名称</summary>
+    public string MonsterName => m_monsterData?.name;
 
     /// <summary>当前血量</summary>
     public int CurrentHp => m_currentHp;

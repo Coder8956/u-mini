@@ -329,6 +329,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_004
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -383,7 +387,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (3)
+      value: mon004
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -863,17 +867,17 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1869932492}
+  - {fileID: 2075786680}
+  - {fileID: 2011843393}
+  - {fileID: 116971896}
   - {fileID: 1037309409}
   - {fileID: 1528101848}
-  - {fileID: 1869932492}
   - {fileID: 279940651}
-  - {fileID: 901411735}
-  - {fileID: 2075786680}
   - {fileID: 924387244}
-  - {fileID: 2011843393}
   - {fileID: 648875019}
+  - {fileID: 901411735}
   - {fileID: 858777712}
-  - {fileID: 116971896}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &268289041
@@ -915,6 +919,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_007
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -969,7 +977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (5)
+      value: mon007
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1898,6 +1906,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_009
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -1952,7 +1964,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (7)
+      value: mon009
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2255,6 +2267,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_011
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 15.899999
@@ -2309,7 +2325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (10)
+      value: mon011
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2506,6 +2522,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_010
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 7.13
@@ -2560,7 +2580,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (9)
+      value: mon010
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2580,6 +2600,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_008
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -2634,7 +2658,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (8)
+      value: mon008
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2834,6 +2858,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_005
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -2888,7 +2916,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (4)
+      value: mon005
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2974,10 +3002,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunFireController
   m_gunAimController: {fileID: 1052940750}
-  m_bulletResourcesPath: Bullet/Bullet
   m_reloadTime: 1
   m_inputEnabled: 1
   m_muzzleEffect: {fileID: 0}
+  m_showBulletPrototype: 0
 --- !u!1 &1070611913
 GameObject:
   m_ObjectHideFlags: 0
@@ -3812,6 +3840,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_006
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -3866,7 +3898,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (6)
+      value: mon006
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4152,6 +4184,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_001
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -4206,7 +4242,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster
+      value: mon001
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4226,6 +4262,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_003
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -4280,7 +4320,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (2)
+      value: mon003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4300,6 +4340,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 262013406}
     m_Modifications:
+    - target: {fileID: 5774729994703313891, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
+      propertyPath: m_monsterId
+      value: mon_002
+      objectReference: {fileID: 0}
     - target: {fileID: 5842082916390836763, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_LocalScale.x
       value: 2
@@ -4354,7 +4398,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7880666461233623948, guid: a882f79da2318dc4b85acc4894dc4e96, type: 3}
       propertyPath: m_Name
-      value: monster (1)
+      value: mon002
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -4911,9 +4955,9 @@ SceneRoots:
   m_Roots:
   - {fileID: 1387353762}
   - {fileID: 555400153}
-  - {fileID: 1714258348}
-  - {fileID: 262013406}
   - {fileID: 122882120}
   - {fileID: 1052940751}
   - {fileID: 268289042}
+  - {fileID: 1714258348}
+  - {fileID: 262013406}
   - {fileID: 850704369}

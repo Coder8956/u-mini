@@ -64,6 +64,9 @@ public class GameFlowController : MonoBehaviour
         // 初始化大炮
         InitGun();
 
+        // 初始化子弹
+        InitBullet();
+
         // 应用初始状态，根据初始状态配置输入
         m_gameState = m_initialState;
         bool inputAccepted = m_gameState == GameState.Playing;
@@ -163,6 +166,62 @@ public class GameFlowController : MonoBehaviour
         // 6. 将大炮Transform绑定到第三人称相机
         if (m_tpCamera != null)
             m_tpCamera.SetTarget(gunGo.transform);
+    }
+
+    /// <summary>
+    /// 初始化子弹：
+    /// 1. 通过 UMOGlobalVal 读取选中的子弹ID
+    /// 2. 从 BulletTable 加载子弹配置
+    /// 3. 根据配置中的 prefabPath 通过 UMORes 加载子弹预制体
+    /// 4. 将子弹原型和配置参数绑定到 GunFireController
+    /// </summary>
+    private void InitBullet()
+    {
+        // 检查框架模块是否已初始化
+        if (!UMOGlobalVal.IsCreated || !UMOConfig.IsCreated || !UMORes.IsCreated)
+        {
+            Debug.LogWarning("[GameFlowController] 框架模块未初始化，跳过子弹加载。", this);
+            return;
+        }
+
+        // 1. 读取选中的子弹ID
+        string bulletId = UMOGlobalVal.Get<string>(DMGlobalVal.SelectBulletID);
+        if (string.IsNullOrEmpty(bulletId))
+        {
+            Debug.LogWarning("[GameFlowController] 未设置选中子弹ID。", this);
+            return;
+        }
+
+        // 2. 加载子弹配置
+        BulletTable bulletTable = UMOConfig.GetTable<BulletTable>();
+        if (bulletTable == null)
+        {
+            Debug.LogWarning("[GameFlowController] BulletTable 未加载。", this);
+            return;
+        }
+
+        BulletData bulletData = bulletTable.GetDataById(bulletId);
+        if (bulletData == null)
+        {
+            Debug.LogWarning($"[GameFlowController] 未找到子弹配置：{bulletId}", this);
+            return;
+        }
+
+        // 3. 通过 UMORes 加载子弹预制体
+        GameObject bulletPrefab = UMORes.Load<GameObject>(bulletData.prefabPath);
+        if (bulletPrefab == null)
+        {
+            Debug.LogWarning($"[GameFlowController] 无法加载子弹预制体：{bulletData.prefabPath}", this);
+            return;
+        }
+
+        // 4. 将子弹原型和配置参数绑定到开火控制器
+        if (m_gunFire != null)
+        {
+            m_gunFire.SetBulletPrefab(bulletPrefab);
+            m_gunFire.SetBulletParams(bulletData);
+            m_gunFire.RefreshBulletPrototype();
+        }
     }
 
     /// <summary>

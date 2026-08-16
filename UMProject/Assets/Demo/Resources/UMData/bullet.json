@@ -2,8 +2,9 @@
   {
     "id": "bullet_001",
     "damage": 10,
-    "initSpeed": 100,
-    "mass": 50,
+    "mass": 50.0,
+    "initSpeed": 100.0,
+    "moveSpeed": 0.3,
     "prefabPath": "Bullet/Bullet"
   }
 ]
