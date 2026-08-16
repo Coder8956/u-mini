@@ -279,6 +279,22 @@ public class GunAimController : MonoBehaviour
 
     // ==================== 公开接口 ====================
 
+    /// <summary>设置炮塔节点</summary>
+    public void SetTurret(Transform turret) => m_turret = turret;
+
+    /// <summary>设置炮管节点</summary>
+    public void SetGunBarrel(Transform gunBarrel) => m_gunBarrel = gunBarrel;
+
+    /// <summary>设置炮口发射点</summary>
+    public void SetShootPoint(Transform shootPoint) => m_shootPoint = shootPoint;
+
+    /// <summary>设置俯仰角度范围</summary>
+    public void SetPitchRange(float minPitch, float maxPitch)
+    {
+        m_minPitch = minPitch;
+        m_maxPitch = maxPitch;
+    }
+
     /// <summary>获取当前炮管俯仰角（度，正值表示仰角）</summary>
     public float GetCurrentPitch() => m_currentPitch;
 

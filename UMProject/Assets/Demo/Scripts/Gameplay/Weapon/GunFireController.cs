@@ -116,6 +116,9 @@ public class GunFireController : MonoBehaviour
     /// <summary>设置装弹时间（秒）</summary>
     public void SetReloadTime(float time) => m_reloadTime = time;
 
+    /// <summary>设置开火粒子特效</summary>
+    public void SetMuzzleEffect(ParticleSystem effect) => m_muzzleEffect = effect;
+
     /// <summary>当前是否正在装弹（无法开火）</summary>
     public bool IsReloading() => m_reloadTimer > 0f;
 

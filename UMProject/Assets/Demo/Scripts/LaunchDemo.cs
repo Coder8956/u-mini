@@ -19,13 +19,14 @@ public class LaunchDemo : MonoBehaviour
             UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
         }
 
-        // UMOScene.Load("Game");
+        UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
+        UMOScene.Load("Game");
     }
 
     private void Update()
     {
-        TestSwitchLang();
-        TestGlobalVal();
+        // TestSwitchLang();
+        // TestGlobalVal();
     }
 
     void TestGlobalVal()

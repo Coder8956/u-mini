@@ -259,6 +259,9 @@ public class TPCameraCtrl : MonoBehaviour
     /// <summary>设置是否接受用户输入</summary>
     public void SetEnableInput(bool enable) => m_enableInput = enable;
 
+    /// <summary>设置相机跟随目标</summary>
+    public void SetTarget(Transform target) => m_target = target;
+
     /// <summary>获取距离平滑时间（秒）</summary>
     public float GetDistanceSmoothTime() => m_distanceSmoothTime;
 

@@ -1,4 +1,6 @@
 using System;
+using Demo.Scripts;
+using UMiniFramework.Runtime;
 using UnityEngine;
 
 /// <summary>
@@ -37,6 +39,14 @@ public class GameFlowController : MonoBehaviour
     [SerializeField]
     private GunFireController m_gunFire;
 
+    [Tooltip("大炮瞄准控制器")]
+    [SerializeField]
+    private GunAimController m_gunAim;
+
+    [Tooltip("武器挂载点（大炮加载后作为其子物体）")]
+    [SerializeField]
+    private Transform m_weaponPos;
+
     [Header("流程配置")]
     [Tooltip("进入场景时的初始状态")]
     [SerializeField]
@@ -51,6 +61,9 @@ public class GameFlowController : MonoBehaviour
 
     private void Awake()
     {
+        // 初始化大炮
+        InitGun();
+
         // 应用初始状态，根据初始状态配置输入
         m_gameState = m_initialState;
         bool inputAccepted = m_gameState == GameState.Playing;
@@ -64,6 +77,90 @@ public class GameFlowController : MonoBehaviour
     }
 
     // ==================== 逻辑 ====================
+
+    /// <summary>
+    /// 初始化大炮：
+    /// 1. 通过 UMOGlobalVal 读取选中的大炮ID
+    /// 2. 从 GunTable 加载大炮配置
+    /// 3. 根据配置中的 prefabPath 通过 UMORes 加载并实例化大炮预制体
+    /// 4. 大炮作为 WeaponPos 的子物体，Transform 归零
+    /// 5. 将大炮组件引用绑定到 GunAimController 和 GunFireController
+    /// 6. 将大炮 Transform 绑定到第三人称相机
+    /// </summary>
+    private void InitGun()
+    {
+        // 检查框架模块是否已初始化
+        if (!UMOGlobalVal.IsCreated || !UMOConfig.IsCreated || !UMORes.IsCreated)
+        {
+            Debug.LogWarning("[GameFlowController] 框架模块未初始化，跳过大炮加载。", this);
+            return;
+        }
+
+        // 1. 读取选中的大炮ID
+        string gunId = UMOGlobalVal.Get<string>(DMGlobalVal.SelectGunID);
+        if (string.IsNullOrEmpty(gunId))
+        {
+            Debug.LogWarning("[GameFlowController] 未设置选中大炮ID。", this);
+            return;
+        }
+
+        // 2. 加载大炮配置
+        GunTable gunTable = UMOConfig.GetTable<GunTable>();
+        if (gunTable == null)
+        {
+            Debug.LogWarning("[GameFlowController] GunTable 未加载。", this);
+            return;
+        }
+
+        GunData gunData = gunTable.GetDataById(gunId);
+        if (gunData == null)
+        {
+            Debug.LogWarning($"[GameFlowController] 未找到大炮配置：{gunId}", this);
+            return;
+        }
+
+        // 3. 通过 UMORes 加载并实例化大炮预制体到 WeaponPos 下
+        if (m_weaponPos == null)
+        {
+            Debug.LogWarning("[GameFlowController] WeaponPos 未赋值。", this);
+            return;
+        }
+
+        GameObject gunGo = UMORes.InstantiateGO(gunData.prefabPath, m_weaponPos);
+        if (gunGo == null)
+        {
+            Debug.LogWarning($"[GameFlowController] 无法加载大炮预制体：{gunData.prefabPath}", this);
+            return;
+        }
+
+        // 4. Transform 归零
+        gunGo.transform.localPosition = Vector3.zero;
+        gunGo.transform.localRotation = Quaternion.identity;
+        gunGo.transform.localScale = Vector3.one;
+
+        // 5. 绑定大炮组件引用到瞄准与开火控制器
+        Gun gun = gunGo.GetComponent<Gun>();
+        if (gun == null)
+        {
+            Debug.LogWarning($"[GameFlowController] 大炮预制体上未找到 Gun 组件：{gunData.prefabPath}", this);
+            return;
+        }
+
+        if (m_gunAim != null)
+        {
+            m_gunAim.SetTurret(gun.GetTurret());
+            m_gunAim.SetGunBarrel(gun.GetGunBarrel());
+            m_gunAim.SetShootPoint(gun.GetShootPoint());
+            m_gunAim.SetPitchRange(gunData.minPitch, gunData.maxPitch);
+        }
+
+        if (m_gunFire != null)
+            m_gunFire.SetMuzzleEffect(gun.GetMuzzleEffect());
+
+        // 6. 将大炮Transform绑定到第三人称相机
+        if (m_tpCamera != null)
+            m_tpCamera.SetTarget(gunGo.transform);
+    }
 
     /// <summary>
     /// 切换游戏状态并触发事件与对应回调
@@ -155,6 +252,12 @@ public class GameFlowController : MonoBehaviour
 
     /// <summary>获取开火控制器</summary>
     public GunFireController GunFire => m_gunFire;
+
+    /// <summary>获取大炮瞄准控制器</summary>
+    public GunAimController GunAim => m_gunAim;
+
+    /// <summary>获取武器挂载点</summary>
+    public Transform WeaponPos => m_weaponPos;
 
     /// <summary>游戏状态变更事件（参数：newState, oldState）</summary>
     public event Action<GameState, GameState> OnGameStateChanged;
