@@ -52,7 +52,7 @@ public class AimPointUIFollower : MonoBehaviour
     [Tooltip("装弹进度条Image（通过Fill Amount体现进度）")]
     [SerializeField] private Image m_progressImage;
 
-    // ==================== 运行时私有字段 ====================
+    // ==================== 私有字段（运行时状态） ====================
 
     private RectTransform m_rectTransform;
     private RectTransform m_parentRectTransform;
@@ -123,7 +123,7 @@ public class AimPointUIFollower : MonoBehaviour
         m_rectTransform.anchoredPosition = m_currentPos;
 
         UpdateColor(worldTarget);
-        UpdatePitchText(worldTarget);
+        UpdatePitchText();
         UpdateReloadUI();
     }
 
@@ -151,7 +151,7 @@ public class AimPointUIFollower : MonoBehaviour
     /// <summary>
     /// 更新TMP文本显示当前炮管俯仰角
     /// </summary>
-    private void UpdatePitchText(Vector3 shootTarget)
+    private void UpdatePitchText()
     {
         if (m_pitchText == null) return;
 
@@ -235,26 +235,4 @@ public class AimPointUIFollower : MonoBehaviour
         return Camera.main;
     }
 
-    // ==================== 公开接口 ====================
-
-    /// <summary>设置跟随的大炮瞄准控制器</summary>
-    public void SetGunAimController(GunAimController controller) => m_gunAimController = controller;
-
-    /// <summary>获取开火控制器</summary>
-    public GunFireController GetGunFireController() => m_gunFireController;
-
-    /// <summary>设置开火控制器</summary>
-    public void SetGunFireController(GunFireController controller) => m_gunFireController = controller;
-
-    /// <summary>获取装弹文本</summary>
-    public TMP_Text GetReloadingText() => m_reloadingText;
-
-    /// <summary>设置装弹文本</summary>
-    public void SetReloadingText(TMP_Text text) => m_reloadingText = text;
-
-    /// <summary>获取进度条Image</summary>
-    public Image GetProgressImage() => m_progressImage;
-
-    /// <summary>设置进度条Image</summary>
-    public void SetProgressImage(Image image) => m_progressImage = image;
 }

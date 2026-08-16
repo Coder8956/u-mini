@@ -165,9 +165,6 @@ public class GunFireController : MonoBehaviour
 
     // ==================== 公开接口 ====================
 
-    /// <summary>获取是否接受玩家输入</summary>
-    public bool IsInputEnabled() => m_inputEnabled;
-
     /// <summary>设置是否接受玩家输入</summary>
     public void SetInputEnabled(bool enabled) => m_inputEnabled = enabled;
 

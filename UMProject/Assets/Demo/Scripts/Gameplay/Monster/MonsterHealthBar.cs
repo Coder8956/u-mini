@@ -71,35 +71,4 @@ public class MonsterHealthBar : MonoBehaviour
         m_foregroundImage.fillAmount = (float)m_monster.CurrentHp / maxHp;
     }
 
-    // ==================== 公开接口 ====================
-
-    /// <summary>获取怪物脚本</summary>
-    public Monster GetMonster() => m_monster;
-
-    /// <summary>设置怪物脚本</summary>
-    public void SetMonster(Monster monster) => m_monster = monster;
-
-    /// <summary>获取背景条Image</summary>
-    public Image GetBackgroundImage() => m_backgroundImage;
-
-    /// <summary>设置背景条Image</summary>
-    public void SetBackgroundImage(Image image) => m_backgroundImage = image;
-
-    /// <summary>获取前景条Image</summary>
-    public Image GetForegroundImage() => m_foregroundImage;
-
-    /// <summary>设置前景条Image</summary>
-    public void SetForegroundImage(Image image) => m_foregroundImage = image;
-
-    /// <summary>获取背景条颜色</summary>
-    public Color GetBackgroundColor() => m_backgroundColor;
-
-    /// <summary>设置背景条颜色</summary>
-    public void SetBackgroundColor(Color color) => m_backgroundColor = color;
-
-    /// <summary>获取前景条颜色</summary>
-    public Color GetForegroundColor() => m_foregroundColor;
-
-    /// <summary>设置前景条颜色</summary>
-    public void SetForegroundColor(Color color) => m_foregroundColor = color;
 }

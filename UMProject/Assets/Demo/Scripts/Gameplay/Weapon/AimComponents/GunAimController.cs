@@ -74,12 +74,6 @@ public class GunAimController : MonoBehaviour
     /// <summary>最终射击目标点（由炮管射线计算得出）</summary>
     private Vector3 m_shootTargetPoint;
 
-    /// <summary>相机瞄准射线是否命中目标</summary>
-    private bool m_worldAimHit;
-
-    /// <summary>炮管射击射线是否命中目标</summary>
-    private bool m_shootTargetHit;
-
     /// <summary>当前被相机射线锁定的怪物（null表示无锁定）</summary>
     private Monster m_lockedMonster;
 
@@ -147,7 +141,6 @@ public class GunAimController : MonoBehaviour
     {
         if (m_aimCamera == null)
         {
-            m_worldAimHit = false;
             UpdateLockedMonster(null);
             return transform.position;
         }
@@ -155,12 +148,10 @@ public class GunAimController : MonoBehaviour
         Ray ray = new Ray(m_aimCamera.transform.position, m_aimCamera.transform.forward);
         if (Physics.Raycast(ray, out RaycastHit hit, m_cameraRayDistance, m_aimLayerMask))
         {
-            m_worldAimHit = true;
             UpdateLockedMonster(hit.collider);
             return hit.point;
         }
 
-        m_worldAimHit = false;
         UpdateLockedMonster(null);
         return ray.GetPoint(m_cameraRayDistance);
     }
@@ -254,7 +245,6 @@ public class GunAimController : MonoBehaviour
     {
         if (m_gunBarrel == null)
         {
-            m_shootTargetHit = false;
             return m_worldAimPoint;
         }
 
@@ -263,11 +253,9 @@ public class GunAimController : MonoBehaviour
 
         if (Physics.Raycast(new Ray(origin, direction), out RaycastHit hit, m_cameraRayDistance, m_aimLayerMask))
         {
-            m_shootTargetHit = true;
             return hit.point;
         }
 
-        m_shootTargetHit = false;
         return m_worldAimPoint;
     }
 
@@ -328,12 +316,6 @@ public class GunAimController : MonoBehaviour
 
     /// <summary>获取当前世界瞄准点</summary>
     public Vector3 GetWorldAimPointValue() => m_worldAimPoint;
-
-    /// <summary>相机瞄准射线是否命中目标（指向目标）</summary>
-    public bool IsWorldAimHit() => m_worldAimHit;
-
-    /// <summary>炮管射击射线是否命中目标（已锁定目标）</summary>
-    public bool IsShootTargetHit() => m_shootTargetHit;
 
     /// <summary>获取炮口发射点Transform（留空则返回炮管Transform）</summary>
     public Transform GetShootPoint() => m_shootPoint != null ? m_shootPoint : m_gunBarrel;

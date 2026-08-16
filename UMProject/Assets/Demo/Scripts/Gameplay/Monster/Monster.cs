@@ -59,7 +59,7 @@ public class Monster : MonoBehaviour, IHittable
     private Color m_lockedTipInitialColor;
 
     /// <summary>LockedTip材质颜色属性名（URP shader使用_BaseColor）</summary>
-    private const string k_ColorProp = "_BaseColor";
+    private const string ColorProp = "_BaseColor";
 
     /// <summary>当前是否被相机射线锁定</summary>
     private bool m_isLocked;
@@ -75,7 +75,7 @@ public class Monster : MonoBehaviour, IHittable
         m_collider = GetComponent<Collider>();
 
         if (m_lockedTipRenderer != null)
-            m_lockedTipInitialColor = m_lockedTipRenderer.material.GetColor(k_ColorProp);
+            m_lockedTipInitialColor = m_lockedTipRenderer.material.GetColor(ColorProp);
     }
 
     private void LateUpdate()
@@ -247,6 +247,6 @@ public class Monster : MonoBehaviour, IHittable
         m_isLocked = locked;
 
         if (m_lockedTipRenderer != null)
-            m_lockedTipRenderer.material.SetColor(k_ColorProp, locked ? Color.red : m_lockedTipInitialColor);
+            m_lockedTipRenderer.material.SetColor(ColorProp, locked ? Color.red : m_lockedTipInitialColor);
     }
 }

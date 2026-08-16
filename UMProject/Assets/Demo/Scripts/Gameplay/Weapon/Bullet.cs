@@ -216,10 +216,6 @@ public class Bullet : MonoBehaviour
     {
         if (!m_drawTrajectory) return;
 
-        // 编辑模式下（未Start）使用当前transform作为起点预测
-        Vector3 startPos = m_startPointInitialized ? m_startPosition : transform.position;
-        Vector3 startVel = m_startPointInitialized ? transform.forward * m_initialSpeed : transform.forward * m_initialSpeed;
-
         // ---- 已走过轨迹（起点→当前位置）----
         if (m_startPointInitialized && m_traveledPoints.Count > 1)
         {
@@ -249,53 +245,18 @@ public class Bullet : MonoBehaviour
 
     // ==================== 公开接口 ====================
 
-    /// <summary>获取初速度</summary>
-    public float GetInitialSpeed() => m_initialSpeed;
-
     /// <summary>设置初速度</summary>
     public void SetInitialSpeed(float speed) => m_initialSpeed = speed;
-
-    /// <summary>获取子弹质量</summary>
-    public float GetMass() => m_mass;
 
     /// <summary>设置子弹质量</summary>
     public void SetMass(float mass) => m_mass = mass;
 
-    /// <summary>获取是否正在移动</summary>
-    public bool IsMoving() => m_isMoving;
-
     /// <summary>设置是否移动</summary>
     public void SetMoving(bool moving) => m_isMoving = moving;
-
-    /// <summary>获取运动速度倍率</summary>
-    public float GetMoveSpeed() => m_moveSpeed;
 
     /// <summary>设置运动速度倍率</summary>
     public void SetMoveSpeed(float speed) => m_moveSpeed = speed;
 
-    /// <summary>获取预测的轨迹采样点（从当前位置开始）</summary>
-    public Vector3[] GetTrajectoryPoints()
-    {
-        Vector3 startPos = transform.position;
-        Vector3 startVel = m_startPointInitialized ? m_velocity : transform.forward * m_initialSpeed;
-        return CalculateTrajectoryPoints(startPos, startVel);
-    }
-
-    /// <summary>获取碰撞Layer掩码</summary>
-    public LayerMask GetCollisionLayerMask() => m_collisionLayerMask;
-
-    /// <summary>设置碰撞Layer掩码</summary>
-    public void SetCollisionLayerMask(LayerMask mask) => m_collisionLayerMask = mask;
-
-    /// <summary>获取伤害值</summary>
-    public int GetDamage() => m_damage;
-
     /// <summary>设置伤害值</summary>
     public void SetDamage(int damage) => m_damage = damage;
-
-    /// <summary>获取自毁时间（秒）</summary>
-    public float GetLifetime() => m_lifetime;
-
-    /// <summary>设置自毁时间（秒）</summary>
-    public void SetLifetime(float time) => m_lifetime = time;
 }

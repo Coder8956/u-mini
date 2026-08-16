@@ -95,9 +95,6 @@ public class TPCameraCtrl : MonoBehaviour
     /// <summary>位置平滑速度（SmoothDamp 内部使用）</summary>
     private Vector3 m_positionVelocity;
 
-    // --- 编辑器同步 ---
-    // （无需额外字段）
-
     // ==================== 生命周期 ====================
 
     private void Start()
@@ -253,30 +250,9 @@ public class TPCameraCtrl : MonoBehaviour
 
     // ==================== 公开接口 ====================
 
-    /// <summary>获取是否接受用户输入</summary>
-    public bool IsInputEnabled() => m_enableInput;
-
     /// <summary>设置是否接受用户输入</summary>
     public void SetEnableInput(bool enable) => m_enableInput = enable;
 
     /// <summary>设置相机跟随目标</summary>
     public void SetTarget(Transform target) => m_target = target;
-
-    /// <summary>获取距离平滑时间（秒）</summary>
-    public float GetDistanceSmoothTime() => m_distanceSmoothTime;
-
-    /// <summary>设置距离平滑时间（秒）</summary>
-    public void SetDistanceSmoothTime(float time) => m_distanceSmoothTime = time;
-
-    /// <summary>获取碰撞检测球体半径</summary>
-    public float GetCollisionRadius() => m_collisionRadius;
-
-    /// <summary>设置碰撞检测球体半径</summary>
-    public void SetCollisionRadius(float radius) => m_collisionRadius = radius;
-
-    // /// <summary>获取是否开启编辑器同步</summary>
-    // public bool IsSyncInitToTransform() => m_syncInitToTransform;
-    //
-    // /// <summary>设置是否开启编辑器同步</summary>
-    // public void SetSyncInitToTransform(bool sync) => m_syncInitToTransform = sync;
 }
