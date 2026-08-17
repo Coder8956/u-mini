@@ -4,8 +4,20 @@ using UnityEngine.InputSystem;
 
 public class LaunchDemo : MonoBehaviour
 {
+    private static bool Launched = false;
+
     private void Start()
     {
+        Launch();
+        DemoUI.Launch.Open();
+        UMOAudio.BGM.Volume = 0.1f;
+        UMOAudio.BGM.Play(DMAudio.BGM_Launch);
+    }
+
+    private void Launch()
+    {
+        if (Launched) return;
+
         UMLauncher.Work();
 
         UMOConfig.AddTable(new LanguageCfg());
@@ -23,14 +35,11 @@ public class LaunchDemo : MonoBehaviour
 
         // 创建 Demo 实例
         DemoEntity.Create();
-        
-        DemoUI.Launch.Open();
-
-        UMOAudio.BGM.Volume = 0.1f;
-        UMOAudio.BGM.Play(DMAudio.BGM_Launch);
 
         UMOUI.EnableDebugPanel = true;
-        
+
+        Launched = true;
+
         Debug.Log("Game Launched!");
     }
 

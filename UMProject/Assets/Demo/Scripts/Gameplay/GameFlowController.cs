@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UMiniFramework.Runtime;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 /// <summary>
 /// 游戏流程状态
@@ -47,6 +48,10 @@ public class GameFlowController : MonoBehaviour
     [SerializeField]
     private Transform m_weaponPos;
 
+    [Tooltip("鼠标控制器")]
+    [SerializeField]
+    private CursorController m_cursorController;
+
     [Header("流程配置")]
     [Tooltip("进入场景时的初始状态")]
     [SerializeField]
@@ -81,8 +86,31 @@ public class GameFlowController : MonoBehaviour
         bool inputAccepted = m_gameState == GameState.Playing;
         SetCameraInput(inputAccepted);
         SetGunFireInput(inputAccepted);
-        
+
+        // 接管鼠标输入处理，由 GameFlowController 统一控制 Esc 暂停 / 鼠标点击恢复
+        if (m_cursorController != null)
+            m_cursorController.EnableInputHandling = false;
+
         UMOAudio.BGM.Play(DMAudio.BGM_Game);
+    }
+
+    private void Update()
+    {
+        // Esc 键：在 Playing 和 Paused 之间切换
+        if (Keyboard.current != null && Keyboard.current.escapeKey.wasPressedThisFrame)
+        {
+            if (m_gameState == GameState.Playing)
+            {
+                PauseGame();
+                m_cursorController?.ApplyCursorState(false);
+            }
+            else if (m_gameState == GameState.Paused)
+            {
+                ResumeGame();
+                m_cursorController?.ApplyCursorState(true);
+            }
+        }
+
     }
 
     private void OnDestroy()

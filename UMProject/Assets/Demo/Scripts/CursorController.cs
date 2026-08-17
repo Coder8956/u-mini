@@ -16,6 +16,9 @@ public class CursorController : MonoBehaviour
     [Tooltip("按下 Esc 键时是否允许临时解锁鼠标")]
     [SerializeField] private bool m_allowUnlockWithEscape = true;
 
+    [Tooltip("是否自动处理 Esc 解锁和鼠标点击锁定（当由外部流程控制时应关闭）")]
+    [SerializeField] private bool m_enableInputHandling = true;
+
     // ==================== 私有字段（运行时状态） ====================
 
     private bool m_isLocked;
@@ -37,6 +40,10 @@ public class CursorController : MonoBehaviour
             m_pendingLock = false;
             ApplyCursorState(true);
         }
+
+        // 外部流程接管输入处理时，跳过自动处理
+        if (!m_enableInputHandling)
+            return;
 
         // 鼠标左键点击：重新锁定鼠标
         if (Mouse.current != null && Mouse.current.leftButton.wasPressedThisFrame && !m_isLocked)
@@ -68,6 +75,16 @@ public class CursorController : MonoBehaviour
     }
 
     // ==================== 公开接口 ====================
+
+    /// <summary>
+    /// 是否自动处理 Esc 解锁和鼠标点击锁定。
+    /// 当由外部流程（如 GameFlowController）控制时应设为 false。
+    /// </summary>
+    public bool EnableInputHandling
+    {
+        get => m_enableInputHandling;
+        set => m_enableInputHandling = value;
+    }
 
     /// <summary>
     /// 统一设置鼠标状态
