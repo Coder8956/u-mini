@@ -18,11 +18,15 @@ namespace UMiniFramework.Runtime
         private const string CanvasName = "UMOUI-Canvas";
         private const string EventSystemName = "UMOUI-EventSystem";
         private const string UICacheName = "UMOUI-UICache";
+        private const string DebugLayerName = "UMOUI-DebugLayer";
         private static readonly Dictionary<Type, List<UMUIPanelBase>> CachePanels = new();
 
         // ==================== 静态字段 ====================
 
         private static List<RectTransform> UILayers;
+        private static RectTransform DebugLayer;
+        private static UMUICommonDebug DebugPanel;
+        private static bool DebugPanelEnabled;
 
         // ==================== 属性 ====================
 
@@ -40,6 +44,29 @@ namespace UMiniFramework.Runtime
         public static EventSystem EventSystem { get; private set; }
 
         public static Color PanelMaskColor { get; set; }
+
+        /// <summary>
+        /// 是否启用 Debug 面板。实时切换：True 时创建 Debug 层和面板，False 时清理。
+        /// </summary>
+        public static bool EnableDebugPanel
+        {
+            get => DebugPanelEnabled;
+            set
+            {
+                if (value == DebugPanelEnabled) return;
+                if (value)
+                {
+                    CreateDebugLayer();
+                    CreateDebugPanel();
+                }
+                else
+                {
+                    DestroyDebugPanel();
+                    DestroyDebugLayer();
+                }
+                DebugPanelEnabled = value;
+            }
+        }
 
         internal static Transform UICache => Instance.m_UICache;
 
@@ -142,6 +169,49 @@ namespace UMiniFramework.Runtime
                 if (list.Count == 0)
                     CachePanels.Remove(type);
             }
+        }
+
+        // ── Debug 面板 ──────────────────────────────────────────
+
+        private static void CreateDebugLayer()
+        {
+            if (DebugLayer != null) return;
+
+            GameObject go = new GameObject(DebugLayerName, typeof(RectTransform));
+            go.transform.SetParent(Canvas.transform, false);
+            UMUIUtils.StretchFull(go.GetComponent<RectTransform>());
+            go.transform.SetAsLastSibling();
+            DebugLayer = go.GetComponent<RectTransform>();
+        }
+
+        private static void CreateDebugPanel()
+        {
+            if (DebugPanel != null) return;
+
+            DebugPanel = Create<UMUICommonDebug>();
+            if (DebugPanel == null)
+            {
+                Debug.LogError("[UMOUI] 无法创建 UMUICommonDebug 面板");
+                return;
+            }
+
+            DebugPanel.Open();
+            DebugPanel.transform.SetParent(DebugLayer, false);
+            UMUIUtils.StretchFull(DebugPanel.GetComponent<RectTransform>());
+        }
+
+        private static void DestroyDebugPanel()
+        {
+            if (DebugPanel == null) return;
+            DebugPanel.Release();
+            DebugPanel = null;
+        }
+
+        private static void DestroyDebugLayer()
+        {
+            if (DebugLayer == null) return;
+            Destroy(DebugLayer.gameObject);
+            DebugLayer = null;
         }
 
         // ==================== 公开接口 ====================

@@ -271,7 +271,7 @@ GameObject:
   - component: {fileID: 1123002123528096825}
   - component: {fileID: 8800046415037733499}
   m_Layer: 0
-  m_Name: UMUICommonPopups
+  m_Name: UMUICommonPopups  Template
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

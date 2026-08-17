@@ -29,6 +29,8 @@ public class LaunchDemo : MonoBehaviour
         UMOAudio.BGM.Volume = 0.1f;
         UMOAudio.BGM.Play(DMAudio.BGM_Launch);
 
+        UMOUI.EnableDebugPanel = true;
+        
         Debug.Log("Game Launched!");
     }
 

@@ -169,6 +169,8 @@ namespace UMiniFramework.Runtime
                     StartCountDown();
                     break;
             }
+
+            UpdateContentText();
         }
 
         public override void Close()
@@ -261,6 +263,16 @@ namespace UMiniFramework.Runtime
         }
 
         // ── 辅助 ─────────────────────────────────────────────
+
+        private void UpdateContentText()
+        {
+            if (m_txtContent == null) return;
+
+            m_txtContent.ForceMeshUpdate();
+            m_txtContent.alignment = m_txtContent.textInfo.lineCount <= 1
+                ? TextAlignmentOptions.Center
+                : TextAlignmentOptions.Left;
+        }
 
         private void SetGroupActive(bool two, bool one, bool countDown)
         {

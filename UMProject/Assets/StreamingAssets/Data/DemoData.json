@@ -1,6 +1,7 @@
 {
-  "LangCode": "SC",
-  "GunID": "gun_001",
+  "LangCode": "ENG",
+  "GunID": "gun_002",
+  "BulletID": "bullet_001",
   "CreateTime": "2026-08-17 14:36:39",
-  "LastUpdateTime": "2026-08-17 14:36:41"
+  "LastUpdateTime": "2026-08-17 18:54:43"
 }
