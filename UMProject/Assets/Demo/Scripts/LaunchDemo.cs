@@ -1,4 +1,3 @@
-using System;
 using UMiniFramework.Runtime;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,16 +19,11 @@ public class LaunchDemo : MonoBehaviour
         UMOAudio.BGM.AddClip(new UMACInfo(DMAudio.BGM_Launch, "Audio/BGM/bgm01"));
         UMOAudio.BGM.AddClip(new UMACInfo(DMAudio.BGM_Game, "Audio/BGM/bgm02"));
 
-        if (UMOConfig.Local != null)
-        {
-            UMOConfig.Local.SwitchByType(UMOConfig.Local.GetOptions()[0].type);
-        }
-
-        UMOGlobalVal.Set(DMGlobalVal.SelectGunID,"gun_001");
-        UMOGlobalVal.Set(DMGlobalVal.SelectBulletID,"bullet_001");
-
         DemoUI.CreateUIObjects();
 
+        // 创建 Demo 实例
+        DemoEntity.Create();
+        
         DemoUI.Launch.Open();
 
         UMOAudio.BGM.Volume = 0.1f;

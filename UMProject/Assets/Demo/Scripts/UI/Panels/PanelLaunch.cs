@@ -11,16 +11,16 @@ public class PanelLaunch : UMUIPanelBase
     protected override void OnInitialize()
     {
         m_enterGame.onClick.AddListener(EnterGame);
-        m_enterGame.onClick.AddListener(OpenSet);
+        m_set.onClick.AddListener(OpenSet);
     }
 
     private void EnterGame()
     {
         UMOScene.Load("Game");
     }
-    
+
     private void OpenSet()
     {
-        UMOScene.Load("Game");
+        DemoUI.Set.Open();
     }
 }
